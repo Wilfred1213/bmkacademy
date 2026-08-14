@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    Students | BMK Academy
+{% endblock %}
+
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+
+        <h2 class="fw-bold mb-1">
+            Students
+        </h2>
+
+        <p class="text-muted mb-0">
+            Manage students enrolled at BMK Academy.
+        </p>
+
+    </div>
+
+
+    <a
+        href="#"
+        class="btn btn-primary"
+    >
+        Add Student
+    </a>
+
+</div>
+
+
+<div class="card shadow-sm">
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Student
+                        </th>
+
+                        <th>
+                            Admission Number
+                        </th>
+
+                        <th>
+                            Gender
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for student in students %}
+
+                        <tr>
+
+                            <td>
+
+                                <strong>
+
+                                    {{ student.first_name }}
+
+                                    {% if student.middle_name %}
+                                        {{ student.middle_name }}
+                                    {% endif %}
+
+                                    {{ student.last_name }}
+
+                                </strong>
+
+                            </td>
+
+
+                            <td>
+                                {{ student.admission_number }}
+                            </td>
+
+
+                            <td>
+                                {{ student.get_gender_display }}
+                            </td>
+
+
+                            <td>
+
+                                {% if student.status == "active" %}
+
+                                    <span class="badge bg-success">
+                                        Active
+                                    </span>
+
+                                {% elif student.status == "withdrawn" %}
+
+                                    <span class="badge bg-danger">
+                                        Withdrawn
+                                    </span>
+
+                                {% elif student.status == "graduated" %}
+
+                                    <span class="badge bg-primary">
+                                        Graduated
+                                    </span>
+
+                                {% elif student.status == "transferred" %}
+
+                                    <span class="badge bg-warning text-dark">
+                                        Transferred
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <td>
+
+                                <a
+                                    href="{% url 'students:student_detail' student.id %}"
+                                    class="btn btn-sm btn-outline-primary"
+                                >
+                                    View
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+
+                    {% empty %}
+
+                        <tr>
+
+                            <td
+                                colspan="5"
+                                class="text-center text-muted py-5"
+                            >
+
+                                No students found.
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

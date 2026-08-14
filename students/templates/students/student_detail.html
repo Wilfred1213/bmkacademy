@@ -1,0 +1,475 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    {{ student.first_name }} {{ student.last_name }} | BMK Academy
+{% endblock %}
+
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+
+        <h2 class="fw-bold mb-1">
+
+            {{ student.first_name }}
+
+            {% if student.middle_name %}
+                {{ student.middle_name }}
+            {% endif %}
+
+            {{ student.last_name }}
+
+        </h2>
+
+        <p class="text-muted mb-0">
+            {{ student.admission_number }}
+        </p>
+
+    </div>
+
+
+    <a
+        href="{% url 'students:student_list' %}"
+        class="btn btn-outline-secondary"
+    >
+        ← Back to Students
+    </a>
+
+</div>
+
+
+<div class="row g-4">
+
+
+    <!-- Student Information -->
+
+    <div class="col-lg-8">
+
+        <div class="card shadow-sm h-100">
+
+            <div class="card-header">
+
+                <strong>
+                    Student Information
+                </strong>
+
+            </div>
+
+
+            <div class="card-body">
+
+                <div class="row g-4">
+
+
+                    <div class="col-md-6">
+
+                        <small class="text-muted">
+                            Full Name
+                        </small>
+
+                        <div class="fw-semibold">
+
+                            {{ student.first_name }}
+
+                            {% if student.middle_name %}
+                                {{ student.middle_name }}
+                            {% endif %}
+
+                            {{ student.last_name }}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <small class="text-muted">
+                            Admission Number
+                        </small>
+
+                        <div class="fw-semibold">
+                            {{ student.admission_number }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <small class="text-muted">
+                            Date of Birth
+                        </small>
+
+                        <div class="fw-semibold">
+                            {{ student.date_of_birth }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <small class="text-muted">
+                            Gender
+                        </small>
+
+                        <div class="fw-semibold">
+                            {{ student.get_gender_display }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <small class="text-muted">
+                            Date Admitted
+                        </small>
+
+                        <div class="fw-semibold">
+                            {{ student.date_admitted }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <small class="text-muted">
+                            Current Status
+                        </small>
+
+                        <div>
+
+                            {% if student.status == "active" %}
+
+                                <span class="badge bg-success">
+                                    Active
+                                </span>
+
+                            {% elif student.status == "withdrawn" %}
+
+                                <span class="badge bg-danger">
+                                    Withdrawn
+                                </span>
+
+                            {% elif student.status == "graduated" %}
+
+                                <span class="badge bg-primary">
+                                    Graduated
+                                </span>
+
+                            {% elif student.status == "transferred" %}
+
+                                <span class="badge bg-warning text-dark">
+                                    Transferred
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="card shadow-sm mt-4">
+
+                <div class="card-header">
+            
+                    <strong>
+                        Current Enrollment
+                    </strong>
+            
+                </div>
+            
+            
+                <div class="card-body">
+            
+                    {% if current_enrollment %}
+            
+                        <div class="row g-4">
+            
+                            <div class="col-md-6">
+            
+                                <small class="text-muted">
+                                    Current Class
+                                </small>
+            
+                                <div class="fw-semibold">
+                                    {{ current_enrollment.school_class }}
+                                </div>
+            
+                            </div>
+            
+            
+                            <div class="col-md-6">
+            
+                                <small class="text-muted">
+                                    Enrollment Date
+                                </small>
+            
+                                <div class="fw-semibold">
+                                    {{ current_enrollment.enrolled_on }}
+                                </div>
+            
+                            </div>
+            
+                        </div>
+            
+                    {% else %}
+            
+                        <p class="text-muted mb-0">
+                            This student does not currently have an active enrollment.
+                        </p>
+            
+                    {% endif %}
+            
+                </div>
+            
+            </div>
+
+            <div class="card shadow-sm mt-4">
+
+                <div class="card-header">
+                    <strong>
+                        Attendance Summary
+                    </strong>
+                </div>
+            
+                <div class="card-body">
+            
+                    <div class="row g-3">
+            
+                        <div class="col-md-3">
+            
+                            <div class="border rounded p-3 text-center">
+            
+                                <small class="text-muted">
+                                    Total Records
+                                </small>
+            
+                                <h4 class="fw-bold mb-0">
+                                    {{ statistics.total }}
+                                </h4>
+            
+                            </div>
+            
+                        </div>
+            
+            
+                        <div class="col-md-3">
+            
+                            <div class="border rounded p-3 text-center">
+            
+                                <small class="text-muted">
+                                    Present
+                                </small>
+            
+                                <h4 class="fw-bold text-success mb-0">
+                                    {{ statistics.present }}
+                                </h4>
+            
+                            </div>
+            
+                        </div>
+            
+            
+                        <div class="col-md-3">
+            
+                            <div class="border rounded p-3 text-center">
+            
+                                <small class="text-muted">
+                                    Absent
+                                </small>
+            
+                                <h4 class="fw-bold text-danger mb-0">
+                                    {{ statistics.absent }}
+                                </h4>
+            
+                            </div>
+            
+                        </div>
+            
+            
+                        <div class="col-md-3">
+            
+                            <div class="border rounded p-3 text-center">
+            
+                                <small class="text-muted">
+                                    Late
+                                </small>
+            
+                                <h4 class="fw-bold text-warning mb-0">
+                                    {{ statistics.late }}
+                                </h4>
+            
+                            </div>
+            
+                        </div>
+            
+                    </div>
+            
+            
+                    <!-- Attendance Rate -->
+            
+                    <div class="mt-4">
+            
+                        <div class="d-flex justify-content-between mb-2">
+            
+                            <span class="text-muted">
+                                Attendance Rate
+                            </span>
+            
+                            <strong>
+                                {{ statistics.attendance_rate }}%
+                            </strong>
+            
+                        </div>
+            
+            
+                        <div
+                            class="progress"
+                            style="height: 10px;"
+                        >
+            
+                            <div
+                                class="progress-bar bg-success"
+                                role="progressbar"
+                                style="width: {{ statistics.attendance_rate }}%;"
+                                aria-valuenow="{{ statistics.attendance_rate }}"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                            >
+                            </div>
+            
+                        </div>
+            
+                    </div>
+            
+            
+                    <div class="mt-4">
+            
+                        <a
+                            href="{% url 'attendance:student_attendance' student.id %}"
+                            class="btn btn-outline-primary"
+                        >
+                            View Full Attendance
+                        </a>
+            
+                    </div>
+            
+                </div>
+            
+            </div>
+
+        </div>
+
+    </div>
+    
+
+
+
+    <!-- Quick Actions -->
+
+    <div class="col-lg-4">
+
+        <div class="card shadow-sm">
+
+            <div class="card-header">
+
+                <strong>
+                    Quick Actions
+                </strong>
+
+            </div>
+
+
+            <div class="card-body d-grid gap-2">
+
+
+                <!-- Attendance -->
+
+                <a
+                    href="{% url 'attendance:student_attendance' student.id %}"
+                    class="btn btn-outline-primary"
+                >
+                    View Attendance
+                </a>
+
+
+                <!-- Fees -->
+
+                <a
+                    href="#"
+                    class="btn btn-outline-success"
+                >
+                    View School Fees
+                </a>
+
+
+                <!-- Results -->
+
+                <a
+                    href="#"
+                    class="btn btn-outline-dark"
+                >
+                    View Academic Results
+                </a>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+<!-- Parents -->
+
+<div class="card shadow-sm mt-4">
+
+    <div class="card-header">
+        <strong>
+            Parents / Guardians
+        </strong>
+    </div>
+
+
+    <div class="card-body">
+
+        <div class="list-group">
+
+            {% for parent in student.parents.all %}
+
+                <div class="list-group-item">
+
+                    {{ parent }}
+
+                </div>
+
+            {% empty %}
+
+                <p class="text-muted mb-0">
+                    No parent or guardian has been linked to this student.
+                </p>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

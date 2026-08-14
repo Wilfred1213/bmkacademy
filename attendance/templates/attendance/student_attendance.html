@@ -1,0 +1,319 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ student.first_name }} {{ student.last_name }} | Attendance
+{% endblock %}
+
+
+{% block content %}
+
+<div class="row">
+
+    <div class="col-lg-11 mx-auto">
+
+        <!-- Student heading -->
+
+        <div class="mb-4">
+
+            <h2 class="fw-bold">
+                {{ student.first_name }}
+
+                {% if student.middle_name %}
+                    {{ student.middle_name }}
+                {% endif %}
+
+                {{ student.last_name }}
+            </h2>
+
+            <p class="text-muted mb-1">
+                Admission Number:
+                <strong>
+                    {{ student.admission_number }}
+                </strong>
+            </p>
+
+        </div>
+
+
+        <!-- Date filter -->
+
+        <div class="card shadow-sm mb-4">
+
+            <div class="card-body">
+
+                <form method="get">
+
+                    <div class="row g-3">
+
+                        <div class="col-md-5">
+
+                            <label class="form-label">
+                                Start Date
+                            </label>
+
+                            <input
+                                type="date"
+                                name="start_date"
+                                class="form-control"
+                                value="{{ start_date|default:'' }}"
+                            >
+
+                        </div>
+
+
+                        <div class="col-md-5">
+
+                            <label class="form-label">
+                                End Date
+                            </label>
+
+                            <input
+                                type="date"
+                                name="end_date"
+                                class="form-control"
+                                value="{{ end_date|default:'' }}"
+                            >
+
+                        </div>
+
+
+                        <div class="col-md-2 d-flex align-items-end">
+
+                            <button
+                                type="submit"
+                                class="btn btn-primary w-100"
+                            >
+                                Filter
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+        <!-- Statistics -->
+
+        <div class="row g-3 mb-4">
+
+            <div class="col-md-4 col-lg">
+
+                <div class="card shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <small class="text-muted">
+                            Total Days
+                        </small>
+
+                        <h3 class="fw-bold mb-0">
+                            {{ statistics.total }}
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4 col-lg">
+
+                <div class="card shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <small class="text-muted">
+                            Present
+                        </small>
+
+                        <h3 class="fw-bold text-success mb-0">
+                            {{ statistics.present }}
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4 col-lg">
+
+                <div class="card shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <small class="text-muted">
+                            Absent
+                        </small>
+
+                        <h3 class="fw-bold text-danger mb-0">
+                            {{ statistics.absent }}
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4 col-lg">
+
+                <div class="card shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <small class="text-muted">
+                            Late
+                        </small>
+
+                        <h3 class="fw-bold text-warning mb-0">
+                            {{ statistics.late }}
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4 col-lg">
+
+                <div class="card shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <small class="text-muted">
+                            Attendance Rate
+                        </small>
+
+                        <h3 class="fw-bold mb-0">
+                            {{ statistics.attendance_rate }}%
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Attendance history -->
+
+        <div class="card shadow-sm">
+
+            <div class="card-header">
+
+                <strong>
+                    Attendance History
+                </strong>
+
+            </div>
+
+
+            <div class="card-body">
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover align-middle">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Date
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for record in records %}
+
+                                <tr>
+
+                                    <td>
+                                        {{ record.attendance_date|date:"M d, Y" }}
+                                    </td>
+
+
+                                    <td>
+
+                                        {% if record.status == "present" %}
+
+                                            <span class="badge bg-success">
+                                                Present
+                                            </span>
+
+                                        {% elif record.status == "absent" %}
+
+                                            <span class="badge bg-danger">
+                                                Absent
+                                            </span>
+
+                                        {% elif record.status == "late" %}
+
+                                            <span class="badge bg-warning text-dark">
+                                                Late
+                                            </span>
+
+                                        {% elif record.status == "excused" %}
+
+                                            <span class="badge bg-info text-dark">
+                                                Excused
+                                            </span>
+
+                                        {% endif %}
+
+                                    </td>
+
+                                </tr>
+
+                            {% empty %}
+
+                                <tr>
+
+                                    <td
+                                        colspan="2"
+                                        class="text-center text-muted py-4"
+                                    >
+                                        No attendance records found.
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

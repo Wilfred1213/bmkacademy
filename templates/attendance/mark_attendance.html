@@ -1,0 +1,423 @@
+{% extends "base.html" %}
+
+{% block title %}
+Mark Attendance | BMK Academy
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+
+
+    <div class="col-lg-10 mx-auto">
+
+        <!-- Page heading -->
+        <div class="mb-4">
+            <h2 class="fw-bold">
+                Mark Attendance
+            </h2>
+
+            <p class="text-muted">
+                Record daily attendance for students.
+            </p>
+        </div>
+
+
+        <!-- Select class and date -->
+        <div class="card shadow-sm mb-4">
+
+            <div class="card-body">
+
+                <form method="get">
+
+                    <div class="row g-3">
+
+                        <!-- Class -->
+                        <div class="col-md-6">
+
+                            <label class="form-label">
+                                Class
+                            </label>
+
+                            <select
+                                name="school_class"
+                                class="form-select"
+                                required
+                            >
+
+                                <option value="">
+                                    Select class
+                                </option>
+
+                                {% for school_class in classes %}
+
+                                    <option
+                                        value="{{ school_class.id }}"
+                                        {% if selected_class and selected_class.id == school_class.id %}
+                                            selected
+                                        {% endif %}
+                                    >
+                                        {{ school_class }}
+                                    </option>
+
+                                {% endfor %}
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Date -->
+                        <div class="col-md-4">
+
+                            <label class="form-label">
+                                Date
+                            </label>
+
+                            <input
+                                type="date"
+                                name="attendance_date"
+                                class="form-control"
+                                value="{{ attendance_date|date:'Y-m-d' }}"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- Load button -->
+                        <div class="col-md-2 d-flex align-items-end">
+
+                            <button
+                                type="submit"
+                                class="btn btn-primary w-100"
+                            >
+                                Load
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+        {% if selected_class %}
+            {% if attendance_saved %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+
+                    <strong>Attendance saved successfully!</strong>
+
+                    Attendance for
+                    {{ selected_class }}
+                    on
+                    {{ attendance_date }}
+                    has been recorded.
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                    ></button>
+
+                </div>
+            {% endif %}
+
+            {% if statistics %}
+
+                <div class="row g-3 mb-4">
+
+                    <div class="col-md-4 col-lg">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body">
+                                <small class="text-muted">
+                                    Total
+                                </small>
+
+                                <h3 class="fw-bold mb-0">
+                                    {{ statistics.total }}
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-4 col-lg">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body">
+                                <small class="text-muted">
+                                    Present
+                                </small>
+
+                                <h3 class="fw-bold text-success mb-0">
+                                    {{ statistics.present }}
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-4 col-lg">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body">
+                                <small class="text-muted">
+                                    Absent
+                                </small>
+
+                                <h3 class="fw-bold text-danger mb-0">
+                                    {{ statistics.absent }}
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-4 col-lg">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body">
+                                <small class="text-muted">
+                                    Late
+                                </small>
+
+                                <h3 class="fw-bold text-warning mb-0">
+                                    {{ statistics.late }}
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-4 col-lg">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body">
+                                <small class="text-muted">
+                                    Attendance Rate
+                                </small>
+
+                                <h3 class="fw-bold mb-0">
+                                    {{ statistics.attendance_rate }}%
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+            <!-- Students attendance card -->
+            <div class="card shadow-sm">
+
+                <!-- Card header -->
+                <div class="card-header">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <strong>
+                            {{ selected_class }}
+                        </strong>
+
+                        <span class="text-muted">
+                            {{ attendance_date }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Card body -->
+                <div class="card-body">
+
+                    <form method="post">
+
+                        {% csrf_token %}
+
+
+                        <!-- IMPORTANT:
+                            Send the selected class and date
+                            back to the POST request.
+                        -->
+
+                        <input
+                            type="hidden"
+                            name="school_class"
+                            value="{{ selected_class.id }}"
+                        >
+
+                        <input
+                            type="hidden"
+                            name="attendance_date"
+                            value="{{ attendance_date|date:'Y-m-d' }}"
+                        >
+
+
+                        <!-- Students table -->
+                        <div class="table-responsive">
+
+                            <table class="table table-hover align-middle">
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th>
+                                            Student
+                                        </th>
+
+                                        <th>
+                                            Admission Number
+                                        </th>
+
+                                        <th>
+                                            Status
+                                        </th>
+
+                                    </tr>
+
+                                </thead>
+
+
+                                <tbody>
+
+                                    {% for student in students %}
+
+                                        <tr>
+
+                                            <!-- Student name -->
+                                            <td>
+
+                                                {{ student.first_name }}
+
+                                                {% if student.middle_name %}
+                                                    {{ student.middle_name }}
+                                                {% endif %}
+
+                                                {{ student.last_name }}
+
+                                            </td>
+
+
+                                            <!-- Admission number -->
+                                            <td>
+                                                {{ student.admission_number }}
+                                            </td>
+
+
+                                            <!-- Attendance status -->
+                                            <td>
+
+                                                <select
+                                                    name="student_{{ student.id }}"
+                                                    class="form-select"
+                                                    required
+                                                >
+
+                                                    <option
+                                                        value=""
+                                                        {% if not student.attendance_status %}
+                                                            selected
+                                                        {% endif %}
+                                                    >
+                                                        Select status
+                                                    </option>
+
+                                                    <option
+                                                        value="present"
+                                                        {% if student.attendance_status == "present" %}
+                                                            selected
+                                                        {% endif %}
+                                                    >
+                                                        Present
+                                                    </option>
+
+                                                    <option
+                                                        value="absent"
+                                                        {% if student.attendance_status == "absent" %}
+                                                            selected
+                                                        {% endif %}
+                                                    >
+                                                        Absent
+                                                    </option>
+
+                                                    <option
+                                                        value="late"
+                                                        {% if student.attendance_status == "late" %}
+                                                            selected
+                                                        {% endif %}
+                                                    >
+                                                        Late
+                                                    </option>
+
+                                                    <option
+                                                        value="excused"
+                                                        {% if student.attendance_status == "excused" %}
+                                                            selected
+                                                        {% endif %}
+                                                    >
+                                                        Excused
+                                                    </option>
+
+                                                </select>
+
+                                            </td>
+
+                                        </tr>
+
+
+                                    {% empty %}
+
+                                        <tr>
+
+                                            <td
+                                                colspan="3"
+                                                class="text-center text-muted py-4"
+                                            >
+                                                No students found for this class.
+                                            </td>
+
+                                        </tr>
+
+                                    {% endfor %}
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+
+                        <!-- Save button -->
+                        {% if students %}
+
+                            <div class="d-flex justify-content-end mt-3">
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-success px-4"
+                                >
+                                    Save Attendance
+                                </button>
+
+                            </div>
+
+                        {% endif %}
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+</div>
+
+{% endblock %}
