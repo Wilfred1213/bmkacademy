@@ -1,0 +1,327 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    Payment Receipt | BMK Academy
+{% endblock %}
+
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4 no-print">
+
+    <div>
+        <h2 class="fw-bold mb-1">
+            Payment Receipt
+        </h2>
+
+        <p class="text-muted mb-0">
+            Official school fee payment receipt
+        </p>
+    </div>
+
+    <div class="d-flex gap-2">
+
+        <a
+            href="{% url 'fees:payment_history' invoice.id %}"
+            class="btn btn-outline-secondary"
+        >
+            ← Payment History
+        </a>
+
+        <button
+            type="button"
+            onclick="window.print()"
+            class="btn btn-primary"
+        >
+            Print Receipt
+        </button>
+
+    </div>
+
+</div>
+
+
+<div class="card shadow-sm">
+
+    <div class="card-body p-4">
+
+
+        <!-- School Header -->
+
+        <div class="text-center mb-4">
+
+            <h1 class="fw-bold mb-1">
+                BMK ACADEMY
+            </h1>
+
+            <p class="mb-1">
+                Nursery & Primary Education
+            </p>
+
+            <p class="text-muted mb-0">
+                Official Payment Receipt
+            </p>
+
+        </div>
+
+
+        <hr>
+
+
+        <!-- Receipt Information -->
+
+        <div class="row mb-4">
+
+            <div class="col-md-6">
+
+                <p class="mb-1 text-muted">
+                    Student
+                </p>
+
+                <h5 class="fw-bold">
+
+                    {{ student.first_name }}
+
+                    {% if student.middle_name %}
+                        {{ student.middle_name }}
+                    {% endif %}
+
+                    {{ student.last_name }}
+
+                </h5>
+
+            </div>
+
+
+            <div class="col-md-6 text-md-end">
+
+                <p class="mb-1 text-muted">
+                    Admission Number
+                </p>
+
+                <h5 class="fw-bold">
+                    {{ student.admission_number }}
+                </h5>
+
+            </div>
+
+        </div>
+
+
+        <!-- Payment Details -->
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered align-middle">
+
+                <tbody>
+
+                    <tr>
+
+                        <th style="width: 35%;">
+                            Receipt Number
+                        </th>
+
+                        <td>
+                            {{ payment.receipt_number }}
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <th>
+                            Payment Date
+                        </th>
+
+                        <td>
+                            {{ payment.payment_date|date:"M. d, Y" }}
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <th>
+                            Academic Year
+                        </th>
+
+                        <td>
+                            {{ invoice.enrollment.academic_year }}
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <th>
+                            Description
+                        </th>
+
+                        <td>
+                            {{ invoice.description }}
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <th>
+                            Payment Method
+                        </th>
+
+                        <td>
+                            {{ payment.get_payment_method_display }}
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <th>
+                            Reference
+                        </th>
+
+                        <td>
+                            {{ payment.reference|default:"—" }}
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <th>
+                            Amount Paid
+                        </th>
+
+                        <td class="fw-bold text-success">
+
+                            ₦{{ payment.amount|floatformat:2 }}
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <th>
+                            Previous Amount Paid
+                        </th>
+
+                        <td>
+                            ₦{{ paid_before|floatformat:2 }}
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <th>
+                            Balance After Payment
+                        </th>
+
+                        <td class="fw-bold">
+
+                            {% if balance_after <= 0 %}
+
+                                <span class="text-success">
+                                    ₦0.00
+                                </span>
+
+                            {% else %}
+
+                                <span class="text-danger">
+                                    ₦{{ balance_after|floatformat:2 }}
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- Remarks -->
+
+        {% if payment.remarks %}
+
+            <div class="mt-4">
+
+                <h6 class="fw-bold">
+                    Remarks
+                </h6>
+
+                <p class="mb-0">
+                    {{ payment.remarks }}
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- Footer -->
+
+        <div class="text-center mt-5">
+
+            <p class="mb-1">
+                Thank you for your payment.
+            </p>
+
+            <small class="text-muted">
+                This receipt was generated by BMK Academy.
+            </small>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<style>
+
+@media print {
+
+    body {
+        background: white !important;
+    }
+
+    nav,
+    footer,
+    .btn,
+    .text-muted {
+        /* Keep receipt clean when printing */
+    }
+
+    .card {
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    .card-body {
+        padding: 0 !important;
+    }
+
+}
+
+</style>
+
+
+{% endblock %}

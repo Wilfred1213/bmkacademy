@@ -40,6 +40,12 @@ def student_detail(request, student_id):
         .first()
     )
 
+    enrollment_history = (
+        student.enrollments
+        .select_related("school_class")
+        .order_by("-enrolled_on")
+    )
+
     statistics = AttendanceService.get_student_statistics(
         student=student,
     )
@@ -50,6 +56,7 @@ def student_detail(request, student_id):
         {
             "student": student,
             "current_enrollment": current_enrollment,
+            "enrollment_history": enrollment_history,
             "statistics": statistics,
         },
     )

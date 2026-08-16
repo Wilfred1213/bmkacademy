@@ -1,0 +1,320 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    Record Payment | BMK Academy
+{% endblock %}
+
+
+{% block content %}
+
+<div class="row">
+
+    <div class="col-lg-8 mx-auto">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <div>
+
+                <h2 class="fw-bold mb-1">
+                    Record Payment
+                </h2>
+
+                <p class="text-muted mb-0">
+                    Record a school fee payment.
+                </p>
+
+            </div>
+
+            <a
+                href="{% url 'fees:student_fees' student.id %}"
+                class="btn btn-outline-secondary"
+            >
+                ← Back to Fees
+            </a>
+
+        </div>
+
+
+        <!-- Student / Invoice Summary -->
+
+        <div class="card shadow-sm mb-4">
+
+            <div class="card-header">
+
+                <strong>
+                    Invoice Information
+                </strong>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row g-4">
+
+                    <div class="col-md-6">
+
+                        <small class="text-muted">
+                            Student
+                        </small>
+
+                        <div class="fw-semibold">
+                            {{ student.first_name }}
+
+                            {% if student.middle_name %}
+                                {{ student.middle_name }}
+                            {% endif %}
+
+                            {{ student.last_name }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <small class="text-muted">
+                            Admission Number
+                        </small>
+
+                        <div class="fw-semibold">
+                            {{ student.admission_number }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <small class="text-muted">
+                            Invoice Amount
+                        </small>
+
+                        <div class="fw-semibold">
+                            ₦{{ summary.amount|floatformat:2 }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <small class="text-muted">
+                            Paid
+                        </small>
+
+                        <div class="fw-semibold text-success">
+                            ₦{{ summary.paid|floatformat:2 }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <small class="text-muted">
+                            Outstanding
+                        </small>
+
+                        <div class="fw-semibold text-danger">
+                            ₦{{ summary.balance|floatformat:2 }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Payment Form -->
+
+        <div class="card shadow-sm">
+
+            <div class="card-header">
+
+                <strong>
+                    Payment Details
+                </strong>
+
+            </div>
+
+
+            <div class="card-body">
+
+                <form method="post">
+
+                    {% csrf_token %}
+
+
+                    <div class="mb-3">
+
+                        <label
+                            for="amount"
+                            class="form-label"
+                        >
+                            Payment Amount
+                        </label>
+
+                        <div class="input-group">
+
+                            <span class="input-group-text">
+                                ₦
+                            </span>
+
+                            <input
+                                type="number"
+                                name="amount"
+                                id="amount"
+                                class="form-control"
+                                min="0.01"
+                                max="{{ summary.balance }}"
+                                step="0.01"
+                                required
+                            >
+
+                        </div>
+
+                        <div class="form-text">
+
+                            Maximum payment:
+                            ₦{{ summary.balance|floatformat:2 }}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label
+                            for="payment_date"
+                            class="form-label"
+                        >
+                            Payment Date
+                        </label>
+
+                        <input
+                            type="date"
+                            name="payment_date"
+                            id="payment_date"
+                            class="form-control"
+                            value="{{ today|date:'Y-m-d' }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label
+                            for="payment_method"
+                            class="form-label"
+                        >
+                            Payment Method
+                        </label>
+
+                        <select
+                            name="payment_method"
+                            id="payment_method"
+                            class="form-select"
+                            required
+                        >
+
+                            <option value="">
+                                Select payment method
+                            </option>
+
+                            <option value="cash">
+                                Cash
+                            </option>
+
+                            <option value="bank_transfer">
+                                Bank Transfer
+                            </option>
+
+                            <option value="pos">
+                                POS
+                            </option>
+
+                            <option value="card">
+                                Card
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label
+                            for="reference"
+                            class="form-label"
+                        >
+                            Payment Reference
+                        </label>
+
+                        <input
+                            type="text"
+                            name="reference"
+                            id="reference"
+                            class="form-control"
+                            placeholder="e.g. TRX-2026-001"
+                        >
+
+                    </div>
+
+
+                    <div class="mb-4">
+
+                        <label
+                            for="remarks"
+                            class="form-label"
+                        >
+                            Remarks
+                        </label>
+
+                        <textarea
+                            name="remarks"
+                            id="remarks"
+                            class="form-control"
+                            rows="3"
+                            placeholder="Optional remarks"
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="d-flex justify-content-end gap-2">
+
+                        <a
+                            href="{% url 'fees:student_fees' student.id %}"
+                            class="btn btn-outline-secondary"
+                        >
+                            Cancel
+                        </a>
+
+                        <button
+                            type="submit"
+                            class="btn btn-success"
+                        >
+                            Save Payment
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

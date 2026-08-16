@@ -1,0 +1,359 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    School Fees | {{ student.first_name }} {{ student.last_name }}
+{% endblock %}
+
+
+{% block content %}
+
+
+
+<!-- Student Header -->
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+
+        <h2 class="fw-bold mb-1">
+
+            {{ student.first_name }}
+
+            {% if student.middle_name %}
+                {{ student.middle_name }}
+            {% endif %}
+
+            {{ student.last_name }}
+
+        </h2>
+
+        <p class="text-muted mb-0">
+            {{ student.admission_number }}
+        </p>
+
+    </div>
+
+
+    <a
+        href="{% url 'students:student_detail' student.id %}"
+        class="btn btn-outline-secondary"
+    >
+        ← Back to Student
+    </a>
+
+</div>
+
+
+<!-- Fee Summary -->
+
+<div class="row g-3 mb-4">
+
+    <!-- Total Invoiced -->
+
+    <div class="col-md-4">
+
+        <div class="card shadow-sm h-100">
+
+            <div class="card-body">
+
+                <small class="text-muted d-block mb-1">
+                    Total Invoiced
+                </small>
+
+                <h4 class="fw-bold mb-0">
+                    ₦{{ fee_summary.total_invoiced|floatformat:2 }}
+                </h4>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Total Paid -->
+
+    <div class="col-md-4">
+
+        <div class="card shadow-sm h-100">
+
+            <div class="card-body">
+
+                <small class="text-muted d-block mb-1">
+                    Total Paid
+                </small>
+
+                <h4 class="fw-bold text-success mb-0">
+                    ₦{{ fee_summary.total_paid|floatformat:2 }}
+                </h4>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Outstanding -->
+
+    <div class="col-md-4">
+
+        <div class="card shadow-sm h-100">
+
+            <div class="card-body">
+
+                <small class="text-muted d-block mb-1">
+                    Outstanding
+                </small>
+
+                <h4 class="fw-bold text-danger mb-0">
+                    ₦{{ fee_summary.outstanding|floatformat:2 }}
+                </h4>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- School Fees -->
+
+<div class="card shadow-sm">
+
+    <div class="card-header d-flex justify-content-between align-items-center">
+
+        <strong>
+            School Fees
+        </strong>
+    
+    
+        <a
+            href="{% url 'fees:create_invoice' student.id %}"
+            class="btn btn-sm btn-primary"
+        >
+            + Create Invoice
+        </a>
+    
+    </div>
+
+    <div class="card-body">
+
+
+    <div class="card-body">
+
+        {% if fee_summaries %}
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Academic Year
+                            </th>
+
+                            <th>
+                                Description
+                            </th>
+
+                            <th>
+                                Amount
+                            </th>
+
+                            <th>
+                                Paid
+                            </th>
+
+                            <th>
+                                Balance
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for summary in fee_summaries %}
+                    
+                            <tr>
+                    
+                                <!-- Academic Year -->
+                                <td>
+                                    {{ summary.invoice.enrollment.academic_year }}
+                                </td>
+                    
+                    
+                                <!-- Description -->
+                                <td>
+                                    {{ summary.invoice.description }}
+                                </td>
+                    
+                    
+                                <!-- Amount -->
+                                <td>
+                                    ₦{{ summary.amount|floatformat:2 }}
+                                </td>
+                    
+                    
+                                <!-- Paid -->
+                                <td class="text-success fw-semibold">
+                                    ₦{{ summary.paid|floatformat:2 }}
+                                </td>
+                    
+                    
+                                <!-- Balance -->
+                                <td class="text-danger fw-semibold">
+                                    ₦{{ summary.balance|floatformat:2 }}
+                                </td>
+                    
+                    
+                                <!-- Status -->
+                                <td>
+                    
+                                    {% if summary.status == "paid" %}
+                    
+                                        <span class="badge bg-success">
+                                            Paid
+                                        </span>
+                    
+                                    {% elif summary.status == "partial" %}
+                    
+                                        <span class="badge bg-warning text-dark">
+                                            Partially Paid
+                                        </span>
+                    
+                                    {% elif summary.status == "cancelled" %}
+                    
+                                        <span class="badge bg-secondary">
+                                            Cancelled
+                                        </span>
+                    
+                                    {% else %}
+                    
+                                        <span class="badge bg-danger">
+                                            Unpaid
+                                        </span>
+                    
+                                    {% endif %}
+                    
+                                </td>
+                    
+                    
+                                <!-- Action -->
+                                <td>
+
+                                    <div class="d-flex gap-2 flex-wrap">
+
+                                        <a
+                                            href="{% url 'fees:payment_history' summary.invoice.id %}"
+                                            class="btn btn-sm btn-outline-secondary"
+                                        >
+                                            Payments
+                                        </a>
+                                    
+                                    
+                                        {% if summary.status != "cancelled" and summary.balance > 0 %}
+                                    
+                                            <a
+                                                href="{% url 'fees:record_payment' summary.invoice.id %}"
+                                                class="btn btn-sm btn-outline-primary"
+                                            >
+                                                Record Payment
+                                            </a>
+                                    
+                                        {% endif %}
+                                    
+                                    
+                                        {% if summary.status == "cancelled" %}
+                                    
+                                            <span class="badge bg-secondary align-self-center">
+                                                Cancelled
+                                            </span>
+                                    
+                                        {% elif summary.paid == 0 %}
+                                    
+                                            <form
+                                                method="post"
+                                                action="{% url 'fees:cancel_invoice' summary.invoice.id %}"
+                                                class="d-inline"
+                                            >
+                                    
+                                                {% csrf_token %}
+                                    
+                                                <button
+                                                    type="submit"
+                                                    class="btn btn-sm btn-outline-danger"
+                                                    onclick="return confirm('Are you sure you want to cancel this invoice?');"
+                                                >
+                                                    Cancel
+                                                </button>
+                                    
+                                            </form>
+                                    
+                                        {% endif %}
+                                    
+                                    </div>
+                                
+                                </td>
+                    
+                            </tr>
+                    
+                        {% empty %}
+                    
+                            <tr>
+                    
+                                <td
+                                    colspan="7"
+                                    class="text-center text-muted py-4"
+                                >
+                                    No fee records found.
+                                </td>
+                    
+                            </tr>
+                    
+                        {% endfor %}
+                    
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        {% else %}
+
+            <div class="text-center py-5">
+
+                <h5>
+                    No fee records found
+                </h5>
+
+                <p class="text-muted">
+                    No school fee invoices have been created for this student.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+{% endblock %}

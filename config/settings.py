@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     "gallery",
     "notifications",
     "reports",
+    "fees"
 ]
 
 AUTH_USER_MODEL = "accounts.User"

@@ -24,6 +24,71 @@
         rel="stylesheet"
     >
 
+    <style>
+        @media print {
+    
+            @page {
+                size: A4 portrait;
+                margin: 12mm;
+            }
+    
+            body {
+                background: white !important;
+                font-size: 12px;
+            }
+    
+            .no-print {
+                display: none !important;
+            }
+    
+            .print-receipt {
+                width: 100%;
+                max-width: 180mm;
+                margin: 0 auto;
+                padding: 0;
+            }
+    
+            .card {
+                border: 1px solid #000 !important;
+                box-shadow: none !important;
+            }
+    
+            .table {
+                font-size: 12px;
+            }
+    
+            .table th,
+            .table td {
+                padding: 6px 8px !important;
+            }
+    
+            .receipt-header {
+                margin-bottom: 12px !important;
+            }
+    
+            h1,
+            h2,
+            h3,
+            h4,
+            h5 {
+                margin-top: 0 !important;
+                margin-bottom: 6px !important;
+            }
+    
+            p {
+                margin-bottom: 4px !important;
+            }
+    
+            .receipt-section {
+                margin-bottom: 10px !important;
+            }
+    
+            footer {
+                display: none !important;
+            }
+        }
+    </style>
+
 </head>
 
 
