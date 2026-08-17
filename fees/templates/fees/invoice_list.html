@@ -1,0 +1,544 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    Fees | BMK Academy
+{% endblock %}
+
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+
+        <h2 class="fw-bold mb-1">
+            Fees
+        </h2>
+
+        <p class="text-muted mb-0">
+            Manage school fee invoices and payments.
+        </p>
+
+    </div>
+
+</div>
+
+<div class="row g-3 mb-4">
+
+    <!-- Total Invoiced -->
+
+    <div class="col-md-4">
+
+        <div class="card shadow-sm h-100">
+
+            <div class="card-body">
+
+                <small class="text-muted">
+                    Total Invoiced
+                </small>
+
+                <h4 class="fw-bold mb-0">
+
+                    ₦{{ summary.total_invoiced|floatformat:2 }}
+
+                </h4>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Total Paid -->
+
+    <div class="col-md-4">
+
+        <div class="card shadow-sm h-100">
+
+            <div class="card-body">
+
+                <small class="text-muted">
+                    Total Paid
+                </small>
+
+                <h4 class="fw-bold text-success mb-0">
+
+                    ₦{{ summary.total_paid|floatformat:2 }}
+
+                </h4>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Outstanding -->
+
+    <div class="col-md-4">
+
+        <div class="card shadow-sm h-100">
+
+            <div class="card-body">
+
+                <small class="text-muted">
+                    Outstanding
+                </small>
+
+                <h4 class="fw-bold text-danger mb-0">
+
+                    ₦{{ summary.outstanding|floatformat:2 }}
+
+                </h4>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="card shadow-sm mb-4">
+
+    <div class="card-body">
+
+        <form
+            method="get"
+            class="row g-3 align-items-end"
+        >
+
+            <!-- Search -->
+
+            <div class="col-md-5">
+
+                <label
+                    for="search"
+                    class="form-label"
+                >
+                    Search Student
+                </label>
+
+                <input
+                    type="text"
+                    name="search"
+                    id="search"
+                    class="form-control"
+                    placeholder="Name or admission number"
+                    value="{{ search }}"
+                >
+
+            </div>
+
+
+            <!-- Status -->
+
+            <div class="col-md-3">
+
+                <label
+                    for="status"
+                    class="form-label"
+                >
+                    Status
+                </label>
+
+                <select
+                    name="status"
+                    id="status"
+                    class="form-select"
+                >
+
+                    <option value="">
+                        All statuses
+                    </option>
+
+                    <option
+                        value="unpaid"
+                        {% if status == "unpaid" %}selected{% endif %}
+                    >
+                        Unpaid
+                    </option>
+
+                    <option
+                        value="partial"
+                        {% if status == "partial" %}selected{% endif %}
+                    >
+                        Partially Paid
+                    </option>
+
+                    <option
+                        value="paid"
+                        {% if status == "paid" %}selected{% endif %}
+                    >
+                        Paid
+                    </option>
+
+                    <option
+                        value="cancelled"
+                        {% if status == "cancelled" %}selected{% endif %}
+                    >
+                        Cancelled
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Academic Year -->
+
+            <div class="col-md-3">
+
+                <label
+                    for="academic_year"
+                    class="form-label"
+                >
+                    Academic Year
+                </label>
+
+                <select
+                    name="academic_year"
+                    id="academic_year"
+                    class="form-select"
+                >
+
+                    <option value="">
+                        All academic years
+                    </option>
+
+                    {% for year in academic_years %}
+
+                        <option
+                            value="{{ year }}"
+                            {% if academic_year == year %}selected{% endif %}
+                        >
+                            {{ year }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <!-- Buttons -->
+
+            <div class="col-md-1">
+
+                <button
+                    type="submit"
+                    class="btn btn-primary w-100"
+                >
+                    Filter
+                </button>
+
+            </div>
+
+        </form>
+
+
+        {% if search or status or academic_year %}
+
+            <div class="mt-3">
+
+                <a
+                    href="{% url 'fees:invoice_list' %}"
+                    class="btn btn-sm btn-outline-secondary"
+                >
+                    Clear Filters
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+<div class="card shadow-sm">
+
+    <div class="card-header d-flex justify-content-between align-items-center">
+
+        <strong>
+            Fee Invoices
+        </strong>
+
+    </div>
+
+
+    <div class="card-body">
+
+        {% if invoice_summaries %}
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Student
+                            </th>
+
+                            <th>
+                                Academic Year
+                            </th>
+
+                            <th>
+                                Description
+                            </th>
+
+                            <th>
+                                Amount
+                            </th>
+
+                            <th>
+                                Paid
+                            </th>
+
+                            <th>
+                                Balance
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for summary in invoice_summaries %}
+
+                            <tr>
+
+                                <td>
+
+                                    <div class="fw-semibold">
+
+                                        {{ summary.invoice.enrollment.student.first_name }}
+
+                                        {% if summary.invoice.enrollment.student.middle_name %}
+                                            {{ summary.invoice.enrollment.student.middle_name }}
+                                        {% endif %}
+
+                                        {{ summary.invoice.enrollment.student.last_name }}
+
+                                    </div>
+
+                                    <small class="text-muted">
+
+                                        {{ summary.invoice.enrollment.student.admission_number }}
+
+                                    </small>
+
+                                </td>
+
+
+                                <td>
+
+                                    {{ summary.invoice.enrollment.academic_year }}
+
+                                </td>
+
+
+                                <td>
+
+                                    {{ summary.invoice.description }}
+
+                                </td>
+
+
+                                <td>
+
+                                    ₦{{ summary.amount|floatformat:2 }}
+
+                                </td>
+
+
+                                <td class="text-success fw-semibold">
+
+                                    ₦{{ summary.paid|floatformat:2 }}
+
+                                </td>
+
+
+                                <td class="text-danger fw-semibold">
+
+                                    ₦{{ summary.balance|floatformat:2 }}
+
+                                </td>
+
+
+                                <td>
+
+                                    {% if summary.status == "paid" %}
+
+                                        <span class="badge bg-success">
+                                            Paid
+                                        </span>
+
+                                    {% elif summary.status == "partial" %}
+
+                                        <span class="badge bg-warning text-dark">
+                                            Partially Paid
+                                        </span>
+
+                                    {% elif summary.status == "cancelled" %}
+
+                                        <span class="badge bg-secondary">
+                                            Cancelled
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="badge bg-danger">
+                                            Unpaid
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+
+                                <td>
+
+                                    <a
+                                        href="{% url 'fees:invoice_detail' summary.invoice.id %}"
+                                        class="btn btn-sm btn-outline-primary"
+                                    >
+                                        View
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        {% else %}
+
+            <div class="text-center py-5">
+
+                <h5>
+                    No fee invoices found
+                </h5>
+
+                <p class="text-muted">
+                    No school fee invoices have been created yet.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+    {% if page_obj.paginator.num_pages > 1 %}
+
+    <nav
+        aria-label="Invoice pagination"
+        class="mt-4"
+    >
+
+        <ul class="pagination justify-content-center">
+
+            <!-- Previous -->
+
+            {% if page_obj.has_previous %}
+
+                <li class="page-item">
+
+                    <a
+                        class="page-link"
+                        href="?page={{ page_obj.previous_page_number }}{% if search %}&search={{ search|urlencode }}{% endif %}{% if status %}&status={{ status }}{% endif %}{% if academic_year %}&academic_year={{ academic_year|urlencode }}{% endif %}"
+                    >
+                        Previous
+                    </a>
+
+                </li>
+
+            {% else %}
+
+                <li class="page-item disabled">
+
+                    <span class="page-link">
+                        Previous
+                    </span>
+
+                </li>
+
+            {% endif %}
+
+
+            <!-- Current page -->
+
+            <li class="page-item active">
+
+                <span class="page-link">
+
+                    Page
+                    {{ page_obj.number }}
+                    of
+                    {{ page_obj.paginator.num_pages }}
+
+                </span>
+
+            </li>
+
+
+            <!-- Next -->
+
+            {% if page_obj.has_next %}
+
+                <li class="page-item">
+
+                    <a
+                        class="page-link"
+                        href="?page={{ page_obj.next_page_number }}{% if search %}&search={{ search|urlencode }}{% endif %}{% if status %}&status={{ status }}{% endif %}{% if academic_year %}&academic_year={{ academic_year|urlencode }}{% endif %}"
+                    >
+                        Next
+                    </a>
+
+                </li>
+
+            {% else %}
+
+                <li class="page-item disabled">
+
+                    <span class="page-link">
+                        Next
+                    </span>
+
+                </li>
+
+            {% endif %}
+
+        </ul>
+
+    </nav>
+
+{% endif %}
+
+</div>
+
+{% endblock %}

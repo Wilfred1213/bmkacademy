@@ -266,6 +266,22 @@
                                         >
                                             Payments
                                         </a>
+                                        <a
+                                            href="{% url 'fees:invoice_detail' summary.invoice.id %}"
+                                            class="btn btn-sm btn-outline-dark"
+                                        >
+                                            Invoice
+                                        </a>
+                                        {% if summary.invoice.status != "cancelled" %}
+
+                                            <a
+                                                href="{% url 'fees:edit_invoice' summary.invoice.id %}"
+                                                class="btn btn-sm btn-outline-primary"
+                                            >
+                                                Edit
+                                            </a>
+
+                                        {% endif %}
                                     
                                     
                                         {% if summary.status != "cancelled" and summary.balance > 0 %}
@@ -287,6 +303,7 @@
                                             </span>
                                     
                                         {% elif summary.paid == 0 %}
+
                                     
                                             <form
                                                 method="post"

@@ -11,10 +11,10 @@ from decimal import Decimal, InvalidOperation
 from django.contrib import messages
 
 
-
+from django.core.paginator import Paginator
 from decimal import Decimal
 
-from django.db.models import Sum
+from django.db.models import Sum, Q
 from .forms import FeeInvoiceForm
 from .models import FeeInvoice, Payment
 
@@ -336,4 +336,299 @@ def cancel_invoice(request, invoice_id):
     return redirect(
         "fees:student_fees",
         student_id=student.id,
+    )
+
+def invoice_detail(request, invoice_id):
+
+    invoice = get_object_or_404(
+        FeeInvoice.objects.select_related(
+            "enrollment__student"
+        ),
+        id=invoice_id,
+    )
+
+    student = invoice.enrollment.student
+
+    summary = FeeService.get_invoice_summary(
+        invoice
+    )
+
+    payments = FeeService.get_payment_history(
+        invoice
+    )
+
+    return render(
+        request,
+        "fees/invoice_detail.html",
+        {
+            "invoice": invoice,
+            "student": student,
+            "summary": summary,
+            "payments": payments,
+        },
+    )
+
+def edit_invoice(request, invoice_id):
+
+    invoice = get_object_or_404(
+        FeeInvoice.objects.select_related(
+            "enrollment__student"
+        ),
+        id=invoice_id,
+    )
+
+    student = invoice.enrollment.student
+
+    if request.method == "POST":
+
+        description = request.POST.get(
+            "description",
+            ""
+        ).strip()
+
+        amount = request.POST.get(
+            "amount"
+        )
+
+        due_date = request.POST.get(
+            "due_date"
+        )
+
+        if not description:
+
+            messages.error(
+                request,
+                "Invoice description is required.",
+            )
+
+            return redirect(
+                "fees:edit_invoice",
+                invoice_id=invoice.id,
+            )
+
+        try:
+
+            amount = Decimal(amount)
+
+        except (InvalidOperation, TypeError):
+
+            messages.error(
+                request,
+                "Please enter a valid invoice amount.",
+            )
+
+            return redirect(
+                "fees:edit_invoice",
+                invoice_id=invoice.id,
+            )
+
+        try:
+
+            due_date = datetime.strptime(
+                due_date,
+                "%Y-%m-%d",
+            ).date()
+
+        except (ValueError, TypeError):
+
+            messages.error(
+                request,
+                "Please provide a valid due date.",
+            )
+
+            return redirect(
+                "fees:edit_invoice",
+                invoice_id=invoice.id,
+            )
+
+        try:
+
+            FeeService.update_invoice(
+                invoice=invoice,
+                description=description,
+                amount=amount,
+                due_date=due_date,
+            )
+
+        except ValueError as error:
+
+            messages.error(
+                request,
+                str(error),
+            )
+
+            return redirect(
+                "fees:edit_invoice",
+                invoice_id=invoice.id,
+            )
+
+        messages.success(
+            request,
+            "Invoice updated successfully.",
+        )
+
+        return redirect(
+            "fees:invoice_detail",
+            invoice_id=invoice.id,
+        )
+
+    paid = FeeService.get_paid_amount(
+        invoice
+    )
+
+    return render(
+        request,
+        "fees/edit_invoice.html",
+        {
+            "invoice": invoice,
+            "student": student,
+            "paid": paid,
+        },
+    )
+def invoice_list(request):
+
+    invoices = (
+        FeeInvoice.objects
+        .select_related(
+            "enrollment__student",
+        )
+        .prefetch_related(
+            "payments",
+        )
+        .order_by(
+            "-created_at",
+        )
+    )
+
+    # -------------------------
+    # Search
+    # -------------------------
+
+    search = request.GET.get(
+        "search",
+        "",
+    ).strip()
+
+    if search:
+
+        invoices = invoices.filter(
+            Q(
+                enrollment__student__first_name__icontains=search
+            )
+            |
+            Q(
+                enrollment__student__middle_name__icontains=search
+            )
+            |
+            Q(
+                enrollment__student__last_name__icontains=search
+            )
+            |
+            Q(
+                enrollment__student__admission_number__icontains=search
+            )
+        )
+
+
+    # -------------------------
+    # Status filter
+    # -------------------------
+
+    status = request.GET.get(
+        "status",
+        "",
+    ).strip()
+
+    if status:
+
+        invoices = invoices.filter(
+            status=status
+        )
+
+
+    # -------------------------
+    # Academic year filter
+    # -------------------------
+
+    academic_year = request.GET.get(
+        "academic_year",
+        "",
+    ).strip()
+
+    if academic_year:
+
+        invoices = invoices.filter(
+            enrollment__academic_year=academic_year
+        )
+
+
+    # -------------------------
+    # Pagination
+    # -------------------------
+
+    paginator = Paginator(
+        invoices,
+        10,
+    )
+
+    page_number = request.GET.get(
+        "page"
+    )
+
+    page_obj = paginator.get_page(
+        page_number
+    )
+
+
+    # -------------------------
+    # Invoice summaries
+    # -------------------------
+
+    invoice_summaries = []
+
+    for invoice in page_obj:
+
+        invoice_summaries.append(
+            FeeService.get_invoice_summary(
+                invoice
+            )
+        )
+
+
+    # -------------------------
+    # Global summary
+    # -------------------------
+
+    summary = FeeService.get_fee_summary()
+
+
+    # -------------------------
+    # Academic years
+    # -------------------------
+
+    academic_years = (
+        FeeInvoice.objects
+        .values_list(
+            "enrollment__academic_year",
+            flat=True,
+        )
+        .distinct()
+        .order_by(
+            "-enrollment__academic_year"
+        )
+    )
+
+
+    return render(
+        request,
+        "fees/invoice_list.html",
+        {
+            "invoice_summaries": invoice_summaries,
+            "summary": summary,
+            "academic_years": academic_years,
+            "search": search,
+            "status": status,
+            "academic_year": academic_year,
+            "page_obj": page_obj,
+        },
     )

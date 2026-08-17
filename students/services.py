@@ -68,35 +68,35 @@ class StudentService:
 
         return new_enrollment
 
-@classmethod
-@transaction.atomic
-def withdraw_student(cls, student, reason=""):
+    @classmethod
+    @transaction.atomic
+    def withdraw_student(cls, student, reason=""):
 
-    if student.status != "active":
-        raise ValueError(
-            "Only active students can be withdrawn."
+        if student.status != "active":
+            raise ValueError(
+                "Only active students can be withdrawn."
+            )
+
+        current_enrollment = cls.get_current_enrollment(
+            student
         )
 
-    current_enrollment = cls.get_current_enrollment(
-        student
-    )
+        current_enrollment.is_current = False
 
-    current_enrollment.is_current = False
+        current_enrollment.save(
+            update_fields=["is_current"]
+        )
 
-    current_enrollment.save(
-        update_fields=["is_current"]
-    )
+        student.status = "withdrawn"
+        student.withdrawal_date = timezone.now().date()
+        student.withdrawal_reason = reason
 
-    student.status = "withdrawn"
-    student.withdrawal_date = timezone.now().date()
-    student.withdrawal_reason = reason
+        student.save(
+            update_fields=[
+                "status",
+                "withdrawal_date",
+                "withdrawal_reason",
+            ]
+        )
 
-    student.save(
-        update_fields=[
-            "status",
-            "withdrawal_date",
-            "withdrawal_reason",
-        ]
-    )
-
-    return student
+        return student
