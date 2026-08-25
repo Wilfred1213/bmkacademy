@@ -1,0 +1,469 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+
+    {{ teacher.user.get_full_name }} | BMK Academy
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<!-- ========================= -->
+<!-- PAGE HEADER -->
+<!-- ========================= -->
+
+<div
+    class="d-flex justify-content-between align-items-center mb-4"
+>
+
+    <div>
+
+        <h2 class="mb-1">
+
+            Teacher Profile
+
+        </h2>
+
+        <p class="text-muted mb-0">
+
+            {{ teacher.user.get_full_name }}
+
+        </p>
+
+    </div>
+
+
+    <div class="d-flex gap-2">
+
+
+        <a
+            href="{% url 'teachers:update_teacher' teacher.id %}"
+            class="btn btn-primary"
+        >
+
+            Edit Teacher
+
+        </a>
+
+
+        <a
+            href="{% url 'teachers:teacher_list' %}"
+            class="btn btn-outline-secondary"
+        >
+
+            Back to Teachers
+
+        </a>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- ========================= -->
+<!-- TEACHER INFORMATION -->
+<!-- ========================= -->
+
+<div class="row">
+
+
+    <div class="col-lg-4 mb-4">
+
+        <div class="card shadow-sm h-100">
+
+            <div class="card-body">
+
+
+                <h5 class="card-title mb-4">
+
+                    Teacher Information
+
+                </h5>
+
+
+                <p>
+
+                    <strong>
+                        Employee ID:
+                    </strong>
+
+                    <br>
+
+                    {{ teacher.employee_id }}
+
+                </p>
+
+
+                <p>
+
+                    <strong>
+                        Full Name:
+                    </strong>
+
+                    <br>
+
+                    {{ teacher.user.get_full_name }}
+
+                </p>
+
+
+                <p>
+
+                    <strong>
+                        Username:
+                    </strong>
+
+                    <br>
+
+                    {{ teacher.user.username }}
+
+                </p>
+
+
+                <p>
+
+                    <strong>
+                        Email:
+                    </strong>
+
+                    <br>
+
+                    {{ teacher.user.email|default:"-" }}
+
+                </p>
+
+
+                <p>
+
+                    <strong>
+                        Phone:
+                    </strong>
+
+                    <br>
+
+                    {{ teacher.phone|default:"-" }}
+
+                </p>
+
+
+                <p>
+
+                    <strong>
+                        Qualification:
+                    </strong>
+
+                    <br>
+
+                    {{ teacher.qualification|default:"-" }}
+
+                </p>
+
+
+                <p>
+
+                    <strong>
+                        Date Joined:
+                    </strong>
+
+                    <br>
+
+                    {{ teacher.date_joined }}
+
+                </p>
+
+
+                <p class="mb-0">
+
+                    <strong>
+                        Status:
+                    </strong>
+
+                    <br>
+
+
+                    {% if teacher.is_active %}
+
+                        <span class="badge text-bg-success">
+
+                            Active
+
+                        </span>
+
+                    {% else %}
+
+                        <span class="badge text-bg-secondary">
+
+                            Inactive
+
+                        </span>
+
+                    {% endif %}
+
+                </p>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ========================= -->
+    <!-- ASSIGNMENTS -->
+    <!-- ========================= -->
+
+    <div class="col-lg-8">
+
+
+        <!-- SUBJECT TEACHING ASSIGNMENTS -->
+
+        <div class="card shadow-sm mb-4">
+
+            <div class="card-header bg-white">
+
+                <div
+                    class="d-flex justify-content-between align-items-center"
+                >
+
+                    <h5 class="mb-0">
+
+                        Teaching Assignments
+
+                    </h5>
+
+
+                    <a
+                        href="{% url 'teachers:assign_subject_teacher' %}"
+                        class="btn btn-sm btn-outline-primary"
+                    >
+
+                        Add Assignment
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="card-body">
+
+
+                {% if teaching_assignments %}
+
+                    <div class="table-responsive">
+
+                        <table class="table table-hover mb-0">
+
+
+                            <thead class="table-light">
+
+                                <tr>
+
+                                    <th>
+
+                                        Class
+
+                                    </th>
+
+
+                                    <th>
+
+                                        Subject
+
+                                    </th>
+
+
+                                    <th>
+
+                                        Academic Year
+
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+
+                                {% for assignment in teaching_assignments %}
+
+                                    <tr>
+
+                                        <td>
+
+                                            {{ assignment.class_subject.school_class }}
+
+                                        </td>
+
+
+                                        <td>
+
+                                            {{ assignment.class_subject.subject }}
+
+                                        </td>
+
+
+                                        <td>
+
+                                            {{ assignment.academic_year }}
+
+                                        </td>
+
+                                    </tr>
+
+                                {% endfor %}
+
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+                {% else %}
+
+                    <p class="text-muted mb-0">
+
+                        No active teaching assignments.
+
+                    </p>
+
+                {% endif %}
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- CLASS TEACHER ASSIGNMENTS -->
+
+        <div class="card shadow-sm">
+
+            <div class="card-header bg-white">
+
+                <div
+                    class="d-flex justify-content-between align-items-center"
+                >
+
+                    <h5 class="mb-0">
+
+                        Class Teacher Assignments
+
+                    </h5>
+
+
+                    <a
+                        href="{% url 'teachers:assign_class_teacher' %}"
+                        class="btn btn-sm btn-outline-primary"
+                    >
+
+                        Assign Class Teacher
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="card-body">
+
+
+                {% if class_teacher_assignments %}
+
+                    <div class="table-responsive">
+
+                        <table class="table table-hover mb-0">
+
+
+                            <thead class="table-light">
+
+                                <tr>
+
+                                    <th>
+
+                                        Class
+
+                                    </th>
+
+
+                                    <th>
+
+                                        Academic Year
+
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+
+                                {% for assignment in class_teacher_assignments %}
+
+                                    <tr>
+
+                                        <td>
+
+                                            {{ assignment.school_class }}
+
+                                        </td>
+
+
+                                        <td>
+
+                                            {{ assignment.academic_year }}
+
+                                        </td>
+
+                                    </tr>
+
+                                {% endfor %}
+
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+                {% else %}
+
+                    <p class="text-muted mb-0">
+
+                        This teacher is not currently assigned
+                        as a class teacher.
+
+                    </p>
+
+                {% endif %}
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+{% endblock %}

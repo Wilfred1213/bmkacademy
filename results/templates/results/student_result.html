@@ -1,0 +1,424 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+
+    {{ enrollment.student }} Result
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+
+        <h2 class="mb-1">
+
+            Student Result
+
+        </h2>
+
+        <p class="text-muted mb-0">
+
+            {{ enrollment.academic_year }}
+            -
+            {{ enrollment.term.get_name_display }}
+
+        </p>
+
+    </div>
+
+
+    <button
+        type="button"
+        class="btn btn-outline-primary no-print"
+        onclick="window.print()"
+    >
+
+        Print Result
+
+    </button>
+
+</div>
+
+
+<!-- ========================= -->
+<!-- STUDENT INFORMATION -->
+<!-- ========================= -->
+
+<div class="card mb-4">
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+
+                <strong>
+
+                    Student Name:
+
+                </strong>
+
+                {{ enrollment.student.first_name }}
+                {{ enrollment.student.middle_name }}
+                {{ enrollment.student.last_name }}
+
+            </div>
+
+
+            <div class="col-md-3 mb-3">
+
+                <strong>
+
+                    Class:
+
+                </strong>
+
+                {{ enrollment.school_class }}
+
+            </div>
+
+
+            <div class="col-md-3 mb-3">
+
+                <strong>
+
+                    Academic Year:
+
+                </strong>
+
+                {{ enrollment.academic_year }}
+
+            </div>
+
+
+            <div class="col-md-6">
+
+                <strong>
+
+                    Term:
+
+                </strong>
+
+                {{ enrollment.term.get_name_display }}
+
+            </div>
+
+
+            <div class="col-md-6">
+
+                <strong>
+
+                    Admission Number:
+
+                </strong>
+
+                {{ enrollment.student.admission_number }}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ========================= -->
+<!-- ACADEMIC RESULTS -->
+<!-- ========================= -->
+
+<div class="card mb-4">
+
+    <div class="card-header">
+
+        <strong>
+
+            Academic Performance
+
+        </strong>
+
+    </div>
+
+
+    <div class="card-body p-0">
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered mb-0">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+
+                            Subject
+
+                        </th>
+
+
+                        {% for component in enrollment.term.assessment_components.all %}
+
+                            {% if component.is_active %}
+
+                                <th class="text-center">
+
+                                    {{ component.name }}
+
+                                    <br>
+
+                                    <small>
+
+                                        / {{ component.max_score }}
+
+                                    </small>
+
+                                </th>
+
+                            {% endif %}
+
+                        {% endfor %}
+
+
+                        <th class="text-center">
+
+                            Total
+
+                        </th>
+
+
+                        <th class="text-center">
+
+                            Grade
+
+                        </th>
+
+
+                        <th>
+
+                            Remark
+
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for result in result_summary.subject_results %}
+
+                        <tr>
+
+                            <td>
+
+                                {{ result.class_subject.subject.name }}
+
+                            </td>
+
+
+                            {% for component in enrollment.term.assessment_components.all %}
+
+                                {% if component.is_active %}
+
+                                    <td class="text-center">
+
+                                        {% for score in result.assessment_scores.all %}
+
+                                            {% if score.assessment_component_id == component.id %}
+
+                                                {{ score.score }}
+
+                                            {% endif %}
+
+                                        {% endfor %}
+
+                                    </td>
+
+                                {% endif %}
+
+                            {% endfor %}
+
+
+                            <td class="text-center">
+
+                                {{ result.total_score }}
+
+                            </td>
+
+
+                            <td class="text-center">
+
+                                {{ result.grade }}
+
+                            </td>
+
+
+                            <td>
+
+                                {{ result.remark }}
+
+                            </td>
+
+                        </tr>
+
+                    {% empty %}
+
+                        <tr>
+
+                            <td
+                                colspan="10"
+                                class="text-center text-muted"
+                            >
+
+                                No results have been entered yet.
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ========================= -->
+<!-- RESULT SUMMARY -->
+<!-- ========================= -->
+
+<div class="row">
+
+
+    <div class="col-md-4 mb-3">
+
+        <div class="card">
+
+            <div class="card-body text-center">
+
+                <small class="text-muted">
+
+                    Total Score
+
+                </small>
+
+                <h3>
+
+                    {{ result_summary.total_score }}
+
+                </h3>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-4 mb-3">
+
+        <div class="card">
+
+            <div class="card-body text-center">
+
+                <small class="text-muted">
+
+                    Subjects Scored
+
+                </small>
+
+                <h3>
+
+                    {{ result_summary.scored_subjects }}
+
+                </h3>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-4 mb-3">
+
+        <div class="card">
+
+            <div class="card-body text-center">
+
+                <small class="text-muted">
+
+                    Average
+
+                </small>
+
+                <h3>
+
+                    {{ result_summary.average }}
+
+                </h3>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="col-md-3 mb-3">
+
+        <div class="card">
+    
+            <div class="card-body text-center">
+    
+                <small class="text-muted">
+                    Position
+                </small>
+    
+                <h3>
+                    {{ result_summary.position }}
+                </h3>
+    
+            </div>
+    
+        </div>
+    
+    </div>
+    
+    
+    <div class="col-md-3 mb-3">
+    
+        <div class="card">
+    
+            <div class="card-body text-center">
+    
+                <small class="text-muted">
+                    Out Of
+                </small>
+    
+                <h3>
+                    {{ result_summary.out_of }}
+                </h3>
+    
+            </div>
+    
+        </div>
+    
+    </div>
+
+
+</div>
+
+
+{% endblock %}

@@ -47,7 +47,8 @@ class Student(models.Model):
 
     admission_number = models.CharField(
         max_length=30,
-        unique=True
+        unique=True,
+        blank=True,
     )
 
     date_admitted = models.DateField()
@@ -82,6 +83,57 @@ class Student(models.Model):
             f"{self.first_name} "
             f"{self.last_name} "
             f"({self.admission_number})"
+        )
+
+    def generate_admission_number(self):
+
+        year = self.date_admitted.year
+
+        prefix = f"BMK-{year}-"
+
+        last_student = (
+            Student.objects
+            .filter(
+                admission_number__startswith=prefix
+            )
+            .order_by(
+                "-admission_number"
+            )
+            .first()
+        )
+
+        if last_student:
+
+            last_number = int(
+                last_student.admission_number
+                .split("-")[-1]
+            )
+
+            next_number = last_number + 1
+
+        else:
+
+            next_number = 1
+
+        return (
+            f"{prefix}{next_number:04d}"
+        )
+
+    def save(
+        self,
+        *args,
+        **kwargs,
+    ):
+
+        if not self.admission_number:
+
+            self.admission_number = (
+                self.generate_admission_number()
+            )
+
+        super().save(
+            *args,
+            **kwargs,
         )
 
 class Enrollment(models.Model):

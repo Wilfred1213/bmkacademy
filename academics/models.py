@@ -87,3 +87,43 @@ class Subject(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class ClassSubject(models.Model):
+
+    school_class = models.ForeignKey(
+        SchoolClass,
+        on_delete=models.CASCADE,
+        related_name="class_subjects",
+    )
+
+    subject = models.ForeignKey(
+        Subject,
+        on_delete=models.CASCADE,
+        related_name="class_subjects",
+    )
+
+    is_active = models.BooleanField(
+        default=True,
+    )
+
+    class Meta:
+
+        constraints = [
+
+            models.UniqueConstraint(
+                fields=[
+                    "school_class",
+                    "subject",
+                ],
+                name="unique_subject_per_class",
+            ),
+
+        ]
+
+    def __str__(self):
+
+        return (
+            f"{self.school_class} - "
+            f"{self.subject}"
+        )

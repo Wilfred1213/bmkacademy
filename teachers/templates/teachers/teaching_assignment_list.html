@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+
+    Teaching Assignments | BMK Academy
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+
+        <h2 class="mb-1">
+            Teaching Assignments
+        </h2>
+
+        <p class="text-muted mb-0">
+            Teachers assigned to classes and subjects.
+        </p>
+
+    </div>
+
+
+    <div class="d-flex gap-2">
+
+        <a
+            href="{% url 'teachers:assign_subject_teacher' %}"
+            class="btn btn-primary"
+        >
+            Assign Subject
+        </a>
+
+
+        <a
+            href="{% url 'teachers:teacher_list' %}"
+            class="btn btn-outline-secondary"
+        >
+            Teachers
+        </a>
+
+    </div>
+
+</div>
+
+
+<div class="card shadow-sm">
+
+    <div class="card-body">
+
+        {% if assignments %}
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th>
+                                Teacher
+                            </th>
+
+                            <th>
+                                Class
+                            </th>
+
+                            <th>
+                                Subject
+                            </th>
+
+                            <th>
+                                Academic Year
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for assignment in assignments %}
+
+                            <tr>
+
+                                <td>
+                                    {{ assignment.teacher.user.get_full_name }}
+                                </td>
+
+
+                                <td>
+                                    {{ assignment.class_subject.school_class }}
+                                </td>
+
+
+                                <td>
+                                    {{ assignment.class_subject.subject }}
+                                </td>
+
+
+                                <td>
+                                    {{ assignment.academic_year }}
+                                </td>
+
+
+                                <td>
+
+                                    {% if assignment.is_active %}
+
+                                        <span class="badge text-bg-success">
+                                            Active
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="badge text-bg-secondary">
+                                            Inactive
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        {% else %}
+
+            <div class="text-center py-5">
+
+                <h5>
+                    No teaching assignments
+                </h5>
+
+                <p class="text-muted">
+                    No teachers have been assigned to subjects yet.
+                </p>
+
+                <a
+                    href="{% url 'teachers:assign_subject_teacher' %}"
+                    class="btn btn-primary"
+                >
+                    Assign Subject
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+{% endblock %}

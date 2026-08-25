@@ -52,6 +52,31 @@ urlpatterns = [
     "",
     views.invoice_list,
     name="invoice_list",
+    ),
+    path(
+    "report/",
+    views.fee_report,
+    name="fee_report",
+    ),
+    path(
+    "report/monthly/",
+    views.monthly_payment_report,
+    name="monthly_payment_report",
+    ),
+    path(
+    "report/outstanding/",
+    views.outstanding_fees,
+    name="outstanding_fees",
+    ),
+    path(
+    "report/class-summary/",
+    views.class_fee_summary,
+    name="class_fee_summary",
+    ),
+    path(
+    "reports/class-summary/export/",
+    views.export_class_fee_summary,
+    name="export_class_fee_summary",
 ),
 
 

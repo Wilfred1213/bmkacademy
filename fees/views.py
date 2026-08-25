@@ -4,12 +4,15 @@ from students.models import Student
 
 from .services import FeeService
 
+from django.http import HttpResponse
 
+from openpyxl import Workbook
+from openpyxl.styles import Font, Alignment
 from datetime import datetime
 from decimal import Decimal, InvalidOperation
 
 from django.contrib import messages
-
+from academics.models import SchoolClass
 
 from django.core.paginator import Paginator
 from decimal import Decimal
@@ -632,3 +635,573 @@ def invoice_list(request):
             "page_obj": page_obj,
         },
     )
+
+def fee_report(request):
+
+    report = FeeService.get_collection_report()
+
+    return render(
+        request,
+        "fees/fee_report.html",
+        {
+            "report": report,
+        },
+    )
+
+def monthly_payment_report(request):
+
+    monthly_report = (
+        FeeService.get_monthly_payment_report()
+    )
+
+    chart_labels = [
+        f"{item['month_name']} {item['year']}"
+        for item in monthly_report
+    ]
+
+    chart_values = [
+        float(item["total"])
+        for item in monthly_report
+    ]
+
+    return render(
+        request,
+        "fees/monthly_payment_report.html",
+        {
+            "monthly_report": monthly_report,
+            "chart_labels": chart_labels,
+            "chart_values": chart_values,
+        },
+    )
+
+def outstanding_fees(request):
+
+    class_id = request.GET.get("class_id")
+    academic_year = request.GET.get("academic_year")
+    search = request.GET.get("search", "").strip()
+
+    outstanding = FeeService.get_outstanding_fees()
+
+    if class_id:
+        outstanding = [
+            item
+            for item in outstanding
+            if str(item["enrollment"].school_class.id) == class_id
+        ]
+
+    if academic_year:
+        outstanding = [
+            item
+            for item in outstanding
+            if str(item["enrollment"].academic_year) == academic_year
+        ]
+
+    if search:
+        search_lower = search.lower()
+
+        outstanding = [
+            item
+            for item in outstanding
+            if (
+                search_lower
+                in (
+                    f"{item['student'].first_name} "
+                    f"{item['student'].middle_name or ''} "
+                    f"{item['student'].last_name}"
+                ).lower()
+                or search_lower
+                in item["student"].admission_number.lower()
+            )
+        ]
+
+    total_outstanding = sum(
+        item["balance"]
+        for item in outstanding
+    )
+
+    school_classes = SchoolClass.objects.all().order_by("name")
+
+    academic_years = (
+        FeeInvoice.objects
+        .values_list(
+            "enrollment__academic_year",
+            flat=True,
+        )
+        .distinct()
+        .order_by("enrollment__academic_year")
+    )
+
+    return render(
+        request,
+        "fees/outstanding_fees.html",
+        {
+            "outstanding": outstanding,
+            "total_outstanding": total_outstanding,
+            "school_classes": school_classes,
+            "academic_years": academic_years,
+            "selected_class": class_id,
+            "selected_academic_year": academic_year,
+            "search": search,
+        },
+    )
+
+def class_fee_summary(request):
+
+    class_id = request.GET.get("class_id")
+    academic_year = request.GET.get("academic_year")
+    risk_filter = request.GET.get("risk")
+
+    search = request.GET.get(
+        "search",
+        ""
+    ).strip()
+
+    school_classes = SchoolClass.objects.all().order_by(
+        "name"
+    )
+
+    academic_years = (
+        FeeInvoice.objects
+        .values_list(
+            "enrollment__academic_year",
+            flat=True,
+        )
+        .distinct()
+        .order_by(
+            "enrollment__academic_year"
+        )
+    )
+
+    risk_summary = {
+    "paid": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0,
+    }
+    
+    summary = None
+    student_summaries = []
+    student_page=None
+
+
+    if class_id and academic_year:
+
+        school_class = get_object_or_404(
+            SchoolClass,
+            id=class_id,
+        )
+
+        summary = (
+            FeeService.get_class_fee_summary(
+                school_class=school_class,
+                academic_year=academic_year,
+            )
+        )
+
+        # ---------------------------------
+        # Get ALL students for risk summary
+        # ---------------------------------
+
+        all_student_summaries = (
+            FeeService.get_class_student_fee_summary(
+                school_class=school_class,
+                academic_year=academic_year,
+            )
+        )
+
+
+        # ---------------------------------
+        # Calculate risk counts
+        # ---------------------------------
+
+        risk_summary = (
+            FeeService.get_fee_risk_summary(
+                all_student_summaries
+            )
+        )
+
+
+        # ---------------------------------
+        # Get filtered students for table
+        # ---------------------------------
+
+        student_summaries = (
+            FeeService.get_filtered_class_student_fee_summary(
+                school_class=school_class,
+                academic_year=academic_year,
+                risk_filter=risk_filter,
+                search=search,
+            )
+        )
+        paginator = Paginator(
+            student_summaries,
+            10,
+        )
+
+        page_number = request.GET.get(
+            "page"
+        )
+
+        student_page = paginator.get_page(
+            page_number
+        )
+    chart_labels = []
+    chart_values = []
+
+    if summary:
+
+        chart_labels = [
+            "Total Invoiced",
+            "Total Paid",
+            "Outstanding",
+        ]
+
+        chart_values = [
+            float(summary["total_invoiced"]),
+            float(summary["total_paid"]),
+            float(summary["outstanding"]),
+        ]
+    return render(
+        request,
+        "fees/class_fee_summary.html",
+        {
+            "summary": summary,
+            "school_classes": school_classes,
+            "academic_years": academic_years,
+            "selected_class": class_id,
+            "selected_academic_year": academic_year,
+            "student_summaries": student_summaries,
+            "risk_summary": risk_summary,
+            "risk_filter": risk_filter,
+            "chart_labels": chart_labels,
+            "chart_values": chart_values,
+            "search": search,
+            "student_page": student_page,
+        },
+    )
+
+def export_class_fee_summary(request):
+
+    class_id = request.GET.get(
+        "class_id"
+    )
+
+    academic_year = request.GET.get(
+        "academic_year"
+    )
+
+    risk_filter = request.GET.get(
+        "risk"
+    )
+
+    search = request.GET.get(
+        "search",
+        ""
+    ).strip()
+
+
+    if not class_id or not academic_year:
+
+        messages.error(
+            request,
+            "Please select a class and academic year first.",
+        )
+
+        return redirect(
+            "fees:class_fee_summary"
+        )
+
+
+    school_class = get_object_or_404(
+        SchoolClass,
+        id=class_id,
+    )
+
+
+    student_summaries = (
+        FeeService.get_filtered_class_student_fee_summary(
+            school_class=school_class,
+            academic_year=academic_year,
+            risk_filter=risk_filter,
+            search=search,
+        )
+    )
+
+    # -----------------------------
+    # Create workbook
+    # -----------------------------
+
+    workbook = Workbook()
+
+    worksheet = workbook.active
+
+    worksheet.title = "Class Fee Summary"
+
+
+    # -----------------------------
+    # Report title
+    # -----------------------------
+
+    worksheet["A1"] = (
+        f"Class Fee Summary - "
+        f"{school_class}"
+    )
+
+    worksheet["A2"] = (
+        f"Academic Year: {academic_year}"
+    )
+
+
+    if risk_filter:
+
+        worksheet["A3"] = (
+            f"Risk Filter: "
+            f"{risk_filter.title()}"
+        )
+
+
+    if search:
+
+        worksheet["A4"] = (
+            f"Search: {search}"
+        )
+
+
+    # -----------------------------
+    # Table headers
+    # -----------------------------
+
+    headers = [
+
+        "#",
+
+        "Student",
+
+        "Admission Number",
+
+        "Total Invoiced",
+
+        "Total Paid",
+
+        "Outstanding",
+
+        "Outstanding %",
+
+        "Status",
+
+        "Risk Level",
+
+    ]
+
+
+    start_row = 6
+
+
+    for column_number, header in enumerate(
+        headers,
+        start=1,
+    ):
+
+        cell = worksheet.cell(
+            row=start_row,
+            column=column_number,
+        )
+
+        cell.value = header
+
+        cell.font = Font(
+            bold=True
+        )
+
+        cell.alignment = Alignment(
+            horizontal="center"
+        )
+
+
+    # -----------------------------
+    # Student rows
+    # -----------------------------
+
+    row_number = start_row + 1
+
+
+    for index, item in enumerate(
+        student_summaries,
+        start=1,
+    ):
+
+        student = item["student"]
+
+
+        worksheet.cell(
+            row=row_number,
+            column=1,
+            value=index,
+        )
+
+
+        worksheet.cell(
+            row=row_number,
+            column=2,
+            value=(
+                f"{student.first_name} "
+                f"{student.last_name}"
+            ),
+        )
+
+
+        worksheet.cell(
+            row=row_number,
+            column=3,
+            value=student.admission_number,
+        )
+
+
+        worksheet.cell(
+            row=row_number,
+            column=4,
+            value=float(
+                item["total_invoiced"]
+            ),
+        )
+
+
+        worksheet.cell(
+            row=row_number,
+            column=5,
+            value=float(
+                item["total_paid"]
+            ),
+        )
+
+
+        worksheet.cell(
+            row=row_number,
+            column=6,
+            value=float(
+                item["outstanding"]
+            ),
+        )
+
+
+        worksheet.cell(
+            row=row_number,
+            column=7,
+            value=float(
+                item[
+                    "outstanding_percentage"
+                ]
+            ),
+        )
+
+
+        worksheet.cell(
+            row=row_number,
+            column=8,
+            value=item["status"],
+        )
+
+
+        worksheet.cell(
+            row=row_number,
+            column=9,
+            value=item["risk_level"],
+        )
+
+
+        row_number += 1
+
+
+    # -----------------------------
+    # Format currency columns
+    # -----------------------------
+
+    for row in range(
+        start_row + 1,
+        row_number,
+    ):
+
+        for column in [4, 5, 6]:
+
+            worksheet.cell(
+                row=row,
+                column=column,
+            ).number_format = (
+                '₦#,##0.00'
+            )
+
+
+        worksheet.cell(
+            row=row,
+            column=7,
+        ).number_format = (
+            '0.0"%"'
+        )
+
+
+    # -----------------------------
+    # Adjust column widths
+    # -----------------------------
+
+    column_widths = {
+
+        "A": 8,
+
+        "B": 30,
+
+        "C": 25,
+
+        "D": 18,
+
+        "E": 18,
+
+        "F": 18,
+
+        "G": 15,
+
+        "H": 15,
+
+        "I": 15,
+
+    }
+
+
+    for column, width in column_widths.items():
+
+        worksheet.column_dimensions[
+            column
+        ].width = width
+
+
+    # -----------------------------
+    # Create response
+    # -----------------------------
+
+    response = HttpResponse(
+        content_type=(
+            "application/vnd.openxmlformats-officedocument."
+            "spreadsheetml.sheet"
+        )
+    )
+
+
+    filename = (
+        f"{school_class}_"
+        f"{academic_year}_"
+        f"fee_summary.xlsx"
+    )
+
+
+    response[
+        "Content-Disposition"
+    ] = (
+        f'attachment; filename="{filename}"'
+    )
+
+
+    workbook.save(
+        response
+    )
+
+
+    return response

@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+
+    Assign Class Teacher | BMK Academy
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="row justify-content-center">
+
+    <div class="col-lg-7">
+
+
+        <div class="card shadow-sm">
+
+            <div class="card-body p-4">
+
+
+                <h2 class="mb-1">
+                    Assign Class Teacher
+                </h2>
+
+                <p class="text-muted mb-4">
+                    Assign a teacher to manage a class for an academic year.
+                </p>
+
+
+                <form method="post">
+
+                    {% csrf_token %}
+
+
+                    <!-- Teacher -->
+
+                    <div class="mb-3">
+
+                        <label
+                            for="teacher"
+                            class="form-label"
+                        >
+                            Teacher
+                        </label>
+
+
+                        <select
+                            name="teacher"
+                            id="teacher"
+                            class="form-select"
+                            required
+                        >
+
+                            <option value="">
+                                Select teacher
+                            </option>
+
+
+                            {% for teacher in teachers %}
+
+                                <option value="{{ teacher.id }}">
+
+                                    {{ teacher.user.get_full_name }}
+
+                                    —
+                                    {{ teacher.employee_id }}
+
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- School Class -->
+
+                    <div class="mb-3">
+
+                        <label
+                            for="school_class"
+                            class="form-label"
+                        >
+                            School Class
+                        </label>
+
+
+                        <select
+                            name="school_class"
+                            id="school_class"
+                            class="form-select"
+                            required
+                        >
+
+                            <option value="">
+                                Select class
+                            </option>
+
+
+                            {% for school_class in school_classes %}
+
+                                <option
+                                    value="{{ school_class.id }}"
+                                >
+
+                                    {{ school_class }}
+
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Academic Year -->
+
+                    <div class="mb-4">
+
+                        <label
+                            for="academic_year"
+                            class="form-label"
+                        >
+                            Academic Year
+                        </label>
+
+
+                        <select
+                            name="academic_year"
+                            id="academic_year"
+                            class="form-select"
+                            required
+                        >
+
+                            <option value="">
+                                Select academic year
+                            </option>
+
+
+                            {% for academic_year in academic_years %}
+
+                                <option
+                                    value="{{ academic_year.id }}"
+                                >
+
+                                    {{ academic_year.name }}
+
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="d-flex gap-2">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                        >
+                            Assign Class Teacher
+                        </button>
+
+
+                        <a
+                            href="{% url 'teachers:class_teacher_assignment_list' %}"
+                            class="btn btn-outline-secondary"
+                        >
+                            Cancel
+                        </a>
+
+                    </div>
+
+
+                </form>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endblock %}

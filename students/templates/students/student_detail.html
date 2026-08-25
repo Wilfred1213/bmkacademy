@@ -518,13 +518,26 @@
 
                 <!-- Results -->
 
-                <a
-                    href="#"
-                    class="btn btn-outline-dark"
-                >
-                    View Academic Results
-                </a>
+                {% if current_enrollment %}
 
+                    <a
+                        href="{% url 'results:student_result' current_enrollment.id %}"
+                        class="btn btn-outline-dark"
+                    >
+                        View Academic Results
+                    </a>
+
+                {% else %}
+
+                    <button
+                        type="button"
+                        class="btn btn-outline-dark"
+                        disabled
+                    >
+                        No Current Result Available
+                    </button>
+
+                {% endif %}
 
             </div>
 

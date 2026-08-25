@@ -1,0 +1,229 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    Monthly Payment Report | BMK Academy
+{% endblock %}
+
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+
+        <h2 class="fw-bold mb-1">
+            Monthly Payment Collection
+        </h2>
+
+        <p class="text-muted mb-0">
+            Money actually received by the school.
+        </p>
+
+    </div>
+
+
+    <a
+        href="{% url 'fees:fee_report' %}"
+        class="btn btn-outline-secondary"
+    >
+        ← Collection Report
+    </a>
+
+</div>
+
+
+<div class="card shadow-sm">
+
+    <div class="card-header">
+
+        <strong>
+            Monthly Collections
+        </strong>
+
+    </div>
+
+    {% comment %} chart {% endcomment %}
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header">
+    
+            <strong>
+                Monthly Collection Trend
+            </strong>
+    
+        </div>
+    
+    
+        <div class="card-body">
+    
+            <div style="height: 350px;">
+    
+                <canvas id="monthlyCollectionChart"></canvas>
+    
+            </div>
+    
+        </div>
+    
+    </div>
+    {% comment %} endchart {% endcomment %}
+    <div class="card-body">
+
+        {% if monthly_report %}
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Year
+                            </th>
+
+                            <th>
+                                Month
+                            </th>
+
+                            <th>
+                                Amount Collected
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for item in monthly_report %}
+
+                            <tr>
+
+                                <td>
+                                    {{ item.year }}
+                                </td>
+
+
+                                <td>
+                                    {{ item.month_name }}
+                                </td>
+
+
+                                <td class="fw-semibold text-success">
+
+                                    ₦{{ item.total|floatformat:2 }}
+
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        {% else %}
+
+            <div class="text-center text-muted py-5">
+
+                No payment records found.
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+<script>
+
+    const labels = {{ chart_labels|safe }};
+    const values = {{ chart_values|safe }};
+
+
+    const ctx = document.getElementById(
+        "monthlyCollectionChart"
+    );
+
+
+    new Chart(
+        ctx,
+        {
+            type: "bar",
+
+            data: {
+                labels: labels,
+
+                datasets: [
+                    {
+                        label: "Amount Collected",
+
+                        data: values,
+
+                        borderWidth: 1
+                    }
+                ]
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                scales: {
+
+                    y: {
+                        beginAtZero: true,
+
+                        ticks: {
+
+                            callback: function(value) {
+
+                                return "₦" +
+                                    value.toLocaleString();
+
+                            }
+
+                        }
+
+                    }
+
+                },
+
+                plugins: {
+
+                    tooltip: {
+
+                        callbacks: {
+
+                            label: function(context) {
+
+                                return "₦" +
+                                    context.parsed.y
+                                    .toLocaleString();
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+    );
+
+</script>
+
+{% endblock %}

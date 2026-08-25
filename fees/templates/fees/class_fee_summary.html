@@ -1,0 +1,1020 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    Class Fee Summary | BMK Academy
+{% endblock %}
+
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+
+        <h2 class="fw-bold mb-1">
+            Class Fee Summary
+        </h2>
+
+        <p class="text-muted mb-0">
+            Analyze fee collection by class and academic year.
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="card shadow-sm mb-4">
+
+    <div class="card-body">
+
+        <form
+            method="get"
+            class="row g-3 align-items-end"
+        >
+
+            <!-- Class -->
+
+            <div class="col-md-4">
+
+                <label
+                    for="class_id"
+                    class="form-label"
+                >
+                    Class
+                </label>
+
+                <select
+                    name="class_id"
+                    id="class_id"
+                    class="form-select"
+                >
+
+                    <option value="">
+                        Select Class
+                    </option>
+
+                    {% for school_class in school_classes %}
+
+                        <option
+                            value="{{ school_class.id }}"
+                            {% if selected_class == school_class.id|stringformat:"s" %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ school_class.name }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <!-- Academic Year -->
+
+            <div class="col-md-4">
+
+                <label
+                    for="academic_year"
+                    class="form-label"
+                >
+                    Academic Year
+                </label>
+
+                <select
+                    name="academic_year"
+                    id="academic_year"
+                    class="form-select"
+                >
+
+                    <option value="">
+                        Select Academic Year
+                    </option>
+
+                    {% for year in academic_years %}
+
+                        <option
+                            value="{{ year }}"
+                            {% if selected_academic_year == year %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ year }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <div class="col-md-auto">
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+                    View Summary
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+{% if summary %}
+
+    <div class="mb-4">
+
+        <h4 class="fw-bold">
+
+            {{ summary.school_class.name }}
+
+            <span class="text-muted">
+                — {{ summary.academic_year }}
+            </span>
+
+        </h4>
+
+    </div>
+
+
+    <div class="row g-3">
+
+
+        <div class="col-md-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <small class="text-muted">
+                        Students
+                    </small>
+
+                    <h3 class="fw-bold mb-0">
+                        {{ summary.student_count }}
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <small class="text-muted">
+                        Total Invoiced
+                    </small>
+
+                    <h4 class="fw-bold mb-0">
+
+                        ₦{{ summary.total_invoiced|floatformat:2 }}
+
+                    </h4>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <small class="text-muted">
+                        Total Paid
+                    </small>
+
+                    <h4 class="fw-bold text-success mb-0">
+
+                        ₦{{ summary.total_paid|floatformat:2 }}
+
+                    </h4>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <small class="text-muted">
+                        Outstanding
+                    </small>
+
+                    <h4 class="fw-bold text-danger mb-0">
+
+                        ₦{{ summary.outstanding|floatformat:2 }}
+
+                    </h4>
+
+                </div>
+
+            </div>
+
+        </div>
+        
+
+    </div>
+
+
+    <div class="row mt-3">
+
+        <div class="col-md-3">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body">
+
+                    <small class="text-muted">
+                        Collection Rate
+                    </small>
+
+                    <h3 class="fw-bold text-primary mb-0">
+
+                        {{ summary.collection_rate|floatformat:2 }}%
+
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    
+    <div class="row g-3 mt-2 mb-4">
+
+        <div class="col-md-3">
+
+            <a
+                href="?class_id={{ selected_class }}&academic_year={{ selected_academic_year }}&risk=high"
+                class="text-decoration-none"
+            >
+        
+                <div
+                    class="card h-100 {% if risk_filter == 'high' %}border-danger shadow{% else %}border-danger{% endif %}"
+                >
+        
+                    <div class="card-body">
+        
+                        <small class="text-muted">
+                            High Risk Students
+                        </small>
+        
+                        <h3 class="fw-bold text-danger mb-0">
+                            {{ risk_summary.high }}
+                        </h3>
+        
+                    </div>
+        
+                </div>
+        
+            </a>
+        
+        </div>
+    
+    
+        <div class="col-md-3">
+
+            <a
+                href="?class_id={{ selected_class }}&academic_year={{ selected_academic_year }}&risk=medium"
+                class="text-decoration-none"
+            >
+        
+                <div
+                    class="card h-100 {% if risk_filter == 'medium' %}border-warning shadow{% else %}border-warning{% endif %}"
+                >
+        
+                    <div class="card-body">
+        
+                        <small class="text-muted">
+                            Medium Risk Students
+                        </small>
+        
+                        <h3 class="fw-bold text-warning mb-0">
+                            {{ risk_summary.medium }}
+                        </h3>
+        
+                    </div>
+        
+                </div>
+        
+            </a>
+        
+        </div>
+    
+    
+        <div class="col-md-3">
+
+            <a
+                href="?class_id={{ selected_class }}&academic_year={{ selected_academic_year }}&risk=low"
+                class="text-decoration-none"
+            >
+        
+                <div
+                    class="card h-100 {% if risk_filter == 'low' %}border-info shadow{% else %}border-info{% endif %}"
+                >
+        
+                    <div class="card-body">
+        
+                        <small class="text-muted">
+                            Low Risk Students
+                        </small>
+        
+                        <h3 class="fw-bold text-info mb-0">
+                            {{ risk_summary.low }}
+                        </h3>
+        
+                    </div>
+        
+                </div>
+        
+            </a>
+        
+        </div>
+    
+    
+        <div class="col-md-3">
+
+            <a
+                href="?class_id={{ selected_class }}&academic_year={{ selected_academic_year }}&risk=paid"
+                class="text-decoration-none"
+            >
+        
+                <div
+                    class="card h-100 {% if risk_filter == 'paid' %}border-success shadow{% else %}border-success{% endif %}"
+                >
+        
+                    <div class="card-body">
+        
+                        <small class="text-muted">
+                            Fully Paid Students
+                        </small>
+        
+                        <h3 class="fw-bold text-success mb-0">
+                            {{ risk_summary.paid }}
+                        </h3>
+        
+                    </div>
+        
+                </div>
+        
+            </a>
+        
+        </div>
+    
+    </div>
+    <!--CHART-->
+    <div class="card shadow-sm mt-4 mb-4">
+
+        <div class="card-header">
+    
+            <strong>
+                Fee Collection Overview
+            </strong>
+    
+        </div>
+    
+    
+        <div class="card-body">
+    
+            <div style="height: 350px;">
+    
+                <canvas id="classFeeChart"></canvas>
+    
+            </div>
+    
+        </div>
+    
+    </div>
+
+    {% if risk_filter %}
+
+        <div class="d-flex justify-content-between align-items-center mt-4">
+
+            <p class="mb-0">
+
+                Showing:
+
+                <strong>
+                    {{ risk_filter|title }}
+                </strong>
+
+                students
+
+            </p>
+
+
+            <a
+                href="?class_id={{ selected_class }}&academic_year={{ selected_academic_year }}"
+                class="btn btn-sm btn-outline-secondary"
+            >
+                Show All Students
+            </a>
+
+            
+
+        </div>
+
+    {% endif %}
+    
+    <div class="card shadow-sm mt-4 mb-3">
+
+        <div class="card-body">
+    
+            <form
+                method="get"
+                class="row g-3 align-items-end"
+            >
+    
+                <!-- Preserve selected class -->
+    
+                <input
+                    type="hidden"
+                    name="class_id"
+                    value="{{ selected_class }}"
+                >
+    
+    
+                <!-- Preserve academic year -->
+    
+                <input
+                    type="hidden"
+                    name="academic_year"
+                    value="{{ selected_academic_year }}"
+                >
+    
+    
+                <!-- Preserve risk filter -->
+    
+                {% if risk_filter %}
+    
+                    <input
+                        type="hidden"
+                        name="risk"
+                        value="{{ risk_filter }}"
+                    >
+    
+                {% endif %}
+    
+    
+                <div class="col-md-8">
+    
+                    <label
+                        for="search"
+                        class="form-label"
+                    >
+                        Search Student
+                    </label>
+    
+                    <input
+                        type="text"
+                        name="search"
+                        id="search"
+                        class="form-control"
+                        value="{{ search }}"
+                        placeholder="Search by student name or admission number"
+                    >
+    
+                </div>
+    
+    
+                <div class="col-md-2 d-grid">
+    
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+                        Search
+                    </button>
+    
+                </div>
+    
+    
+                <div class="col-md-2 d-grid">
+    
+                    <a
+                        href="?class_id={{ selected_class }}&academic_year={{ selected_academic_year }}{% if risk_filter %}&risk={{ risk_filter }}{% endif %}"
+                        class="btn btn-outline-secondary"
+                    >
+                        Clear
+                    </a>
+    
+                </div>
+    
+            </form>
+    
+        </div>
+    
+    </div>
+    <div class="card shadow-sm mt-4">
+        {% if summary %}
+
+            <a
+                href="{% url 'fees:export_class_fee_summary' %}?class_id={{ selected_class }}&academic_year={{ selected_academic_year }}{% if risk_filter %}&risk={{ risk_filter }}{% endif %}{% if search %}&search={{ search }}{% endif %}"
+                class="btn btn-success"
+            >
+                Export to Excel
+            </a>
+
+        {% endif %}
+
+        <div class="card-header">
+    
+            <strong>
+                Student Fee Breakdown
+            </strong>
+    
+        </div>
+    
+        <div class="d-flex justify-content-between align-items-center mb-3">
+
+            <div>
+        
+                <strong>
+                    Student Fee Breakdown
+                </strong>
+        
+                <span class="text-muted">
+        
+                    — {{ student_page.paginator.count }} student{{ student_page.paginator.count|pluralize }}
+        
+                </span>
+        
+            </div>
+        
+        
+            {% if student_page.paginator.count > 0 %}
+        
+                <small class="text-muted">
+        
+                    Showing
+                    {{ student_page.start_index }}
+                    to
+                    {{ student_page.end_index }}
+        
+                </small>
+        
+            {% endif %}
+        
+        </div>
+        <div class="card-body">
+    
+            {% if student_summaries %}
+    
+                <div class="table-responsive">
+    
+                    <table class="table table-hover align-middle">
+    
+                        <thead>
+
+                            <tr>
+                                <th>
+                                    #
+                                </th>
+                        
+                                <th>
+                                    Student
+                                </th>
+                        
+                                <th>
+                                    Admission Number
+                                </th>
+                        
+                                <th>
+                                    Total Invoiced
+                                </th>
+                        
+                                <th>
+                                    Total Paid
+                                </th>
+                        
+                                <th>
+                                    Outstanding
+                                </th>
+                        
+                                <th>
+                                    Status
+                                </th>
+                                <th>
+                                    Risk
+                                </th>
+                        
+                                <th>
+                                    Action
+                                </th>
+                                
+                        
+                            </tr>
+                        
+                        </thead>
+    
+    
+                        <tbody>
+
+                            {% for item in student_page %}
+                        
+                                <tr>
+                        
+                                    <!-- Student -->
+                                    <td>
+                                        {{ student_page.start_index|add:forloop.counter0 }}
+                                    </td>
+                        
+                                    <td class="fw-semibold">
+                        
+                                        {{ item.student.first_name }}
+                        
+                                        {% if item.student.middle_name %}
+                                            {{ item.student.middle_name }}
+                                        {% endif %}
+                        
+                                        {{ item.student.last_name }}
+                        
+                                    </td>
+                        
+                        
+                                    <!-- Admission Number -->
+                        
+                                    <td>
+                        
+                                        {{ item.student.admission_number }}
+                        
+                                    </td>
+                        
+                        
+                                    <!-- Total Invoiced -->
+                        
+                                    <td>
+                        
+                                        ₦{{ item.total_invoiced|floatformat:2 }}
+                        
+                                    </td>
+                        
+                        
+                                    <!-- Total Paid -->
+                        
+                                    <td class="text-success">
+                        
+                                        ₦{{ item.total_paid|floatformat:2 }}
+                        
+                                    </td>
+                        
+                        
+                                    <!-- Outstanding -->
+                        
+                                    <td class="text-danger fw-semibold">
+                        
+                                        ₦{{ item.outstanding|floatformat:2 }}
+                        
+                                    </td>
+                        
+                        
+                                    <!-- Status -->
+                        
+                                    <td>
+                        
+                                        {% if item.status == "paid" %}
+                        
+                                            <span class="badge bg-success">
+                                                Paid
+                                            </span>
+                        
+                                        {% elif item.status == "partial" %}
+                        
+                                            <span class="badge bg-warning text-dark">
+                                                Partial
+                                            </span>
+                        
+                                        {% else %}
+                        
+                                            <span class="badge bg-danger">
+                                                Unpaid
+                                            </span>
+                        
+                                        {% endif %}
+                        
+                                    </td>
+                                    <!--Risk-->
+                                    <td>
+
+                                        {% if item.risk_level == "paid" %}
+                                    
+                                            <span class="badge bg-success">
+                                                Paid
+                                            </span>
+                                    
+                                        {% elif item.risk_level == "high" %}
+                                    
+                                            <span class="badge bg-danger">
+                                                High Risk
+                                            </span>
+                                    
+                                        {% elif item.risk_level == "medium" %}
+                                    
+                                            <span class="badge bg-warning text-dark">
+                                                Medium Risk
+                                            </span>
+                                    
+                                        {% else %}
+                                    
+                                            <span class="badge bg-info text-dark">
+                                                Low Risk
+                                            </span>
+                                    
+                                        {% endif %}
+                                    
+                                    </td>
+                        
+                                    <!-- Action -->
+                        
+                                    <td>
+                        
+                                        <div class="d-flex gap-2">
+
+                                            <a
+                                                href="{% url 'fees:student_fees' item.student.id %}"
+                                                class="btn btn-sm btn-outline-secondary"
+                                            >
+                                                View Fees
+                                            </a>
+                                        
+                                            {% if item.outstanding > 0 %}
+                                        
+                                                <a
+                                                    href="{% url 'fees:student_fees' item.student.id %}"
+                                                    class="btn btn-sm btn-outline-primary"
+                                                >
+                                                    Collect Payment
+                                                </a>
+                                        
+                                            {% endif %}
+                                        
+                                        </div>
+                        
+                                    </td>
+                        
+                                </tr>
+                        
+                            {% endfor %}
+                        
+                        </tbody>
+    
+                    </table>
+    
+                </div>
+    
+            {% else %}
+    
+                <div class="text-center text-muted py-4">
+    
+                    No fee invoices found for this class.
+    
+                </div>
+    
+            {% endif %}
+    
+        </div>
+
+        {% if student_page.has_other_pages %}
+
+    <nav class="mt-4">
+
+        <ul class="pagination justify-content-center">
+
+
+            <!-- Previous -->
+
+            {% if student_page.has_previous %}
+
+                <li class="page-item">
+
+                    <a
+                        class="page-link"
+                        href="?class_id={{ selected_class }}&academic_year={{ selected_academic_year }}{% if risk_filter %}&risk={{ risk_filter }}{% endif %}{% if search %}&search={{ search }}{% endif %}&page={{ student_page.previous_page_number }}"
+                    >
+                        Previous
+                    </a>
+
+                </li>
+
+            {% else %}
+
+                <li class="page-item disabled">
+
+                    <span class="page-link">
+                        Previous
+                    </span>
+
+                </li>
+
+            {% endif %}
+
+
+            <!-- Page numbers -->
+
+            {% for page_num in student_page.paginator.page_range %}
+
+                {% if page_num == student_page.number %}
+
+                    <li class="page-item active">
+
+                        <span class="page-link">
+                            {{ page_num }}
+                        </span>
+
+                    </li>
+
+                {% else %}
+
+                    <li class="page-item">
+
+                        <a
+                            class="page-link"
+                            href="?class_id={{ selected_class }}&academic_year={{ selected_academic_year }}{% if risk_filter %}&risk={{ risk_filter }}{% endif %}{% if search %}&search={{ search }}{% endif %}&page={{ page_num }}"
+                        >
+                            {{ page_num }}
+                        </a>
+
+                    </li>
+
+                {% endif %}
+
+            {% endfor %}
+
+
+            <!-- Next -->
+
+            {% if student_page.has_next %}
+
+                <li class="page-item">
+
+                    <a
+                        class="page-link"
+                        href="?class_id={{ selected_class }}&academic_year={{ selected_academic_year }}{% if risk_filter %}&risk={{ risk_filter }}{% endif %}{% if search %}&search={{ search }}{% endif %}&page={{ student_page.next_page_number }}"
+                    >
+                        Next
+                    </a>
+
+                </li>
+
+            {% else %}
+
+                <li class="page-item disabled">
+
+                    <span class="page-link">
+                        Next
+                    </span>
+
+                </li>
+
+            {% endif %}
+
+
+        </ul>
+
+    </nav>
+
+{% endif %}
+    
+    </div>
+
+
+{% else %}
+
+    <div class="text-center text-muted py-5">
+
+        <h5>
+            Select a class and academic year
+        </h5>
+
+        <p>
+            Choose the filters above to view the fee collection summary.
+        </p>
+
+    </div>
+
+{% endif %}
+
+
+{% if summary %}
+
+<script>
+
+    const classFeeLabels = {{ chart_labels|safe }};
+
+    const classFeeValues = {{ chart_values|safe }};
+
+
+    const classFeeCtx = document.getElementById(
+        "classFeeChart"
+    );
+
+
+    new Chart(
+        classFeeCtx,
+        {
+            type: "bar",
+
+            data: {
+
+                labels: classFeeLabels,
+
+                datasets: [
+                    {
+                        label: "Amount",
+
+                        data: classFeeValues,
+
+                        borderWidth: 1,
+                    }
+                ]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                scales: {
+
+                    y: {
+
+                        beginAtZero: true,
+
+                        ticks: {
+
+                            callback: function(value) {
+
+                                return "₦" +
+                                    value.toLocaleString();
+
+                            }
+
+                        }
+
+                    }
+
+                },
+
+                plugins: {
+
+                    tooltip: {
+
+                        callbacks: {
+
+                            label: function(context) {
+
+                                return (
+                                    "₦" +
+                                    context.parsed.y
+                                    .toLocaleString()
+                                );
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+    );
+
+</script>
+
+{% endif %}
+
+{% endblock %}

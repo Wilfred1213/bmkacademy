@@ -1,0 +1,238 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    Fee Collection Report | BMK Academy
+{% endblock %}
+
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+
+        <h2 class="fw-bold mb-1">
+            Fee Collection Report
+        </h2>
+
+        <p class="text-muted mb-0">
+            School-wide fee collection overview.
+        </p>
+
+    </div>
+
+
+    <a
+        href="{% url 'fees:invoice_list' %}"
+        class="btn btn-outline-secondary"
+    >
+        ← Back to Fees
+    </a>
+
+</div>
+
+
+<!-- Summary -->
+
+<div class="row g-3 mb-4">
+
+
+    <!-- Total Invoiced -->
+
+    <div class="col-md-3">
+
+        <div class="card shadow-sm h-100">
+
+            <div class="card-body">
+
+                <small class="text-muted">
+                    Total Invoiced
+                </small>
+
+                <h4 class="fw-bold mb-0">
+
+                    ₦{{ report.total_invoiced|floatformat:2 }}
+
+                </h4>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Total Paid -->
+
+    <div class="col-md-3">
+
+        <div class="card shadow-sm h-100">
+
+            <div class="card-body">
+
+                <small class="text-muted">
+                    Total Paid
+                </small>
+
+                <h4 class="fw-bold text-success mb-0">
+
+                    ₦{{ report.total_paid|floatformat:2 }}
+
+                </h4>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Outstanding -->
+
+    <div class="col-md-3">
+
+        <div class="card shadow-sm h-100">
+
+            <div class="card-body">
+
+                <small class="text-muted">
+                    Outstanding
+                </small>
+
+                <h4 class="fw-bold text-danger mb-0">
+
+                    ₦{{ report.outstanding|floatformat:2 }}
+
+                </h4>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Collection Rate -->
+
+    <div class="col-md-3">
+
+        <div class="card shadow-sm h-100">
+
+            <div class="card-body">
+
+                <small class="text-muted">
+                    Collection Rate
+                </small>
+
+                <h4 class="fw-bold text-primary mb-0">
+
+                    {{ report.collection_rate|floatformat:2 }}%
+
+                </h4>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Status Breakdown -->
+
+<div class="card shadow-sm">
+
+    <div class="card-header">
+
+        <strong>
+            Invoice Status Breakdown
+        </strong>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Number of Invoices
+                        </th>
+
+                        <th>
+                            Invoice Amount
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for status_code, data in report.status_breakdown.items %}
+
+                        <tr>
+
+                            <td>
+
+                                {% if status_code == "paid" %}
+
+                                    <span class="badge bg-success">
+                                        {{ data.label }}
+                                    </span>
+
+                                {% elif status_code == "partial" %}
+
+                                    <span class="badge bg-warning text-dark">
+                                        {{ data.label }}
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-danger">
+                                        {{ data.label }}
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <td>
+                                {{ data.count }}
+                            </td>
+
+
+                            <td>
+                                ₦{{ data.amount|floatformat:2 }}
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endblock %}

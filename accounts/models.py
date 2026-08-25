@@ -16,6 +16,9 @@ class User(AbstractUser):
         choices=ROLE_CHOICES,
         default="parent",
     )
+    must_change_password = models.BooleanField(
+        default=False
+    )
 
 class ParentProfile(models.Model):
 
