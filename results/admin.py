@@ -6,6 +6,7 @@ from .models import (
     BehaviourCategory,
     StudentBehaviourRating,
     StudentSubjectResult,
+    StudentTermReport
 )
 
 @admin.register(AssessmentComponent)
@@ -131,4 +132,26 @@ class StudentBehaviourRatingAdmin(admin.ModelAdmin):
     autocomplete_fields = (
         "enrollment",
         "behaviour_category",
+    )
+
+@admin.register(StudentTermReport)
+class StudentTermReportAdmin(admin.ModelAdmin):
+
+    list_display = (
+        "enrollment",
+        "next_term_begins",
+        "is_published",
+    )
+
+    search_fields = (
+        "enrollment__student__first_name",
+        "enrollment__student__middle_name",
+        "enrollment__student__last_name",
+    )
+
+    list_filter = (
+        "is_published",
+        "enrollment__academic_year",
+        "enrollment__term",
+        "enrollment__school_class",
     )

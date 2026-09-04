@@ -43,4 +43,8 @@ urlpatterns = [
     "results/",
     include("results.urls"),
     ),
+    path(
+    "admissions/",
+    include("admissions.urls"),
+    ),
 ]

@@ -1,0 +1,420 @@
+<div id="admission-form-container">
+
+    <div class="card border-0 shadow-sm">
+
+        <div class="card-body p-4 p-md-5">
+
+            <form
+                method="post"
+                hx-post="{% url 'admissions:admission_application' %}"
+                hx-target="#admission-form-container"
+                hx-swap="innerHTML"
+                hx-indicator="#admission-loading"
+            >
+
+                {% csrf_token %}
+
+
+                <!-- ================================= -->
+                <!-- ADMISSION INFORMATION -->
+                <!-- ================================= -->
+
+                <div class="mb-4">
+
+                    <h5 class="fw-bold mb-1">
+                        Admission Information
+                    </h5>
+
+                    <p class="text-muted small mb-0">
+                        Select the academic year, term and class
+                        you are applying for.
+                    </p>
+
+                </div>
+
+
+                <div class="row g-3">
+
+                    <!-- Academic Year -->
+
+                    <div class="col-md-4">
+
+                        <label class="form-label fw-semibold">
+                            Academic Year
+                        </label>
+
+                        <select
+                            name="academic_year"
+                            id="id_academic_year"
+                            class="form-select"
+                            hx-get="{% url 'admissions:admission_terms' %}"
+                            hx-target="#id_term"
+                            hx-trigger="change"
+                            hx-swap="innerHTML"
+                            required
+                        >
+
+                            <option value="">
+                                Select Academic Year
+                            </option>
+
+                            {% for year in form.fields.academic_year.queryset %}
+
+                                <option value="{{ year.id }}">
+                                    {{ year.name }}
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                        <div class="text-danger small">
+                            {{ form.academic_year.errors }}
+                        </div>
+
+                    </div>
+
+
+                    <!-- Term -->
+
+                    <div class="col-md-4">
+
+                        <label class="form-label fw-semibold">
+                            Term
+                        </label>
+
+                        {{ form.term }}
+
+                        <div class="text-danger small">
+                            {{ form.term.errors }}
+                        </div>
+
+                    </div>
+
+
+                    <!-- Desired Class -->
+
+                    <div class="col-md-4">
+
+                        <label class="form-label fw-semibold">
+                            Desired Class
+                        </label>
+
+                        {{ form.desired_class }}
+
+                        <div class="text-danger small">
+                            {{ form.desired_class.errors }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <hr class="my-5">
+
+
+                <!-- ================================= -->
+                <!-- STUDENT INFORMATION -->
+                <!-- ================================= -->
+
+                <div class="mb-4">
+
+                    <h5 class="fw-bold mb-1">
+                        Student Information
+                    </h5>
+
+                    <p class="text-muted small mb-0">
+                        Enter the student's personal information.
+                    </p>
+
+                </div>
+
+
+                <div class="row g-3">
+
+                    <div class="col-md-4">
+
+                        <label class="form-label fw-semibold">
+                            First Name
+                        </label>
+
+                        {{ form.first_name }}
+
+                        <div class="text-danger small">
+                            {{ form.first_name.errors }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label class="form-label fw-semibold">
+                            Middle Name
+                        </label>
+
+                        {{ form.middle_name }}
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <label class="form-label fw-semibold">
+                            Last Name
+                        </label>
+
+                        {{ form.last_name }}
+
+                        <div class="text-danger small">
+                            {{ form.last_name.errors }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Date of Birth
+                        </label>
+
+                        {{ form.date_of_birth }}
+
+                        <div class="text-danger small">
+                            {{ form.date_of_birth.errors }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Gender
+                        </label>
+
+                        {{ form.gender }}
+
+                        <div class="text-danger small">
+                            {{ form.gender.errors }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-12">
+
+                        <label class="form-label fw-semibold">
+                            Previous School
+                        </label>
+
+                        {{ form.previous_school }}
+
+                    </div>
+
+                </div>
+
+
+                <hr class="my-5">
+
+
+                <!-- ================================= -->
+                <!-- PARENT INFORMATION -->
+                <!-- ================================= -->
+
+                <div class="mb-4">
+
+                    <h5 class="fw-bold mb-1">
+                        Parent / Guardian Information
+                    </h5>
+
+                    <p class="text-muted small mb-0">
+                        Provide the contact details of the parent
+                        or guardian responsible for the student.
+                    </p>
+
+                </div>
+
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Parent / Guardian Name
+                        </label>
+
+                        {{ form.parent_name }}
+
+                        <div class="text-danger small">
+                            {{ form.parent_name.errors }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Phone Number
+                        </label>
+
+                        {{ form.parent_phone }}
+
+                        <div class="text-danger small">
+                            {{ form.parent_phone.errors }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Email Address
+                        </label>
+
+                        {{ form.parent_email }}
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Relationship to Student
+                        </label>
+
+                        {{ form.relationship }}
+
+                        <div class="text-danger small">
+                            {{ form.relationship.errors }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-12">
+
+                        <label class="form-label fw-semibold">
+                            Residential Address
+                        </label>
+
+                        {{ form.parent_address }}
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================= -->
+                <!-- AGREEMENT -->
+                <!-- ================================= -->
+
+                <div class="alert alert-light border mt-5 mb-4">
+
+                    <div class="form-check">
+
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="application_agreement"
+                            required
+                        >
+
+                        <label
+                            class="form-check-label small"
+                            for="application_agreement"
+                        >
+
+                            I confirm that the information provided
+                            in this application is true, complete and
+                            accurate to the best of my knowledge.
+                            I understand that providing false or
+                            misleading information may affect the
+                            admission process.
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================= -->
+                <!-- SUBMIT -->
+                <!-- ================================= -->
+
+                <div class="d-grid">
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary btn-lg"
+                        id="submit-application"
+                    >
+
+                        <span class="normal-text">
+                            Submit Application
+                        </span>
+
+                        <span
+                            id="admission-loading"
+                            class="htmx-indicator"
+                        >
+
+                            <span
+                                class="spinner-border spinner-border-sm me-2"
+                                role="status"
+                                aria-hidden="true"
+                            ></span>
+
+                            Submitting Application...
+
+                        </span>
+
+                    </button>
+
+                </div>
+
+
+                <div class="text-center mt-3">
+
+                    <small class="text-muted">
+                        Please review all information carefully
+                        before submitting your application.
+                    </small>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<style>
+
+    #admission-loading {
+        display: none;
+    }
+
+    #admission-loading.htmx-request {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #submit-application.htmx-request .normal-text {
+        display: none;
+    }
+
+    #submit-application.htmx-request {
+        cursor: wait;
+    }
+
+</style>

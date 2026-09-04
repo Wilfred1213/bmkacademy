@@ -1,0 +1,126 @@
+<div id="admission-form-container">
+
+    <div class="card border-0 shadow-sm">
+
+        <div class="card-body p-4 p-md-5 text-center">
+
+            <div
+                class="mx-auto mb-4 d-flex align-items-center justify-content-center rounded-circle bg-success-subtle"
+                style="width: 80px; height: 80px;"
+            >
+
+                <span
+                    class="fs-1 text-success"
+                >
+                    ✓
+                </span>
+
+            </div>
+
+
+            <h3 class="fw-bold text-success mb-3">
+                Application Submitted Successfully
+            </h3>
+
+
+            <p class="text-muted mb-4">
+
+                Thank you for applying to
+                <strong>BMK Academy</strong>.
+
+                Your admission application has been
+                received and is now awaiting review.
+
+            </p>
+
+
+            <div class="bg-light rounded p-4 mb-4">
+
+                <div class="row g-3 text-start">
+
+                    <div class="col-md-6">
+
+                        <small class="text-muted d-block">
+                            Applicant
+                        </small>
+
+                        <strong>
+                            {{ application.first_name }}
+                            {{ application.last_name }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <small class="text-muted d-block">
+                            Desired Class
+                        </small>
+
+                        <strong>
+                            {{ application.desired_class }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <small class="text-muted d-block">
+                            Academic Year
+                        </small>
+
+                        <strong>
+                            {{ application.academic_year }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <small class="text-muted d-block">
+                            Term
+                        </small>
+
+                        <strong>
+                            {{ application.term }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="alert alert-info text-start">
+
+                <strong>
+                    What happens next?
+                </strong>
+
+                <p class="mb-0 mt-2 small">
+
+                    The school will review your application.
+                    You may be contacted using the phone number
+                    or email address provided in the application.
+
+                </p>
+
+            </div>
+
+
+            <a
+                href="{% url 'admissions:admission_application' %}"
+                class="btn btn-primary mt-3"
+            >
+                Submit Another Application
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

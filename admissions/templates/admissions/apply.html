@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Online Admission | BMK Academy
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-9">
+
+
+            <!-- ================================= -->
+            <!-- HEADER -->
+            <!-- ================================= -->
+
+            <div class="text-center mb-5">
+
+                <div class="mb-3">
+
+                    <div
+                        class="d-inline-flex
+                               align-items-center
+                               justify-content-center
+                               rounded-circle
+                               bg-primary
+                               text-white"
+                        style="
+                            width: 70px;
+                            height: 70px;
+                            font-size: 30px;
+                        "
+                    >
+
+                        B
+
+                    </div>
+
+                </div>
+
+
+                <h1 class="fw-bold mb-2">
+
+                    BMK ACADEMY
+
+                </h1>
+
+
+                <p class="text-muted mb-2">
+
+                    Nursery & Primary Education
+
+                </p>
+
+
+                <h3 class="fw-semibold">
+
+                    Online Admission Application
+
+                </h3>
+
+
+                <p class="text-muted">
+
+                    Complete the form below to apply for admission.
+
+                </p>
+
+            </div>
+
+
+            <!-- ================================= -->
+            <!-- FORM CONTAINER -->
+            <!-- ================================= -->
+
+            <div id="admission-form-container">
+
+                {% include "admissions/partials/application_form.html" %}
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

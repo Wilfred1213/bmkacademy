@@ -263,3 +263,44 @@ class StudentBehaviourRating(models.Model):
             f"{self.enrollment.student} - "
             f"{self.behaviour_category}"
         )
+
+
+class StudentTermReport(models.Model):
+
+    enrollment = models.OneToOneField(
+        "students.Enrollment",
+        on_delete=models.CASCADE,
+        related_name="term_report",
+    )
+
+    teacher_remark = models.TextField(
+        blank=True,
+    )
+
+    head_teacher_remark = models.TextField(
+        blank=True,
+    )
+
+    next_term_begins = models.DateField(
+        null=True,
+        blank=True,
+    )
+
+    is_published = models.BooleanField(
+        default=False,
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True,
+    )
+
+    def __str__(self):
+
+        return (
+            f"{self.enrollment.student} - "
+            f"{self.enrollment.term}"
+        )

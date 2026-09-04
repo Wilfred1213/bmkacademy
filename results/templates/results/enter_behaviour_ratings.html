@@ -1,0 +1,726 @@
+{% extends "base.html" %}
+{% load result_extras %}
+
+{% block title %}
+    Enter Behaviour Ratings | BMK Academy
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+
+
+    <!-- ========================= -->
+    <!-- PAGE HEADER -->
+    <!-- ========================= -->
+
+    <div class="row mb-4">
+
+        <div class="col">
+
+            <h2>
+                Behaviour / Psychomotor Ratings
+            </h2>
+
+            <p class="text-muted mb-0">
+
+                Enter affective and psychomotor
+                development ratings for students.
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- SUCCESS MESSAGE -->
+    <!-- ========================= -->
+
+    {% if messages %}
+
+        {% for message in messages %}
+
+            <div
+                class="
+                    alert
+                    alert-success
+                    alert-dismissible
+                    fade
+                    show
+                "
+                role="alert"
+            >
+
+                {{ message }}
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                ></button>
+
+            </div>
+
+        {% endfor %}
+
+    {% endif %}
+
+
+    
+    <!-- ========================= -->
+    <!-- SELECTION FORM -->
+    <!-- ========================= -->
+
+    <div class="card mb-4">
+
+        <div class="card-header">
+
+            <strong>
+                Select Student
+            </strong>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <form
+                method="get"
+                id="selectionForm"
+            >
+
+                <div class="row g-3">
+
+
+                    <!-- Academic Year -->
+
+                    <div class="col-md-3">
+
+                        <label class="form-label">
+
+                            Academic Year
+
+                        </label>
+
+                        <select
+                            name="academic_year"
+                            id="academicYear"
+                            class="form-select"
+                        >
+
+                            <option value="">
+
+                                Select Academic Year
+
+                            </option>
+
+
+                            {% for academic_year in academic_years %}
+
+                                <option
+                                    value="{{ academic_year.id }}"
+
+                                    {% if selected_academic_year and academic_year.id == selected_academic_year.id %}
+                                        selected
+                                    {% endif %}
+                                >
+
+                                    {{ academic_year.name }}
+
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Term -->
+
+                    <div class="col-md-3">
+
+                        <label class="form-label">
+
+                            Term
+
+                        </label>
+
+                        <select
+                            name="term"
+                            id="term"
+                            class="form-select"
+
+                            {% if not selected_academic_year %}
+                                disabled
+                            {% endif %}
+                        >
+
+                            <option value="">
+
+                                Select Term
+
+                            </option>
+
+
+                            {% for term in terms %}
+
+                                <option
+                                    value="{{ term.id }}"
+
+                                    {% if selected_term and term.id == selected_term.id %}
+                                        selected
+                                    {% endif %}
+                                >
+
+                                    {{ term.get_name_display }}
+
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Class -->
+
+                    <div class="col-md-3">
+
+                        <label class="form-label">
+
+                            Class
+
+                        </label>
+
+                        <select
+                            name="school_class"
+                            id="schoolClass"
+                            class="form-select"
+                        >
+
+                            <option value="">
+
+                                Select Class
+
+                            </option>
+
+
+                            {% for school_class in school_classes %}
+
+                                <option
+                                    value="{{ school_class.id }}"
+
+                                    {% if selected_class and school_class.id == selected_class.id %}
+                                        selected
+                                    {% endif %}
+                                >
+
+                                    {{ school_class.name }}
+
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Student -->
+
+                    <div class="col-md-3">
+
+                        <label class="form-label">
+
+                            Student
+
+                        </label>
+
+                        <select
+                            name="enrollment"
+                            id="enrollment"
+                            class="form-select"
+
+                            {% if not students %}
+                                disabled
+                            {% endif %}
+                        >
+
+                            <option value="">
+
+                                Select Student
+
+                            </option>
+
+
+                            {% for enrollment in students %}
+
+                                <option
+                                    value="{{ enrollment.id }}"
+
+                                    {% if selected_enrollment and enrollment.id == selected_enrollment.id %}
+                                        selected
+                                    {% endif %}
+                                >
+
+                                    {{ enrollment.student }}
+
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- Manual fallback button -->
+
+                <div class="mt-4">
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+
+                        Load Student
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- ========================= -->
+    <!-- RATING FORM -->
+    <!-- ========================= -->
+
+    {% if selected_enrollment %}
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <div
+                    class="
+                        d-flex
+                        justify-content-between
+                        align-items-center
+                    "
+                >
+
+                    <strong>
+
+                        {{ selected_enrollment.student }}
+
+                    </strong>
+
+
+                    <span
+                        class="
+                            badge
+                            text-bg-primary
+                        "
+                    >
+
+                        {{ selected_enrollment.school_class }}
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="card-body">
+
+                <form
+                    method="post"
+                >
+
+                    {% csrf_token %}
+
+
+                    <!-- ========================= -->
+                    <!-- PRESERVE SELECTED DATA -->
+                    <!-- ========================= -->
+
+                    <input
+                        type="hidden"
+                        name="academic_year"
+                        value="{{ selected_academic_year.id }}"
+                    >
+
+                    <input
+                        type="hidden"
+                        name="term"
+                        value="{{ selected_term.id }}"
+                    >
+
+                    <input
+                        type="hidden"
+                        name="school_class"
+                        value="{{ selected_class.id }}"
+                    >
+
+                    <input
+                        type="hidden"
+                        name="enrollment"
+                        value="{{ selected_enrollment.id }}"
+                    >
+
+
+                    <!-- ========================= -->
+                    <!-- RATING GUIDE -->
+                    <!-- ========================= -->
+
+                    <div
+                        class="
+                            alert
+                            alert-light
+                            border
+                            mb-4
+                        "
+                    >
+
+                        <strong>
+                            Rating Scale:
+                        </strong>
+
+                        <span class="ms-2">
+
+                            1 = Lowest
+
+                        </span>
+
+                        <span class="ms-2">
+
+                            2 = Fair
+
+                        </span>
+
+                        <span class="ms-2">
+
+                            3 = Good
+
+                        </span>
+
+                        <span class="ms-2">
+
+                            4 = High
+
+                        </span>
+
+                        <span class="ms-2">
+
+                            5 = Very High
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- ========================= -->
+                    <!-- RATINGS TABLE -->
+                    <!-- ========================= -->
+
+                    {% if behaviour_categories %}
+
+                        <div
+                            class="table-responsive"
+                        >
+
+                            <table
+                                class="
+                                    table
+                                    table-bordered
+                                    align-middle
+                                "
+                            >
+
+                                <thead
+                                    class="table-light"
+                                >
+
+                                    <tr>
+
+                                        <th>
+                                            #
+                                        </th>
+
+                                        <th>
+                                            Behaviour /
+                                            Psychomotor Area
+                                        </th>
+
+                                        <th
+                                            style="
+                                                width: 220px;
+                                            "
+                                        >
+                                            Rating
+                                        </th>
+
+                                    </tr>
+
+                                </thead>
+
+
+                                <tbody>
+
+
+                                    {% for category in behaviour_categories %}
+
+                                        <tr>
+
+                                            <td>
+
+                                                {{ forloop.counter }}
+
+                                            </td>
+
+
+                                            <td>
+
+                                                {{ category.name }}
+
+                                            </td>
+
+
+                                            <td>
+
+                                                <select
+                                                    name="rating_{{ category.id }}"
+                                                    class="form-select"
+                                                >
+
+                                                    <option value="">
+
+                                                        Not Rated
+
+                                                    </option>
+
+
+                                                    {% for value in "12345" %}
+
+                                                    <option
+                                                        value="{{ value }}"
+                                                    
+                                                        {% if existing_ratings|get_item:category.id == value %}
+                                                            selected
+                                                        {% endif %}
+                                                    >
+                                                        {{ value }}
+                                                    </option>
+
+                                                    {% endfor %}
+
+                                                </select>
+
+                                            </td>
+
+                                        </tr>
+
+                                    {% endfor %}
+
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+
+                        <div
+                            class="
+                                mt-4
+                                d-flex
+                                justify-content-between
+                            "
+                        >
+
+                            <a
+                                href="{% url 'students:student_detail' selected_enrollment.student.id %}"
+                                class="
+                                    btn
+                                    btn-outline-secondary
+                                "
+                            >
+
+                                Back to Student
+
+                            </a>
+
+
+                            <button
+                                type="submit"
+                                class="btn btn-success"
+                            >
+
+                                Save Behaviour Ratings
+
+                            </button>
+
+                        </div>
+
+
+                    {% else %}
+
+                        <div
+                            class="
+                                alert
+                                alert-warning
+                                mb-0
+                            "
+                        >
+
+                            No behaviour categories
+                            have been configured yet.
+
+                        </div>
+
+                    {% endif %}
+
+                </form>
+
+            </div>
+
+        </div>
+
+    {% endif %}
+
+
+</div>
+
+<script>
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+            const form = document.getElementById(
+                "selectionForm"
+            );
+
+            const academicYear = document.getElementById(
+                "academicYear"
+            );
+
+            const term = document.getElementById(
+                "term"
+            );
+
+            const schoolClass = document.getElementById(
+                "schoolClass"
+            );
+
+            const enrollment = document.getElementById(
+                "enrollment"
+            );
+
+
+            // --------------------------------
+            // ACADEMIC YEAR CHANGED
+            // --------------------------------
+
+            academicYear.addEventListener(
+                "change",
+                function () {
+
+                    if (!academicYear.value) {
+
+                        return;
+
+                    }
+
+                    term.value = "";
+
+                    enrollment.value = "";
+
+                    form.submit();
+
+                }
+            );
+
+
+            // --------------------------------
+            // TERM CHANGED
+            // --------------------------------
+
+            term.addEventListener(
+                "change",
+                function () {
+
+                    if (!term.value) {
+
+                        return;
+
+                    }
+
+                    enrollment.value = "";
+
+                    form.submit();
+
+                }
+            );
+
+
+            // --------------------------------
+            // CLASS CHANGED
+            // --------------------------------
+
+            schoolClass.addEventListener(
+                "change",
+                function () {
+
+                    if (!schoolClass.value) {
+
+                        return;
+
+                    }
+
+                    enrollment.value = "";
+
+                    form.submit();
+
+                }
+            );
+
+
+            // --------------------------------
+            // STUDENT CHANGED
+            // --------------------------------
+
+            enrollment.addEventListener(
+                "change",
+                function () {
+
+                    if (!enrollment.value) {
+
+                        return;
+
+                    }
+
+                    form.submit();
+
+                }
+            );
+
+        }
+    );
+
+</script>
+
+{% endblock %}

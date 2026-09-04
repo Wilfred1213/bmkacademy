@@ -36,14 +36,26 @@ def student_detail(request, student_id):
     current_enrollment = (
         student.enrollments
         .filter(is_current=True)
-        .select_related("school_class")
+        .select_related(
+            "school_class",
+            "academic_year",
+            "term",
+        )
         .first()
     )
 
+    
     enrollment_history = (
         student.enrollments
-        .select_related("school_class")
-        .order_by("-enrolled_on")
+        .select_related(
+            "school_class",
+            "academic_year",
+            "term",
+        )
+        .order_by(
+            "-academic_year__start_date",
+            "-term__start_date",
+        )
     )
 
     statistics = AttendanceService.get_student_statistics(

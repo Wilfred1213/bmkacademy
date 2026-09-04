@@ -1,0 +1,645 @@
+
+{% extends "base.html" %}
+{% load result_tags %}
+
+{% block title %}
+    {{ report.student.first_name }} {{ report.student.last_name }} - Report Card
+{% endblock %}
+
+{% block content %}
+
+
+
+
+<div class="report-wrapper">
+
+    <div class="report-card">
+
+        <!-- =================================
+             SCHOOL HEADER
+        ================================== -->
+
+        <div class="school-header">
+
+            <!-- Temporary logo -->
+            <img
+                src="https://via.placeholder.com/150"
+                alt="BMK Academy Logo"
+                class="school-logo"
+            >
+
+            <h1 class="school-name">
+                BAKI & MAIRAM KWASARI ACADEMY
+            </h1>
+
+            <div class="school-motto">
+                Nursery & Primary Education
+            </div>
+
+            <div class="school-title">
+                STUDENT REPORT CARD
+            </div>
+
+            <div class="school-contact">
+                Excellence • Discipline • Character
+            </div>
+
+        </div>
+
+
+        <!-- =================================
+             RESULT STATUS
+        ================================== -->
+
+        {% if report.term_report.is_published %}
+
+            <div class="status-box status-complete">
+                PUBLISHED RESULT
+            </div>
+
+        {% elif report.status == "incomplete" %}
+
+            <div class="status-box status-incomplete">
+                INCOMPLETE RESULT —
+                Required assessments are still missing.
+            </div>
+
+        {% else %}
+
+            <div class="status-box status-draft">
+                DRAFT RESULT —
+                Complete but not yet published.
+            </div>
+
+        {% endif %}
+
+
+        <!-- =================================
+             STUDENT INFORMATION
+        ================================== -->
+
+        <div class="student-info">
+
+            <div class="student-info-title">
+                STUDENT INFORMATION
+            </div>
+
+            <table>
+
+                <tr>
+
+                    <td>
+                        <span class="label">Student:</span>
+                        {{ report.student.first_name }}
+                        {{ report.student.middle_name }}
+                        {{ report.student.last_name }}
+                    </td>
+
+                    <td>
+                        <span class="label">Class:</span>
+                        {{ report.enrollment.school_class }}
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        <span class="label">Academic Year:</span>
+                        {{ report.enrollment.academic_year }}
+                    </td>
+
+                    <td>
+                        <span class="label">Term:</span>
+                        {{ report.enrollment.term }}
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        <span class="label">Admission No:</span>
+                        {{ report.student.admission_number }}
+                    </td>
+
+                    <td>
+                        <span class="label">Date:</span>
+                        {{ report.enrollment.term.end_date|default:"-" }}
+                    </td>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+
+        <!-- =================================
+             ACADEMIC PERFORMANCE
+        ================================== -->
+
+        <div class="section-title">
+            ACADEMIC PERFORMANCE
+        </div>
+
+        <table class="results-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Subject
+                    </th>
+
+                    {% for component in report.assessment_components %}
+
+                        <th>
+                            {{ component.name }}
+                            <br>
+                            /{{ component.max_score }}
+                        </th>
+
+                    {% endfor %}
+
+                    <th>
+                        Total
+                    </th>
+
+                    <th>
+                        Grade
+                    </th>
+
+                    <th>
+                        Remark
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for item in report.subject_results %}
+
+                    <tr>
+
+                        <td class="subject-name">
+                            {{ item.result.class_subject.subject.name }}
+                        </td>
+
+                        {% for component in report.assessment_components %}
+
+                            <td class="center">
+
+                                {% with score=item.scores|get_item:component.id %}
+
+                                    {% if score is not None %}
+                                        {{ score }}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+
+                                {% endwith %}
+
+                            </td>
+
+                        {% endfor %}
+
+                        <td class="center">
+                            {{ item.result.total_score|default:"-" }}
+                        </td>
+
+                        <td class="center">
+                            {{ item.result.grade|default:"-" }}
+                        </td>
+
+                        <td>
+                            {{ item.result.remark|default:"-" }}
+                        </td>
+
+                    </tr>
+
+                {% empty %}
+
+                    <tr>
+
+                        <td
+                            colspan="10"
+                            class="center"
+                        >
+                            No academic results available.
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+
+        <!-- =================================
+             SUMMARY
+        ================================== -->
+
+        <div class="summary-grid">
+
+            <!-- Academic Summary -->
+
+            <div class="summary-box">
+
+                <div class="summary-title">
+                    ACADEMIC SUMMARY
+                </div>
+
+                <div class="summary-content">
+
+                    <div class="summary-row">
+
+                        <span>Status</span>
+
+                        <strong>
+
+                            {% if report.status == "complete" %}
+                                Complete
+                            {% else %}
+                                Incomplete
+                            {% endif %}
+
+                        </strong>
+
+                    </div>
+
+                    <div class="summary-row">
+
+                        <span>Total Score</span>
+
+                        <strong>
+
+                            {% if report.status == "complete" %}
+                                {{ report.total_score }}
+                            {% else %}
+                                -
+                            {% endif %}
+
+                        </strong>
+
+                    </div>
+
+                    <div class="summary-row">
+
+                        <span>Subjects Scored</span>
+
+                        <strong>
+
+                            {% if report.status == "complete" %}
+                                {{ report.scored_subject_count }}
+                            {% else %}
+                                -
+                            {% endif %}
+
+                        </strong>
+
+                    </div>
+
+                    <div class="summary-row">
+
+                        <span>Average</span>
+
+                        <strong>
+
+                            {% if report.status == "complete" %}
+                                {{ report.average_score }}
+                            {% else %}
+                                -
+                            {% endif %}
+
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Class Position -->
+
+            <div class="summary-box">
+
+                <div class="summary-title">
+                    CLASS POSITION
+                </div>
+
+                <div class="summary-content">
+
+                    {% if report.status == "complete" %}
+
+                        <div class="summary-row">
+
+                            <span>Position</span>
+
+                            <strong>
+                                {{ report.position|default:"-" }}
+                            </strong>
+
+                        </div>
+
+                        <div class="summary-row">
+
+                            <span>Out Of</span>
+
+                            <strong>
+                                {{ report.total_students }}
+                            </strong>
+
+                        </div>
+
+                    {% else %}
+
+                        <div class="text-center">
+
+                            <strong>
+                                Position unavailable
+                            </strong>
+
+                            <br>
+
+                            <small>
+                                Complete all assessments.
+                            </small>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================
+             ATTENDANCE
+        ================================== -->
+
+        <div class="section-title">
+            ATTENDANCE
+        </div>
+
+        <table class="attendance-table">
+
+            <tr>
+
+                <td>
+                    <small>Total School Days</small>
+                    <br>
+                    <span class="attendance-number">
+                        {{ report.attendance.total|default:"0" }}
+                    </span>
+                </td>
+
+                <td>
+                    <small>Days Present</small>
+                    <br>
+                    <span class="attendance-number">
+                        {{ report.attendance.present|default:"0" }}
+                    </span>
+                </td>
+
+                <td>
+                    <small>Days Absent</small>
+                    <br>
+                    <span class="attendance-number">
+                        {{ report.attendance.absent|default:"0" }}
+                    </span>
+                </td>
+
+            </tr>
+
+        </table>
+
+
+        <!-- =================================
+             BEHAVIOUR
+        ================================== -->
+
+        <div class="section-title">
+            AFFECTIVE & PSYCHOMOTOR DEVELOPMENT
+        </div>
+
+        <table class="behaviour-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Category
+                    </th>
+
+                    <th>
+                        Rating
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for rating in report.behaviour_ratings %}
+
+                    <tr>
+
+                        <td>
+                            {{ rating.behaviour_category.name }}
+                        </td>
+
+                        <td>
+                            {{ rating.rating }}
+                        </td>
+
+                    </tr>
+
+                {% empty %}
+
+                    <tr>
+
+                        <td
+                            colspan="2"
+                            class="text-center"
+                        >
+                            No behaviour ratings available.
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+
+        <!-- =================================
+             REMARKS
+        ================================== -->
+
+        <div class="section-title">
+            REMARKS
+        </div>
+
+        <div class="remarks-grid">
+
+            <div class="remark-box">
+
+                <div class="remark-title">
+                    Class Teacher's Remark
+                </div>
+
+                {{ report.term_report.teacher_remark|default:"Not yet entered." }}
+
+            </div>
+
+
+            <div class="remark-box">
+
+                <div class="remark-title">
+                    Head Teacher's Remark
+                </div>
+
+                {{ report.term_report.head_teacher_remark|default:"Not yet entered." }}
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================
+             NEXT TERM
+        ================================== -->
+
+        <div class="next-term">
+
+            <strong>
+                Next Term Begins:
+            </strong>
+
+            {% if report.term_report.next_term_begins %}
+
+                {{ report.term_report.next_term_begins }}
+
+            {% else %}
+
+                Not yet set.
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- =================================
+             SIGNATURES
+        ================================== -->
+
+        <div class="signatures">
+
+            <div>
+
+                <div class="signature-line">
+                    Class Teacher's Signature
+                </div>
+
+            </div>
+
+            <div>
+
+                <div class="signature-line">
+                    Head Teacher's Signature
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =================================
+     ACTION BUTTONS
+================================== -->
+
+<div class="report-actions no-print">
+
+    <div class="d-flex justify-content-center gap-2">
+
+        <button
+            type="button"
+            class="btn btn-primary"
+            onclick="window.print()"
+        >
+            <i class="bi bi-printer"></i>
+            Print Report Card
+        </button>
+
+
+        <a
+            href="{% url 'results:student_result' report.enrollment.id %}"
+            class="btn btn-secondary"
+        >
+            Back to Results
+        </a>
+
+
+        <form
+            method="post"
+            action="{% url 'results:toggle_report_publication' report.enrollment.id %}"
+        >
+
+            {% csrf_token %}
+
+            {% if report.term_report.is_published %}
+
+                <button
+                    type="submit"
+                    class="btn btn-warning"
+                >
+                    Unpublish Result
+                </button>
+
+            {% elif report.status == "complete" %}
+
+                <button
+                    type="submit"
+                    class="btn btn-success"
+                >
+                    Publish Result
+                </button>
+
+            {% else %}
+
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    disabled
+                >
+                    Result Incomplete
+                </button>
+
+            {% endif %}
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}
+

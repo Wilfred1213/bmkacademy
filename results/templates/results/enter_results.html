@@ -434,23 +434,19 @@
 
                                     <!-- Assessment Components -->
 
-                                    {% for result_score in enrollment.result_scores %}
+                                    {% for component in assessment_components %}
 
-                                        <td>
+                                            <th class="text-center">
 
-                                            <input
-                                                type="number"
-                                                name="score_{{ enrollment.id }}_{{ result_score.component.id }}"
-                                                class="form-control text-center"
-                                                min="0"
-                                                max="{{ result_score.component.max_score }}"
-                                                step="0.01"
-                                                value="{{ result_score.score|default_if_none:'' }}"
-                                            >
+                                                {{ component.name }}
 
-                                        </td>
+                                                <small class="text-muted d-block">
+                                                    / {{ component.max_score }}
+                                                </small>
 
-                                    {% endfor %}
+                                            </th>
+
+                                        {% endfor %}
 
 
                                 </tr>

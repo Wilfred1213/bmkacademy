@@ -476,8 +476,6 @@
     </div>
     
 
-
-
     <!-- Quick Actions -->
 
     <div class="col-lg-4">
@@ -520,29 +518,214 @@
 
                 {% if current_enrollment %}
 
+                    
+
                     <a
                         href="{% url 'results:student_result' current_enrollment.id %}"
-                        class="btn btn-outline-dark"
+                        class="btn btn-outline-success"
                     >
-                        View Academic Results
+                        View Results
                     </a>
 
-                {% else %}
 
-                    <button
-                        type="button"
-                        class="btn btn-outline-dark"
-                        disabled
+                    <a
+                        href="{% url 'results:student_report_card' current_enrollment.id %}"
+                        class="btn btn-outline-success"
                     >
-                        No Current Result Available
-                    </button>
+                        View Report Card
+                    </a>
+
+                    
 
                 {% endif %}
+
+                <!-- Behaviour rating -->
+
+                <a
+                    href="{% url 'results:enter_behaviour_ratings' %}?academic_year={{ current_enrollment.academic_year.id }}&term={{ current_enrollment.term.id }}&school_class={{ current_enrollment.school_class.id }}&enrollment={{ current_enrollment.id }}"
+                    class="btn btn-outline-success"
+                >
+                    Behaviour Ratings
+                </a>
+
+                <!--report remark  -->
+
+                <a
+                    href="{% url 'results:enter_report_remarks' %}?academic_year={{ current_enrollment.academic_year.id }}&term={{ current_enrollment.term.id }}&school_class={{ current_enrollment.school_class.id }}&enrollment={{ current_enrollment.id }}"
+                    class="btn btn-outline-success"
+                >
+                    Report Remarks
+                </a>
+
+                
 
             </div>
 
         </div>
 
+    </div>
+    <!-- ========================= -->
+    <!-- STUDENT RESULTS -->
+    <!-- ========================= -->
+
+    <div class="card mt-4">
+
+        <div class="card-header d-flex justify-content-between">
+
+            <strong>
+                Results
+            </strong>
+
+            <a
+                href="{% url 'results:enter_results' %}"
+                class="btn btn-sm btn-primary"
+            >
+                Enter Academic Result
+            </a>
+
+        </div>
+
+
+        <div class="card-body">
+
+            <p class="mb-3">
+
+                Manage academic results and
+                behavioural development ratings
+                for {{ student.first_name }}.
+
+            </p>
+
+
+            <a
+                href="{% url 'results:enter_behaviour_ratings' %}"
+                class="btn btn-outline-success"
+            >
+                Enter Behaviour Ratings
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="card mt-4">
+
+        <div class="card-header">
+    
+            <strong>
+                Report History
+            </strong>
+    
+        </div>
+    
+        <div class="card-body p-0">
+    
+            <div class="table-responsive">
+    
+                <table class="table table-bordered mb-0">
+    
+                    <thead>
+    
+                        <tr>
+    
+                            <th>
+                                Academic Year
+                            </th>
+    
+                            <th>
+                                Term
+                            </th>
+    
+                            <th>
+                                Class
+                            </th>
+    
+                            <th>
+                                Actions
+                            </th>
+    
+                        </tr>
+    
+                    </thead>
+    
+                    <tbody>
+    
+                        {% for enrollment in enrollment_history %}
+    
+                            <tr>
+    
+                                <td>
+    
+                                    {{ enrollment.academic_year }}
+    
+                                </td>
+    
+                                <td>
+    
+                                    {{ enrollment.term }}
+    
+                                </td>
+    
+                                <td>
+    
+                                    {{ enrollment.school_class }}
+    
+                                </td>
+    
+                                <td>
+    
+                                    <div class="d-flex gap-2">
+    
+                                        <a
+                                            href="{% url 'results:student_result' enrollment.id %}"
+                                            class="btn btn-sm btn-primary"
+                                        >
+    
+                                            Results
+    
+                                        </a>
+    
+    
+                                        <a
+                                            href="{% url 'results:student_report_card' enrollment.id %}"
+                                            class="btn btn-sm btn-success"
+                                        >
+    
+                                            Report Card
+    
+                                        </a>
+    
+                                    </div>
+    
+                                </td>
+    
+                            </tr>
+    
+                        {% empty %}
+    
+                            <tr>
+    
+                                <td
+                                    colspan="4"
+                                    class="text-center"
+                                >
+    
+                                    No enrollment history available.
+    
+                                </td>
+    
+                            </tr>
+    
+                        {% endfor %}
+    
+                    </tbody>
+    
+                </table>
+    
+            </div>
+    
+        </div>
+    
     </div>
 
 

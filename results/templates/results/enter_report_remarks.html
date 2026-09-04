@@ -1,0 +1,424 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+<div class="card">
+
+    <div class="card-header">
+
+        <strong>
+            Enter Report Remarks
+        </strong>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <!-- ========================= -->
+        <!-- SELECTION FORM -->
+        <!-- ========================= -->
+
+        <form
+            method="get"
+            id="selectionForm"
+            class="row g-3"
+        >
+
+            <!-- Academic Year -->
+
+            <div class="col-md-3">
+
+                <label class="form-label">
+
+                    Academic Year
+
+                </label>
+
+                <select
+                    name="academic_year"
+                    id="academicYear"
+                    class="form-select"
+                >
+
+                    <option value="">
+
+                        Select Academic Year
+
+                    </option>
+
+                    {% for year in academic_years %}
+
+                        <option
+                            value="{{ year.id }}"
+                            {% if selected_academic_year and selected_academic_year.id == year.id %}
+                                selected
+                            {% endif %}
+                        >
+
+                            {{ year.name }}
+
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <!-- Term -->
+
+            <div class="col-md-3">
+
+                <label class="form-label">
+
+                    Term
+
+                </label>
+
+                <select
+                    name="term"
+                    id="term"
+                    class="form-select"
+                    {% if not selected_academic_year %}
+                        disabled
+                    {% endif %}
+                >
+
+                    <option value="">
+
+                        Select Term
+
+                    </option>
+
+                    {% for term in terms %}
+
+                        <option
+                            value="{{ term.id }}"
+                            {% if selected_term and selected_term.id == term.id %}
+                                selected
+                            {% endif %}
+                        >
+
+                            {{ term.get_name_display }}
+
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <!-- Class -->
+
+            <div class="col-md-3">
+
+                <label class="form-label">
+
+                    Class
+
+                </label>
+
+                <select
+                    name="school_class"
+                    id="schoolClass"
+                    class="form-select"
+                >
+
+                    <option value="">
+
+                        Select Class
+
+                    </option>
+
+                    {% for school_class in school_classes %}
+
+                        <option
+                            value="{{ school_class.id }}"
+                            {% if selected_class and selected_class.id == school_class.id %}
+                                selected
+                            {% endif %}
+                        >
+
+                            {{ school_class.name }}
+
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <!-- Student -->
+
+            <div class="col-md-3">
+
+                <label class="form-label">
+
+                    Student
+
+                </label>
+
+                <select
+                    name="enrollment"
+                    id="enrollment"
+                    class="form-select"
+                    {% if not students %}
+                        disabled
+                    {% endif %}
+                >
+
+                    <option value="">
+
+                        Select Student
+
+                    </option>
+
+                    {% for enrollment in students %}
+
+                        <option
+                            value="{{ enrollment.id }}"
+                            {% if selected_enrollment and selected_enrollment.id == enrollment.id %}
+                                selected
+                            {% endif %}
+                        >
+
+                            {{ enrollment.student }}
+
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <div class="col-12">
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+
+                    Load Student
+
+                </button>
+
+            </div>
+
+        </form>
+
+
+        <!-- ========================= -->
+        <!-- REMARK FORM -->
+        <!-- ========================= -->
+
+        {% if selected_enrollment %}
+
+            <hr class="my-4">
+
+            <h5>
+
+                {{ selected_enrollment.student }}
+
+            </h5>
+
+
+            <form
+                method="post"
+                class="mt-3"
+            >
+
+                {% csrf_token %}
+
+
+                <input
+                    type="hidden"
+                    name="academic_year"
+                    value="{{ selected_academic_year.id }}"
+                >
+
+                <input
+                    type="hidden"
+                    name="term"
+                    value="{{ selected_term.id }}"
+                >
+
+                <input
+                    type="hidden"
+                    name="school_class"
+                    value="{{ selected_class.id }}"
+                >
+
+                <input
+                    type="hidden"
+                    name="enrollment"
+                    value="{{ selected_enrollment.id }}"
+                >
+
+
+                <!-- Teacher Remark -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        Class Teacher's Remark
+
+                    </label>
+
+                    <textarea
+                        name="teacher_remark"
+                        class="form-control"
+                        rows="4"
+                    >{% if existing_report %}{{ existing_report.teacher_remark }}{% endif %}</textarea>
+
+                </div>
+
+
+                <!-- Head Teacher Remark -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        Head Teacher's Remark
+
+                    </label>
+
+                    <textarea
+                        name="head_teacher_remark"
+                        class="form-control"
+                        rows="4"
+                    >{% if existing_report %}{{ existing_report.head_teacher_remark }}{% endif %}</textarea>
+
+                </div>
+
+
+                <!-- Next Term Begins -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        Next Term Begins
+
+                    </label>
+
+                    <input
+                        type="date"
+                        name="next_term_begins"
+                        class="form-control"
+                        value="{% if existing_report and existing_report.next_term_begins %}{{ existing_report.next_term_begins|date:'Y-m-d' }}{% endif %}"
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="btn btn-success"
+                >
+
+                    Save Report Remarks
+
+                </button>
+
+            </form>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+</div>
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const form = document.getElementById(
+            "selectionForm"
+        );
+
+        const academicYear = document.getElementById(
+            "academicYear"
+        );
+
+        const term = document.getElementById(
+            "term"
+        );
+
+        const schoolClass = document.getElementById(
+            "schoolClass"
+        );
+
+        const enrollment = document.getElementById(
+            "enrollment"
+        );
+
+
+        academicYear.addEventListener(
+            "change",
+            function () {
+
+                term.value = "";
+                enrollment.value = "";
+
+                form.submit();
+
+            }
+        );
+
+
+        term.addEventListener(
+            "change",
+            function () {
+
+                enrollment.value = "";
+
+                form.submit();
+
+            }
+        );
+
+
+        schoolClass.addEventListener(
+            "change",
+            function () {
+
+                enrollment.value = "";
+
+                form.submit();
+
+            }
+        );
+
+
+        enrollment.addEventListener(
+            "change",
+            function () {
+
+                form.submit();
+
+            }
+        );
+
+    }
+);
+
+</script>
+
+{% endblock %}
