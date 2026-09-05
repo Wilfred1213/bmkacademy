@@ -796,7 +796,47 @@
 
                     </li>
 
+                    <!-- Reports -->
 
+                    <li class="nav-item dropdown">
+
+                        <a
+                            class="nav-link dropdown-toggle"
+                            href="#"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                        >
+                            Reports
+                        </a>
+
+                        <ul class="dropdown-menu">
+
+                            <li>
+
+                                <a
+                                    class="dropdown-item"
+                                    href="{% url 'reports:report_dashboard' %}"
+                                >
+                                    Report Dashboard
+                                </a>
+
+                            </li>
+
+                            <li>
+
+                                <a
+                                    class="dropdown-item"
+                                    href="{% url 'reports:report_dashboard' %}#studentReports"
+                                >
+                                    Student Reports
+                                </a>
+
+                            </li>
+
+                        </ul>
+
+                    </li>
                     <!-- Fees -->
 
                     <li class="nav-item dropdown">

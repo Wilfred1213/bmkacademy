@@ -1,0 +1,352 @@
+{% extends "base.html" %}
+
+{% block title %}
+Class Performance Report - {{ school_class }}
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-4">
+
+
+<!-- ACTIONS -->
+
+<div class="d-flex justify-content-between align-items-center mb-4 no-print">
+
+    <a
+        href="{% url 'reports:report_dashboard' %}"
+        class="btn btn-outline-secondary"
+    >
+        ← Reports
+    </a>
+
+    <button
+        type="button"
+        onclick="window.print()"
+        class="btn btn-primary"
+    >
+        Print Report
+    </button>
+
+</div>
+
+
+<!-- REPORT -->
+
+<div class="report-card">
+
+    <!-- SCHOOL HEADER -->
+
+    <div class="school-header text-center">
+
+        <h1 class="school-name">
+            BMK ACADEMY
+        </h1>
+
+        <div class="school-motto">
+            Baki and Mairam Kwasari
+        </div>
+
+        <div class="school-title">
+            NURSERY & PRIMARY EDUCATION
+        </div>
+
+        <div class="school-contact">
+            CLASS PERFORMANCE REPORT
+        </div>
+
+    </div>
+
+
+    <!-- CLASS INFORMATION -->
+
+    <div class="student-info mt-4">
+
+        <div class="student-info-title">
+            CLASS INFORMATION
+        </div>
+
+        <table>
+
+            <tr>
+
+                <td>
+                    <span class="label">
+                        Academic Year:
+                    </span>
+
+                    {{ academic_year }}
+                </td>
+
+                <td>
+                    <span class="label">
+                        Term:
+                    </span>
+
+                    {{ term }}
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <td>
+                    <span class="label">
+                        Class:
+                    </span>
+
+                    {{ school_class }}
+                </td>
+
+                <td>
+                    <span class="label">
+                        Students:
+                    </span>
+
+                    {{ class_results|length }}
+                </td>
+
+            </tr>
+
+        </table>
+
+    </div>
+
+
+    <!-- PERFORMANCE -->
+
+    <div class="section-title mt-4">
+        CLASS PERFORMANCE
+    </div>
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm text-center h-100">
+                <div class="card-body">
+                    <div class="text-muted small">
+                        STUDENTS
+                    </div>
+    
+                    <div class="fs-3 fw-bold">
+                        {{ student_count }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm text-center h-100">
+                <div class="card-body">
+                    <div class="text-muted small">
+                        CLASS AVERAGE
+                    </div>
+    
+                    <div class="fs-3 fw-bold">
+                        {{ class_average|floatformat:2 }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm text-center h-100">
+                <div class="card-body">
+                    <div class="text-muted small">
+                        HIGHEST AVERAGE
+                    </div>
+    
+                    <div class="fs-3 fw-bold">
+                        {{ highest_average|floatformat:2 }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm text-center h-100">
+                <div class="card-body">
+                    <div class="text-muted small">
+                        LOWEST AVERAGE
+                    </div>
+    
+                    <div class="fs-3 fw-bold">
+                        {{ lowest_average|floatformat:2 }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+
+
+    <div class="table-responsive">
+
+        <table class="results-table">
+
+            <thead>
+
+                <tr>
+
+                    <th style="width: 6%;">
+                        POS.
+                    </th>
+
+                    <th style="text-align: left;">
+                        STUDENT
+                    </th>
+
+                    {% if class_results %}
+
+                        {% for result in class_results.0.subject_results %}
+
+                            <th>
+                                {{ result.class_subject.subject.name }}
+                            </th>
+
+                        {% endfor %}
+
+                    {% endif %}
+
+                    <th>
+                        TOTAL
+                    </th>
+
+                    <th>
+                        AVERAGE
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for item in class_results %}
+
+                    <tr>
+
+                        <!-- POSITION -->
+
+                        <td class="center">
+
+                            {% if item.position == 1 %}
+                                1st
+                            {% elif item.position == 2 %}
+                                2nd
+                            {% elif item.position == 3 %}
+                                3rd
+                            {% else %}
+                                {{ item.position }}th
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- STUDENT -->
+
+                        <td class="subject-name">
+
+                            {{ item.student.first_name }}
+
+                            {% if item.student.middle_name %}
+                                {{ item.student.middle_name }}
+                            {% endif %}
+
+                            {{ item.student.last_name }}
+
+                        </td>
+
+
+                        <!-- SUBJECT SCORES -->
+
+                        {% for result in item.subject_results %}
+
+                            <td class="center">
+
+                                {% if result.total_score != None %}
+                                    {{ result.total_score }}
+                                {% else %}
+                                    —
+                                {% endif %}
+
+                            </td>
+
+                        {% endfor %}
+
+
+                        <!-- TOTAL -->
+
+                        <td class="center">
+
+                            {{ item.total_score }}
+
+                        </td>
+
+
+                        <!-- AVERAGE -->
+
+                        <td class="center">
+
+                            {{ item.average|floatformat:2 }}
+
+                        </td>
+
+                    </tr>
+
+                {% empty %}
+
+                    <tr>
+
+                        <td
+                            colspan="20"
+                            class="text-center"
+                        >
+                            No students found for this class and term.
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <div class="mt-5">
+
+        <div class="row text-center">
+
+            <div class="col-md-6">
+
+                <div class="signature-line">
+                    Class Teacher
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <div class="signature-line">
+                    Head Teacher
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+{% endblock %}

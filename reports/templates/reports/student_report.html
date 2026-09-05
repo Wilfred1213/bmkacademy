@@ -1,0 +1,536 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Student Report - {{ report.student }}
+{% endblock %}
+
+{% block content %}
+
+<div class="report-wrapper">
+
+    <!-- ========================= -->
+    <!-- ACTIONS -->
+    <!-- ========================= -->
+
+    <div class="report-actions no-print d-flex justify-content-between align-items-center">
+
+        <div>
+            <a
+                href="{% url 'students:student_list' %}"
+                class="btn btn-outline-secondary"
+            >
+                ← Students
+            </a>
+        </div>
+
+        <button
+            type="button"
+            onclick="window.print()"
+            class="btn btn-primary"
+        >
+            Print Report
+        </button>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- REPORT CARD -->
+    <!-- ========================= -->
+
+    <div class="report-card">
+
+        <!-- ========================= -->
+        <!-- SCHOOL HEADER -->
+        <!-- ========================= -->
+
+        <div class="school-header">
+
+            {% if school.logo %}
+                <img
+                    src="{{ school.logo.url }}"
+                    alt="BMK Academy"
+                    class="school-logo"
+                >
+            {% endif %}
+
+            <h1 class="school-name">
+                BMK ACADEMY
+            </h1>
+
+            <div class="school-motto">
+                Baki and Mairam Kwasari
+            </div>
+
+            <div class="school-title">
+                NURSERY & PRIMARY EDUCATION
+            </div>
+
+            <div class="school-contact">
+                STUDENT ACADEMIC REPORT
+            </div>
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- STUDENT INFORMATION -->
+        <!-- ========================= -->
+
+        <div class="student-info">
+
+            <div class="student-info-title">
+                STUDENT INFORMATION
+            </div>
+
+            <table>
+
+                <tr>
+
+                    <td>
+                        <span class="label">Student Name:</span>
+                        {{ report.student.first_name }}
+                        {% if report.student.middle_name %}
+                            {{ report.student.middle_name }}
+                        {% endif %}
+                        {{ report.student.last_name }}
+                    </td>
+
+                    <td>
+                        <span class="label">Admission No:</span>
+                        {{ report.student.admission_number }}
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        <span class="label">Class:</span>
+                        {{ report.school_class }}
+                    </td>
+
+                    <td>
+                        <span class="label">Academic Year:</span>
+                        {{ report.academic_year }}
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        <span class="label">Term:</span>
+                        {{ report.term }}
+                    </td>
+
+                    <td>
+                        <span class="label">Date of Birth:</span>
+                        {{ report.student.date_of_birth|date:"d M Y" }}
+                    </td>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- PUBLICATION STATUS -->
+        <!-- ========================= -->
+
+        {% if report.term_report %}
+
+            {% if report.term_report.is_published %}
+
+                <div class="status-box status-complete">
+                    REPORT PUBLISHED
+                </div>
+
+            {% else %}
+
+                <div class="status-box status-draft">
+                    REPORT NOT YET PUBLISHED
+                </div>
+
+            {% endif %}
+
+        {% endif %}
+
+
+        <!-- ========================= -->
+        <!-- ACADEMIC RESULTS -->
+        <!-- ========================= -->
+
+        <div class="section-title">
+            ACADEMIC PERFORMANCE
+        </div>
+
+
+        <table class="results-table">
+
+            <thead>
+
+                <tr>
+
+                    <th style="width: 5%;">
+                        #
+                    </th>
+
+                    <th style="text-align: left;">
+                        SUBJECT
+                    </th>
+
+                    <th>
+                        TOTAL SCORE
+                    </th>
+
+                    <th>
+                        GRADE
+                    </th>
+
+                    <th>
+                        REMARK
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for result in report.subject_results %}
+
+                    <tr>
+
+                        <td class="center">
+                            {{ forloop.counter }}
+                        </td>
+
+                        <td class="subject-name">
+                            {{ result.class_subject.subject.name }}
+                        </td>
+
+                        <td class="center">
+                            {% if result.total_score != None %}
+                                {{ result.total_score }}
+                            {% else %}
+                                —
+                            {% endif %}
+                        </td>
+
+                        <td class="center">
+                            {% if result.grade %}
+                                {{ result.grade }}
+                            {% else %}
+                                —
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {{ result.remark|default:"—" }}
+                        </td>
+
+                    </tr>
+
+                {% empty %}
+
+                    <tr>
+
+                        <td
+                            colspan="5"
+                            class="text-center"
+                        >
+                            No academic results available.
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+
+        <!-- ========================= -->
+        <!-- ASSESSMENT DETAILS -->
+        <!-- ========================= -->
+
+        <div class="section-title">
+            ASSESSMENT DETAILS
+        </div>
+
+
+        <table class="results-table">
+
+            <thead>
+
+                <tr>
+
+                    <th style="text-align: left;">
+                        SUBJECT
+                    </th>
+
+                    {% with first_result=report.subject_results.0 %}
+
+                        {% for score in first_result.assessment_scores.all %}
+
+                            <th>
+                                {{ score.assessment_component.name }}
+                            </th>
+
+                        {% endfor %}
+
+                    {% endwith %}
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for result in report.subject_results %}
+
+                    <tr>
+
+                        <td class="subject-name">
+                            {{ result.class_subject.subject.name }}
+                        </td>
+
+                        {% for score in result.assessment_scores.all %}
+
+                            <td class="center">
+                                {{ score.score }}
+                            </td>
+
+                        {% endfor %}
+
+                    </tr>
+
+                {% empty %}
+
+                    <tr>
+
+                        <td
+                            colspan="10"
+                            class="text-center"
+                        >
+                            No assessment scores available.
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+
+        <!-- ========================= -->
+        <!-- BEHAVIOUR -->
+        <!-- ========================= -->
+
+        <div class="section-title">
+            BEHAVIOUR / PSYCHOMOTOR DEVELOPMENT
+        </div>
+
+
+        <table class="behaviour-table">
+
+            <thead>
+
+                <tr>
+
+                    <th style="text-align: left;">
+                        AREA
+                    </th>
+
+                    <th class="center">
+                        RATING
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for rating in report.behaviour_ratings %}
+
+                    <tr>
+
+                        <td>
+                            {{ rating.behaviour_category.name }}
+                        </td>
+
+                        <td class="center">
+                            {{ rating.rating }}
+                        </td>
+
+                    </tr>
+
+                {% empty %}
+
+                    <tr>
+
+                        <td
+                            colspan="2"
+                            class="center"
+                        >
+                            No behaviour ratings available.
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        <!-- ========================= -->
+        <!-- ATTENDANCE -->
+        <!-- ========================= -->
+
+        <div class="section-title">
+            ATTENDANCE SUMMARY
+        </div>
+
+        <table class="results-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        SCHOOL DAYS
+                    </th>
+
+                    <th>
+                        PRESENT
+                    </th>
+
+                    <th>
+                        ABSENT
+                    </th>
+
+                    <th>
+                        LATE
+                    </th>
+
+                    <th>
+                        EXCUSED
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr>
+
+                    <td class="center">
+                        {{ report.attendance_summary.total }}
+                    </td>
+
+                    <td class="center">
+                        {{ report.attendance_summary.present }}
+                    </td>
+
+                    <td class="center">
+                        {{ report.attendance_summary.absent }}
+                    </td>
+
+                    <td class="center">
+                        {{ report.attendance_summary.late }}
+                    </td>
+
+                    <td class="center">
+                        {{ report.attendance_summary.excused }}
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+
+        <!-- ========================= -->
+        <!-- REMARKS -->
+        <!-- ========================= -->
+
+        {% if report.term_report %}
+
+            <div class="section-title">
+                TEACHER'S REMARKS
+            </div>
+
+            <div class="remark-box">
+
+                {{ report.term_report.teacher_remark|default:"No teacher remark has been entered." }}
+
+            </div>
+
+
+            <div class="section-title">
+                HEAD TEACHER'S REMARKS
+            </div>
+
+            <div class="remark-box">
+
+                {{ report.term_report.head_teacher_remark|default:"No head teacher remark has been entered." }}
+
+            </div>
+
+
+            {% if report.term_report.next_term_begins %}
+
+                <div class="next-term">
+
+                    <strong>
+                        Next Term Begins:
+                    </strong>
+
+                    {{ report.term_report.next_term_begins|date:"d F Y" }}
+
+                </div>
+
+            {% endif %}
+
+        {% endif %}
+
+
+        <!-- ========================= -->
+        <!-- SIGNATURES -->
+        <!-- ========================= -->
+
+        <div class="signatures">
+
+            <div>
+
+                <div class="signature-line">
+                    Class Teacher
+                </div>
+
+            </div>
+
+            <div>
+
+                <div class="signature-line">
+                    Head Teacher
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
