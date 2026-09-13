@@ -2,13 +2,15 @@ from datetime import datetime
 
 from django.contrib import messages
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.http import require_http_methods
 
 from academics.models import AcademicYear, Term, SchoolClass
+from .models import AdmissionApplication
 
 from .services import AdmissionService
-
+from accounts.decorators import role_required
+from django.contrib.auth.decorators import login_required
 
 from .forms import AdmissionApplicationForm
 
@@ -126,4 +128,117 @@ def admission_terms(request):
         {
             "terms": terms,
         },
+    )
+
+@login_required
+@role_required("admin")
+def admission_list(request):
+
+    applications = AdmissionApplication.objects.select_related(
+        "academic_year",
+        "term",
+        "desired_class",
+    ).order_by("-submitted_at")
+
+    return render(
+        request,
+        "admissions/admission_list.html",
+        {
+            "applications": applications,
+        },
+    )
+
+@login_required
+@role_required("admin")
+def admission_detail(request, application_id):
+
+    application = get_object_or_404(
+        AdmissionApplication,
+        id=application_id,
+    )
+
+    return render(
+        request,
+        "admissions/admission_detail.html",
+        {
+            "application": application,
+        },
+    )
+
+@login_required
+@role_required("admin")
+def approve_application(request, application_id):
+
+    if request.method != "POST":
+        return redirect(
+            "admissions:admission_detail",
+            application_id=application_id,
+        )
+
+    application = get_object_or_404(
+        AdmissionApplication,
+        id=application_id,
+    )
+
+    try:
+
+        student, temporary_password = (
+            AdmissionService.approve_application(
+                application
+            )
+        )
+
+        messages.success(
+            request,
+            "Admission application approved successfully.",
+        )
+
+    except ValueError as e:
+
+        messages.error(
+            request,
+            str(e),
+        )
+
+    return redirect(
+        "admissions:admission_detail",
+        application_id=application_id,
+    )
+
+@login_required
+@role_required("admin")
+def reject_application(request, application_id):
+
+    if request.method != "POST":
+        return redirect(
+            "admissions:admission_detail",
+            application_id=application_id,
+        )
+
+    application = get_object_or_404(
+        AdmissionApplication,
+        id=application_id,
+    )
+
+    try:
+
+        AdmissionService.reject_application(
+            application
+        )
+
+        messages.success(
+            request,
+            "Admission application rejected.",
+        )
+
+    except ValueError as e:
+
+        messages.error(
+            request,
+            str(e),
+        )
+
+    return redirect(
+        "admissions:admission_detail",
+        application_id=application_id,
     )

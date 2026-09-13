@@ -1,0 +1,48 @@
+
+{% extends "base.html" %}
+
+
+{% block title %}
+
+    BMK Academy
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="text-center">
+
+        <h1>
+            Welcome to BMK Academy
+        </h1>
+
+        {% if request.user.is_authenticated %}
+
+            <p class="lead text-muted">
+                Welcome, {{ request.user.get_full_name|default:request.user.username }}.
+            </p>
+
+        {% else %}
+
+            <p class="lead text-muted">
+                Baki and Mairam Kwasari Nursery & Primary School
+            </p>
+
+            <a
+                href="{% url 'accounts:login' %}"
+                class="btn btn-primary"
+            >
+                Login
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}
+

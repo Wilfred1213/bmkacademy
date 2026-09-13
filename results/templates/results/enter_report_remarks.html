@@ -32,9 +32,7 @@
             <div class="col-md-3">
 
                 <label class="form-label">
-
                     Academic Year
-
                 </label>
 
                 <select
@@ -44,9 +42,7 @@
                 >
 
                     <option value="">
-
                         Select Academic Year
-
                     </option>
 
                     {% for year in academic_years %}
@@ -74,9 +70,7 @@
             <div class="col-md-3">
 
                 <label class="form-label">
-
                     Term
-
                 </label>
 
                 <select
@@ -89,9 +83,7 @@
                 >
 
                     <option value="">
-
                         Select Term
-
                     </option>
 
                     {% for term in terms %}
@@ -119,9 +111,7 @@
             <div class="col-md-3">
 
                 <label class="form-label">
-
                     Class
-
                 </label>
 
                 <select
@@ -131,9 +121,7 @@
                 >
 
                     <option value="">
-
                         Select Class
-
                     </option>
 
                     {% for school_class in school_classes %}
@@ -161,9 +149,7 @@
             <div class="col-md-3">
 
                 <label class="form-label">
-
                     Student
-
                 </label>
 
                 <select
@@ -176,9 +162,7 @@
                 >
 
                     <option value="">
-
                         Select Student
-
                     </option>
 
                     {% for enrollment in students %}
@@ -265,7 +249,9 @@
                 >
 
 
-                <!-- Teacher Remark -->
+                <!-- ========================= -->
+                <!-- CLASS TEACHER REMARK -->
+                <!-- ========================= -->
 
                 <div class="mb-3">
 
@@ -284,26 +270,35 @@
                 </div>
 
 
-                <!-- Head Teacher Remark -->
+                <!-- ========================= -->
+                <!-- HEAD TEACHER REMARK -->
+                <!-- ADMIN ONLY -->
+                <!-- ========================= -->
 
-                <div class="mb-3">
+                {% if request.user.role == "admin" %}
 
-                    <label class="form-label">
+                    <div class="mb-3">
 
-                        Head Teacher's Remark
+                        <label class="form-label">
 
-                    </label>
+                            Head Teacher's Remark
 
-                    <textarea
-                        name="head_teacher_remark"
-                        class="form-control"
-                        rows="4"
-                    >{% if existing_report %}{{ existing_report.head_teacher_remark }}{% endif %}</textarea>
+                        </label>
 
-                </div>
+                        <textarea
+                            name="head_teacher_remark"
+                            class="form-control"
+                            rows="4"
+                        >{% if existing_report %}{{ existing_report.head_teacher_remark }}{% endif %}</textarea>
+
+                    </div>
+
+                
 
 
-                <!-- Next Term Begins -->
+                <!-- ========================= -->
+                <!-- NEXT TERM BEGINS -->
+                <!-- ========================= -->
 
                 <div class="mb-3">
 
@@ -321,6 +316,7 @@
                     >
 
                 </div>
+                {% endif %}
 
 
                 <button
@@ -342,6 +338,7 @@
 
 
 </div>
+
 
 <script>
 

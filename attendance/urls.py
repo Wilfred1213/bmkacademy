@@ -7,6 +7,11 @@ app_name = "attendance"
 
 urlpatterns = [
     path(
+        "",
+        views.attendance_dashboard,
+        name="attendance_dashboard",
+    ),
+    path(
         "mark/",
         views.mark_attendance,
         name="mark_attendance",

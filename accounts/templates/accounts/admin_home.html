@@ -1,0 +1,333 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Admin Dashboard | BMK Academy
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid py-4">
+
+    <!-- Header -->
+    <div class="mb-4">
+
+        <h2 class="fw-bold mb-1">
+            Admin Dashboard
+        </h2>
+
+        <p class="text-muted mb-0">
+            Welcome back,
+            {{ request.user.get_full_name|default:request.user.username }}.
+            Here's an overview of BMK Academy.
+        </p>
+
+    </div>
+
+
+    <!-- Summary Cards -->
+    <div class="row g-4 mb-4">
+
+        <!-- Users -->
+        <div class="col-md-6 col-xl-3">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-start">
+
+                        <div>
+
+                            <p class="text-muted mb-1">
+                                Total Users
+                            </p>
+
+                            <h3 class="fw-bold mb-0">
+                                {{ total_users }}
+                            </h3>
+
+                        </div>
+
+                        <div class="bg-primary bg-opacity-10
+                                    text-primary rounded-circle
+                                    p-3">
+
+                            <i class="bi bi-people fs-4"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Students -->
+        <div class="col-md-6 col-xl-3">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-start">
+
+                        <div>
+
+                            <p class="text-muted mb-1">
+                                Students
+                            </p>
+
+                            <h3 class="fw-bold mb-0">
+                                {{ total_students }}
+                            </h3>
+
+                        </div>
+
+                        <div class="bg-success bg-opacity-10
+                                    text-success rounded-circle
+                                    p-3">
+
+                            <i class="bi bi-mortarboard fs-4"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Teachers -->
+        <div class="col-md-6 col-xl-3">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-start">
+
+                        <div>
+
+                            <p class="text-muted mb-1">
+                                Teachers
+                            </p>
+
+                            <h3 class="fw-bold mb-0">
+                                {{ total_teachers }}
+                            </h3>
+
+                        </div>
+
+                        <div class="bg-warning bg-opacity-10
+                                    text-warning rounded-circle
+                                    p-3">
+
+                            <i class="bi bi-person-workspace fs-4"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Pending Admissions -->
+        <div class="col-md-6 col-xl-3">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-start">
+
+                        <div>
+
+                            <p class="text-muted mb-1">
+                                Pending Admissions
+                            </p>
+
+                            <h3 class="fw-bold mb-0">
+                                {{ pending_admissions }}
+                            </h3>
+
+                        </div>
+
+                        <div class="bg-danger bg-opacity-10
+                                    text-danger rounded-circle
+                                    p-3">
+
+                            <i class="bi bi-person-plus fs-4"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Main Dashboard -->
+    <div class="row g-4">
+
+
+        <!-- Admissions -->
+        <div class="col-lg-8">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body p-4">
+
+                    <div class="d-flex justify-content-between
+                                align-items-center mb-4">
+
+                        <div>
+
+                            <h5 class="fw-bold mb-1">
+                                Admissions Overview
+                            </h5>
+
+                            <p class="text-muted mb-0">
+                                Current admission application status.
+                            </p>
+
+                        </div>
+
+                        <a
+                            href="{% url 'admissions:admission_application' %}"
+                            class="btn btn-sm btn-outline-primary"
+                        >
+                            View Admissions
+                        </a>
+
+                    </div>
+
+
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+
+                            <div class="border rounded-3 p-3">
+
+                                <div class="d-flex justify-content-between">
+
+                                    <span class="text-muted">
+                                        Pending
+                                    </span>
+
+                                    <span class="badge text-bg-warning">
+                                        {{ pending_admissions }}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <div class="border rounded-3 p-3">
+
+                                <div class="d-flex justify-content-between">
+
+                                    <span class="text-muted">
+                                        Approved
+                                    </span>
+
+                                    <span class="badge text-bg-success">
+                                        {{ approved_admissions }}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Quick Actions -->
+        <div class="col-lg-4">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body p-4">
+
+                    <h5 class="fw-bold mb-4">
+                        Quick Actions
+                    </h5>
+
+
+                    <div class="d-grid gap-2">
+
+                        <a
+                            href="{% url 'accounts:user_list' %}"
+                            class="btn btn-outline-primary text-start"
+                        >
+                            <i class="bi bi-people me-2"></i>
+                            Manage Users
+                        </a>
+
+
+                        <a
+                            href="{% url 'admissions:admission_list' %}"
+                            class="btn btn-outline-primary text-start"
+                        >
+                            <i class="bi bi-person-plus me-2"></i>
+                            Manage Admissions
+                        </a>
+
+
+                        <a
+                            href="#"
+                            class="btn btn-outline-primary text-start"
+                        >
+                            <i class="bi bi-mortarboard me-2"></i>
+                            Manage Students
+                        </a>
+
+
+                        <a
+                            href="#"
+                            class="btn btn-outline-primary text-start"
+                        >
+                            <i class="bi bi-person-workspace me-2"></i>
+                            Manage Teachers
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

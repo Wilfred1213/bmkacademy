@@ -6,15 +6,53 @@ from django.shortcuts import (
 )
 
 from academics.models import SchoolClass
+from teachers.models import Teacher, ClassTeacherAssignment
 from students.models import Student
 
 from .models import Attendance
 from .services import AttendanceService
 
 
+
+
+from datetime import datetime
+
+from django.shortcuts import (
+    get_object_or_404,
+    render,
+)
+
+from accounts.decorators import role_required
+from django.contrib.auth.decorators import login_required
+from datetime import datetime, date
+
+
+
+@login_required
+@role_required("admin", "teacher")
 def mark_attendance(request):
 
-    classes = SchoolClass.objects.all()
+    # --------------------------------------------------
+    # Determine which classes the user is allowed to see
+    # --------------------------------------------------
+
+    if request.user.role == "admin":
+
+        classes = SchoolClass.objects.all()
+
+    else:
+
+        teacher = get_object_or_404(
+            Teacher,
+            user=request.user,
+            is_active=True,
+        )
+
+        classes = SchoolClass.objects.filter(
+            class_teacher_assignments__teacher=teacher,
+            class_teacher_assignments__is_active=True,
+        ).distinct()
+
 
     selected_class = None
     students = []
@@ -22,63 +60,106 @@ def mark_attendance(request):
     statistics = None
     attendance_saved = False
 
-    # Existing attendance for the selected date
     existing_attendance = {}
 
-    # -------------------------
+
+    # ==================================================
     # GET
-    # -------------------------
+    # ==================================================
 
     if request.method == "GET":
 
-        if request.GET.get("school_class"):
+        selected_class_id = request.GET.get(
+            "school_class"
+        )
+
+        requested_date = request.GET.get(
+            "attendance_date"
+        )
+
+
+        # --------------------------------------------------
+        # Automatically select class for a teacher
+        # --------------------------------------------------
+
+        if (
+            request.user.role == "teacher"
+            and not selected_class_id
+            and classes.count() == 1
+        ):
+
+            selected_class = classes.first()
+
+        elif selected_class_id:
 
             selected_class = get_object_or_404(
-                SchoolClass,
-                id=request.GET["school_class"],
+                classes,
+                id=selected_class_id,
             )
+
+
+        # --------------------------------------------------
+        # Default to today's date
+        # --------------------------------------------------
+
+        if requested_date:
+
+            attendance_date = datetime.strptime(
+                requested_date,
+                "%Y-%m-%d",
+            ).date()
+
+        else:
+
+            attendance_date = date.today()
+
+
+        # --------------------------------------------------
+        # Load students
+        # --------------------------------------------------
+
+        if selected_class:
 
             students = Student.objects.filter(
                 enrollments__school_class=selected_class,
                 enrollments__is_current=True,
             ).distinct()
 
-            attendance_date = request.GET.get(
-                "attendance_date"
+
+            # --------------------------------------------------
+            # Existing attendance
+            # --------------------------------------------------
+
+            records = Attendance.objects.filter(
+                student__in=students,
+                attendance_date=attendance_date,
             )
 
-            if attendance_date:
+            existing_attendance = {
+                record.student_id: record.status
+                for record in records
+            }
 
-                attendance_date = datetime.strptime(
-                    attendance_date,
-                    "%Y-%m-%d",
-                ).date()
 
-                records = Attendance.objects.filter(
-                    student__in=students,
-                    attendance_date=attendance_date,
-                )
+            if records.exists():
 
-                existing_attendance = {
-                    record.student_id: record.status
-                    for record in records
-                }
-
-                if records.exists():
-
-                    statistics = AttendanceService.get_class_statistics(
+                statistics = (
+                    AttendanceService
+                    .get_class_statistics(
                         selected_class,
                         attendance_date,
                     )
+                )
 
-    # -------------------------
+
+    # ==================================================
     # POST
-    # -------------------------
+    # ==================================================
 
     elif request.method == "POST":
 
         selected_class = get_object_or_404(
-            SchoolClass,
+            classes,
             id=request.POST["school_class"],
         )
 
@@ -87,16 +168,15 @@ def mark_attendance(request):
             "%Y-%m-%d",
         ).date()
 
-        # print("GET DATE:", request.GET.get("attendance_date"))
-        # print("POST DATE:", request.POST.get("attendance_date"))
-        # print("POST DATA:", request.POST)
 
         students = Student.objects.filter(
             enrollments__school_class=selected_class,
             enrollments__is_current=True,
         ).distinct()
 
+
         attendance_data = {}
+
 
         for student in students:
 
@@ -105,42 +185,69 @@ def mark_attendance(request):
             )
 
             if status:
+
                 attendance_data[student.id] = status
 
+
+        # --------------------------------------------------
         # Save attendance
+        # --------------------------------------------------
+
         AttendanceService.mark_class_attendance(
             school_class=selected_class,
             attendance_date=attendance_date,
             attendance_data=attendance_data,
         )
 
+
+        # --------------------------------------------------
         # Get updated statistics
-        statistics = AttendanceService.get_class_statistics(
-            selected_class,
-            attendance_date,
+        # --------------------------------------------------
+
+        statistics = (
+            AttendanceService
+            .get_class_statistics(
+                selected_class,
+                attendance_date,
+            )
         )
 
+
+        # --------------------------------------------------
         # Reload saved records
+        # --------------------------------------------------
+
         records = Attendance.objects.filter(
             student__in=students,
             attendance_date=attendance_date,
         )
+
 
         existing_attendance = {
             record.student_id: record.status
             for record in records
         }
 
+
         attendance_saved = True
 
-    # -------------------------
-    # FINAL RESPONSE
-    # -------------------------
-    
+
+    # ==================================================
+    # Attach status to each student
+    # ==================================================
+
     for student in students:
-        student.attendance_status = existing_attendance.get(
-            student.id
+
+        student.attendance_status = (
+            existing_attendance.get(
+                student.id
+            )
         )
+
+
+    # ==================================================
+    # Response
+    # ==================================================
 
     return render(
         request,
@@ -156,9 +263,27 @@ def mark_attendance(request):
         },
     )
 
+@login_required
+@role_required("admin", "teacher")
 def attendance_history(request):
 
-    classes = SchoolClass.objects.all()
+    if request.user.role == "admin":
+
+        classes = SchoolClass.objects.all()
+
+    else:
+
+        teacher = get_object_or_404(
+            Teacher,
+            user=request.user,
+            is_active=True,
+        )
+
+        classes = SchoolClass.objects.filter(
+            class_teacher_assignments__teacher=teacher,
+            class_teacher_assignments__is_active=True,
+        ).distinct()
+
 
     selected_class = None
     records = []
@@ -166,32 +291,40 @@ def attendance_history(request):
     start_date = request.GET.get("start_date")
     end_date = request.GET.get("end_date")
 
+
     if request.GET.get("school_class"):
 
-        selected_class = SchoolClass.objects.get(
-            id=request.GET["school_class"]
+        selected_class = get_object_or_404(
+            classes,
+            id=request.GET["school_class"],
         )
 
         parsed_start_date = None
         parsed_end_date = None
 
+
         if start_date:
+
             parsed_start_date = datetime.strptime(
                 start_date,
                 "%Y-%m-%d",
             ).date()
 
+
         if end_date:
+
             parsed_end_date = datetime.strptime(
                 end_date,
                 "%Y-%m-%d",
             ).date()
+
 
         records = AttendanceService.get_class_attendance_history(
             school_class=selected_class,
             start_date=parsed_start_date,
             end_date=parsed_end_date,
         )
+
 
     return render(
         request,
@@ -261,3 +394,111 @@ def student_attendance(request, student_id):
         },
     )
 
+# @login_required
+# @role_required("admin", "teacher")
+# def attendance_dashboard(request):
+
+#     if request.user.role == "admin":
+#         classes = SchoolClass.objects.all()
+#     else:
+#         teacher = get_object_or_404(
+#             Teacher,
+#             user=request.user,
+#             is_active=True,
+#         )
+
+#         classes = SchoolClass.objects.filter(
+#             class_teacher_assignments__teacher=teacher,
+#             class_teacher_assignments__is_active=True,
+#         ).distinct()
+
+#     selected_class = None
+#     statistics = None
+
+#     if request.GET.get("school_class"):
+
+#         selected_class = get_object_or_404(
+#             classes,
+#             id=request.GET["school_class"],
+#         )
+
+#         statistics = AttendanceService.get_class_statistics(
+#             selected_class
+#         )
+
+#     return render(
+#         request,
+#         "attendance/attendance_dashboard.html",
+#         {
+#             "classes": classes,
+#             "selected_class": selected_class,
+#             "statistics": statistics,
+#         },
+#     )
+
+@login_required
+@role_required("admin", "teacher")
+def attendance_dashboard(request):
+
+    if request.user.role == "admin":
+
+        classes = SchoolClass.objects.all()
+
+    else:
+
+        teacher = get_object_or_404(
+            Teacher,
+            user=request.user,
+            is_active=True,
+        )
+
+        classes = SchoolClass.objects.filter(
+            class_teacher_assignments__teacher=teacher,
+            class_teacher_assignments__is_active=True,
+        ).distinct()
+
+    selected_class = None
+    statistics = None
+
+    start_date = request.GET.get("start_date")
+    end_date = request.GET.get("end_date")
+
+    if request.GET.get("school_class"):
+
+        selected_class = get_object_or_404(
+            classes,
+            id=request.GET["school_class"],
+        )
+
+        parsed_start_date = None
+        parsed_end_date = None
+
+        if start_date:
+            parsed_start_date = datetime.strptime(
+                start_date,
+                "%Y-%m-%d",
+            ).date()
+
+        if end_date:
+            parsed_end_date = datetime.strptime(
+                end_date,
+                "%Y-%m-%d",
+            ).date()
+
+        statistics = AttendanceService.get_class_period_statistics(
+            school_class=selected_class,
+            start_date=parsed_start_date,
+            end_date=parsed_end_date,
+        )
+
+    return render(
+        request,
+        "attendance/attendance_dashboard.html",
+        {
+            "classes": classes,
+            "selected_class": selected_class,
+            "statistics": statistics,
+            "start_date": start_date,
+            "end_date": end_date,
+        },
+    )

@@ -1,0 +1,550 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Attendance Dashboard | BMK Academy
+{% endblock %}
+
+
+{% block content %}
+
+<div class="row">
+
+    <div class="col-lg-11 mx-auto">
+
+        <!-- Page Header -->
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <div>
+
+                <h2 class="fw-bold mb-1">
+                    Attendance Dashboard
+                </h2>
+
+                <p class="text-muted mb-0">
+                    Monitor attendance performance across your classes.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- Filters -->
+
+        <div class="card border-0 shadow-sm mb-4">
+
+            <div class="card-body p-4">
+
+                <form method="get">
+
+                    <div class="row g-3">
+
+                        <!-- Class -->
+
+                        <div class="col-md-4">
+
+                            <label class="form-label fw-semibold mb-2">
+                                Class
+                            </label>
+
+                            <select
+                                name="school_class"
+                                class="form-select"
+                                required
+                            >
+
+                                <option value="">
+                                    Select class
+                                </option>
+
+                                {% for school_class in classes %}
+
+                                    <option
+                                        value="{{ school_class.id }}"
+                                        {% if selected_class and selected_class.id == school_class.id %}
+                                            selected
+                                        {% endif %}
+                                    >
+                                        {{ school_class }}
+                                    </option>
+
+                                {% endfor %}
+
+                            </select>
+
+                            <div class="form-text">
+                                Select the class you want to analyze.
+                            </div>
+
+                        </div>
+
+
+                        <!-- Start Date -->
+
+                        <div class="col-md-3">
+
+                            <label class="form-label fw-semibold mb-2">
+                                Start Date
+                            </label>
+
+                            <input
+                                type="date"
+                                name="start_date"
+                                class="form-control"
+                                value="{{ start_date|default:'' }}"
+                            >
+
+                            <div class="form-text">
+                                Optional starting date.
+                            </div>
+
+                        </div>
+
+
+                        <!-- End Date -->
+
+                        <div class="col-md-3">
+
+                            <label class="form-label fw-semibold mb-2">
+                                End Date
+                            </label>
+
+                            <input
+                                type="date"
+                                name="end_date"
+                                class="form-control"
+                                value="{{ end_date|default:'' }}"
+                            >
+
+                            <div class="form-text">
+                                Optional ending date.
+                            </div>
+
+                        </div>
+
+
+                        <!-- Button -->
+
+                        <div class="col-md-2 d-flex align-items-start">
+
+                            <div class="w-100">
+
+                                <label class="form-label fw-semibold mb-2 invisible">
+                                    Search
+                                </label>
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary w-100"
+                                >
+
+                                    <i class="bi bi-bar-chart-line me-1"></i>
+
+                                    Analyze
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+        {% if selected_class and statistics %}
+
+            <!-- Selected Class -->
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                <div>
+
+                    <h5 class="fw-bold mb-1">
+                        {{ selected_class }}
+                    </h5>
+
+                    <p class="text-muted mb-0">
+
+                        {% if start_date and end_date %}
+
+                            {{ start_date }} to {{ end_date }}
+
+                        {% elif start_date %}
+
+                            From {{ start_date }}
+
+                        {% elif end_date %}
+
+                            Up to {{ end_date }}
+
+                        {% else %}
+
+                            All available attendance records
+
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Statistics Cards -->
+
+            <div class="row g-3 mb-4">
+
+                <!-- Total -->
+
+                <div class="col-sm-6 col-lg-4">
+
+                    <div class="card border-0 shadow-sm h-100">
+
+                        <div class="card-body p-4">
+
+                            <div class="d-flex justify-content-between align-items-start">
+
+                                <div>
+
+                                    <p class="text-muted mb-1">
+                                        Total Records
+                                    </p>
+
+                                    <h3 class="fw-bold mb-0">
+                                        {{ statistics.total }}
+                                    </h3>
+
+                                </div>
+
+                                <div class="text-primary fs-3">
+
+                                    <i class="bi bi-clipboard-data"></i>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Present -->
+
+                <div class="col-sm-6 col-lg-4">
+
+                    <div class="card border-0 shadow-sm h-100">
+
+                        <div class="card-body p-4">
+
+                            <div class="d-flex justify-content-between align-items-start">
+
+                                <div>
+
+                                    <p class="text-muted mb-1">
+                                        Present
+                                    </p>
+
+                                    <h3 class="fw-bold text-success mb-0">
+                                        {{ statistics.present }}
+                                    </h3>
+
+                                </div>
+
+                                <div class="text-success fs-3">
+
+                                    <i class="bi bi-check-circle"></i>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Absent -->
+
+                <div class="col-sm-6 col-lg-4">
+
+                    <div class="card border-0 shadow-sm h-100">
+
+                        <div class="card-body p-4">
+
+                            <div class="d-flex justify-content-between align-items-start">
+
+                                <div>
+
+                                    <p class="text-muted mb-1">
+                                        Absent
+                                    </p>
+
+                                    <h3 class="fw-bold text-danger mb-0">
+                                        {{ statistics.absent }}
+                                    </h3>
+
+                                </div>
+
+                                <div class="text-danger fs-3">
+
+                                    <i class="bi bi-x-circle"></i>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Late -->
+
+                <div class="col-sm-6 col-lg-4">
+
+                    <div class="card border-0 shadow-sm h-100">
+
+                        <div class="card-body p-4">
+
+                            <div class="d-flex justify-content-between align-items-start">
+
+                                <div>
+
+                                    <p class="text-muted mb-1">
+                                        Late
+                                    </p>
+
+                                    <h3 class="fw-bold text-warning mb-0">
+                                        {{ statistics.late }}
+                                    </h3>
+
+                                </div>
+
+                                <div class="text-warning fs-3">
+
+                                    <i class="bi bi-clock"></i>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Excused -->
+
+                <div class="col-sm-6 col-lg-4">
+
+                    <div class="card border-0 shadow-sm h-100">
+
+                        <div class="card-body p-4">
+
+                            <div class="d-flex justify-content-between align-items-start">
+
+                                <div>
+
+                                    <p class="text-muted mb-1">
+                                        Excused
+                                    </p>
+
+                                    <h3 class="fw-bold text-info mb-0">
+                                        {{ statistics.excused }}
+                                    </h3>
+
+                                </div>
+
+                                <div class="text-info fs-3">
+
+                                    <i class="bi bi-info-circle"></i>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Attendance Rate -->
+
+                <div class="col-sm-6 col-lg-4">
+
+                    <div class="card border-0 shadow-sm h-100">
+
+                        <div class="card-body p-4">
+
+                            <div class="d-flex justify-content-between align-items-start">
+
+                                <div>
+
+                                    <p class="text-muted mb-1">
+                                        Attendance Rate
+                                    </p>
+
+                                    <h3 class="fw-bold mb-0">
+                                        {{ statistics.attendance_rate }}%
+                                    </h3>
+
+                                </div>
+
+                                <div class="text-primary fs-3">
+
+                                    <i class="bi bi-graph-up-arrow"></i>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Attendance Summary -->
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-header bg-white border-bottom py-3">
+
+                    <h5 class="fw-bold mb-0">
+                        Attendance Summary
+                    </h5>
+
+                </div>
+
+                <div class="card-body p-4">
+
+                    <div class="row align-items-center">
+
+                        <!-- Rate -->
+
+                        <div class="col-md-4 text-center mb-4 mb-md-0">
+
+                            <div class="display-5 fw-bold">
+
+                                {{ statistics.attendance_rate }}%
+
+                            </div>
+
+                            <p class="text-muted mb-0">
+                                Overall Attendance Rate
+                            </p>
+
+                        </div>
+
+
+                        <!-- Progress -->
+
+                        <div class="col-md-8">
+
+                            <div class="d-flex justify-content-between mb-2">
+
+                                <span class="fw-semibold">
+                                    Attendance Performance
+                                </span>
+
+                                <span class="fw-semibold">
+                                    {{ statistics.attendance_rate }}%
+                                </span>
+
+                            </div>
+
+                            <div
+                                class="progress"
+                                style="height: 12px;"
+                            >
+
+                                <div
+                                    class="progress-bar bg-success"
+                                    role="progressbar"
+                                    style="width: {{ statistics.attendance_rate }}%;"
+                                    aria-valuenow="{{ statistics.attendance_rate }}"
+                                    aria-valuemin="0"
+                                    aria-valuemax="100"
+                                ></div>
+
+                            </div>
+
+                            <div class="mt-3 text-muted small">
+
+                                <i class="bi bi-info-circle me-1"></i>
+
+                                Attendance rate is calculated from the
+                                number of students marked present against
+                                total attendance records.
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        {% else %}
+
+            <!-- Initial State -->
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body text-center py-5">
+
+                    <div class="mb-3">
+
+                        <i
+                            class="bi bi-bar-chart-line text-muted"
+                            style="font-size: 3rem;"
+                        ></i>
+
+                    </div>
+
+                    <h5 class="fw-bold">
+                        Select a Class
+                    </h5>
+
+                    <p class="text-muted mb-0">
+
+                        Select a class and optionally choose a date range
+                        to view attendance statistics.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

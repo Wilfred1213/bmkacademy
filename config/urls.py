@@ -16,6 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.shortcuts import render
+
+def custom_permission_denied(request, exception=None):
+    return render(
+        request,
+        "403.html",
+        status=403,
+    )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -50,5 +58,10 @@ urlpatterns = [
     path(
     "reports/",
     include("reports.urls")
+    ),
+    path(
+    "notifications/",
+    include("notifications.urls")
 ),
 ]
+handler403 = "config.urls.custom_permission_denied"

@@ -37,7 +37,7 @@
             </div>
 
             <div class="school-title">
-                STUDENT REPORT CARD
+                PUPIL'S REPORT CARD
             </div>
 
             <div class="school-contact">
@@ -81,7 +81,7 @@
         <div class="student-info">
 
             <div class="student-info-title">
-                STUDENT INFORMATION
+                PUPIL'S INFORMATION
             </div>
 
             <table>
@@ -245,6 +245,7 @@
              SUMMARY
         ================================== -->
 
+        
         <div class="summary-grid">
 
             <!-- Academic Summary -->
@@ -326,63 +327,67 @@
             </div>
 
 
-            <!-- Class Position -->
+            <!-- =================================
+                CLASS POSITION
+            ================================== -->
 
-            <div class="summary-box">
+            {% if report.show_position %}
 
-                <div class="summary-title">
-                    CLASS POSITION
+                <div class="summary-box">
+
+                    <div class="summary-title">
+                        CLASS POSITION
+                    </div>
+
+                    <div class="summary-content">
+
+                        {% if report.status == "complete" %}
+
+                            <div class="summary-row">
+
+                                <span>Position</span>
+
+                                <strong>
+                                    {{ report.position|default:"-" }}
+                                </strong>
+
+                            </div>
+
+                            <div class="summary-row">
+
+                                <span>Out Of</span>
+
+                                <strong>
+                                    {{ report.total_students|default:"-" }}
+                                </strong>
+
+                            </div>
+
+                        {% else %}
+
+                            <div class="text-center">
+
+                                <strong>
+                                    Position unavailable
+                                </strong>
+
+                                <br>
+
+                                <small>
+                                    Complete all assessments.
+                                </small>
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
                 </div>
 
-                <div class="summary-content">
-
-                    {% if report.status == "complete" %}
-
-                        <div class="summary-row">
-
-                            <span>Position</span>
-
-                            <strong>
-                                {{ report.position|default:"-" }}
-                            </strong>
-
-                        </div>
-
-                        <div class="summary-row">
-
-                            <span>Out Of</span>
-
-                            <strong>
-                                {{ report.total_students }}
-                            </strong>
-
-                        </div>
-
-                    {% else %}
-
-                        <div class="text-center">
-
-                            <strong>
-                                Position unavailable
-                            </strong>
-
-                            <br>
-
-                            <small>
-                                Complete all assessments.
-                            </small>
-
-                        </div>
-
-                    {% endif %}
-
-                </div>
-
-            </div>
+            {% endif %}
 
         </div>
-
-
         <!-- =================================
              ATTENDANCE
         ================================== -->
@@ -586,56 +591,81 @@
             onclick="window.print()"
         >
             <i class="bi bi-printer"></i>
-            Print Report Card
+
+            {% if report.show_position %}
+                Print Report Card With Position
+            {% else %}
+                Print Report Card
+            {% endif %}
+
         </button>
 
 
-        <a
-            href="{% url 'results:student_result' report.enrollment.id %}"
-            class="btn btn-secondary"
-        >
-            Back to Results
-        </a>
+        {% if from_parent %}
+
+            <a
+                href="{{ back_url }}"
+                class="btn btn-secondary"
+            >
+                <i class="bi bi-arrow-left"></i>
+                Back to Reports
+            </a>
+
+        {% else %}
+
+            <a
+                href="{% url 'results:student_result' report.enrollment.id %}"
+                class="btn btn-secondary"
+            >
+                <i class="bi bi-arrow-left"></i>
+                Back to Results
+            </a>
+
+        {% endif %}
 
 
-        <form
-            method="post"
-            action="{% url 'results:toggle_report_publication' report.enrollment.id %}"
-        >
+        {% if request.user.role == "admin" %}
 
-            {% csrf_token %}
+            <form
+                method="post"
+                action="{% url 'results:toggle_report_publication' report.enrollment.id %}"
+            >
 
-            {% if report.term_report.is_published %}
+                {% csrf_token %}
 
-                <button
-                    type="submit"
-                    class="btn btn-warning"
-                >
-                    Unpublish Result
-                </button>
+                {% if report.term_report.is_published %}
 
-            {% elif report.status == "complete" %}
+                    <button
+                        type="submit"
+                        class="btn btn-warning"
+                    >
+                        Unpublish Result
+                    </button>
 
-                <button
-                    type="submit"
-                    class="btn btn-success"
-                >
-                    Publish Result
-                </button>
+                {% elif report.status == "complete" %}
 
-            {% else %}
+                    <button
+                        type="submit"
+                        class="btn btn-success"
+                    >
+                        Publish Result
+                    </button>
 
-                <button
-                    type="button"
-                    class="btn btn-secondary"
-                    disabled
-                >
-                    Result Incomplete
-                </button>
+                {% else %}
 
-            {% endif %}
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        disabled
+                    >
+                        Result Incomplete
+                    </button>
 
-        </form>
+                {% endif %}
+
+            </form>
+
+        {% endif %}
 
     </div>
 

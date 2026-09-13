@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Parent Dashboard | BMK Academy
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-4">
+
+    <div class="mb-4">
+        <h2 class="fw-bold">
+            Parent Dashboard
+        </h2>
+
+        <p class="text-muted">
+            Welcome,
+            {{ request.user.get_full_name|default:request.user.username }}.
+        </p>
+    </div>
+
+    <div class="card border-0 shadow-sm">
+
+        <div class="card-body">
+
+            <h5 class="fw-bold mb-3">
+                My Children
+            </h5>
+
+            {% if children %}
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover align-middle">
+
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Admission Number</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                    
+                        <tbody>
+                    
+                            {% for child in children %}
+                    
+                                <tr>
+                    
+                                    <td>
+                                        {{ child.first_name }}
+                                        {{ child.middle_name }}
+                                        {{ child.last_name }}
+                                    </td>
+                    
+                                    <td>
+                                        {{ child.admission_number }}
+                                    </td>
+                    
+                                    <td>
+                                        {{ child.get_status_display }}
+                                    </td>
+                    
+                                    <td>
+                                        <a
+                                            href="{% url 'accounts:parent_child_reports' child.id %}"
+                                            class="btn btn-sm btn-primary"
+                                        >
+                                            <i class="bi bi-file-earmark-text"></i>
+                                            View Reports
+                                        </a>
+                                    </td>
+                    
+                                </tr>
+                    
+                            {% endfor %}
+                    
+                        </tbody>
+                    
+                    </table>
+
+                </div>
+
+            {% else %}
+
+                <div class="alert alert-info mb-0">
+                    No children are currently linked to your account.
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

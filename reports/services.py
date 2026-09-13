@@ -6,7 +6,8 @@ from results.models import (
     StudentTermReport,
 )
 from students.models import Enrollment
-
+from decimal import Decimal
+from results.services import ResultService
 
 class ReportService:
 
@@ -92,7 +93,32 @@ class ReportService:
         }
 
     @classmethod
-    def get_class_performance(cls, academic_year, term, school_class):
+    def get_class_performance(
+    cls,
+    academic_year,
+    term,
+    school_class,
+    ):
+
+        # --------------------------------
+        # CLASS SUBJECTS
+        # --------------------------------
+        # These subjects determine the
+        # columns of the report.
+        # --------------------------------
+        subjects = list(
+            school_class.class_subjects
+            .filter(
+                is_active=True,
+            )
+            .select_related(
+                "subject",
+            )
+        )
+
+        # --------------------------------
+        # STUDENT ENROLLMENTS
+        # --------------------------------
 
         enrollments = (
             Enrollment.objects
@@ -101,9 +127,11 @@ class ReportService:
                 term=term,
                 school_class=school_class,
             )
-            .select_related("student")
+            .select_related(
+                "student",
+            )
             .prefetch_related(
-                "subject_results__class_subject__subject"
+                "subject_results__class_subject__subject",
             )
             .order_by(
                 "student__first_name",
@@ -113,47 +141,174 @@ class ReportService:
 
         class_results = []
 
+        # --------------------------------
+        # BUILD EACH STUDENT'S RESULT
+        # --------------------------------
+
         for enrollment in enrollments:
 
-            subject_results = enrollment.subject_results.all()
-
-            total_score = sum(
-                result.total_score or 0
-                for result in subject_results
+            subject_results = (
+                enrollment.subject_results.all()
             )
 
-            subject_count = subject_results.count()
+            # Map each result by ClassSubject ID
+            result_map = {
+                result.class_subject_id: result
+                for result in subject_results
+            }
 
-            if subject_count:
-                average = total_score / subject_count
+            # --------------------------------
+            # CREATE SUBJECT SCORES
+            # --------------------------------
+            # The order follows the class subjects,
+            # not whatever results happen to exist.
+            # --------------------------------
+
+            subject_scores = []
+
+            for class_subject in subjects:
+
+                result = result_map.get(
+                    class_subject.id
+                )
+
+                subject_scores.append({
+                    "class_subject": class_subject,
+                    "result": result,
+                    "score": (
+                        result.total_score
+                        if result
+                        and result.total_score is not None
+                        else None
+                    ),
+                })
+
+            # --------------------------------
+            # RESULT COMPLETENESS
+            # --------------------------------
+            
+            result_status = (
+                ResultService
+                .get_student_result_status(
+                    enrollment
+                )
+            )
+
+            is_complete = (
+                result_status["is_complete"]
+            )
+
+            # --------------------------------
+            # TOTAL SCORE
+            # --------------------------------
+
+            entered_scores = [
+                item["score"]
+                for item in subject_scores
+                if item["score"] is not None
+            ]
+
+            total_score = sum(
+                entered_scores,
+                Decimal("0"),
+            )
+
+            # --------------------------------
+            # AVERAGE
+            # --------------------------------
+            # Only a complete result gets
+            # an official average.
+            # --------------------------------
+
+            if is_complete and subjects:
+
+                average = (
+                    total_score
+                    / Decimal(len(subjects))
+                )
+
             else:
-                average = 0
+
+                average = None
 
             class_results.append({
                 "enrollment": enrollment,
+
                 "student": enrollment.student,
-                "subject_results": subject_results,
-                "total_score": total_score,
+
+                "subject_scores": subject_scores,
+
+                "total_score": (
+                    total_score
+                    if entered_scores
+                    else None
+                ),
+
                 "average": average,
+
+                "is_complete": is_complete,
+
+                "result_status": result_status,
+
+                "position": None,
             })
 
-        # Rank students by average score
-        class_results.sort(
+        # --------------------------------
+        # RANK ONLY COMPLETE STUDENTS
+        # --------------------------------
+
+        ranked_students = [
+            item
+            for item in class_results
+            if item["is_complete"]
+            and item["average"] is not None
+        ]
+
+        ranked_students.sort(
             key=lambda item: item["average"],
             reverse=True,
         )
 
-        # Assign positions
+        # --------------------------------
+        # ASSIGN POSITIONS
+        # --------------------------------
+
         position = 0
         previous_average = None
 
-        for index, item in enumerate(class_results, start=1):
+        for index, item in enumerate(
+            ranked_students,
+            start=1,
+        ):
 
             if item["average"] != previous_average:
+
                 position = index
 
             item["position"] = position
 
             previous_average = item["average"]
 
-        return class_results
+        # --------------------------------
+        # SORT FINAL REPORT
+        # --------------------------------
+        # Ranked students first,
+        # incomplete students afterwards.
+        # --------------------------------
+
+        class_results.sort(
+            key=lambda item: (
+                item["position"] is None,
+                item["position"]
+                if item["position"] is not None
+                else 999999,
+                item["student"].first_name,
+                item["student"].last_name,
+            )
+        )
+
+        return {
+            "subjects": subjects,
+            "class_results": class_results,
+        }
+

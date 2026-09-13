@@ -10,6 +10,7 @@ from .models import AdmissionApplication
 from django.contrib.auth import get_user_model
 from django.utils.crypto import get_random_string
 from accounts.models import ParentProfile
+from notifications.services import NotificationService
 
 
 class AdmissionService:
@@ -191,7 +192,7 @@ class AdmissionService:
             student.parents.add(parent_profile)
 
         # Create enrollment
-        Enrollment.objects.create(
+        enrollment = Enrollment.objects.create(
             student=student,
             academic_year=application.academic_year,
             term=application.term,
@@ -210,13 +211,30 @@ class AdmissionService:
             ]
         )
 
+        # Send notification to the parent
+        if parent_profile:
+            NotificationService.create_notification(
+                recipient=parent_profile.user,
+                title="Admission Approved",
+                message=(
+                    f"Congratulations! The admission application for "
+                    f"{student.first_name} {student.last_name} has been approved. "
+                    f"The student has been admitted into "
+                    f"{enrollment.school_class}."
+                ),
+                notification_type="admission",
+            )
+
         return student, temporary_password
+
 
     @classmethod
     def create_parent_account(cls, application):
+
         User = get_user_model()
 
         if application.applicant:
+
             parent_profile = getattr(
                 application.applicant,
                 "parent_profile",
@@ -228,18 +246,14 @@ class AdmissionService:
 
         username = f"parent_{get_random_string(8)}"
 
-        temporary_password = get_random_string(12)
-
         user = User.objects.create_user(
             username=username,
             email=application.parent_email,
             first_name=application.parent_name,
             role="parent",
-            password=temporary_password,
+            password=None,
+            is_active=False,
         )
-
-        user.must_change_password = True
-        user.save(update_fields=["must_change_password"])
 
         parent_profile = ParentProfile.objects.create(
             user=user,
@@ -247,4 +261,25 @@ class AdmissionService:
             address=application.parent_address,
         )
 
-        return parent_profile, temporary_password
+        return parent_profile, None
+
+    @classmethod
+    @transaction.atomic
+    def reject_application(cls, application):
+
+        if application.status != "pending":
+            raise ValueError(
+                "Only pending applications can be rejected."
+            )
+
+        application.status = "rejected"
+        application.reviewed_at = timezone.now()
+
+        application.save(
+            update_fields=[
+                "status",
+                "reviewed_at",
+            ]
+        )
+
+        return application

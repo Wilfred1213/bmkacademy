@@ -528,12 +528,53 @@
                     </a>
 
 
-                    <a
-                        href="{% url 'results:student_report_card' current_enrollment.id %}"
-                        class="btn btn-outline-success"
-                    >
-                        View Report Card
-                    </a>
+                    {% if request.user.role == "admin" %}
+
+                        <div class="dropdown">
+
+                            <button
+                                class="btn btn-outline-success dropdown-toggle w-100"
+                                type="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                            >
+                                View Report Card
+                            </button>
+
+                            <ul class="dropdown-menu w-100">
+
+                                <li>
+                                    <a
+                                        href="{% url 'results:student_report_card' current_enrollment.id %}?show_position=0"
+                                        class="dropdown-item"
+                                    >
+                                        Report Without Position
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a
+                                        href="{% url 'results:student_report_card' current_enrollment.id %}?show_position=1"
+                                        class="dropdown-item"
+                                    >
+                                        Report With Position
+                                    </a>
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+                    {% else %}
+
+                        <a
+                            href="{% url 'results:student_report_card' current_enrollment.id %}?show_position=0"
+                            class="btn btn-outline-success"
+                        >
+                            View Report Card
+                        </a>
+
+                    {% endif %}
 
                     
 
@@ -686,14 +727,53 @@
                                         </a>
     
     
-                                        <a
-                                            href="{% url 'results:student_report_card' enrollment.id %}"
-                                            class="btn btn-sm btn-success"
-                                        >
-    
-                                            Report Card
-    
-                                        </a>
+                                        {% if request.user.role == "admin" %}
+
+                                            <div class="dropdown">
+
+                                                <button
+                                                    class="btn btn-sm btn-success dropdown-toggle"
+                                                    type="button"
+                                                    data-bs-toggle="dropdown"
+                                                    aria-expanded="false"
+                                                >
+                                                    Report Card
+                                                </button>
+
+                                                <ul class="dropdown-menu">
+
+                                                    <li>
+                                                        <a
+                                                            href="{% url 'results:student_report_card' enrollment.id %}?show_position=0"
+                                                            class="dropdown-item"
+                                                        >
+                                                            Without Position
+                                                        </a>
+                                                    </li>
+
+                                                    <li>
+                                                        <a
+                                                            href="{% url 'results:student_report_card' enrollment.id %}?show_position=1"
+                                                            class="dropdown-item"
+                                                        >
+                                                            With Position
+                                                        </a>
+                                                    </li>
+
+                                                </ul>
+
+                                            </div>
+
+                                        {% else %}
+
+                                            <a
+                                                href="{% url 'results:student_report_card' enrollment.id %}?show_position=0"
+                                                class="btn btn-sm btn-success"
+                                            >
+                                                Report Card
+                                            </a>
+
+                                        {% endif %}
     
                                     </div>
     

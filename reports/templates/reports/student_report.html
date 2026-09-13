@@ -12,26 +12,123 @@
     <!-- ACTIONS -->
     <!-- ========================= -->
 
-    <div class="report-actions no-print d-flex justify-content-between align-items-center">
+    <div class="report-actions no-print">
 
-        <div>
-            <a
-                href="{% url 'students:student_list' %}"
-                class="btn btn-outline-secondary"
-            >
-                ← Students
-            </a>
+        <div class="d-flex justify-content-between align-items-center">
+
+            <!-- LEFT SIDE -->
+
+            <div>
+
+                <a
+                    href="{% url 'students:student_list' %}"
+                    class="btn btn-outline-secondary"
+                >
+                    ← Students
+                </a>
+
+            </div>
+
+
+            <!-- RIGHT SIDE -->
+
+            <div class="d-flex gap-2">
+
+                <!-- PRINT -->
+
+                <button
+                    type="button"
+                    onclick="window.print()"
+                    class="btn btn-primary"
+                >
+
+                    <i class="bi bi-printer"></i>
+
+                    Print Report
+
+                </button>
+
+
+                <!-- BACK TO RESULTS -->
+
+                <a
+                    href="{% url 'results:student_result' report.enrollment.id %}"
+                    class="btn btn-secondary"
+                >
+
+                    Back to Results
+
+                </a>
+
+
+                <!-- PUBLISH / UNPUBLISH -->
+
+                {% if report.term_report %}
+
+                    {% if report.term_report.is_published %}
+
+                        <form
+                            method="post"
+                            action="{% url 'results:toggle_report_publication' report.enrollment.id %}"
+                            class="d-inline"
+                        >
+
+                            {% csrf_token %}
+
+                            <button
+                                type="submit"
+                                class="btn btn-warning"
+                            >
+
+                                Unpublish Result
+
+                            </button>
+
+                        </form>
+
+                    {% elif report.status == "complete" %}
+
+                        <form
+                            method="post"
+                            action="{% url 'results:toggle_report_publication' report.enrollment.id %}"
+                            class="d-inline"
+                        >
+
+                            {% csrf_token %}
+
+                            <button
+                                type="submit"
+                                class="btn btn-success"
+                            >
+
+                                Publish Result
+
+                            </button>
+
+                        </form>
+
+                    {% else %}
+
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            disabled
+                        >
+
+                            Result Incomplete
+
+                        </button>
+
+                    {% endif %}
+
+                {% endif %}
+
+            </div>
+
         </div>
 
-        <button
-            type="button"
-            onclick="window.print()"
-            class="btn btn-primary"
-        >
-            Print Report
-        </button>
-
     </div>
+
 
 
     <!-- ========================= -->

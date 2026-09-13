@@ -289,3 +289,64 @@ class AttendanceService:
             "excused": excused,
             "attendance_rate": attendance_rate,
         }
+        
+    @classmethod
+    def get_class_period_statistics(
+        cls,
+        school_class,
+        start_date=None,
+        end_date=None,
+    ):
+        records = Attendance.objects.filter(
+            student__enrollments__school_class=school_class,
+            student__enrollments__is_current=True,
+        )
+
+        if start_date:
+            records = records.filter(
+                attendance_date__gte=start_date
+            )
+
+        if end_date:
+            records = records.filter(
+                attendance_date__lte=end_date
+            )
+
+        statistics = records.aggregate(
+            total=Count("id"),
+
+            present=Count(
+                "id",
+                filter=Q(status="present"),
+            ),
+
+            absent=Count(
+                "id",
+                filter=Q(status="absent"),
+            ),
+
+            late=Count(
+                "id",
+                filter=Q(status="late"),
+            ),
+
+            excused=Count(
+                "id",
+                filter=Q(status="excused"),
+            ),
+        )
+
+        total = statistics["total"]
+
+        if total:
+            statistics["attendance_rate"] = round(
+                (
+                    statistics["present"]
+                    / total
+                ) * 100,
+                2,
+            )
+        else:
+            statistics["attendance_rate"] = 0
+
+        return statistics

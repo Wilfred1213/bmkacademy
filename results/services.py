@@ -805,106 +805,7 @@ class ResultService:
                 required_component_count
             ),
         }
-    # @classmethod
-    # def get_student_result_status(
-    #     cls,
-    #     enrollment,
-    # ):
-
-    #     # --------------------------------
-    #     # REQUIRED SUBJECTS
-    #     # --------------------------------
-
-    #     required_subject_count = (
-    #         ClassSubject.objects
-    #         .filter(
-    #             school_class=enrollment.school_class,
-    #             is_active=True,
-    #         )
-    #         .count()
-    #     )
-
-    #     # --------------------------------
-    #     # REQUIRED ASSESSMENT COMPONENTS
-    #     # --------------------------------
-
-    #     required_component_count = (
-    #         AssessmentComponent.objects
-    #         .filter(
-    #             term=enrollment.term,
-    #             is_active=True,
-    #         )
-    #         .count()
-    #     )
-
-    #     # --------------------------------
-    #     # STUDENT SUBJECT RESULTS
-    #     # --------------------------------
-
-    #     subject_results = (
-    #         enrollment
-    #         .subject_results
-    #         .prefetch_related(
-    #             "assessment_scores"
-    #         )
-    #     )
-
-    #     # --------------------------------
-    #     # CHECK SUBJECTS
-    #     # --------------------------------
-
-    #     completed_subject_count = 0
-
-    #     for result in subject_results:
-
-    #         scored_component_count = (
-    #             result
-    #             .assessment_scores
-    #             .count()
-    #         )
-
-    #         if (
-    #             scored_component_count
-    #             == required_component_count
-    #         ):
-
-    #             completed_subject_count += 1
-
-    #     # --------------------------------
-    #     # COMPLETE RESULT?
-    #     # --------------------------------
-
-    #     is_complete = (
-    #         required_subject_count > 0
-    #         and completed_subject_count
-    #         == required_subject_count
-    #     )
-
-    #     if is_complete:
-
-    #         status = "complete"
-
-    #     else:
-
-    #         status = "incomplete"
-
-    #     return {
-    #         "status": status,
-
-    #         "is_complete": is_complete,
-
-    #         "required_subject_count": (
-    #             required_subject_count
-    #         ),
-
-    #         "completed_subject_count": (
-    #             completed_subject_count
-    #         ),
-
-    #         "required_component_count": (
-    #             required_component_count
-    #         ),
-    #     }
+    
     # --------------------------------
     # STUDENT RESULT SUMMARY
     # --------------------------------
@@ -1153,102 +1054,7 @@ class ResultService:
 
             "total_students": total_students,
         }
-    # @classmethod
-    # def get_class_position(
-    #     cls,
-    #     enrollment,
-    # ):
-
-    #     # Get all students in the same class,
-    #     # academic year and term
-
-    #     class_enrollments = (
-    #         Enrollment.objects
-    #         .filter(
-    #             academic_year=enrollment.academic_year,
-    #             term=enrollment.term,
-    #             school_class=enrollment.school_class,
-    #             is_current=True,
-    #             student__status="active",
-    #         )
-    #     )
-
-    #     student_results = []
-
-    #     # Calculate total score for each student
-
-    #     for class_enrollment in class_enrollments:
-
-    #         result_summary = (
-    #             cls.get_student_result_summary(
-    #                 class_enrollment
-    #             )
-    #         )
-
-            
-    #         total_score = (
-    #             result_summary[
-    #                 "total_score"
-    #             ]
-    #         )
-
-    #         scored_subject_count = (
-    #             result_summary[
-    #                 "scored_subject_count"
-    #             ]
-    #         )
-
-    #         if scored_subject_count > 0:
-
-    #             student_results.append(
-    #                 {
-    #                     "enrollment_id": (
-    #                         class_enrollment.id
-    #                     ),
-    #                     "total_score": total_score,
-    #                 }
-    #             )
-
-    #     # Order students from highest score
-
-    #     student_results.sort(
-    #         key=lambda item: item["total_score"],
-    #         reverse=True,
-    #     )
-
-    #     # Total students with results
-
-    #     total_students = len(
-    #         student_results
-    #     )
-
-    #     # IMPORTANT:
-    #     # Define position before formatting it
-
-    #     position = None
-
-    #     for index, item in enumerate(
-    #         student_results,
-    #         start=1,
-    #     ):
-
-    #         if (
-    #             item["enrollment_id"]
-    #             == enrollment.id
-    #         ):
-
-    #             position = index
-
-    #             break
-
-    #     return {
-    #         "position": (
-    #             cls.format_position(position)
-    #             if position is not None
-    #             else None
-    #         ),
-    #         "total_students": total_students,
-    #     }
+    
     # --------------------------------
     # RESULT ATTENDANCE SUMMARY
     # --------------------------------
@@ -1307,6 +1113,7 @@ class ResultService:
     def get_complete_student_result(
         cls,
         enrollment,
+        include_position=False,
     ):
 
         # --------------------------------
@@ -1389,11 +1196,24 @@ class ResultService:
         # POSITION
         # --------------------------------
 
-        position_data = (
-            cls.get_class_position(
-                enrollment
+        position = None
+        total_students = None
+
+        if include_position:
+
+            position_data = (
+                cls.get_class_position(
+                    enrollment
+                )
             )
-        )
+
+            position = position_data[
+                "position"
+            ]
+
+            total_students = position_data[
+                "total_students"
+            ]
 
         # --------------------------------
         # ATTENDANCE
@@ -1415,8 +1235,13 @@ class ResultService:
             )
         )
 
+        # --------------------------------
+        # TERM REPORT
+        # --------------------------------
+
         term_report, created = (
-            StudentTermReport.objects.get_or_create(
+            StudentTermReport.objects
+            .get_or_create(
                 enrollment=enrollment
             )
         )
@@ -1430,6 +1255,7 @@ class ResultService:
             "enrollment": enrollment,
 
             "student": enrollment.student,
+
             "term_report": term_report,
 
             "assessment_components": (
@@ -1458,25 +1284,25 @@ class ResultService:
                 ]
             ),
 
-            "position": (
-                position_data[
-                    "position"
-                ]
-            ),
-            
+            "position": position,
 
-            "total_students": (
-                position_data[
-                    "total_students"
-                ]
-            ),
+            "total_students": total_students,
 
             "attendance": attendance_data,
 
             "behaviour_ratings": (
                 behaviour_ratings
             ),
-            "status": result_summary["status"],
+
+            "status": (
+                result_summary[
+                    "status"
+                ]
+            ),
+
+            # This tells the template
+            # which version is being displayed.
+            "show_position": include_position,
         }
 
     # --------------------------------

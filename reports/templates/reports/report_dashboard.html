@@ -179,154 +179,150 @@
 
     <!-- STUDENT RESULTS -->
 
-    {% if selected_class %}
+    <div id="studentReports">
 
-        <div class="card shadow-sm border-0">
+        {% if selected_class %}
 
-            <div class="card-body p-4">
+            <div class="card shadow-sm border-0">
 
-                <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="card-body p-4">
 
-                    <div>
+                    <div class="d-flex justify-content-between align-items-center mb-4">
 
-                        <h5 class="fw-bold mb-1">
-                            Students
-                        </h5>
+                        <div>
 
-                        <p class="text-muted mb-0">
-                            Select a student to view the report.
-                        </p>
+                            <h5 class="fw-bold mb-1">
+                                Students
+                            </h5>
+
+                            <p class="text-muted mb-0">
+                                Select a student to view the report.
+                            </p>
+
+                        </div>
+
+                        <span class="badge bg-primary">
+                            {{ enrollments|length }} Student{{ enrollments|length|pluralize }}
+                        </span>
 
                     </div>
 
-                    <span class="badge bg-primary">
-                        {{ enrollments|length }} Student{{ enrollments|length|pluralize }}
-                    </span>
 
-                </div>
+                    {% if enrollments %}
 
+                        <div class="table-responsive">
 
-                {% if enrollments %}
+                            <table class="table table-hover align-middle">
 
-                    <div class="table-responsive">
-
-                        <table class="table table-hover align-middle">
-
-                            <thead class="table-light">
-
-                                <tr>
-
-                                    <th>
-                                        #
-                                    </th>
-
-                                    <th>
-                                        Student
-                                    </th>
-
-                                    <th>
-                                        Admission No.
-                                    </th>
-
-                                    <th>
-                                        Class
-                                    </th>
-
-                                    <th>
-                                        Action
-                                    </th>
-
-                                </tr>
-
-                            </thead>
-
-
-                            <tbody>
-
-                                {% for enrollment in enrollments %}
+                                <thead class="table-light">
 
                                     <tr>
 
-                                        <td>
-                                            {{ forloop.counter }}
-                                        </td>
+                                        <th>#</th>
 
-                                        <td class="fw-semibold">
+                                        <th>Student</th>
 
-                                            {{ enrollment.student.first_name }}
+                                        <th>Admission No.</th>
 
-                                            {% if enrollment.student.middle_name %}
-                                                {{ enrollment.student.middle_name }}
-                                            {% endif %}
+                                        <th>Class</th>
 
-                                            {{ enrollment.student.last_name }}
-
-                                        </td>
-
-                                        <td>
-                                            {{ enrollment.student.admission_number }}
-                                        </td>
-
-                                        <td>
-                                            {{ enrollment.school_class }}
-                                        </td>
-
-                                        <td>
-
-                                            <a
-                                                href="{% url 'reports:student_report' enrollment.id %}"
-                                                class="btn btn-sm btn-primary"
-                                            >
-                                                View Report
-                                            </a>
-
-                                        </td>
+                                        <th>Action</th>
 
                                     </tr>
 
-                                {% endfor %}
+                                </thead>
 
-                            </tbody>
 
-                        </table>
+                                <tbody>
 
-                    </div>
+                                    {% for enrollment in enrollments %}
 
-                {% else %}
+                                        <tr>
 
-                    <div class="alert alert-info mb-0">
+                                            <td>
+                                                {{ forloop.counter }}
+                                            </td>
 
-                        No students were found for the selected
-                        academic year, term and class.
+                                            <td class="fw-semibold">
 
-                    </div>
+                                                {{ enrollment.student.first_name }}
 
-                {% endif %}
+                                                {% if enrollment.student.middle_name %}
+                                                    {{ enrollment.student.middle_name }}
+                                                {% endif %}
+
+                                                {{ enrollment.student.last_name }}
+
+                                            </td>
+
+                                            <td>
+                                                {{ enrollment.student.admission_number }}
+                                            </td>
+
+                                            <td>
+                                                {{ enrollment.school_class }}
+                                            </td>
+
+                                            <td>
+
+                                                <a
+                                                    href="{% url 'reports:student_report' enrollment.id %}"
+                                                    class="btn btn-sm btn-primary"
+                                                >
+                                                    View Report
+                                                </a>
+
+                                            </td>
+
+                                        </tr>
+
+                                    {% endfor %}
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    {% else %}
+
+                        <div class="alert alert-info mb-0">
+
+                            No students were found for the selected
+                            academic year, term and class.
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
 
             </div>
 
-        </div>
+        {% else %}
 
-    {% else %}
+            <div class="card shadow-sm border-0">
 
-        <div class="card shadow-sm border-0">
+                <div class="card-body text-center py-5">
 
-            <div class="card-body text-center py-5">
+                    <h5 class="fw-bold">
+                        Select the academic period
+                    </h5>
 
-                <h5 class="fw-bold">
-                    Select the academic period
-                </h5>
+                    <p class="text-muted mb-0">
+                        Choose an academic year, term and class
+                        to view available student reports.
+                    </p>
 
-                <p class="text-muted mb-0">
-                    Choose an academic year, term and class
-                    to view available student reports.
-                </p>
+                </div>
 
             </div>
 
-        </div>
+        {% endif %}
 
-    {% endif %}
+    </div>
+
+
 
 </div>
 

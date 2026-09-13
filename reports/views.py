@@ -1,11 +1,18 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404,redirect, render
 
 from academics.models import AcademicYear, Term, SchoolClass
 from students.models import Enrollment
-
+from decimal import Decimal
 from .services import ReportService
 
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
+from accounts.decorators import role_required
 
+from teachers.models import Teacher, ClassTeacherAssignment
+
+@login_required
+@role_required("admin", "teacher")
 def report_dashboard(request):
 
     academic_years = AcademicYear.objects.all()
@@ -41,6 +48,7 @@ def report_dashboard(request):
                 "school_class",
             )
             .filter(
+                academic_year_id=academic_year_id,
                 term_id=term_id,
                 school_class_id=class_id,
             )
@@ -66,6 +74,8 @@ def report_dashboard(request):
     )
 
 
+@login_required
+@role_required("admin", "teacher")
 def student_report(request, enrollment_id):
 
     enrollment = get_object_or_404(
@@ -78,28 +88,22 @@ def student_report(request, enrollment_id):
         id=enrollment_id,
     )
 
-    report = ReportService.get_student_term_report(
-        enrollment
+    return redirect(
+        "results:student_report_card",
+        enrollment_id=enrollment.id,
     )
 
-    return render(
-        request,
-        "reports/student_report.html",
-        {
-            "report": report,
-        },
-    )
-
+@login_required
+@role_required("admin", "teacher")
 def class_performance_report(
-    request,
-    academic_year_id,
-    term_id,
-    school_class_id,
+request,
+academic_year_id,
+term_id,
+school_class_id,
 ):
-
     academic_year = get_object_or_404(
-        AcademicYear,
-        id=academic_year_id,
+    AcademicYear,
+    id=academic_year_id,
     )
 
     term = get_object_or_404(
@@ -113,46 +117,78 @@ def class_performance_report(
         id=school_class_id,
     )
 
-    class_results = ReportService.get_class_performance(
+    # -----------------------------------------
+    # TEACHER PERMISSION CHECK
+    # -----------------------------------------
+    if request.user.role == "teacher":
+
+        teacher = get_object_or_404(
+            Teacher,
+            user=request.user,
+            is_active=True,
+        )
+
+        is_class_teacher = (
+            ClassTeacherAssignment.objects.filter(
+                teacher=teacher,
+                school_class=school_class,
+                academic_year=academic_year,
+                is_active=True,
+            ).exists()
+        )
+
+        if not is_class_teacher:
+            raise PermissionDenied
+
+    # -----------------------------------------
+    # GET CLASS RESULTS
+    # -----------------------------------------
+    performance = ReportService.get_class_performance(
         academic_year=academic_year,
         term=term,
         school_class=school_class,
     )
 
-    # =========================
-    # CLASS STATISTICS
-    # =========================
+    subjects = performance["subjects"]
+    class_results = performance["class_results"]
 
+    # -----------------------------------------
+    # CLASS STATISTICS
+    # -----------------------------------------
     averages = [
-        result["average"]
+        Decimal(str(result["average"]))
         for result in class_results
         if result["average"] is not None
     ]
 
     class_average = (
-        sum(averages) / len(averages)
+        sum(
+            averages,
+            Decimal("0"),
+        )
+        / Decimal(len(averages))
         if averages
-        else 0
+        else Decimal("0")
     )
 
     highest_average = (
         max(averages)
         if averages
-        else 0
+        else Decimal("0")
     )
 
     lowest_average = (
         min(averages)
         if averages
-        else 0
+        else Decimal("0")
     )
 
     context = {
         "academic_year": academic_year,
         "term": term,
         "school_class": school_class,
+        "subjects": subjects,
         "class_results": class_results,
-
         "class_average": class_average,
         "highest_average": highest_average,
         "lowest_average": lowest_average,
@@ -164,37 +200,4 @@ def class_performance_report(
         "reports/class_performance_report.html",
         context,
     )
-# def class_performance_report(request, academic_year_id, term_id, school_class_id):
 
-#     academic_year = get_object_or_404(
-#         AcademicYear,
-#         id=academic_year_id,
-#     )
-
-#     term = get_object_or_404(
-#         Term,
-#         id=term_id,
-#         academic_year=academic_year,
-#     )
-
-#     school_class = get_object_or_404(
-#         SchoolClass,
-#         id=school_class_id,
-#     )
-
-#     class_results = ReportService.get_class_performance(
-#         academic_year=academic_year,
-#         term=term,
-#         school_class=school_class,
-#     )
-
-#     return render(
-#         request,
-#         "reports/class_performance_report.html",
-#         {
-#             "academic_year": academic_year,
-#             "term": term,
-#             "school_class": school_class,
-#             "class_results": class_results,
-#         },
-#     )

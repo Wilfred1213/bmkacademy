@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Edit User - BMK Academy
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-bold mb-1">
+                Edit User
+            </h2>
+
+            <p class="text-muted mb-0">
+                Update the user's account information.
+            </p>
+
+        </div>
+
+        <a
+            href="{% url 'accounts:user_detail' user_account.id %}"
+            class="btn btn-outline-secondary"
+        >
+            ← Back to User
+        </a>
+
+    </div>
+
+
+    <div class="card shadow-sm border-0">
+
+        <div class="card-body p-4">
+
+            <form method="post">
+
+                {% csrf_token %}
+
+
+                <div class="row g-3">
+
+                    <!-- First Name -->
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            First Name
+                        </label>
+
+                        <input
+                            type="text"
+                            name="first_name"
+                            class="form-control"
+                            value="{{ user_account.first_name }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Last Name -->
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Last Name
+                        </label>
+
+                        <input
+                            type="text"
+                            name="last_name"
+                            class="form-control"
+                            value="{{ user_account.last_name }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Username -->
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Username
+                        </label>
+
+                        <input
+                            type="text"
+                            name="username"
+                            class="form-control"
+                            value="{{ user_account.username }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Email -->
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            name="email"
+                            class="form-control"
+                            value="{{ user_account.email }}"
+                        >
+
+                    </div>
+
+
+                    <!-- Role -->
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Role
+                        </label>
+
+                        <select
+                            name="role"
+                            class="form-select"
+                            required
+                        >
+
+                            {% for value, label in user_account.ROLE_CHOICES %}
+
+                                <option
+                                    value="{{ value }}"
+                                    {% if user_account.role == value %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    {{ label }}
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <hr class="my-4">
+
+
+                <div class="d-flex justify-content-end gap-2">
+
+                    <a
+                        href="{% url 'accounts:user_detail' user_account.id %}"
+                        class="btn btn-outline-secondary"
+                    >
+                        Cancel
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+                        Save Changes
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

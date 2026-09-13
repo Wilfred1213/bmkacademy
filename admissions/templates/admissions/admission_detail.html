@@ -1,0 +1,423 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Admission Details | BMK Academy
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid py-4">
+
+    <!-- Header -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <a
+                href="{% url 'admissions:admission_list' %}"
+                class="text-decoration-none"
+            >
+                <i class="bi bi-arrow-left me-1"></i>
+                Back to Applications
+            </a>
+
+            <h2 class="fw-bold mt-2 mb-1">
+                Admission Application
+            </h2>
+
+            <p class="text-muted mb-0">
+                Review the applicant's information before making a decision.
+            </p>
+
+        </div>
+
+
+        <div>
+
+            {% if application.status == "pending" %}
+
+                <span class="badge text-bg-warning fs-6 px-3 py-2">
+                    Pending
+                </span>
+
+            {% elif application.status == "approved" %}
+
+                <span class="badge text-bg-success fs-6 px-3 py-2">
+                    Approved
+                </span>
+
+            {% elif application.status == "rejected" %}
+
+                <span class="badge text-bg-danger fs-6 px-3 py-2">
+                    Rejected
+                </span>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <div class="row g-4">
+
+
+        <!-- Student Information -->
+
+        <div class="col-lg-7">
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <h5 class="fw-bold mb-4">
+                        Student Information
+                    </h5>
+
+
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+
+                            <small class="text-muted d-block">
+                                First Name
+                            </small>
+
+                            <span class="fw-semibold">
+                                {{ application.first_name }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <small class="text-muted d-block">
+                                Last Name
+                            </small>
+
+                            <span class="fw-semibold">
+                                {{ application.last_name }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <small class="text-muted d-block">
+                                Date of Birth
+                            </small>
+
+                            <span class="fw-semibold">
+                                {{ application.date_of_birth|date:"M d, Y" }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <small class="text-muted d-block">
+                                Gender
+                            </small>
+
+                            <span class="fw-semibold">
+                                {{ application.gender|title }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <small class="text-muted d-block">
+                                Desired Class
+                            </small>
+
+                            <span class="fw-semibold">
+                                {{ application.desired_class }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <small class="text-muted d-block">
+                                Date Submitted
+                            </small>
+
+                            <span class="fw-semibold">
+                                {{ application.submitted_at|date:"M d, Y H:i" }}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Parent Information -->
+
+            <div class="card border-0 shadow-sm mt-4">
+
+                <div class="card-body p-4">
+
+                    <h5 class="fw-bold mb-4">
+                        Parent / Guardian Information
+                    </h5>
+
+
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+
+                            <small class="text-muted d-block">
+                                Parent Name
+                            </small>
+
+                            <span class="fw-semibold">
+                                {{ application.parent_name }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <small class="text-muted d-block">
+                                Phone
+                            </small>
+
+                            <span class="fw-semibold">
+                                {{ application.parent_phone }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <small class="text-muted d-block">
+                                Email
+                            </small>
+
+                            <span class="fw-semibold">
+                                {{ application.parent_email }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <small class="text-muted d-block">
+                                Occupation
+                            </small>
+
+                            <span class="fw-semibold">
+                                {{ application.parent_occupation|default:"Not provided" }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="col-12">
+
+                            <small class="text-muted d-block">
+                                Address
+                            </small>
+
+                            <span class="fw-semibold">
+                                {{ application.parent_address|default:"Not provided" }}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Application Summary -->
+
+        <div class="col-lg-5">
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <h5 class="fw-bold mb-4">
+                        Application Summary
+                    </h5>
+
+
+                    <div class="mb-3">
+
+                        <small class="text-muted d-block">
+                            Academic Year
+                        </small>
+
+                        <span class="fw-semibold">
+                            {{ application.academic_year }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <small class="text-muted d-block">
+                            Term
+                        </small>
+
+                        <span class="fw-semibold">
+                            {{ application.term }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <small class="text-muted d-block">
+                            Desired Class
+                        </small>
+
+                        <span class="fw-semibold">
+                            {{ application.desired_class }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <small class="text-muted d-block">
+                            Application Status
+                        </small>
+
+                        <span class="fw-semibold">
+                            {{ application.get_status_display }}
+                        </span>
+
+                    </div>
+
+
+                    {% if application.reviewed_at %}
+
+                        <div class="mb-3">
+
+                            <small class="text-muted d-block">
+                                Reviewed
+                            </small>
+
+                            <span class="fw-semibold">
+                                {{ application.reviewed_at|date:"M d, Y H:i" }}
+                            </span>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if application.remarks %}
+
+                        <div class="mt-4">
+
+                            <small class="text-muted d-block mb-1">
+                                Remarks
+                            </small>
+
+                            <div class="bg-light rounded p-3">
+                                {{ application.remarks }}
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <!-- Actions -->
+
+            {% if application.status == "pending" %}
+
+                <div class="card border-0 shadow-sm mt-4">
+
+                    <div class="card-body p-4">
+
+                        <h5 class="fw-bold mb-3">
+                            Application Decision
+                        </h5>
+
+                        <p class="text-muted small">
+                            Review all information carefully before
+                            approving or rejecting this application.
+                        </p>
+
+
+                        <div class="d-grid gap-2">
+
+                            <form
+                                method="post"
+                                action="{% url 'admissions:approve_application' application.id %}"
+                                onsubmit="return confirm('Are you sure you want to approve this admission application?');"
+                            >
+                                {% csrf_token %}
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-success"
+                                >
+                                    <i class="bi bi-check-circle me-2"></i>
+                                    Approve Application
+                                </button>
+
+                            </form>
+
+
+                            <form
+                                method="post"
+                                action="{% url 'admissions:reject_application' application.id %}"
+                                onsubmit="return confirm('Are you sure you want to reject this admission application?');"
+                            >
+                                {% csrf_token %}
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-outline-danger"
+                                >
+                                    <i class="bi bi-x-circle me-2"></i>
+                                    Reject Application
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
