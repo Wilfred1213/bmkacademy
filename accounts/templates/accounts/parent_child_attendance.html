@@ -1,0 +1,292 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Attendance - {{ child.get_full_name }}
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-4">
+
+    <!-- HEADER -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-bold mb-1">
+                {{ child.get_full_name }}
+            </h2>
+
+            {% if enrollment %}
+
+                <p class="text-muted mb-0">
+
+                    {{ enrollment.school_class.name }}
+
+                    —
+                    {{ enrollment.academic_year.name }}
+
+                    —
+                    {{ enrollment.term.name }}
+
+                </p>
+
+            {% else %}
+
+                <p class="text-muted mb-0">
+                    Attendance information
+                </p>
+
+            {% endif %}
+
+        </div>
+
+        <a
+            href="{% url 'accounts:parent_home' %}"
+            class="btn btn-outline-secondary"
+        >
+            <i class="bi bi-arrow-left"></i>
+            Back to Dashboard
+        </a>
+
+    </div>
+
+
+    {% if enrollment %}
+
+        <!-- ATTENDANCE SUMMARY -->
+
+        <div class="row g-3 mb-4">
+
+            <div class="col-md-3">
+
+                <div class="card border-0 shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <p class="text-muted mb-1">
+                            Present
+                        </p>
+
+                        <h3 class="fw-bold text-success mb-0">
+                            {{ statistics.present }}
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-3">
+
+                <div class="card border-0 shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <p class="text-muted mb-1">
+                            Absent
+                        </p>
+
+                        <h3 class="fw-bold text-danger mb-0">
+                            {{ statistics.absent }}
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-3">
+
+                <div class="card border-0 shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <p class="text-muted mb-1">
+                            Late
+                        </p>
+
+                        <h3 class="fw-bold text-warning mb-0">
+                            {{ statistics.late }}
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-3">
+
+                <div class="card border-0 shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <p class="text-muted mb-1">
+                            Attendance Rate
+                        </p>
+
+                        <h3 class="fw-bold text-primary mb-0">
+                            {{ statistics.attendance_rate }}%
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ATTENDANCE RECORDS -->
+
+        <div class="card border-0 shadow-sm">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+
+                    <div>
+
+                        <h5 class="fw-bold mb-1">
+                            Attendance Records
+                        </h5>
+
+                        <p class="text-muted mb-0">
+                            {{ enrollment.term.name }}
+                            attendance
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                {% if records %}
+
+                    <div class="table-responsive">
+
+                        <table class="table table-hover align-middle">
+
+                            <thead class="table-light">
+
+                                <tr>
+
+                                    <th>
+                                        Date
+                                    </th>
+
+                                    <th>
+                                        Status
+                                    </th>
+
+                                    <th>
+                                        Remarks
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                {% for record in records %}
+
+                                    <tr>
+
+                                        <td>
+                                            {{ record.attendance_date|date:"M d, Y" }}
+                                        </td>
+
+                                        <td>
+
+                                            {% if record.status == "present" %}
+
+                                                <span class="badge bg-success">
+                                                    Present
+                                                </span>
+
+                                            {% elif record.status == "absent" %}
+
+                                                <span class="badge bg-danger">
+                                                    Absent
+                                                </span>
+
+                                            {% elif record.status == "late" %}
+
+                                                <span class="badge bg-warning text-dark">
+                                                    Late
+                                                </span>
+
+                                            {% elif record.status == "excused" %}
+
+                                                <span class="badge bg-secondary">
+                                                    Excused
+                                                </span>
+
+                                            {% endif %}
+
+                                        </td>
+
+                                        <td>
+                                            {{ record.remarks|default:"-" }}
+                                        </td>
+
+                                    </tr>
+
+                                {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                {% else %}
+
+                    <div class="text-center py-4">
+
+                        <p class="text-muted mb-0">
+                            No attendance records are available
+                            for this term.
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    {% else %}
+
+        <div class="card border-0 shadow-sm">
+
+            <div class="card-body text-center py-5">
+
+                <h5 class="fw-bold">
+                    No Current Enrollment
+                </h5>
+
+                <p class="text-muted mb-0">
+                    There is no current enrollment information
+                    available for this child.
+                </p>
+
+            </div>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

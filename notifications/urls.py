@@ -25,4 +25,19 @@ urlpatterns = [
         views.mark_all_notifications_as_read,
         name="mark_all_notifications_as_read",
     ),
+    path(
+    "announcements/create/",
+    views.create_announcement,
+    name="create_announcement",
+    ),
+    path(
+    "announcements/",
+    views.announcement_history,
+    name="announcement_history",
+    ),
+    path(
+    "announcements/<uuid:announcement_id>/",
+    views.announcement_detail,
+    name="announcement_detail",
+),
 ]

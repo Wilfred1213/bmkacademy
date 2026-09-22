@@ -353,11 +353,13 @@
 
             <!-- Actions -->
 
-            {% if application.status == "pending" %}
+            <div class="card border-0 shadow-sm mt-4">
 
-                <div class="card border-0 shadow-sm mt-4">
+                <div class="card-body p-4">
 
-                    <div class="card-body p-4">
+                    {% if application.status == "pending" %}
+
+                        <!-- Pending Application -->
 
                         <h5 class="fw-bold mb-3">
                             Application Decision
@@ -368,8 +370,9 @@
                             approving or rejecting this application.
                         </p>
 
-
                         <div class="d-grid gap-2">
+
+                            <!-- Approve -->
 
                             <form
                                 method="post"
@@ -380,7 +383,7 @@
 
                                 <button
                                     type="submit"
-                                    class="btn btn-success"
+                                    class="btn btn-success w-100"
                                 >
                                     <i class="bi bi-check-circle me-2"></i>
                                     Approve Application
@@ -389,16 +392,18 @@
                             </form>
 
 
+                            <!-- Reject -->
+
                             <form
                                 method="post"
                                 action="{% url 'admissions:reject_application' application.id %}"
-                                onsubmit="return confirm('Are you sure you want to reject this admission application?');"
+                                onsubmit="return confirm('Are you sure you want to reject this application?');"
                             >
                                 {% csrf_token %}
 
                                 <button
                                     type="submit"
-                                    class="btn btn-outline-danger"
+                                    class="btn btn-outline-danger w-100"
                                 >
                                     <i class="bi bi-x-circle me-2"></i>
                                     Reject Application
@@ -408,11 +413,236 @@
 
                         </div>
 
-                    </div>
+
+                    {% elif application.status == "approved" %}
+
+                        <!-- Approved Application -->
+
+                        <h5 class="fw-bold mb-3">
+                            Admission Approved
+                        </h5>
+
+
+                        {% if application.claimed_at %}
+
+                            <!-- Parent Already Claimed -->
+
+                            <div class="alert alert-success mb-0">
+
+                                <i class="bi bi-check-circle me-2"></i>
+
+                                The parent has already claimed this
+                                admission and created their account.
+
+                            </div>
+
+
+                        {% else %}
+
+                            <!-- Parent Has Not Claimed -->
+
+                            <p class="text-muted small">
+                                The admission has been approved. The parent
+                                can create their account using the secure
+                                claim link sent by email.
+                            </p>
+
+
+                            <div class="d-grid gap-2">
+
+
+                                <!-- Resend Existing Claim Link -->
+
+                                <form
+                                    method="post"
+                                    action="{% url 'admissions:resend_admission_email' application.id %}"
+                                    onsubmit="return confirm('Resend the existing admission claim link to the parent?');"
+                                >
+                                    {% csrf_token %}
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-outline-primary w-100"
+                                    >
+                                        <i class="bi bi-envelope me-2"></i>
+                                        Resend Admission Email
+                                    </button>
+
+                                </form>
+
+
+                                <!-- Generate New Claim Link -->
+
+                                <form
+                                    method="post"
+                                    action="{% url 'admissions:regenerate_claim_token' application.id %}"
+                                    onsubmit="return confirm('Generate a new claim link? The previous claim link will no longer be valid.');"
+                                >
+                                    {% csrf_token %}
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-outline-warning w-100"
+                                    >
+                                        <i class="bi bi-arrow-repeat me-2"></i>
+                                        Generate New Claim Link
+                                    </button>
+
+                                </form>
+                                <div class="text-muted small mb-2">
+                                    <i class="bi bi-info-circle me-1"></i>
+                                    Resends the existing admission email and claim link to the
+                                    parent's email address. The current claim link remains valid.
+                                </div>
+
+                            </div>
+
+                        {% endif %}
+
+
+                    {% elif application.status == "rejected" %}
+
+                        <!-- Rejected Application -->
+
+                        <h5 class="fw-bold mb-3">
+                            Application Rejected
+                        </h5>
+
+                        <div class="alert alert-danger mb-0">
+
+                            <i class="bi bi-x-circle me-2"></i>
+
+                            This admission application has been rejected.
+
+                        </div>
+
+                    {% endif %}
 
                 </div>
 
-            {% endif %}
+            </div>
+
+
+            <!-- Admission Email Status -->
+
+            <div class="card border-0 shadow-sm mt-4">
+
+                <div class="card-header bg-white">
+
+                    <strong>
+                        <i class="bi bi-envelope me-2"></i>
+                        Admission Email Status
+                    </strong>
+
+                </div>
+
+
+                <div class="card-body">
+
+                    <!-- Email Status -->
+
+                    <p class="mb-3">
+
+                        <strong>
+                            Status:
+                        </strong>
+                    
+                        {% if application.admission_email_sent %}
+                    
+                            <span class="badge bg-success">
+                                <i class="bi bi-check-circle me-1"></i>
+                                Sent Successfully
+                            </span>
+                    
+                        {% elif application.admission_email_last_error %}
+                    
+                            <span class="badge bg-danger">
+                                <i class="bi bi-exclamation-triangle me-1"></i>
+                                Delivery Failed
+                            </span>
+                    
+                        {% else %}
+                    
+                            <span class="badge bg-warning text-dark">
+                                <i class="bi bi-clock me-1"></i>
+                                Not Sent
+                            </span>
+                    
+                        {% endif %}
+                    
+                    </p>
+
+
+                    <!-- Attempts -->
+
+                    <p class="mb-3">
+
+                        <strong>
+                            Attempts:
+                        </strong>
+
+                        {{ application.admission_email_attempts }}
+
+                    </p>
+
+
+                    <!-- Last Successful Send -->
+
+                    {% if application.admission_email_sent_at %}
+
+                        <p class="mb-3">
+
+                            <strong>
+                                Last Successful Send:
+                            </strong>
+
+                            {{ application.admission_email_sent_at|date:"M d, Y H:i" }}
+
+                        </p>
+
+                    {% endif %}
+
+
+                    <!-- Last Error -->
+
+                    {% if application.admission_email_last_error %}
+
+                        <div class="alert alert-danger">
+
+                            <div class="fw-semibold mb-2">
+
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                The admission email could not be delivered.
+
+                            </div>
+
+                            <div class="small mb-3">
+
+                                The admission itself is still valid. You can use
+                                <strong>Resend Admission Email</strong> to try sending
+                                the existing claim link again.
+
+                            </div>
+
+                            <hr>
+
+                            <div class="small">
+
+                                <strong>Technical Error:</strong>
+
+                                <div class="mt-1">
+                                    {{ application.admission_email_last_error }}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
 
         </div>
 

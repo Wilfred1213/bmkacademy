@@ -22,13 +22,27 @@
 
     <div class="d-flex gap-2">
 
-        <a
-            href="{% url 'fees:payment_history' invoice.id %}"
-            class="btn btn-outline-secondary"
-        >
-            ← Payment History
-        </a>
-
+        {% if from_parent %}
+    
+            <a
+                href="{% url 'accounts:parent_invoice_payment_history' invoice.id %}"
+                class="btn btn-outline-secondary"
+            >
+                ← Payment History
+            </a>
+    
+        {% else %}
+    
+            <a
+                href="{% url 'fees:payment_history' invoice.id %}"
+                class="btn btn-outline-secondary"
+            >
+                ← Payment History
+            </a>
+    
+        {% endif %}
+    
+    
         <button
             type="button"
             onclick="window.print()"
@@ -36,7 +50,7 @@
         >
             Print Receipt
         </button>
-
+    
     </div>
 
 </div>
@@ -153,6 +167,17 @@
                             {{ invoice.enrollment.academic_year }}
                         </td>
 
+                    </tr>
+                    <tr>
+
+                        <th>
+                            Term
+                        </th>
+                    
+                        <td>
+                            {{ invoice.enrollment.term }}
+                        </td>
+                    
                     </tr>
 
 
@@ -297,31 +322,61 @@
 
 <style>
 
-@media print {
-
-    body {
-        background: white !important;
+    @media print {
+    
+        body {
+            background: white !important;
+        }
+    
+        nav,
+        footer,
+        .no-print,
+        .btn {
+            display: none !important;
+        }
+    
+        .container,
+        .container-fluid {
+            width: 100% !important;
+            max-width: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+    
+        .card {
+            border: none !important;
+            box-shadow: none !important;
+        }
+    
+        .card-body {
+            padding: 0 !important;
+        }
+    
+        .table {
+            border-color: #000 !important;
+        }
+    
+        .table th,
+        .table td {
+            border-color: #000 !important;
+        }
+    
+        .text-success,
+        .text-danger {
+            color: #000 !important;
+        }
+    
+        .text-muted {
+            color: #000 !important;
+        }
+    
+        @page {
+            margin: 15mm;
+        }
+    
     }
-
-    nav,
-    footer,
-    .btn,
-    .text-muted {
-        /* Keep receipt clean when printing */
-    }
-
-    .card {
-        border: none !important;
-        box-shadow: none !important;
-    }
-
-    .card-body {
-        padding: 0 !important;
-    }
-
-}
-
-</style>
+    
+    </style>
 
 
 {% endblock %}

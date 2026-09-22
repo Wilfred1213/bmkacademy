@@ -8,42 +8,68 @@ Notifications - BMK Academy
 
 <div class="container py-4">
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-
-    <div>
-
-        <h2 class="fw-bold mb-1">
-            Notifications
-        </h2>
-
-        <p class="text-muted mb-0">
-            Stay updated with important school activities.
-        </p>
-
+    
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+    
+        <div>
+            <h2 class="fw-bold mb-1">
+                Notifications
+            </h2>
+    
+            <p class="text-muted mb-0">
+                Stay updated with important school activities.
+            </p>
+        </div>
+    
+    
+        <div class="d-flex flex-column flex-sm-row gap-2">
+    
+            {% if request.user.role == "admin" %}
+    
+                <a
+                    href="{% url 'notifications:create_announcement' %}"
+                    class="btn btn-primary"
+                >
+                    <i class="bi bi-megaphone me-2"></i>
+                    Send Announcement
+                </a>
+    
+                <a
+                    href="{% url 'notifications:announcement_history' %}"
+                    class="btn btn-outline-secondary"
+                >
+                    <i class="bi bi-clock-history me-2"></i>
+                    Announcement History
+                </a>
+    
+            {% endif %}
+    
+    
+            {% if unread_count %}
+    
+                <form
+                    method="post"
+                    action="{% url 'notifications:mark_all_notifications_as_read' %}"
+                    class="m-0"
+                >
+    
+                    {% csrf_token %}
+    
+                    <button
+                        type="submit"
+                        class="btn btn-outline-primary w-100"
+                    >
+                        Mark all as read
+                    </button>
+    
+                </form>
+    
+            {% endif %}
+    
+        </div>
+    
     </div>
-
-    {% if unread_count %}
-
-        <form
-            method="post"
-            action="{% url 'notifications:mark_all_notifications_as_read' %}"
-        >
-
-            {% csrf_token %}
-
-            <button
-                type="submit"
-                class="btn btn-outline-primary"
-            >
-                Mark all as read
-            </button>
-
-        </form>
-
-    {% endif %}
-
-</div>
-
+    
 
 {% if notifications %}
 
@@ -60,7 +86,7 @@ Notifications - BMK Academy
 
                 <div class="d-flex justify-content-between align-items-start">
 
-                    <div>
+                    <div class="me-3">
 
                         <h5 class="mb-1 fw-semibold">
 
@@ -91,11 +117,28 @@ Notifications - BMK Academy
                     </div>
 
 
-                    {% if not notification.is_read %}
+                    {% if notification.link %}
 
                         <a
                             href="{% url 'notifications:mark_notification_as_read' notification.id %}"
-                            class="btn btn-sm btn-outline-secondary"
+                            class="btn btn-sm btn-outline-primary text-nowrap"
+                        >
+
+                            {% if notification.is_read %}
+                                <i class="bi bi-eye me-1"></i>
+                                View
+                            {% else %}
+                                <i class="bi bi-arrow-right-circle me-1"></i>
+                                View
+                            {% endif %}
+
+                        </a>
+
+                    {% elif not notification.is_read %}
+
+                        <a
+                            href="{% url 'notifications:mark_notification_as_read' notification.id %}"
+                            class="btn btn-sm btn-outline-secondary text-nowrap"
                         >
                             Mark as read
                         </a>
@@ -129,6 +172,7 @@ Notifications - BMK Academy
     </div>
 
 {% endif %}
+
 
 </div>
 

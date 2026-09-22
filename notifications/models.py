@@ -1,9 +1,10 @@
+import uuid
+
 from django.conf import settings
 from django.db import models
 
 
 class Notification(models.Model):
-
     NOTIFICATION_TYPES = [
         ("general", "General"),
         ("admission", "Admission"),
@@ -18,9 +19,7 @@ class Notification(models.Model):
         related_name="notifications",
     )
 
-    title = models.CharField(
-        max_length=200
-    )
+    title = models.CharField(max_length=200)
 
     message = models.TextField()
 
@@ -30,9 +29,23 @@ class Notification(models.Model):
         default="general",
     )
 
-    is_read = models.BooleanField(
-        default=False
+    recipient_group = models.CharField(
+        max_length=20,
+        blank=True,
     )
+
+    announcement_id = models.UUIDField(
+        null=True,
+        blank=True,
+        db_index=True,
+    )
+
+    link = models.CharField(
+        max_length=500,
+        blank=True,
+    )
+
+    is_read = models.BooleanField(default=False)
 
     created_at = models.DateTimeField(
         auto_now_add=True
@@ -40,7 +53,7 @@ class Notification(models.Model):
 
     read_at = models.DateTimeField(
         null=True,
-        blank=True
+        blank=True,
     )
 
     class Meta:

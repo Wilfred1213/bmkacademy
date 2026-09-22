@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-6">
+
+            <div class="alert alert-success text-center">
+
+                <h4>Claim Link Verified</h4>
+
+                <p>
+                    The claim link for
+                    <strong>
+                        {{ application.first_name }}
+                        {{ application.last_name }}
+                    </strong>
+                    is valid.
+                </p>
+
+                <p>
+                    Username:
+                    <strong>{{ username }}</strong>
+                </p>
+
+                <p class="mb-0">
+                    The next step is to create your BMK Academy
+                    parent account.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

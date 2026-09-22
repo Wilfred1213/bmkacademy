@@ -2,6 +2,8 @@ from django.conf import settings
 from django.db import models
 from django.core.exceptions import ValidationError
 
+import uuid
+
 class AdmissionApplication(models.Model):
 
     STATUS_CHOICES = [
@@ -83,6 +85,13 @@ class AdmissionApplication(models.Model):
         max_length=200,
         blank=True
     )
+    student = models.OneToOneField(
+        "students.Student",
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name="admission_application",
+    )
 
     # --------------------------------------------------
     # PARENT / GUARDIAN INFORMATION
@@ -133,6 +142,44 @@ class AdmissionApplication(models.Model):
 
     remarks = models.TextField(
         blank=True
+    )
+
+    # --------------------------------------------------
+    # APPLICATION TOKEN
+    # --------------------------------------------------
+
+    claim_token = models.UUIDField(
+        # default=uuid.uuid4,
+        # unique=True,
+        editable=False,
+        null=True,
+        blank=True,
+    )
+
+    claim_token_expires_at = models.DateTimeField(
+        null=True,
+        blank=True,
+    )
+
+    claimed_at = models.DateTimeField(
+        null=True,
+        blank=True,
+    )
+    admission_email_sent = models.BooleanField(
+        default=False
+    )
+
+    admission_email_sent_at = models.DateTimeField(
+        null=True,
+        blank=True,
+    )
+
+    admission_email_attempts = models.PositiveIntegerField(
+        default=0
+    )
+
+    admission_email_last_error = models.TextField(
+        blank=True,
     )
 
     def __str__(self):

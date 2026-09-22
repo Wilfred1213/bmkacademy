@@ -9,9 +9,11 @@
 <div class="container-fluid py-4">
 
     <!-- Header -->
+
     <div class="d-flex justify-content-between align-items-center mb-4">
 
         <div>
+
             <h2 class="fw-bold mb-1">
                 Admission Applications
             </h2>
@@ -19,7 +21,9 @@
             <p class="text-muted mb-0">
                 Review and manage student admission applications.
             </p>
+
         </div>
+
 
         <a
             href="{% url 'admissions:admission_application' %}"
@@ -33,6 +37,7 @@
 
 
     <!-- Applications -->
+
     <div class="card border-0 shadow-sm">
 
         <div class="card-body p-0">
@@ -46,24 +51,51 @@
                         <thead class="table-light">
 
                             <tr>
-                                <th class="px-4">Applicant</th>
-                                <th>Class</th>
-                                <th>Academic Year</th>
-                                <th>Term</th>
-                                <th>Status</th>
-                                <th>Submitted</th>
+
+                                <th class="px-4">
+                                    Applicant
+                                </th>
+
+                                <th>
+                                    Class
+                                </th>
+
+                                <th>
+                                    Academic Year
+                                </th>
+
+                                <th>
+                                    Term
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    Email
+                                </th>
+
+                                <th>
+                                    Submitted
+                                </th>
+
                                 <th class="text-end px-4">
                                     Action
                                 </th>
+
                             </tr>
 
                         </thead>
+
 
                         <tbody>
 
                             {% for application in applications %}
 
                                 <tr>
+
+                                    <!-- Applicant -->
 
                                     <td class="px-4">
 
@@ -79,20 +111,28 @@
                                     </td>
 
 
+                                    <!-- Class -->
+
                                     <td>
                                         {{ application.desired_class }}
                                     </td>
 
+
+                                    <!-- Academic Year -->
 
                                     <td>
                                         {{ application.academic_year }}
                                     </td>
 
 
+                                    <!-- Term -->
+
                                     <td>
                                         {{ application.term }}
                                     </td>
 
+
+                                    <!-- Application Status -->
 
                                     <td>
 
@@ -119,10 +159,47 @@
                                     </td>
 
 
+                                    <!-- Email Status -->
+
+                                    <td>
+
+                                        {% if application.status == "pending" %}
+
+                                            <span class="text-muted">
+                                                —
+                                            </span>
+
+                                        {% elif application.admission_email_sent %}
+
+                                            <span class="badge text-bg-success">
+                                                Sent
+                                            </span>
+
+                                        {% elif application.admission_email_last_error %}
+
+                                            <span class="badge text-bg-danger">
+                                                Failed
+                                            </span>
+
+                                        {% else %}
+
+                                            <span class="badge text-bg-warning">
+                                                Not Sent
+                                            </span>
+
+                                        {% endif %}
+
+                                    </td>
+
+
+                                    <!-- Submitted -->
+
                                     <td>
                                         {{ application.submitted_at|date:"M d, Y" }}
                                     </td>
 
+
+                                    <!-- Action -->
 
                                     <td class="text-end px-4">
 
@@ -130,6 +207,7 @@
                                             href="{% url 'admissions:admission_detail' application.id %}"
                                             class="btn btn-sm btn-outline-primary"
                                         >
+                                            <i class="bi bi-eye me-1"></i>
                                             View
                                         </a>
 
@@ -150,7 +228,9 @@
                 <div class="text-center py-5">
 
                     <div class="mb-3">
+
                         <i class="bi bi-inbox fs-1 text-muted"></i>
+
                     </div>
 
                     <h5 class="fw-semibold">

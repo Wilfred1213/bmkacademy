@@ -182,6 +182,51 @@ class FeeService:
             "total_paid": total_paid,
             "outstanding": outstanding,
         }
+
+
+    @staticmethod
+    def get_enrollment_fee_summary(enrollment):
+
+        invoices = (
+            FeeInvoice.objects
+            .filter(
+                enrollment=enrollment,
+            )
+            .exclude(
+                status="cancelled",
+            )
+        )
+
+        total_invoiced = (
+            invoices.aggregate(
+                total=Sum("amount")
+            )["total"]
+            or Decimal("0.00")
+        )
+
+        total_paid = (
+            Payment.objects
+            .filter(
+                invoice__in=invoices,
+            )
+            .aggregate(
+                total=Sum("amount")
+            )["total"]
+            or Decimal("0.00")
+        )
+
+        outstanding = (
+            total_invoiced - total_paid
+        )
+
+        return {
+            "total_invoiced": total_invoiced,
+            "total_paid": total_paid,
+            "outstanding": max(
+                outstanding,
+                Decimal("0.00"),
+            ),
+        }
     @staticmethod
     @transaction.atomic
     def cancel_invoice(invoice):

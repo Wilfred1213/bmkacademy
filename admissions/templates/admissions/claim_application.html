@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block title %}Create Parent Account - BMK Academy{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-7 col-lg-6">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <div class="text-center mb-4">
+
+                        <h3 class="fw-bold">
+                            Create Your Parent Account
+                        </h3>
+
+                        <p class="text-muted mb-0">
+                            BMK Academy
+                        </p>
+
+                    </div>
+
+                    <div class="alert alert-success">
+
+                        <strong>
+                            Admission Approved
+                        </strong>
+
+                        <br>
+
+                        The admission application for
+
+                        <strong>
+                            {{ application.first_name }}
+                            {{ application.middle_name }}
+                            {{ application.last_name }}
+                        </strong>
+
+                        has been approved.
+
+                    </div>
+
+                    <p>
+                        Please create your username and password
+                        below to access the BMK Academy Parent Portal.
+                    </p>
+
+                    {% if form.non_field_errors %}
+
+                        <div class="alert alert-danger">
+
+                            {{ form.non_field_errors }}
+
+                        </div>
+
+                    {% endif %}
+
+                    <form method="post">
+
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Username
+                            </label>
+
+                            {{ form.username }}
+
+                            {% for error in form.username.errors %}
+
+                                <div class="text-danger small">
+                                    {{ error }}
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Password
+                            </label>
+
+                            {{ form.password }}
+
+                            {% for error in form.password.errors %}
+
+                                <div class="text-danger small">
+                                    {{ error }}
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Confirm Password
+                            </label>
+
+                            {{ form.confirm_password }}
+
+                            {% for error in form.confirm_password.errors %}
+
+                                <div class="text-danger small">
+                                    {{ error }}
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary w-100"
+                        >
+                            Create Parent Account
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

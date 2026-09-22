@@ -100,7 +100,39 @@ urlpatterns = [
     "parent/report/<int:enrollment_id>/",
     views.parent_view_report,
     name="parent_view_report",
+    ),
+    path(
+    "parent/child/<int:student_id>/attendance/",
+    views.parent_child_attendance,
+    name="parent_child_attendance",
+    ),
+    path(
+    "parent/child/<int:student_id>/fees/",
+    views.parent_child_fees,
+    name="parent_child_fees",
+    ),
+    path(
+    "parent/invoice/<int:invoice_id>/payments/",
+    views.parent_invoice_payment_history,
+    name="parent_invoice_payment_history",
+    ),
+    path(
+    "parent/payment/<int:payment_id>/receipt/",
+    views.parent_payment_receipt,
+    name="parent_payment_receipt",
+    ),
+    path(
+    "parent/profile/",
+    views.parent_profile,
+    name="parent_profile",
+    ),
+    path(
+    "parent/change-password/",
+    views.parent_change_password,
+    name="parent_change_password",
 ),
+
+
     
 
 ]

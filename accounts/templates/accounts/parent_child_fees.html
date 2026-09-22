@@ -1,0 +1,285 @@
+{% extends "base.html" %}
+
+{% block title %}
+Fees - {{ child.get_full_name }}
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-4">
+
+
+<!-- HEADER -->
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+
+        <h2 class="fw-bold mb-1">
+            {{ child.get_full_name }}
+        </h2>
+
+        {% if enrollment %}
+
+            <p class="text-muted mb-0">
+                {{ enrollment.school_class.name }}
+                —
+                {{ enrollment.academic_year.name }}
+                —
+                {{ enrollment.term.name }}
+            </p>
+
+        {% else %}
+
+            <p class="text-muted mb-0">
+                Fee information
+            </p>
+
+        {% endif %}
+
+    </div>
+
+    <a
+        href="{% url 'accounts:parent_home' %}"
+        class="btn btn-outline-secondary"
+    >
+        <i class="bi bi-arrow-left"></i>
+        Back to Dashboard
+    </a>
+
+</div>
+
+
+{% if enrollment %}
+
+    <!-- FEE SUMMARY -->
+
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-4">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <p class="text-muted mb-1">
+                        Total Invoiced
+                    </p>
+
+                    <h3 class="fw-bold mb-0">
+                        ₦{{ fee_summary.total_invoiced|floatformat:2 }}
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <p class="text-muted mb-1">
+                        Total Paid
+                    </p>
+
+                    <h3 class="fw-bold text-success mb-0">
+                        ₦{{ fee_summary.total_paid|floatformat:2 }}
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <p class="text-muted mb-1">
+                        Outstanding
+                    </p>
+
+                    <h3 class="fw-bold text-danger mb-0">
+                        ₦{{ fee_summary.outstanding|floatformat:2 }}
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- INVOICES -->
+
+    <div class="card border-0 shadow-sm">
+
+        <div class="card-body">
+
+            <div class="mb-3">
+
+                <h5 class="fw-bold mb-1">
+                    Fee Invoices
+                </h5>
+
+                <p class="text-muted mb-0">
+                    Fees assigned for
+                    {{ enrollment.term.name }}
+                </p>
+
+            </div>
+
+
+            {% if invoices %}
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover align-middle">
+
+                        <thead class="table-light">
+
+                            <tr>
+
+                                <th>
+                                    Description
+                                </th>
+
+                                <th>
+                                    Amount
+                                </th>
+
+                                <th>
+                                    Due Date
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+                                <th>
+                                    Action
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for invoice in invoices %}
+
+                                <tr>
+
+                                    <td>
+                                        {{ invoice.description }}
+                                    </td>
+
+                                    <td>
+                                        ₦{{ invoice.amount|floatformat:2 }}
+                                    </td>
+
+                                    <td>
+                                        {{ invoice.due_date|date:"M d, Y" }}
+                                    </td>
+
+                                    <td>
+
+                                        {% if invoice.status == "paid" %}
+
+                                            <span class="badge bg-success">
+                                                Paid
+                                            </span>
+
+                                        {% elif invoice.status == "partial" %}
+
+                                            <span class="badge bg-warning text-dark">
+                                                Partially Paid
+                                            </span>
+
+                                        {% elif invoice.status == "unpaid" %}
+
+                                            <span class="badge bg-danger">
+                                                Unpaid
+                                            </span>
+
+                                        {% else %}
+
+                                            <span class="badge bg-secondary">
+                                                {{ invoice.get_status_display }}
+                                            </span>
+
+                                        {% endif %}
+
+                                    </td>
+                                    <td>
+                                        <a
+                                            href="{% url 'accounts:parent_invoice_payment_history' invoice.id %}"
+                                            class="btn btn-sm btn-outline-primary"
+                                        >
+                                            <i class="bi bi-clock-history"></i>
+                                            Payment History
+                                        </a>
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            {% else %}
+
+                <div class="text-center py-4">
+
+                    <p class="text-muted mb-0">
+                        No fees have been assigned for this term.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+{% else %}
+
+    <div class="card border-0 shadow-sm">
+
+        <div class="card-body text-center py-5">
+
+            <h5 class="fw-bold">
+                No Current Enrollment
+            </h5>
+
+            <p class="text-muted mb-0">
+                There is no current enrollment information
+                available for this child.
+            </p>
+
+        </div>
+
+    </div>
+
+{% endif %}
+
+
+</div>
+
+{% endblock %}

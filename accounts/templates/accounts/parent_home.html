@@ -8,84 +8,160 @@
 
 <div class="container py-4">
 
+    <!-- PAGE HEADER -->
+
     <div class="mb-4">
-        <h2 class="fw-bold">
+
+        <h2 class="fw-bold mb-1">
             Parent Dashboard
         </h2>
 
-        <p class="text-muted">
+        <p class="text-muted mb-0">
             Welcome,
             {{ request.user.get_full_name|default:request.user.username }}.
         </p>
+        <a
+            href="{% url 'accounts:parent_profile' %}"
+            class="btn btn-outline-primary"
+        >
+            <i class="bi bi-person"></i>
+            My Profile
+        </a>
+
     </div>
+    <!-- NOTIFICATIONS -->
 
-    <div class="card border-0 shadow-sm">
+    <div class="card border-0 shadow-sm mb-4">
 
-        <div class="card-body">
+        <div class="card-body p-4">
 
-            <h5 class="fw-bold mb-3">
-                My Children
-            </h5>
+            <div class="d-flex justify-content-between align-items-center mb-3">
 
-            {% if children %}
+                <div>
 
-                <div class="table-responsive">
+                    <h5 class="fw-bold mb-1">
+                        Notifications
+                    </h5>
 
-                    <table class="table table-hover align-middle">
-
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Admission Number</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                    
-                        <tbody>
-                    
-                            {% for child in children %}
-                    
-                                <tr>
-                    
-                                    <td>
-                                        {{ child.first_name }}
-                                        {{ child.middle_name }}
-                                        {{ child.last_name }}
-                                    </td>
-                    
-                                    <td>
-                                        {{ child.admission_number }}
-                                    </td>
-                    
-                                    <td>
-                                        {{ child.get_status_display }}
-                                    </td>
-                    
-                                    <td>
-                                        <a
-                                            href="{% url 'accounts:parent_child_reports' child.id %}"
-                                            class="btn btn-sm btn-primary"
-                                        >
-                                            <i class="bi bi-file-earmark-text"></i>
-                                            View Reports
-                                        </a>
-                                    </td>
-                    
-                                </tr>
-                    
-                            {% endfor %}
-                    
-                        </tbody>
-                    
-                    </table>
+                    <p class="text-muted mb-0">
+                        Important school updates
+                    </p>
 
                 </div>
 
+
+                <a
+                    href="{% url 'notifications:notification_list' %}"
+                    class="btn btn-sm btn-outline-primary"
+                >
+                    View All
+                </a>
+
+            </div>
+
+
+            {% if notifications %}
+
+                <div class="list-group list-group-flush">
+
+                    {% for notification in notifications %}
+
+                        <div
+                            class="list-group-item px-0
+                            {% if not notification.is_read %}
+                                bg-light
+                            {% endif %}"
+                        >
+
+                            <div class="d-flex justify-content-between align-items-start gap-3">
+
+                                <div class="flex-grow-1">
+
+                                    <div class="d-flex align-items-center gap-2 mb-1">
+
+                                        <h6 class="fw-bold mb-0">
+
+                                            {{ notification.title }}
+
+                                        </h6>
+
+
+                                        {% if not notification.is_read %}
+
+                                            <span class="badge bg-primary">
+                                                New
+                                            </span>
+
+                                        {% endif %}
+
+                                    </div>
+
+
+                                    <p class="mb-1">
+
+                                        {{ notification.message }}
+
+                                    </p>
+
+
+                                    <small class="text-muted">
+
+                                        {{ notification.created_at|date:"M d, Y - h:i A" }}
+
+                                    </small>
+
+                                </div>
+
+
+                                {% if not notification.is_read %}
+
+                                    <a
+                                        href="{% url 'notifications:mark_notification_as_read' notification.id %}"
+                                        class="btn btn-sm btn-outline-secondary"
+                                    >
+                                        Read
+                                    </a>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                {% if unread_notification_count %}
+
+                    <div class="mt-3">
+
+                        <small class="text-primary">
+
+                            You have
+                            {{ unread_notification_count }}
+                            unread notification{{ unread_notification_count|pluralize }}.
+
+                        </small>
+
+                    </div>
+
+                {% endif %}
+
+
             {% else %}
 
-                <div class="alert alert-info mb-0">
-                    No children are currently linked to your account.
+                <div class="text-center py-4">
+
+                    <i class="bi bi-bell fs-1 text-muted"></i>
+
+                    <p class="text-muted mt-2 mb-0">
+
+                        You have no notifications.
+
+                    </p>
+
                 </div>
 
             {% endif %}
@@ -93,6 +169,468 @@
         </div>
 
     </div>
+
+
+    {% if children %}
+
+        <!-- CHILDREN -->
+
+        {% for child in children %}
+
+            <div class="card border-0 shadow-sm mb-4">
+
+                <div class="card-body p-4">
+
+
+                    <!-- CHILD HEADER -->
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+
+                        <div>
+
+                            <h4 class="fw-bold mb-1">
+
+                                {{ child.first_name }}
+
+                                {% if child.middle_name %}
+                                    {{ child.middle_name }}
+                                {% endif %}
+
+                                {{ child.last_name }}
+
+                            </h4>
+
+                            <small class="text-muted">
+
+                                Admission No:
+                                {{ child.admission_number }}
+
+                            </small>
+
+                        </div>
+
+
+                        <span class="badge bg-primary">
+
+                            {{ child.status|title }}
+
+                        </span>
+
+                    </div>
+
+
+                    {% if child.current_enrollment %}
+
+
+                        <!-- ACADEMIC INFORMATION -->
+
+                        <div class="row g-3 mb-4">
+
+
+                            <div class="col-md-4">
+
+                                <div class="border rounded p-3 h-100">
+
+                                    <small class="text-muted">
+                                        Current Class
+                                    </small>
+
+                                    <h6 class="fw-bold mb-0 mt-1">
+
+                                        {{ child.current_enrollment.school_class }}
+
+                                    </h6>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-md-4">
+
+                                <div class="border rounded p-3 h-100">
+
+                                    <small class="text-muted">
+                                        Academic Year
+                                    </small>
+
+                                    <h6 class="fw-bold mb-0 mt-1">
+
+                                        {{ child.current_enrollment.academic_year }}
+
+                                    </h6>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-md-4">
+
+                                <div class="border rounded p-3 h-100">
+
+                                    <small class="text-muted">
+                                        Current Term
+                                    </small>
+
+                                    <h6 class="fw-bold mb-0 mt-1">
+
+                                        {{ child.current_enrollment.term }}
+
+                                    </h6>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <!-- SUMMARY CARDS -->
+
+                        <div class="row g-3 mb-4">
+
+
+                            <!-- ATTENDANCE -->
+
+                            <div class="col-md-6 col-lg-3">
+
+                                <div class="card border-0 bg-light h-100">
+
+                                    <div class="card-body">
+
+                                        <small class="text-muted">
+                                            Attendance
+                                        </small>
+
+
+                                        {% if child.attendance_statistics %}
+
+                                            <h3 class="fw-bold mb-1">
+
+                                                {{ child.attendance_statistics.attendance_rate }}%
+
+                                            </h3>
+
+                                            <small class="text-muted">
+
+                                                {{ child.attendance_statistics.present }}
+                                                present /
+                                                {{ child.attendance_statistics.total }}
+                                                recorded
+
+                                            </small>
+
+                                        {% else %}
+
+                                            <h3 class="fw-bold mb-1">
+                                                —
+                                            </h3>
+
+                                            <small class="text-muted">
+                                                No attendance record
+                                            </small>
+
+                                        {% endif %}
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- REPORTS -->
+
+                            <div class="col-md-6 col-lg-3">
+
+                                <div class="card border-0 bg-light h-100">
+
+                                    <div class="card-body">
+
+                                        <small class="text-muted">
+                                            Published Reports
+                                        </small>
+
+                                        <h3 class="fw-bold mb-1">
+
+                                            {{ child.published_report_count }}
+
+                                        </h3>
+
+                                        <small class="text-muted">
+
+                                            Available report{{ child.published_report_count|pluralize }}
+
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- FEES -->
+
+                            <div class="col-md-6 col-lg-3">
+
+                                <div class="card border-0 bg-light h-100">
+
+                                    <div class="card-body">
+
+                                        <small class="text-muted">
+                                            Fees
+                                        </small>
+
+
+                                        {% if child.fee_summary.total_invoiced > 0 %}
+
+                                            <h5 class="fw-bold mb-1 mt-2">
+
+                                                ₦{{ child.fee_summary.total_paid|floatformat:2 }}
+
+                                            </h5>
+
+                                            <small class="text-muted">
+
+                                                Paid of
+                                                ₦{{ child.fee_summary.total_invoiced|floatformat:2 }}
+
+                                            </small>
+
+
+                                            <div class="mt-2">
+
+                                                {% if child.fee_summary.outstanding > 0 %}
+
+                                                    <span class="text-danger">
+
+                                                        Balance:
+                                                        ₦{{ child.fee_summary.outstanding|floatformat:2 }}
+
+                                                    </span>
+
+                                                {% else %}
+
+                                                    <span class="text-success">
+
+                                                        Fully Paid
+
+                                                    </span>
+
+                                                {% endif %}
+
+                                            </div>
+
+
+                                        {% else %}
+
+                                            <h5 class="fw-bold mb-1 mt-2">
+
+                                                ₦0.00
+
+                                            </h5>
+
+                                            <small class="text-muted">
+
+                                                No fees assigned
+
+                                            </small>
+
+                                        {% endif %}
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- ATTENDANCE STATUS -->
+
+                            <div class="col-md-6 col-lg-3">
+
+                                <div class="card border-0 bg-light h-100">
+
+                                    <div class="card-body">
+
+                                        <small class="text-muted">
+                                            Attendance Status
+                                        </small>
+
+
+                                        {% if child.attendance_statistics %}
+
+
+                                            {% if child.attendance_statistics.attendance_rate >= 90 %}
+
+                                                <h5 class="text-success mt-2 mb-0">
+
+                                                    Excellent
+
+                                                </h5>
+
+                                            {% elif child.attendance_statistics.attendance_rate >= 75 %}
+
+                                                <h5 class="text-warning mt-2 mb-0">
+
+                                                    Good
+
+                                                </h5>
+
+                                            {% else %}
+
+                                                <h5 class="text-danger mt-2 mb-0">
+
+                                                    Needs Attention
+
+                                                </h5>
+
+                                            {% endif %}
+
+
+                                        {% else %}
+
+                                            <h5 class="text-muted mt-2 mb-0">
+
+                                                No Data
+
+                                            </h5>
+
+                                        {% endif %}
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <!-- QUICK ACTIONS -->
+
+                        <div>
+
+                            <h6 class="fw-bold mb-3">
+                                Quick Actions
+                            </h6>
+
+
+                            <div class="d-flex gap-2 flex-wrap">
+
+
+                                <a
+                                    href="{% url 'accounts:parent_child_reports' child.id %}"
+                                    class="btn btn-outline-primary"
+                                >
+
+                                    <i class="bi bi-file-earmark-text"></i>
+
+                                    Reports
+
+                                </a>
+
+
+                                <a
+                                    href="{% url 'accounts:parent_child_attendance' child.id %}"
+                                    class="btn btn-outline-info"
+                                >
+
+                                    <i class="bi bi-calendar-check"></i>
+
+                                    Attendance
+
+                                </a>
+
+
+                                <a
+                                    href="{% url 'accounts:parent_child_fees' child.id %}"
+                                    class="btn btn-outline-success"
+                                >
+
+                                    <i class="bi bi-cash-stack"></i>
+
+                                    Fees
+
+                                </a>
+
+
+                            </div>
+
+                        </div>
+
+
+                    {% else %}
+
+
+                        <!-- NO ENROLLMENT -->
+
+                        <div class="alert alert-warning mb-0">
+
+                            <i class="bi bi-exclamation-triangle"></i>
+
+                            This student does not currently have
+                            an active enrollment.
+
+                        </div>
+
+
+                    {% endif %}
+
+
+                </div>
+
+            </div>
+
+
+        {% empty %}
+
+
+            <div class="alert alert-info">
+
+                <i class="bi bi-info-circle"></i>
+
+                You currently have no children linked to your
+                parent account.
+
+            </div>
+
+
+        {% endfor %}
+
+
+    {% else %}
+
+
+        <div class="card border-0 shadow-sm">
+
+            <div class="card-body text-center py-5">
+
+                <i class="bi bi-people fs-1 text-muted"></i>
+
+                <h5 class="fw-bold mt-3">
+
+                    No Children Linked
+
+                </h5>
+
+                <p class="text-muted mb-0">
+
+                    No children are currently linked to your
+                    parent account.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+    {% endif %}
 
 </div>
 

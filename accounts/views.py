@@ -23,7 +23,15 @@ from teachers.models import Teacher
 from admissions.models import AdmissionApplication
 from results.models import StudentTermReport
 from django.core.exceptions import PermissionDenied
-
+from decimal import Decimal
+from results.models import StudentTermReport
+from attendance.services import AttendanceService
+from fees.services import FeeService, FeeInvoice
+from fees.models import Payment
+from django.db.models import Sum
+from notifications.services import NotificationService
+from .forms import ParentProfileForm
+from django.contrib.auth.forms import PasswordChangeForm
 
 @login_required
 @role_required("admin")
@@ -527,7 +535,6 @@ def teacher_home(request):
 @login_required
 @role_required("parent")
 def parent_home(request):
-
     parent_profile = get_object_or_404(
         ParentProfile,
         user=request.user,
@@ -535,13 +542,72 @@ def parent_home(request):
 
     children = (
         parent_profile.children
-        .prefetch_related(
-            "enrollments",
+        .prefetch_related("enrollments")
+        .order_by("first_name", "last_name")
+    )
+
+    for child in children:
+
+        # Get current enrollment
+        enrollment = (
+            child.enrollments
+            .filter(is_current=True)
+            .select_related(
+                "academic_year",
+                "term",
+                "school_class",
+            )
+            .order_by(
+                "-academic_year__start_date",
+                "-term__start_date",
+            )
+            .first()
         )
-        .order_by(
-            "first_name",
-            "last_name",
+
+        child.current_enrollment = enrollment
+
+        # Attendance summary
+        if enrollment:
+            child.attendance_statistics = (
+                AttendanceService.get_student_statistics(
+                    student=child,
+                    start_date=enrollment.term.start_date,
+                    end_date=enrollment.term.end_date,
+                )
+            )
+        else:
+            child.attendance_statistics = None
+
+        # Published reports
+        child.published_report_count = (
+            StudentTermReport.objects.filter(
+                enrollment__student=child,
+                is_published=True,
+            ).count()
         )
+
+        # Fee summary
+        if enrollment:
+            child.fee_summary = FeeService.get_enrollment_fee_summary(
+                enrollment=enrollment
+            )
+        else:
+            child.fee_summary = {
+                "total_invoiced": Decimal("0.00"),
+                "total_paid": Decimal("0.00"),
+                "outstanding": Decimal("0.00"),
+            }
+
+    # Parent notifications
+    notifications = (
+        NotificationService
+        .get_user_notifications(request.user)
+        .order_by("-created_at")[:1]
+    )
+
+    unread_notification_count = (
+        NotificationService
+        .get_unread_count(request.user)
     )
 
     return render(
@@ -550,9 +616,10 @@ def parent_home(request):
         {
             "parent_profile": parent_profile,
             "children": children,
+            "notifications": notifications,
+            "unread_notification_count": unread_notification_count,
         },
     )
-
 @login_required
 @role_required("student")
 def student_home(request):
@@ -560,6 +627,7 @@ def student_home(request):
     return render(
         request,
         "accounts/student_home.html",
+
     )
 
 @login_required
@@ -604,6 +672,86 @@ def parent_child_reports(request, student_id):
             "parent_profile": parent_profile,
             "child": child,
             "reports": reports,
+        },
+    )
+@login_required
+@role_required("parent")
+def parent_child_fees(request, student_id):
+
+    parent_profile = get_object_or_404(
+        ParentProfile,
+        user=request.user,
+    )
+
+    # Make sure this student actually belongs
+    # to the logged-in parent.
+    child = get_object_or_404(
+        parent_profile.children.all(),
+        id=student_id,
+    )
+
+    # Get the child's current enrollment.
+    enrollment = (
+        Enrollment.objects
+        .filter(
+            student=child,
+            is_current=True,
+        )
+        .select_related(
+            "academic_year",
+            "term",
+            "school_class",
+        )
+        .order_by(
+            "-academic_year__start_date",
+            "-term__start_date",
+        )
+        .first()
+    )
+
+    if not enrollment:
+        return render(
+            request,
+            "accounts/parent_child_fees.html",
+            {
+                "child": child,
+                "enrollment": None,
+                "invoices": [],
+                "fee_summary": None,
+            },
+        )
+    
+    # Get invoices belonging to this enrollment.
+    invoices = (
+        FeeInvoice.objects
+        .filter(
+            enrollment=enrollment,
+        )
+        .exclude(
+            status="cancelled",
+        )
+        .prefetch_related(
+            "payments",
+        )
+        .order_by(
+            "due_date",
+            "id",
+        )
+    )
+
+    # Current enrollment fee summary.
+    fee_summary = FeeService.get_enrollment_fee_summary(
+        enrollment=enrollment,
+    )
+
+    return render(
+        request,
+        "accounts/parent_child_fees.html",
+        {
+            "child": child,
+            "enrollment": enrollment,
+            "invoices": invoices,
+            "fee_summary": fee_summary,
         },
     )
 
@@ -681,4 +829,286 @@ def parent_view_report(request, enrollment_id):
             ),
             "from_parent": True,
         }
+    )
+
+@login_required
+@role_required("parent")
+def parent_child_attendance(request, student_id):
+
+    # =================================
+    # GET PARENT PROFILE
+    # =================================
+
+    parent_profile = get_object_or_404(
+        ParentProfile,
+        user=request.user,
+    )
+
+    # =================================
+    # VERIFY CHILD BELONGS TO PARENT
+    # =================================
+
+    child = get_object_or_404(
+        parent_profile.children.all(),
+        id=student_id,
+    )
+
+    # =================================
+    # GET CHILD'S CURRENT ENROLLMENT
+    # =================================
+
+    enrollment = (
+        Enrollment.objects
+        .filter(
+            student=child,
+            is_current=True,
+        )
+        .select_related(
+            "academic_year",
+            "term",
+            "school_class",
+        )
+        .first()
+    )
+
+    # =================================
+    # NO CURRENT ENROLLMENT
+    # =================================
+
+    if not enrollment:
+        return render(
+            request,
+            "accounts/parent_child_attendance.html",
+            {
+                "child": child,
+                "enrollment": None,
+                "records": [],
+                "statistics": None,
+            },
+        )
+
+    # =================================
+    # TERM DATE RANGE
+    # =================================
+
+    start_date = enrollment.term.start_date
+    end_date = enrollment.term.end_date
+
+    # =================================
+    # GET ATTENDANCE
+    # =================================
+
+    records = AttendanceService.get_student_attendance(
+        student=child,
+        start_date=start_date,
+        end_date=end_date,
+    )
+
+    statistics = AttendanceService.get_student_statistics(
+        student=child,
+        start_date=start_date,
+        end_date=end_date,
+    )
+
+    # =================================
+    # RENDER
+    # =================================
+
+    return render(
+        request,
+        "accounts/parent_child_attendance.html",
+        {
+            "child": child,
+            "enrollment": enrollment,
+            "records": records,
+            "statistics": statistics,
+        },
+    )
+
+@login_required
+@role_required("parent")
+def parent_invoice_payment_history(request, invoice_id):
+
+    parent_profile = get_object_or_404(
+        ParentProfile,
+        user=request.user,
+    )
+
+    invoice = get_object_or_404(
+        FeeInvoice.objects.select_related(
+            "enrollment",
+            "enrollment__student",
+            "enrollment__academic_year",
+            "enrollment__term",
+            "enrollment__school_class",
+        ),
+        id=invoice_id,
+    )
+
+    # Make sure this invoice belongs to one of the parent's children
+    if not parent_profile.children.filter(
+        id=invoice.enrollment.student_id
+    ).exists():
+        raise PermissionDenied
+
+    payments = FeeService.get_payment_history(
+        invoice=invoice,
+    )
+
+    invoice_summary = FeeService.get_invoice_summary(
+        invoice=invoice,
+    )
+
+    return render(
+        request,
+        "accounts/parent_payment_history.html",
+        {
+            "parent_profile": parent_profile,
+            "invoice": invoice,
+            "payments": payments,
+            "invoice_summary": invoice_summary,
+            "child": invoice.enrollment.student,
+        },
+    )
+
+@login_required
+@role_required("parent")
+def parent_payment_receipt(request, payment_id):
+
+    parent_profile = get_object_or_404(
+        ParentProfile,
+        user=request.user,
+    )
+
+    payment = get_object_or_404(
+        Payment.objects.select_related(
+            "invoice",
+            "invoice__enrollment",
+            "invoice__enrollment__student",
+        ),
+        id=payment_id,
+    )
+
+    child = payment.invoice.enrollment.student
+
+    # Make sure this payment belongs to one of the parent's children
+    if not parent_profile.children.filter(
+        id=child.id
+    ).exists():
+        raise PermissionDenied
+
+    invoice = payment.invoice
+
+    # Calculate total paid before this payment
+    paid_before = (
+        invoice.payments
+        .filter(
+            id__lt=payment.id
+        )
+        .aggregate(
+            total=Sum("amount")
+        )["total"]
+        or Decimal("0.00")
+    )
+
+    balance_after = invoice.amount - (
+        paid_before + payment.amount
+    )
+
+    return render(
+        request,
+        "fees/payment_receipt.html",
+        {
+            "payment": payment,
+            "invoice": invoice,
+            "student": child,
+            "paid_before": paid_before,
+            "balance_after": balance_after,
+            "from_parent": True,
+        },
+    )
+
+@login_required
+@role_required("parent")
+def parent_profile(request):
+
+    parent_profile = get_object_or_404(
+        ParentProfile,
+        user=request.user,
+    )
+
+    if request.method == "POST":
+
+        form = ParentProfileForm(
+            request.POST,
+            instance=parent_profile,
+        )
+
+        if form.is_valid():
+
+            form.save()
+
+            messages.success(
+                request,
+                "Your profile has been updated successfully.",
+            )
+
+            return redirect(
+                "accounts:parent_profile"
+            )
+
+    else:
+
+        form = ParentProfileForm(
+            instance=parent_profile,
+        )
+
+    children_count = parent_profile.children.count()
+
+    return render(
+        request,
+        "accounts/parent_profile.html",
+        {
+            "parent_profile": parent_profile,
+            "children_count": children_count,
+            "form": form,
+        },
+    )
+
+@login_required
+@role_required("parent")
+def parent_change_password(request):
+
+    if request.method == "POST":
+
+        form = PasswordChangeForm(
+            user=request.user,
+            data=request.POST,
+        )
+
+        if form.is_valid():
+
+            form.save()
+
+            messages.success(
+                request,
+                "Your password has been changed successfully.",
+            )
+
+            return redirect(
+                "accounts:parent_profile"
+            )
+
+    else:
+
+        form = PasswordChangeForm(
+            user=request.user,
+        )
+
+    return render(
+        request,
+        "accounts/parent_change_password.html",
+        {
+            "form": form,
+        },
     )

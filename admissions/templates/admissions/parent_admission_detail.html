@@ -1,0 +1,361 @@
+{% extends "base.html" %}
+
+{% block title %}
+Admission Status | BMK Academy
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+
+    <!-- Header -->
+
+    <div class="mb-4">
+
+        <a
+            href="{% url 'accounts:parent_home' %}"
+            class="text-decoration-none"
+        >
+            <i class="bi bi-arrow-left me-1"></i>
+            Back to Dashboard
+        </a>
+
+        <h2 class="fw-bold mt-3 mb-1">
+            Admission Application
+        </h2>
+
+        <p class="text-muted mb-0">
+            View the status of your child's admission application.
+        </p>
+
+    </div>
+
+
+    <div class="row g-4">
+
+        <!-- Student Information -->
+
+        <div class="col-lg-7">
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <h5 class="fw-bold mb-4">
+                        Student Information
+                    </h5>
+
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+
+                            <small class="text-muted d-block">
+                                Student Name
+                            </small>
+
+                            <span class="fw-semibold">
+                                {{ application.first_name }}
+                                {% if application.middle_name %}
+                                    {{ application.middle_name }}
+                                {% endif %}
+                                {{ application.last_name }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <small class="text-muted d-block">
+                                Gender
+                            </small>
+
+                            <span class="fw-semibold">
+                                {{ application.get_gender_display }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <small class="text-muted d-block">
+                                Date of Birth
+                            </small>
+
+                            <span class="fw-semibold">
+                                {{ application.date_of_birth|date:"M d, Y" }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <small class="text-muted d-block">
+                                Desired Class
+                            </small>
+
+                            <span class="fw-semibold">
+                                {{ application.desired_class }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <small class="text-muted d-block">
+                                Academic Year
+                            </small>
+
+                            <span class="fw-semibold">
+                                {{ application.academic_year }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <small class="text-muted d-block">
+                                Term
+                            </small>
+
+                            <span class="fw-semibold">
+                                {{ application.term }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="col-12">
+
+                            <small class="text-muted d-block">
+                                Date Submitted
+                            </small>
+
+                            <span class="fw-semibold">
+                                {{ application.submitted_at|date:"M d, Y H:i" }}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Remarks -->
+
+            {% if application.remarks %}
+
+                <div class="card border-0 shadow-sm mt-4">
+
+                    <div class="card-body p-4">
+
+                        <h5 class="fw-bold mb-3">
+                            School Remarks
+                        </h5>
+
+                        <div class="bg-light rounded p-3">
+
+                            {{ application.remarks }}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- Application Status -->
+
+        <div class="col-lg-5">
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body p-4 text-center">
+
+                    <h5 class="fw-bold mb-4">
+                        Application Status
+                    </h5>
+
+
+                    {% if application.status == "pending" %}
+
+                        <div class="mb-3">
+
+                            <i
+                                class="bi bi-hourglass-split text-warning"
+                                style="font-size: 3rem;"
+                            ></i>
+
+                        </div>
+
+                        <span class="badge text-bg-warning fs-6 px-3 py-2">
+                            Pending
+                        </span>
+
+                        <p class="text-muted mt-3 mb-0">
+                            Your admission application is currently
+                            being reviewed by the school.
+                        </p>
+
+
+                    {% elif application.status == "approved" %}
+
+                        <div class="mb-3">
+
+                            <i
+                                class="bi bi-check-circle-fill text-success"
+                                style="font-size: 3rem;"
+                            ></i>
+
+                        </div>
+
+                        <span class="badge text-bg-success fs-6 px-3 py-2">
+                            Approved
+                        </span>
+
+                        <p class="text-muted mt-3 mb-0">
+                            Congratulations! Your child's admission
+                            application has been approved.
+                        </p>
+
+
+                    {% elif application.status == "rejected" %}
+
+                        <div class="mb-3">
+
+                            <i
+                                class="bi bi-x-circle-fill text-danger"
+                                style="font-size: 3rem;"
+                            ></i>
+
+                        </div>
+
+                        <span class="badge text-bg-danger fs-6 px-3 py-2">
+                            Rejected
+                        </span>
+
+                        <p class="text-muted mt-3 mb-0">
+                            The school has reviewed your admission
+                            application and it was not approved.
+                        </p>
+
+                    {% endif %}
+
+
+                    {% if application.reviewed_at %}
+
+                        <hr class="my-4">
+
+                        <small class="text-muted d-block">
+                            Reviewed On
+                        </small>
+
+                        <span class="fw-semibold">
+                            {{ application.reviewed_at|date:"M d, Y H:i" }}
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <!-- Next Step for Approved Application -->
+
+            {% if application.status == "approved" %}
+
+    <div class="card border-0 shadow-sm mt-4">
+
+        <div class="card-body p-4">
+
+            <h6 class="fw-bold mb-3">
+                <i class="bi bi-check-circle text-success me-2"></i>
+                Admission Completed
+            </h6>
+
+            {% if application.student %}
+
+                <div class="bg-light rounded p-3 mb-3">
+
+                    <div class="mb-2">
+                        <small class="text-muted d-block">
+                            Admission Number
+                        </small>
+
+                        <span class="fw-semibold">
+                            {{ application.student.admission_number }}
+                        </span>
+                    </div>
+
+                    <div class="mb-2">
+                        <small class="text-muted d-block">
+                            Class
+                        </small>
+
+                        <span class="fw-semibold">
+                            {{ application.desired_class }}
+                        </span>
+                    </div>
+
+                    <div>
+                        <small class="text-muted d-block">
+                            Academic Year
+                        </small>
+
+                        <span class="fw-semibold">
+                            {{ application.academic_year }}
+                        </span>
+                    </div>
+
+                </div>
+
+                <p class="text-muted small">
+                    Your child's admission has been completed successfully.
+                    You can now access the child's information, fees,
+                    attendance and published results from your parent dashboard.
+                </p>
+
+            {% else %}
+
+                <p class="text-muted small">
+                    Your child's admission has been approved.
+                    Please check your parent dashboard for further information.
+                </p>
+
+            {% endif %}
+
+            <a
+                href="{% url 'accounts:parent_home' %}"
+                class="btn btn-success w-100"
+            >
+                <i class="bi bi-speedometer2 me-2"></i>
+                Go to Parent Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+{% endif %}
+
+        </div>
+
+    </div>
+
+
+</div>
+
+{% endblock %}

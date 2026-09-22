@@ -1,6 +1,10 @@
 from django import forms
 from academics.models import AcademicYear, Term
 from .models import AdmissionApplication
+from django.contrib.auth import get_user_model
+
+from django.contrib.auth.password_validation import validate_password
+
 
 class AdmissionApplicationForm(forms.ModelForm):
     class Meta:
@@ -58,190 +62,71 @@ class AdmissionApplicationForm(forms.ModelForm):
                     academic_year=current_year
                 ).order_by("start_date")
 
-# from django import forms
 
-# from academics.models import AcademicYear, Term, SchoolClass
-# from .models import AdmissionApplication
+class ClaimApplicationForm(forms.Form):
 
+    username = forms.CharField(
+        max_length=150,
+        label="Username",
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Choose a username",
+            }
+        ),
+    )
 
-# class AdmissionApplicationForm(forms.ModelForm):
+    password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Create a password",
+            }
+        ),
+        label="Password",
+    )
 
-#     class Meta:
-#         model = AdmissionApplication
+    confirm_password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Confirm your password",
+            }
+        ),
+        label="Confirm Password",
+    )
 
-#         fields = [
-#             "academic_year",
-#             "term",
-#             "desired_class",
+    def clean_username(self):
+        username = self.cleaned_data["username"]
 
-#             "first_name",
-#             "middle_name",
-#             "last_name",
-#             "date_of_birth",
-#             "gender",
-#             "previous_school",
+        User = get_user_model()
 
-#             "parent_name",
-#             "parent_phone",
-#             "parent_email",
-#             "parent_address",
-#             "relationship",
-#         ]
+        if User.objects.filter(username=username).exists():
+            raise forms.ValidationError(
+                "This username is already taken."
+            )
 
-#         widgets = {
+        return username
 
-#             "academic_year": forms.Select(
-#                 attrs={
-#                     "class": "form-select",
-#                 }
-#             ),
+    def clean_password(self):
+        password = self.cleaned_data["password"]
 
-#             "term": forms.Select(
-#                 attrs={
-#                     "class": "form-select",
-#                 }
-#             ),
+        validate_password(password)
 
-#             "desired_class": forms.Select(
-#                 attrs={
-#                     "class": "form-select",
-#                 }
-#             ),
+        return password
 
-#             "first_name": forms.TextInput(
-#                 attrs={
-#                     "class": "form-control",
-#                     "placeholder": "Enter first name",
-#                 }
-#             ),
+    def clean(self):
+        cleaned_data = super().clean()
 
-#             "middle_name": forms.TextInput(
-#                 attrs={
-#                     "class": "form-control",
-#                     "placeholder": "Enter middle name",
-#                 }
-#             ),
+        password = cleaned_data.get("password")
+        confirm_password = cleaned_data.get("confirm_password")
 
-#             "last_name": forms.TextInput(
-#                 attrs={
-#                     "class": "form-control",
-#                     "placeholder": "Enter last name",
-#                 }
-#             ),
+        if password and confirm_password:
 
-#             "date_of_birth": forms.DateInput(
-#                 attrs={
-#                     "class": "form-control",
-#                     "type": "date",
-#                 }
-#             ),
+            if password != confirm_password:
 
-#             "gender": forms.Select(
-#                 attrs={
-#                     "class": "form-select",
-#                 }
-#             ),
+                raise forms.ValidationError(
+                    "The passwords do not match."
+                )
 
-#             "previous_school": forms.TextInput(
-#                 attrs={
-#                     "class": "form-control",
-#                     "placeholder": "Previous school (optional)",
-#                 }
-#             ),
-
-#             "parent_name": forms.TextInput(
-#                 attrs={
-#                     "class": "form-control",
-#                     "placeholder": "Parent / Guardian full name",
-#                 }
-#             ),
-
-#             "parent_phone": forms.TextInput(
-#                 attrs={
-#                     "class": "form-control",
-#                     "placeholder": "080XXXXXXXX",
-#                 }
-#             ),
-
-#             "parent_email": forms.EmailInput(
-#                 attrs={
-#                     "class": "form-control",
-#                     "placeholder": "Parent email",
-#                 }
-#             ),
-
-#             "parent_address": forms.Textarea(
-#                 attrs={
-#                     "class": "form-control",
-#                     "rows": 3,
-#                     "placeholder": "Residential address",
-#                 }
-#             ),
-
-#             "relationship": forms.Select(
-#                 attrs={
-#                     "class": "form-select",
-#                 }
-#             ),
-#         }
-
-#     def __init__(self, *args, **kwargs):
-
-#         super().__init__(*args, **kwargs)
-
-#         self.fields["term"].queryset = Term.objects.none()
-
-#         if "academic_year" in self.data:
-
-#             try:
-
-#                 academic_year_id = int(
-#                     self.data.get("academic_year")
-#                 )
-
-#                 self.fields["term"].queryset = (
-#                     Term.objects
-#                     .filter(
-#                         academic_year_id=academic_year_id
-#                     )
-#                     .order_by("start_date")
-#                 )
-
-#             except (
-#                 ValueError,
-#                 TypeError,
-#             ):
-
-#                 pass
-
-#         elif self.instance.pk:
-
-#             self.fields["term"].queryset = (
-#                 Term.objects
-#                 .filter(
-#                     academic_year=self.instance.academic_year
-#                 )
-#                 .order_by("start_date")
-#             )
-
-#         else:
-
-#             current_year = (
-#                 AcademicYear.objects
-#                 .filter(is_current=True)
-#                 .first()
-#             )
-
-#             if current_year:
-
-#                 self.fields["academic_year"].initial = (
-#                     current_year
-#                 )
-
-#                 self.fields["term"].queryset = (
-#                     Term.objects
-#                     .filter(
-#                         academic_year=current_year
-#                     )
-#                     .order_by("start_date")
-#                 )
+        return cleaned_data

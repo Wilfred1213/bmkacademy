@@ -23,6 +23,11 @@
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"
     >
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+        rel="stylesheet"
+    >
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
@@ -541,20 +546,46 @@
                     <!-- Dashboard -->
                     <!-- ========================= -->
 
+                    {% if request.user.is_authenticated %}
+
                     <li class="nav-item">
 
-                        <a
-                            class="nav-link"
-                            href="#"
-                        >
+                        {% if request.user.role == "parent" %}
 
-                            <i class="bi bi-speedometer2 me-1"></i>
+                            <a
+                                class="nav-link"
+                                href="{% url 'accounts:parent_home' %}"
+                            >
+                                <i class="bi bi-speedometer2 me-1"></i>
+                                Dashboard
+                            </a>
 
-                            Dashboard
+                        {% elif request.user.role == "teacher" %}
 
-                        </a>
+                            <a
+                                class="nav-link"
+                                href="{% url 'accounts:teacher_home' %}"
+                            >
+                                <i class="bi bi-speedometer2 me-1"></i>
+                                Dashboard
+                            </a>
+
+                        {% elif request.user.role == "admin" %}
+
+                            <a
+                                class="nav-link"
+                                href="{% url 'admin:index' %}"
+                            >
+                                <i class="bi bi-speedometer2 me-1"></i>
+                                Dashboard
+                            </a>
+
+                        {% endif %}
 
                     </li>
+
+                    {% endif %}
+
 
 
                     <!-- ========================= -->
@@ -579,7 +610,7 @@
 
 
                         <ul class="dropdown-menu shadow-sm border-0">
-
+                            {% if request.user.role == "admin" or request.user.role == "teacher" %}
                             <li>
                                 <a
                                     class="dropdown-item"
@@ -589,6 +620,7 @@
                                     Admission Applications
                                 </a>
                             </li>
+                            {% endif %}
                             <li>
 
                                 <a
@@ -613,6 +645,8 @@
                     <!-- Students -->
                     <!-- ========================= -->
 
+                    {% if request.user.role == "admin" or request.user.role == "teacher" %}
+
                     <li class="nav-item">
 
                         <a
@@ -628,11 +662,13 @@
 
                     </li>
 
+                    {% endif %}
+
 
                     <!-- ========================= -->
                     <!-- Teachers -->
                     <!-- ========================= -->
-
+                    {% if request.user.role == "admin" or request.user.role == "teacher" %}
                     <li class="nav-item dropdown">
 
                         <a
@@ -766,13 +802,14 @@
                         </ul>
 
                     </li>
-
+                    {% endif %}
 
                     <!-- ========================= -->
                     <!-- Attendance -->
                     <!-- ========================= -->
 
-                    {% if request.user.is_authenticated and request.user.role in "admin teacher" %}
+                    
+                    {% if request.user.role == "admin" or request.user.role == "teacher" %}
 
                     <li class="nav-item dropdown">
 
@@ -865,7 +902,7 @@
                     <!-- ========================= -->
                     <!-- Results -->
                     <!-- ========================= -->
-
+                    {% if request.user.role == "admin" or request.user.role == "teacher" %}
                     <li class="nav-item dropdown">
 
                         <a
@@ -937,12 +974,12 @@
                         </ul>
 
                     </li>
-
+                    {% endif %}
 
                     <!-- ========================= -->
                     <!-- Reports -->
                     <!-- ========================= -->
-
+                    {% if request.user.role == "admin" or request.user.role == "teacher" %}
                     <li class="nav-item dropdown">
 
                         <a
@@ -998,12 +1035,12 @@
                         </ul>
 
                     </li>
-
+                    {% endif %}
 
                     <!-- ========================= -->
                     <!-- Fees -->
                     <!-- ========================= -->
-
+                    {% if request.user.role == "admin" or request.user.role == "teacher" %}
                     <li class="nav-item dropdown">
 
                         <a
@@ -1107,7 +1144,7 @@
                         </ul>
 
                     </li>
-
+                    {% endif %}
 
                     <!-- ========================= -->
                     <!-- Notifications -->
@@ -1152,36 +1189,119 @@
                             <ul
                                 class="dropdown-menu dropdown-menu-end shadow-sm border-0"
                                 aria-labelledby="notificationDropdown"
+                                style="min-width: 320px;"
                             >
 
+                        
+                            <li>
+
+                                <h6 class="dropdown-header">
+
+                                    <i class="bi bi-bell me-2"></i>
+
+                                    Notifications
+
+                                </h6>
+
+                            </li>
+
+
+                            {% if latest_notifications %}
+
+                                {% for notification in latest_notifications %}
+
+                                    <li>
+
+                                        <a
+                                            class="dropdown-item py-2
+                                            {% if not notification.is_read %}
+                                                bg-light
+                                            {% endif %}"
+                                            href="{% url 'notifications:mark_notification_as_read' notification.id %}"
+                                        >
+
+                                            <div class="d-flex justify-content-between align-items-start gap-2">
+
+                                                <div>
+
+                                                    <div class="fw-semibold">
+
+                                                        {{ notification.title }}
+
+                                                        {% if not notification.is_read %}
+
+                                                            <span class="badge bg-primary ms-1">
+                                                                New
+                                                            </span>
+
+                                                        {% endif %}
+
+                                                    </div>
+
+                                                    <small class="text-muted">
+
+                                                        {{ notification.message|truncatechars:45 }}
+
+                                                    </small>
+
+                                                    <div>
+
+                                                        <small class="text-muted">
+
+                                                            {{ notification.created_at|date:"M d, Y - h:i A" }}
+
+                                                        </small>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </a>
+
+                                    </li>
+
+                                {% endfor %}
+
+                            {% else %}
+
                                 <li>
 
-                                    <h6 class="dropdown-header">
+                                    <div class="dropdown-item-text text-muted text-center py-3">
 
-                                        <i class="bi bi-bell me-2"></i>
+                                        <i class="bi bi-bell-slash fs-4 d-block mb-2"></i>
 
-                                        Notifications
+                                        No notifications
 
-                                    </h6>
+                                    </div>
 
                                 </li>
 
+                            {% endif %}
 
-                                <li>
 
-                                    <a
-                                        class="dropdown-item"
-                                        href="{% url 'notifications:notification_list' %}"
-                                    >
+                            <li>
 
-                                        <i class="bi bi-list-ul me-2"></i>
+                                <hr class="dropdown-divider">
 
-                                        View all notifications
+                            </li>
 
-                                    </a>
 
-                                </li>
+                            <li>
 
+                                <a
+                                    class="dropdown-item text-center fw-semibold"
+                                    href="{% url 'notifications:notification_list' %}"
+                                >
+
+                                    <i class="bi bi-list-ul me-2"></i>
+
+                                    View all notifications
+
+                                </a>
+
+                            </li>
 
                             </ul>
 
@@ -1226,7 +1346,7 @@
 
 
                             <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
-
+                                
 
                                 <li>
 
@@ -1247,6 +1367,32 @@
                                     </div>
 
                                 </li>
+                                <li>
+
+                                    <hr class="dropdown-divider">
+
+                                </li>
+                                {% if request.user.role == "parent" %}
+
+                                <li>
+
+                                    <a
+                                        class="dropdown-item"
+                                        href="{% url 'accounts:parent_profile' %}"
+                                    >
+
+                                        <i class="bi bi-person me-2"></i>
+
+                                        My Profile
+
+                                    </a>
+
+                                </li>
+
+                                
+
+                                {% endif %}
+
 
 
                                 <li>
@@ -1254,6 +1400,28 @@
                                     <hr class="dropdown-divider">
 
                                 </li>
+
+
+                                {% if request.user.role == "parent" %}
+
+                                
+                                <li>
+
+                                    <a
+                                        class="dropdown-item"
+                                        href="{% url 'accounts:parent_change_password' %}"
+                                    >
+
+                                        <i class="bi bi-key me-2"></i>
+
+                                        Change Password
+
+                                    </a>
+
+                                </li>
+                                
+
+                                {% else %}
 
 
                                 <li>
@@ -1270,6 +1438,9 @@
                                     </a>
 
                                 </li>
+
+                                {% endif %}
+
 
 
                                 <li>

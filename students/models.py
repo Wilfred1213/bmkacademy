@@ -77,13 +77,21 @@ class Student(models.Model):
     created_at = models.DateTimeField(
         auto_now_add=True
     )
+    def get_full_name(self):
+        return " ".join(
+            part
+            for part in [
+                self.first_name,
+                self.middle_name,
+                self.last_name,
+            ]
+            if part
+        )
 
     def __str__(self):
-        return (
-            f"{self.first_name} "
-            f"{self.last_name} "
-            f"({self.admission_number})"
-        )
+        return self.get_full_name()
+
+    
 
     def generate_admission_number(self):
 
