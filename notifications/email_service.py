@@ -20,8 +20,17 @@ class NotificationEmailService:
         """
         Send an admission decision email to the applicant.
 
-        For approved applications, the email includes the
-        parent-account claim link.
+        Approved applications are handled differently depending
+        on whether the applicant already has a parent account.
+
+        Existing parent:
+            - No claim link
+            - Child is already linked to the parent account
+            - Login link is provided
+
+        New parent:
+            - Claim link is provided
+            - Parent creates an account
 
         Returns:
             True  -> email sent successfully
@@ -57,72 +66,126 @@ class NotificationEmailService:
 
         if decision == "approved":
 
-            # Make sure an approved application has a claim token
-            if not application.claim_token:
-                logger.error(
-                    "Approved application %s has no claim token.",
-                    application.id,
-                )
-
-                application.admission_email_last_error = (
-                    "Approved application has no claim token."
-                )
-
-                application.save(
-                    update_fields=[
-                        "admission_email_last_error"
-                    ]
-                )
-
-                return False
-
-            claim_path = reverse(
-                "admissions:claim_application",
-                kwargs={
-                    "claim_token": application.claim_token
-                },
-            )
-
-            claim_url = (
-                f"{settings.SITE_URL}"
-                f"{claim_path}"
-            )
-
             subject = "BMK Academy - Admission Approved"
 
-            message = (
-                f"Dear {application.parent_name},\n\n"
+            # -----------------------------------------------------
+            # Existing parent
+            # -----------------------------------------------------
 
-                f"Congratulations!\n\n"
+            if application.applicant:
 
-                f"The admission application for "
-                f"{application.first_name} "
-                f"{application.middle_name} "
-                f"{application.last_name} "
-                f"has been approved.\n\n"
+                login_path = reverse(
+                    "accounts:login"
+                )
 
-                f"Class: {application.desired_class}\n"
-                f"Academic Year: {application.academic_year}\n"
-                f"Term: {application.term}\n\n"
+                login_url = (
+                    f"{settings.SITE_URL}"
+                    f"{login_path}"
+                )
 
-                f"To access the BMK Academy Parent Portal, "
-                f"please create your parent account using "
-                f"the secure link below:\n\n"
+                message = (
+                    f"Dear {application.parent_name},\n\n"
 
-                f"{claim_url}\n\n"
+                    f"Congratulations!\n\n"
 
-                f"This account-creation link will expire "
-                f"in 48 hours.\n\n"
+                    f"The admission application for "
+                    f"{application.first_name} "
+                    f"{application.middle_name} "
+                    f"{application.last_name} "
+                    f"has been approved.\n\n"
 
-                f"Once your account has been created, you will "
-                f"be able to log in to the BMK Academy Parent "
-                f"Portal and access information about your child.\n\n"
+                    f"Class: {application.desired_class}\n"
+                    f"Academic Year: {application.academic_year}\n"
+                    f"Term: {application.term}\n\n"
 
-                f"Thank you for choosing BMK Academy.\n\n"
+                    f"Your existing BMK Academy parent account "
+                    f"has been used for this admission.\n\n"
 
-                f"Regards,\n"
-                f"BMK Academy"
-            )
+                    f"The student has been linked to your existing "
+                    f"parent account. You do not need to create "
+                    f"another account or claim this admission.\n\n"
+
+                    f"Please log in to your BMK Academy Parent Portal "
+                    f"using your existing account:\n\n"
+
+                    f"{login_url}\n\n"
+
+                    f"Thank you for choosing BMK Academy.\n\n"
+
+                    f"Regards,\n"
+                    f"BMK Academy"
+                )
+
+            # -----------------------------------------------------
+            # New parent
+            # -----------------------------------------------------
+
+            else:
+
+                # A new parent must have a claim token.
+                if not application.claim_token:
+                    logger.error(
+                        "Approved application %s has no claim token.",
+                        application.id,
+                    )
+
+                    application.admission_email_last_error = (
+                        "Approved application has no claim token."
+                    )
+
+                    application.save(
+                        update_fields=[
+                            "admission_email_last_error"
+                        ]
+                    )
+
+                    return False
+
+                claim_path = reverse(
+                    "admissions:claim_application",
+                    kwargs={
+                        "claim_token": application.claim_token
+                    },
+                )
+
+                claim_url = (
+                    f"{settings.SITE_URL}"
+                    f"{claim_path}"
+                )
+
+                message = (
+                    f"Dear {application.parent_name},\n\n"
+
+                    f"Congratulations!\n\n"
+
+                    f"The admission application for "
+                    f"{application.first_name} "
+                    f"{application.middle_name} "
+                    f"{application.last_name} "
+                    f"has been approved.\n\n"
+
+                    f"Class: {application.desired_class}\n"
+                    f"Academic Year: {application.academic_year}\n"
+                    f"Term: {application.term}\n\n"
+
+                    f"To access the BMK Academy Parent Portal, "
+                    f"please create your parent account using "
+                    f"the secure link below:\n\n"
+
+                    f"{claim_url}\n\n"
+
+                    f"This account-creation link will expire "
+                    f"in 48 hours.\n\n"
+
+                    f"Once your account has been created, you will "
+                    f"be able to log in to the BMK Academy Parent "
+                    f"Portal and access information about your child.\n\n"
+
+                    f"Thank you for choosing BMK Academy.\n\n"
+
+                    f"Regards,\n"
+                    f"BMK Academy"
+                )
 
         elif decision == "rejected":
 
@@ -217,6 +280,8 @@ class NotificationEmailService:
         )
 
         return True
+
+
 
     @staticmethod
     def send_announcement_email(

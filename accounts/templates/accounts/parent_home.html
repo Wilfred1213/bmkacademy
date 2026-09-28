@@ -27,6 +27,13 @@
             <i class="bi bi-person"></i>
             My Profile
         </a>
+        <a
+            href="{% url 'admissions:admission_application' %}"
+            class="btn btn-primary"
+        >
+            <i class="bi bi-person-plus me-1"></i>
+            Apply for Another Child
+        </a>
 
     </div>
     <!-- NOTIFICATIONS -->
@@ -557,6 +564,23 @@
                                     Fees
 
                                 </a>
+                                
+                                {% if child.admission_application %}
+
+                                    <a
+                                        href="{% url 'admissions:admission_letter' child.admission_application.id %}"
+                                        class="btn btn-outline-secondary"
+                                    >
+
+                                        <i class="bi bi-file-earmark-text"></i>
+
+                                        Admission Letter
+
+                                    </a>
+
+                                {% endif %}
+
+
 
 
                             </div>

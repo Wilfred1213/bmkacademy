@@ -1,0 +1,618 @@
+{% extends "base.html" %}
+
+{% block title %}
+    News & Blog | BMK Academy
+{% endblock %}
+
+{% block content %}
+
+<!-- =========================================================
+     BLOG HERO
+========================================================= -->
+
+<section class="py-5 mb-5">
+
+    <div class="row align-items-center g-4">
+
+        <div class="col-lg-8">
+
+            <span class="badge bg-primary-subtle text-primary px-3 py-2 mb-3">
+                <i class="bi bi-newspaper me-1"></i>
+                BMK Academy News
+            </span>
+
+            <h1 class="display-5 fw-bold mb-3">
+                News, Stories &amp;
+                <span class="text-primary">School Life</span>
+            </h1>
+
+            <p class="lead text-muted mb-0">
+                Stay updated with the latest news, activities, achievements,
+                events and important stories from BMK Academy.
+            </p>
+
+        </div>
+
+        <div class="col-lg-4 text-lg-end">
+
+            <div class="d-inline-flex align-items-center
+                        justify-content-center
+                        bg-primary text-white rounded-circle shadow"
+                 style="width: 100px; height: 100px;">
+
+                <i class="bi bi-journal-richtext fs-1"></i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- Category Navigation -->
+<div class="mb-5">
+
+    <div class="d-flex flex-wrap justify-content-center gap-2">
+
+        <!-- All Posts -->
+        <a
+            href="{% url 'blog:post_list' %}"
+            class="btn btn-primary rounded-pill px-4"
+        >
+            All Posts
+        </a>
+
+
+        <!-- Categories -->
+        {% for category in categories %}
+
+            <a
+                href="{% url 'blog:category_posts' category.slug %}"
+                class="btn btn-outline-primary rounded-pill px-4"
+            >
+                {{ category.name }}
+            </a>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+
+{% if search_query %}
+
+    <div class="mb-4">
+
+        <h4 class="fw-bold">
+            Search results for "{{ search_query }}"
+        </h4>
+
+        {% if posts %}
+
+            <p class="text-muted">
+                Showing articles matching your search.
+            </p>
+
+        {% else %}
+
+            <p class="text-muted">
+                No published articles were found for your search.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+{% endif %}
+
+<!-- Blog Search -->
+<div class="row justify-content-center mb-5">
+
+    <div class="col-md-8 col-lg-6">
+
+        <form
+            method="get"
+            action="{% url 'blog:post_list' %}"
+        >
+
+            <div class="input-group input-group-lg">
+
+                <input
+                    type="search"
+                    name="q"
+                    value="{{ search_query }}"
+                    class="form-control"
+                    placeholder="Search school news, events, activities..."
+                    aria-label="Search blog"
+                >
+
+                <button
+                    class="btn btn-primary"
+                    type="submit"
+                >
+                    <i class="bi bi-search"></i>
+                    Search
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+{% if posts %}
+
+    <!-- =====================================================
+         FEATURED POST
+    ====================================================== -->
+
+    {% with featured_post=posts.0 %}
+
+    <section class="mb-5">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <div>
+                <span class="text-primary fw-semibold small text-uppercase">
+                    Featured Story
+                </span>
+
+                <h2 class="fw-bold mb-0">
+                    From BMK Academy
+                </h2>
+            </div>
+
+        </div>
+
+
+        <div class="card border-0 shadow-sm overflow-hidden">
+
+            <div class="row g-0">
+
+                <!-- Featured Image -->
+
+                <div class="col-lg-6">
+
+                    {% if featured_post.featured_image %}
+
+                        <img
+                            src="{{ featured_post.featured_image.url }}"
+                            class="w-100 h-100"
+                            style="min-height: 350px; object-fit: cover;"
+                            alt="{{ featured_post.title }}"
+                        >
+
+                    {% else %}
+
+                        <div
+                            class="bg-primary-subtle
+                                   d-flex
+                                   align-items-center
+                                   justify-content-center
+                                   h-100"
+                            style="min-height: 350px;"
+                        >
+
+                            <i class="bi bi-image text-primary"
+                               style="font-size: 5rem;">
+                            </i>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- Featured Content -->
+
+                <div class="col-lg-6">
+
+                    <div class="p-4 p-lg-5">
+
+                        <span class="badge bg-primary mb-3">
+                            {{ featured_post.category.name }}
+                        </span>
+
+
+                        <h2 class="fw-bold mb-3">
+                            {{ featured_post.title }}
+                        </h2>
+
+
+                        <div class="text-muted small mb-3">
+
+                            <i class="bi bi-calendar3 me-1"></i>
+
+                            {{ featured_post.published_at|date:"F d, Y" }}
+
+                            <span class="mx-2">•</span>
+
+                            <i class="bi bi-person me-1"></i>
+
+                            {{ featured_post.author.get_full_name|default:featured_post.author.username }}
+
+                        </div>
+
+
+                        {% if featured_post.excerpt %}
+
+                            <p class="text-muted fs-6 mb-4">
+                                {{ featured_post.excerpt }}
+                            </p>
+
+                        {% else %}
+
+                            <p class="text-muted fs-6 mb-4">
+                                {{ featured_post.content|truncatechars:220 }}
+                            </p>
+
+                        {% endif %}
+
+
+                        <a
+                            href="{% url 'blog:post_detail' featured_post.slug %}"
+                            class="btn btn-primary px-4"
+                        >
+
+                            Read Full Story
+
+                            <i class="bi bi-arrow-right ms-2"></i>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    {% endwith %}
+
+    
+    <!-- Pagination -->
+    {% if page_obj.has_other_pages %}
+
+        <nav
+            class="mt-5"
+            aria-label="Blog pagination"
+        >
+
+            <ul class="pagination justify-content-center">
+
+                {% if page_obj.has_previous %}
+
+                    <li class="page-item">
+
+                        <a
+                            class="page-link"
+                            href="?q={{ search_query|urlencode }}&page={{ page_obj.previous_page_number }}"
+                        >
+                            &laquo; Previous
+                        </a>
+
+                    </li>
+
+                {% else %}
+
+                    <li class="page-item disabled">
+
+                        <span class="page-link">
+                            &laquo; Previous
+                        </span>
+
+                    </li>
+
+                {% endif %}
+
+
+                {% for num in page_obj.paginator.page_range %}
+
+                    {% if page_obj.number == num %}
+
+                        <li class="page-item active">
+
+                            <span class="page-link">
+                                {{ num }}
+                            </span>
+
+                        </li>
+
+                    {% else %}
+
+                        <li class="page-item">
+
+                            <a
+                                class="page-link"
+                                href="?q={{ search_query|urlencode }}&page={{ num }}"
+                            >
+                                {{ num }}
+                            </a>
+
+                        </li>
+
+                    {% endif %}
+
+                {% endfor %}
+
+
+                {% if page_obj.has_next %}
+
+                    <li class="page-item">
+
+                        <a
+                            class="page-link"
+                            href="?q={{ search_query|urlencode }}&page={{ page_obj.next_page_number }}"
+                        >
+                            Next &raquo;
+                        </a>
+
+                    </li>
+
+                {% else %}
+
+                    <li class="page-item disabled">
+
+                        <span class="page-link">
+                            Next &raquo;
+                        </span>
+
+                    </li>
+
+                {% endif %}
+
+            </ul>
+
+        </nav>
+
+    {% endif %}
+
+
+    <!-- =====================================================
+         LATEST STORIES
+    ====================================================== -->
+
+    <section class="py-4">
+
+        <div class="d-flex
+                    justify-content-between
+                    align-items-end
+                    mb-4">
+
+            <div>
+
+                <span class="text-primary fw-semibold
+                             small text-uppercase">
+
+                    Latest Updates
+
+                </span>
+
+                <h2 class="fw-bold mb-1">
+                    Latest News &amp; Activities
+                </h2>
+
+                <p class="text-muted mb-0">
+                    Explore more stories from BMK Academy.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="row g-4">
+
+            {% for post in posts|slice:"1:" %}
+
+                <div class="col-md-6 col-lg-4">
+
+                    <article class="card
+                                   h-100
+                                   border-0
+                                   shadow-sm
+                                   overflow-hidden">
+
+
+                        <!-- Article Image -->
+
+                        {% if post.featured_image %}
+
+                            <img
+                                src="{{ post.featured_image.url }}"
+                                class="card-img-top"
+                                style="height: 220px; object-fit: cover;"
+                                alt="{{ post.title }}"
+                            >
+
+                        {% else %}
+
+                            <div
+                                class="bg-light
+                                       d-flex
+                                       align-items-center
+                                       justify-content-center"
+                                style="height: 220px;"
+                            >
+
+                                <i class="bi bi-image text-primary fs-1"></i>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <!-- Article Content -->
+
+                        <div class="card-body p-4 d-flex flex-column">
+
+
+                            <div class="mb-3">
+
+                                <span class="badge
+                                             bg-primary-subtle
+                                             text-primary">
+
+                                    {{ post.category.name }}
+
+                                </span>
+
+                            </div>
+
+
+                            <h3 class="h5 fw-bold mb-3">
+
+                                {{ post.title }}
+
+                            </h3>
+
+
+                            <div class="text-muted small mb-3">
+
+                                <i class="bi bi-calendar3 me-1"></i>
+
+                                {{ post.published_at|date:"M d, Y" }}
+
+                            </div>
+
+
+                            <p class="text-muted mb-4">
+
+                                {% if post.excerpt %}
+
+                                    {{ post.excerpt|truncatechars:130 }}
+
+                                {% else %}
+
+                                    {{ post.content|truncatechars:130 }}
+
+                                {% endif %}
+
+                            </p>
+
+
+                            <div class="mt-auto">
+
+                                <a
+                                    href="{% url 'blog:post_detail' post.slug %}"
+                                    class="text-primary
+                                           text-decoration-none
+                                           fw-semibold"
+                                >
+
+                                    Read Article
+
+                                    <i class="bi bi-arrow-right ms-1"></i>
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            {% empty %}
+
+                <div class="col-12">
+
+                    <div class="text-center
+                                py-5
+                                bg-light
+                                rounded-4">
+
+                        <i class="bi bi-journal-x
+                                  text-muted
+                                  display-4
+                                  d-block
+                                  mb-3">
+                        </i>
+
+                        <h4 class="fw-bold">
+                            No additional stories yet
+                        </h4>
+
+                        <p class="text-muted mb-0">
+                            Check back soon for more news and activities
+                            from BMK Academy.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+
+{% else %}
+
+    <!-- =====================================================
+         EMPTY BLOG STATE
+    ====================================================== -->
+
+    <section class="py-5">
+
+        <div class="text-center
+                    py-5
+                    px-4
+                    bg-light
+                    rounded-4">
+
+            <div class="mb-4">
+
+                <span
+                    class="d-inline-flex
+                           align-items-center
+                           justify-content-center
+                           bg-primary-subtle
+                           text-primary
+                           rounded-circle"
+                    style="width: 90px; height: 90px;"
+                >
+
+                    <i class="bi bi-newspaper fs-1"></i>
+
+                </span>
+
+            </div>
+
+
+            <h2 class="fw-bold">
+                No news published yet
+            </h2>
+
+
+            <p class="text-muted
+                      mx-auto
+                      mb-0"
+               style="max-width: 600px;">
+
+                We are preparing exciting news, activities and stories
+                from BMK Academy. Please check back soon.
+
+            </p>
+
+        </div>
+
+    </section>
+
+{% endif %}
+
+
+{% endblock %}

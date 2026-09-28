@@ -11,10 +11,10 @@ from django.utils import timezone
 from .services import AdmissionService
 from accounts.decorators import role_required
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
+from .forms import AdmissionApplicationForm, ClaimApplicationForm, ExistingParentClaimForm
+from django.contrib.auth import authenticate, login
 
-from .forms import AdmissionApplicationForm, ClaimApplicationForm
-
-from django.contrib.auth import login
 
 
  
@@ -38,11 +38,15 @@ def _admission_error(request, message):
     )
 
 
+
 def admission_application(request):
 
     if request.method == "POST":
 
-        form = AdmissionApplicationForm(request.POST)
+        form = AdmissionApplicationForm(
+            request.POST,
+            user=request.user,
+        )
 
         if form.is_valid():
 
@@ -94,9 +98,12 @@ def admission_application(request):
                 },
                 # status=400,
             )
+
     else:
 
-        form = AdmissionApplicationForm()
+        form = AdmissionApplicationForm(
+            user=request.user,
+        )
 
     # ---------------------------------------------
     # NORMAL PAGE
@@ -275,15 +282,31 @@ def parent_admission_detail(request, application_id):
     )
 
 
-
 def claim_application(request, claim_token):
 
-    application = get_object_or_404(
-        AdmissionApplication,
-        claim_token=claim_token,
-    )
+    # -------------------------------------------------
+    # Find the application
+    # -------------------------------------------------
 
+    application = AdmissionApplication.objects.filter(
+        claim_token=claim_token,
+    ).first()
+
+    # -------------------------------------------------
+    # Invalid / already-used claim link
+    # -------------------------------------------------
+
+    if not application:
+
+        return render(
+            request,
+            "admissions/claim_invalid.html",
+        )
+
+    # -------------------------------------------------
     # Already claimed
+    # -------------------------------------------------
+
     if application.claimed_at:
 
         messages.info(
@@ -293,11 +316,15 @@ def claim_application(request, claim_token):
 
         return redirect("accounts:login")
 
+    # -------------------------------------------------
     # Expired
+    # -------------------------------------------------
+
     if (
         application.claim_token_expires_at
         and application.claim_token_expires_at < timezone.now()
     ):
+
         return render(
             request,
             "admissions/claim_expired.html",
@@ -305,6 +332,10 @@ def claim_application(request, claim_token):
                 "application": application,
             },
         )
+
+    # -------------------------------------------------
+    # NEW PARENT
+    # -------------------------------------------------
 
     if request.method == "POST":
 
@@ -441,3 +472,29 @@ def regenerate_claim_token(request, application_id):
         "admissions:admission_detail",
         application_id=application.id,
     )
+
+
+@login_required
+@role_required("parent")
+def admission_letter(request, application_id):
+
+    application = get_object_or_404(
+        AdmissionApplication.objects.select_related(
+            "academic_year",
+            "term",
+            "desired_class",
+            "student",
+        ),
+        id=application_id,
+        applicant=request.user,
+        status="approved",
+    )
+
+    return render(
+        request,
+        "admissions/admission_letter.html",
+        {
+            "application": application,
+        },
+    )
+

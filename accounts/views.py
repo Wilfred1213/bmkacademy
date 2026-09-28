@@ -21,7 +21,7 @@ from django.urls import reverse
 from students.models import Student
 from teachers.models import Teacher
 from admissions.models import AdmissionApplication
-from results.models import StudentTermReport
+
 from django.core.exceptions import PermissionDenied
 from decimal import Decimal
 from results.models import StudentTermReport
@@ -30,8 +30,12 @@ from fees.services import FeeService, FeeInvoice
 from fees.models import Payment
 from django.db.models import Sum
 from notifications.services import NotificationService
-from .forms import ParentProfileForm
-from django.contrib.auth.forms import PasswordChangeForm
+from .forms import (
+    ParentProfileForm,
+    UserProfileForm,
+    TeacherProfileForm,
+)
+
 
 @login_required
 @role_required("admin")
@@ -470,7 +474,10 @@ def role_home(request):
 @role_required("admin")
 def admin_home(request):
 
-    
+    fee_summary = FeeService.get_fee_summary()
+
+    collection_report = FeeService.get_collection_report()
+
     context = {
         "total_users": User.objects.count(),
 
@@ -486,12 +493,56 @@ def admin_home(request):
             status="approved"
         ).count(),
 
+        "fee_summary": fee_summary,
+
+        "collection_report": collection_report,
     }
 
     return render(
         request,
         "accounts/admin_home.html",
         context,
+    )
+
+@login_required
+@role_required("admin")
+def admin_profile(request):
+
+    user = request.user
+
+    if request.method == "POST":
+
+        form = UserProfileForm(
+            request.POST,
+            instance=user,
+        )
+
+        if form.is_valid():
+
+            form.save()
+
+            messages.success(
+                request,
+                "Your profile has been updated successfully.",
+            )
+
+            return redirect(
+                "accounts:admin_profile"
+            )
+
+    else:
+
+        form = UserProfileForm(
+            instance=user,
+        )
+
+    return render(
+        request,
+        "accounts/admin_profile.html",
+        {
+            "form": form,
+            "user_account": user,
+        },
     )
 
 @login_required
@@ -533,8 +584,70 @@ def teacher_home(request):
     )
 
 @login_required
+@role_required("teacher")
+def teacher_profile(request):
+
+    teacher = get_object_or_404(
+        Teacher,
+        user=request.user,
+        is_active=True,
+    )
+
+    user = request.user
+
+    if request.method == "POST":
+
+        user_form = UserProfileForm(
+            request.POST,
+            instance=user,
+        )
+
+        teacher_form = TeacherProfileForm(
+            request.POST,
+            instance=teacher,
+        )
+
+        if (
+            user_form.is_valid()
+            and teacher_form.is_valid()
+        ):
+
+            user_form.save()
+            teacher_form.save()
+
+            messages.success(
+                request,
+                "Your profile has been updated successfully.",
+            )
+
+            return redirect(
+                "accounts:teacher_profile"
+            )
+
+    else:
+
+        user_form = UserProfileForm(
+            instance=user,
+        )
+
+        teacher_form = TeacherProfileForm(
+            instance=teacher,
+        )
+
+    return render(
+        request,
+        "accounts/teacher_profile.html",
+        {
+            "user_form": user_form,
+            "teacher_form": teacher_form,
+            "teacher": teacher,
+        },
+    )
+
+@login_required
 @role_required("parent")
 def parent_home(request):
+
     parent_profile = get_object_or_404(
         ParentProfile,
         user=request.user,
@@ -545,6 +658,30 @@ def parent_home(request):
         .prefetch_related("enrollments")
         .order_by("first_name", "last_name")
     )
+
+    # -------------------------------------------------
+    # Approved admission applications belonging
+    # to this parent
+    # -------------------------------------------------
+
+    admission_applications = (
+        AdmissionApplication.objects.filter(
+            applicant=request.user,
+            status="approved",
+            student__isnull=False,
+        )
+        .select_related(
+            "student",
+            "academic_year",
+            "term",
+            "desired_class",
+        )
+    )
+
+    admission_by_student = {
+        application.student_id: application
+        for application in admission_applications
+    }
 
     for child in children:
 
@@ -566,8 +703,17 @@ def parent_home(request):
 
         child.current_enrollment = enrollment
 
+        # -------------------------------------------------
+        # Admission letter
+        # -------------------------------------------------
+
+        child.admission_application = admission_by_student.get(
+            child.id
+        )
+
         # Attendance summary
         if enrollment:
+
             child.attendance_statistics = (
                 AttendanceService.get_student_statistics(
                     student=child,
@@ -575,7 +721,9 @@ def parent_home(request):
                     end_date=enrollment.term.end_date,
                 )
             )
+
         else:
+
             child.attendance_statistics = None
 
         # Published reports
@@ -588,10 +736,15 @@ def parent_home(request):
 
         # Fee summary
         if enrollment:
-            child.fee_summary = FeeService.get_enrollment_fee_summary(
-                enrollment=enrollment
+
+            child.fee_summary = (
+                FeeService.get_enrollment_fee_summary(
+                    enrollment=enrollment
+                )
             )
+
         else:
+
             child.fee_summary = {
                 "total_invoiced": Decimal("0.00"),
                 "total_paid": Decimal("0.00"),
@@ -606,8 +759,9 @@ def parent_home(request):
     )
 
     unread_notification_count = (
-        NotificationService
-        .get_unread_count(request.user)
+        NotificationService.get_unread_count(
+            request.user
+        )
     )
 
     return render(
@@ -620,6 +774,7 @@ def parent_home(request):
             "unread_notification_count": unread_notification_count,
         },
     )
+
 @login_required
 @role_required("student")
 def student_home(request):

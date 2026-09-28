@@ -130,7 +130,18 @@ urlpatterns = [
     "parent/change-password/",
     views.parent_change_password,
     name="parent_change_password",
-),
+    ),
+    path(
+    "admin-profile/",
+    views.admin_profile,
+    name="admin_profile",
+    ),
+
+    path(
+        "teacher-profile/",
+        views.teacher_profile,
+        name="teacher_profile",
+    ),
 
 
     

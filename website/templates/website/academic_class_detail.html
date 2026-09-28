@@ -1,0 +1,110 @@
+{% extends "website/base.html" %}
+
+{% block content %}
+
+<section class="py-5">
+
+<div class="container">
+
+    <!-- Back link -->
+    <div class="mb-4">
+        <a
+            href="{% url 'website:academics' %}"
+            class="text-decoration-none"
+        >
+            ← Back to Academics
+        </a>
+    </div>
+
+
+    <!-- Class heading -->
+    <div class="text-center mb-5">
+
+        <span class="badge bg-primary mb-3">
+            {{ school_class.get_section_display }}
+        </span>
+
+        <h1 class="fw-bold">
+            {{ school_class.name }}
+        </h1>
+
+        <p class="text-muted">
+            Subjects offered in {{ school_class.name }}
+        </p>
+
+    </div>
+
+
+    <!-- Subjects -->
+    <div class="row g-4">
+
+        {% for class_subject in school_class.class_subjects.all %}
+
+            <div class="col-sm-6 col-lg-4">
+
+                <div class="card h-100 border-0 shadow-sm">
+
+                    <div class="card-body text-center p-4">
+
+                        <div class="mb-3">
+
+                            <span
+                                class="d-inline-flex
+                                       align-items-center
+                                       justify-content-center
+                                       bg-light
+                                       rounded-circle"
+                                style="width: 60px; height: 60px;"
+                            >
+                                📚
+                            </span>
+
+                        </div>
+
+                        <h5 class="fw-bold mb-2">
+                            {{ class_subject.subject.name }}
+                        </h5>
+
+                        <p class="text-muted small mb-0">
+                            Subject
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        {% empty %}
+
+            <div class="col-12">
+
+                <div class="alert alert-light text-center">
+                    No subjects are currently available
+                    for this class.
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    <!-- Bottom navigation -->
+    <div class="text-center mt-5">
+
+        <a
+            href="{% url 'website:academics' %}"
+            class="btn btn-outline-primary"
+        >
+            View All Classes
+        </a>
+
+    </div>
+
+</div>
+
+</section>
+
+{% endblock %}

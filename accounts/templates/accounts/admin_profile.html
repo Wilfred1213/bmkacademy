@@ -1,0 +1,290 @@
+{% extends "base.html" %}
+
+{% block title %}
+    My Profile | BMK Academy
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-4">
+
+    <!-- HEADER -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-bold mb-1">
+                My Profile
+            </h2>
+
+            <p class="text-muted mb-0">
+                Your administrator account information
+            </p>
+
+        </div>
+
+        <div class="d-flex gap-2">
+
+            <a
+                href="{% url 'accounts:change_password' %}"
+                class="btn btn-outline-primary"
+            >
+                <i class="bi bi-key"></i>
+                Change Password
+            </a>
+
+            <a
+                href="{% url 'accounts:admin_home' %}"
+                class="btn btn-outline-secondary"
+            >
+                <i class="bi bi-arrow-left"></i>
+                Back to Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- PROFILE -->
+
+    <div class="row g-4">
+
+
+        <!-- PERSONAL INFORMATION -->
+
+        <div class="col-lg-8">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body p-4">
+
+                    <h5 class="fw-bold mb-4">
+                        Personal Information
+                    </h5>
+
+
+                    <form method="post">
+
+                        {% csrf_token %}
+
+
+                        <!-- FIRST NAME -->
+
+                        <div class="mb-3">
+
+                            <label
+                                for="{{ form.first_name.id_for_label }}"
+                                class="form-label fw-semibold"
+                            >
+                                First Name
+                            </label>
+
+                            {{ form.first_name }}
+
+                            {% if form.first_name.errors %}
+
+                                <div class="text-danger small mt-1">
+                                    {{ form.first_name.errors }}
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- LAST NAME -->
+
+                        <div class="mb-3">
+
+                            <label
+                                for="{{ form.last_name.id_for_label }}"
+                                class="form-label fw-semibold"
+                            >
+                                Last Name
+                            </label>
+
+                            {{ form.last_name }}
+
+                            {% if form.last_name.errors %}
+
+                                <div class="text-danger small mt-1">
+                                    {{ form.last_name.errors }}
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- EMAIL -->
+
+                        <div class="mb-3">
+
+                            <label
+                                for="{{ form.email.id_for_label }}"
+                                class="form-label fw-semibold"
+                            >
+                                Email
+                            </label>
+
+                            {{ form.email }}
+
+                            {% if form.email.errors %}
+
+                                <div class="text-danger small mt-1">
+                                    {{ form.email.errors }}
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="d-flex justify-content-end">
+
+                            <button
+                                type="submit"
+                                class="btn btn-primary"
+                            >
+                                <i class="bi bi-check-circle"></i>
+                                Save Changes
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ACCOUNT SUMMARY -->
+
+        <div class="col-lg-4">
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <div class="text-center mb-4">
+
+                        <div
+                            class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center"
+                            style="width: 80px; height: 80px;"
+                        >
+
+                            <i class="bi bi-person fs-1"></i>
+
+                        </div>
+
+                        <h5 class="fw-bold mt-3 mb-1">
+
+                            {{ user_account.get_full_name|default:user_account.username }}
+
+                        </h5>
+
+                        <small class="text-muted">
+                            Administrator
+                        </small>
+
+                    </div>
+
+
+                    <div class="mt-4">
+
+                        <h6 class="fw-bold mb-3">
+                            Account Information
+                        </h6>
+
+
+                        <!-- USERNAME -->
+
+                        <div class="mb-3">
+
+                            <small class="text-muted">
+                                Username
+                            </small>
+
+                            <div class="fw-semibold">
+                                {{ user_account.username }}
+                            </div>
+
+                        </div>
+
+
+                        <!-- EMAIL -->
+
+                        <div class="mb-3">
+
+                            <small class="text-muted">
+                                Email
+                            </small>
+
+                            <div class="fw-semibold">
+                                {{ user_account.email|default:"-" }}
+                            </div>
+
+                        </div>
+
+
+                        <!-- ROLE -->
+
+                        <div class="mb-3">
+
+                            <small class="text-muted">
+                                Role
+                            </small>
+
+                            <div class="fw-semibold">
+                                Administrator
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <hr>
+
+
+                    <!-- ACCOUNT STATUS -->
+
+                    <div class="d-flex justify-content-between">
+
+                        <span class="text-muted">
+                            Account Status
+                        </span>
+
+                        {% if user_account.is_active %}
+
+                            <span class="badge bg-success">
+                                Active
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge bg-danger">
+                                Inactive
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+{% endblock %}

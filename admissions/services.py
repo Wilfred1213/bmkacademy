@@ -79,17 +79,44 @@ class AdmissionService:
 
         return term
 
+
     @classmethod
     def submit_application(cls, applicant=None, **data):
 
         # -------------------------------------------------
-        # 1. Check if this parent already has this child
-        #    enrolled for the selected academic year/term
+        # 1. Existing logged-in parent
         # -------------------------------------------------
 
         if applicant:
 
-            child_exists = applicant.parent_profile.children.filter(
+            if applicant.role != "parent":
+                raise ValueError(
+                    "Only parent accounts can submit an admission "
+                    "application while logged in."
+                )
+
+            try:
+                parent_profile = applicant.parent_profile
+
+            except ParentProfile.DoesNotExist:
+                raise ValueError(
+                    "Your parent profile could not be found."
+                )
+
+            # ---------------------------------------------
+            # Get parent information from the database
+            # ---------------------------------------------
+
+            data["parent_name"] = applicant.get_full_name()
+            data["parent_phone"] = parent_profile.phone
+            data["parent_email"] = applicant.email
+            data["parent_address"] = parent_profile.address
+
+            # -------------------------------------------------
+            # 2. Check if this parent already has this child
+            # -------------------------------------------------
+
+            child_exists = parent_profile.children.filter(
                 first_name=data["first_name"],
                 middle_name=data.get("middle_name", ""),
                 last_name=data["last_name"],
@@ -114,9 +141,8 @@ class AdmissionService:
                         "the selected academic year and term."
                     )
 
-
         # -------------------------------------------------
-        # 2. Check for an existing admission application
+        # 3. Check for an existing admission application
         # -------------------------------------------------
 
         duplicate_exists = AdmissionApplication.objects.filter(
@@ -135,9 +161,8 @@ class AdmissionService:
                 "student for the selected academic year and term."
             )
 
-
         # -------------------------------------------------
-        # 3. Create the application
+        # 4. Create the application
         # -------------------------------------------------
 
         application = AdmissionApplication(
@@ -148,9 +173,8 @@ class AdmissionService:
         application.full_clean()
         application.save()
 
-
         # -------------------------------------------------
-        # 4. Notify administrators
+        # 5. Notify administrators
         # -------------------------------------------------
 
         admin_users = User.objects.filter(
@@ -179,27 +203,21 @@ class AdmissionService:
             )
 
         return application
+
+
+    
     @classmethod
     @transaction.atomic
     def approve_application(cls, application):
+
         if application.status != "pending":
             raise ValueError(
                 "Only pending applications can be approved."
             )
 
-        # ---------------------------------------------------------
-        # 1. Generate secure claim token
-        # ---------------------------------------------------------
-
-        application.claim_token = uuid.uuid4()
-
-        application.claim_token_expires_at = (
-            timezone.now() + timedelta(days=2)
-        )
-
-        # ---------------------------------------------------------
-        # 2. Create the student
-        # ---------------------------------------------------------
+        # -------------------------------------------------
+        # 1. Create the student
+        # -------------------------------------------------
 
         student = Student.objects.create(
             first_name=application.first_name,
@@ -209,10 +227,10 @@ class AdmissionService:
             gender=application.gender,
             date_admitted=timezone.now().date(),
         )
-        
-        # ---------------------------------------------------------
-        # 3. Create enrollment
-        # ---------------------------------------------------------
+
+        # -------------------------------------------------
+        # 2. Create enrollment
+        # -------------------------------------------------
 
         enrollment = Enrollment.objects.create(
             student=student,
@@ -222,12 +240,48 @@ class AdmissionService:
             is_current=True,
         )
 
-        # ---------------------------------------------------------
-        # 4. Mark application as approved
-        # ---------------------------------------------------------
+        # -------------------------------------------------
+        # 3. Connect student to the application
+        # -------------------------------------------------
+
         application.student = student
         application.status = "approved"
         application.reviewed_at = timezone.now()
+
+        # -------------------------------------------------
+        # 4. Existing parent
+        # -------------------------------------------------
+
+        if application.applicant:
+
+            parent_profile = getattr(
+                application.applicant,
+                "parent_profile",
+                None,
+            )
+
+            if parent_profile:
+
+                # Automatically link the new child
+                # to the existing parent's children.
+                student.parents.add(parent_profile)
+
+        # -------------------------------------------------
+        # 5. New/anonymous applicant
+        # -------------------------------------------------
+
+        else:
+
+            # Only NEW parents need a claim token.
+            application.claim_token = uuid.uuid4()
+
+            application.claim_token_expires_at = (
+                timezone.now() + timedelta(days=2)
+            )
+
+        # -------------------------------------------------
+        # 6. Save application
+        # -------------------------------------------------
 
         application.save(
             update_fields=[
@@ -239,23 +293,23 @@ class AdmissionService:
             ]
         )
 
-        # ---------------------------------------------------------
-        # 5. Send email only after transaction succeeds
-        # ---------------------------------------------------------
+        # -------------------------------------------------
+        # 7. Send admission decision email
+        # -------------------------------------------------
 
         transaction.on_commit(
-            lambda: NotificationEmailService
-            .send_admission_decision_email(
+            lambda: NotificationEmailService.send_admission_decision_email(
                 application,
                 "approved",
             )
         )
 
-        # ---------------------------------------------------------
-        # 6. Notify an already-linked parent, if one exists
-        # ---------------------------------------------------------
+        # -------------------------------------------------
+        # 8. Notify existing parent
+        # -------------------------------------------------
 
         if application.applicant:
+
             parent_profile = getattr(
                 application.applicant,
                 "parent_profile",
@@ -286,6 +340,8 @@ class AdmissionService:
                 )
 
         return student
+
+
 
     @classmethod
     def create_parent_account(cls, application):
@@ -474,6 +530,96 @@ class AdmissionService:
         )
 
         return user, parent_profile
+
+    @classmethod
+    @transaction.atomic
+    def claim_existing_parent_application(cls, application, user):
+
+        # 1. Application must be approved
+        if application.status != "approved":
+            raise ValueError(
+                "Only approved admission applications can be claimed."
+            )
+
+        # 2. Application must not have been claimed already
+        if application.claimed_at:
+            raise ValueError(
+                "This admission application has already been claimed."
+            )
+
+        # 3. Claim token must exist
+        if not application.claim_token:
+            raise ValueError(
+                "This admission claim link is no longer valid."
+            )
+
+        # 4. Check token expiration
+        if (
+            application.claim_token_expires_at
+            and application.claim_token_expires_at < timezone.now()
+        ):
+            raise ValueError(
+                "This admission claim link has expired."
+            )
+
+        # 5. Make sure this is a parent account
+        if user.role != "parent":
+            raise ValueError(
+                "This account is not a parent account."
+            )
+
+        # 6. Make sure the account has a ParentProfile
+        try:
+            parent_profile = user.parent_profile
+        except ParentProfile.DoesNotExist:
+            raise ValueError(
+                "This parent account does not have a parent profile."
+            )
+
+        # 7. Connect the newly admitted student
+        #    to the existing parent profile
+        application.student.parents.add(parent_profile)
+
+        # 8. Connect the application to the existing user
+        application.applicant = user
+        application.claimed_at = timezone.now()
+
+        # 9. Invalidate the claim link
+        application.claim_token = None
+        application.claim_token_expires_at = None
+
+        application.save(
+            update_fields=[
+                "applicant",
+                "claimed_at",
+                "claim_token",
+                "claim_token_expires_at",
+            ]
+        )
+
+        # 10. Create an in-app notification
+        NotificationService.create_notification(
+            recipient=user,
+            title="New Admission Added",
+            message=(
+                f"The admission application for "
+                f"{application.first_name} "
+                f"{application.last_name} "
+                f"has been successfully linked to your "
+                f"BMK Academy parent account."
+            ),
+            notification_type="admission",
+            link=reverse(
+                "admissions:parent_admission_detail",
+                kwargs={
+                    "application_id": application.id
+                },
+            ),
+        )
+
+        return user, parent_profile
+
+
 
     @classmethod
     def resend_admission_email(cls, application):

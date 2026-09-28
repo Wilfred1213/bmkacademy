@@ -178,12 +178,88 @@
 
         </div>
 
+        <!-- Total Invoiced -->
+        <div class="col-md-6 col-xl-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+
+                        <div>
+                            <p class="text-muted mb-1">
+                                Total Invoiced
+                            </p>
+
+                            <h3 class="fw-bold mb-0">
+                                ₦{{ fee_summary.total_invoiced|floatformat:2 }}
+                            </h3>
+                        </div>
+
+                        <div class="bg-primary bg-opacity-10 text-primary rounded-circle p-3">
+                            <i class="bi bi-receipt fs-4"></i>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Total Paid -->
+        <div class="col-md-6 col-xl-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+
+                        <div>
+                            <p class="text-muted mb-1">
+                                Total Paid
+                            </p>
+
+                            <h3 class="fw-bold mb-0">
+                                ₦{{ fee_summary.total_paid|floatformat:2 }}
+                            </h3>
+                        </div>
+
+                        <div class="bg-success bg-opacity-10 text-success rounded-circle p-3">
+                            <i class="bi bi-cash-stack fs-4"></i>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Outstanding -->
+        <div class="col-md-6 col-xl-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+
+                        <div>
+                            <p class="text-muted mb-1">
+                                Outstanding
+                            </p>
+
+                            <h3 class="fw-bold mb-0">
+                                ₦{{ fee_summary.outstanding|floatformat:2 }}
+                            </h3>
+                        </div>
+
+                        <div class="bg-danger bg-opacity-10 text-danger rounded-circle p-3">
+                            <i class="bi bi-wallet2 fs-4"></i>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 
     <!-- Main Dashboard -->
     <div class="row g-4">
-
 
         <!-- Admissions -->
         <div class="col-lg-8">
@@ -208,7 +284,7 @@
                         </div>
 
                         <a
-                            href="{% url 'admissions:admission_application' %}"
+                            href="{% url 'admissions:admission_list' %}"
                             class="btn btn-sm btn-outline-primary"
                         >
                             View Admissions
@@ -319,6 +395,183 @@
                         </a>
 
                     </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Fee Overview -->
+    <div class="row g-4 mt-1">
+
+        <!-- Fee Overview Card -->
+        <div class="col-lg-8">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body p-4">
+
+                    <div class="d-flex justify-content-between
+                                align-items-center mb-4">
+
+                        <div>
+
+                            <h5 class="fw-bold mb-1">
+                                Fee Overview
+                            </h5>
+
+                            <p class="text-muted mb-0">
+                                Current school fee collection status.
+                            </p>
+
+                        </div>
+
+                        <a
+                            href="{% url 'fees:invoice_list' %}"
+                            class="btn btn-sm btn-outline-primary"
+                        >
+                            View Invoices
+                        </a>
+
+                    </div>
+
+
+                    <div class="row g-3">
+
+                        <!-- Total Invoiced -->
+                        <div class="col-md-4">
+
+                            <div class="border rounded-3 p-3">
+
+                                <p class="text-muted mb-1">
+                                    Invoiced
+                                </p>
+
+                                <h5 class="fw-bold mb-0">
+                                    ₦{{ collection_report.total_invoiced|floatformat:2 }}
+                                </h5>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Total Paid -->
+                        <div class="col-md-4">
+
+                            <div class="border rounded-3 p-3">
+
+                                <p class="text-muted mb-1">
+                                    Collected
+                                </p>
+
+                                <h5 class="fw-bold text-success mb-0">
+                                    ₦{{ collection_report.total_paid|floatformat:2 }}
+                                </h5>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Outstanding -->
+                        <div class="col-md-4">
+
+                            <div class="border rounded-3 p-3">
+
+                                <p class="text-muted mb-1">
+                                    Outstanding
+                                </p>
+
+                                <h5 class="fw-bold text-danger mb-0">
+                                    ₦{{ collection_report.outstanding|floatformat:2 }}
+                                </h5>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Collection Rate -->
+                    <div class="mt-4">
+
+                        <div class="d-flex justify-content-between mb-2">
+
+                            <span class="text-muted">
+                                Collection Rate
+                            </span>
+
+                            <strong>
+                                {{ collection_report.collection_rate|floatformat:1 }}%
+                            </strong>
+
+                        </div>
+
+
+                        <div
+                            class="progress"
+                            role="progressbar"
+                            aria-valuenow="{{ collection_report.collection_rate }}"
+                            aria-valuemin="0"
+                            aria-valuemax="100"
+                        >
+
+                            <div
+                                class="progress-bar"
+                                style="width: {{ collection_report.collection_rate }}%;"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Invoice Status -->
+        <div class="col-lg-4">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body p-4">
+
+                    <h5 class="fw-bold mb-4">
+                        Invoice Status
+                    </h5>
+
+
+                    {% for status, data in collection_report.status_breakdown.items %}
+
+                        <div class="d-flex justify-content-between
+                                    align-items-center mb-3">
+
+                            <span>
+                                {{ data.label }}
+                            </span>
+
+                            <span class="badge text-bg-secondary">
+                                {{ data.count }}
+                            </span>
+
+                        </div>
+
+                    {% empty %}
+
+                        <p class="text-muted mb-0">
+                            No invoice data available.
+                        </p>
+
+                    {% endfor %}
 
                 </div>
 

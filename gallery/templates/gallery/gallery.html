@@ -1,0 +1,247 @@
+{% extends "website/base.html" %}
+{% load static %}
+
+{% block title %}Gallery | BMK Academy{% endblock %}
+
+
+
+{% block content %}
+
+<!-- Hero -->
+
+<section class="bmk-gallery-hero">
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-lg-9">
+
+                <span class="badge rounded-pill bg-light text-primary px-3 py-2 mb-3">
+                    <i class="bi bi-images me-2"></i>
+                    BMK Gallery
+                </span>
+
+                <h1>
+                    Moments From Life at BMK
+                </h1>
+
+                <p class="mt-4">
+                    Explore photographs capturing learning, school life,
+                    special events and the environment of
+                    Baki and Mairam Kwasari Nursery and Primary School.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- Gallery -->
+
+<section class="bmk-gallery-section">
+
+    <div class="container">
+
+
+        <!-- Category filters -->
+
+        <div class="bmk-gallery-filter">
+
+            <a
+                href="{% url 'gallery:gallery' %}"
+                class="btn btn-primary"
+            >
+                All Photos
+            </a>
+
+
+            {% for category in categories %}
+
+                <a
+                    href="{% url 'gallery:category_gallery' category.slug %}"
+                    class="btn btn-outline-primary"
+                >
+                    {{ category.name }}
+                </a>
+
+            {% endfor %}
+
+        </div>
+
+
+        {% if photos %}
+
+            <div class="row g-4">
+
+                {% for photo in photos %}
+
+                    <div class="col-sm-6 col-lg-4">
+
+                        <a
+                            href="{% url 'gallery:photo_detail' photo.pk %}"
+                            class="text-decoration-none text-dark"
+                        >
+
+                            <article class="bmk-gallery-card">
+
+                                <div class="bmk-gallery-image-wrapper">
+
+                                    <img
+                                        src="{{ photo.image.url }}"
+                                        alt="{{ photo.title }}"
+                                        class="bmk-gallery-image"
+                                        loading="lazy"
+                                    >
+
+                                    <div class="bmk-gallery-overlay">
+
+                                        <div class="bmk-gallery-overlay-content">
+
+                                            <h3>
+                                                {{ photo.title }}
+                                            </h3>
+
+                                            <span>
+                                                <i class="bi bi-eye me-1"></i>
+                                                View Photograph
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="bmk-gallery-info">
+
+                                    <div class="bmk-gallery-category">
+                                        {{ photo.category.name }}
+                                    </div>
+
+                                    <h3>
+                                        {{ photo.title }}
+                                    </h3>
+
+                                    {% if photo.caption %}
+
+                                        <p class="text-muted small mb-0">
+                                            {{ photo.caption|truncatewords:18 }}
+                                        </p>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </article>
+
+                        </a>
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            <!-- Pagination -->
+
+            {% if page_obj.has_other_pages %}
+
+                <nav
+                    class="bmk-gallery-pagination"
+                    aria-label="Gallery pagination"
+                >
+
+                    <ul class="pagination justify-content-center">
+
+                        {% if page_obj.has_previous %}
+
+                            <li class="page-item">
+
+                                <a
+                                    class="page-link"
+                                    href="?page={{ page_obj.previous_page_number }}"
+                                >
+                                    Previous
+                                </a>
+
+                            </li>
+
+                        {% endif %}
+
+
+                        {% for number in page_obj.paginator.page_range %}
+
+                            <li
+                                class="page-item
+                                {% if page_obj.number == number %}
+                                    active
+                                {% endif %}"
+                            >
+
+                                <a
+                                    class="page-link"
+                                    href="?page={{ number }}"
+                                >
+                                    {{ number }}
+                                </a>
+
+                            </li>
+
+                        {% endfor %}
+
+
+                        {% if page_obj.has_next %}
+
+                            <li class="page-item">
+
+                                <a
+                                    class="page-link"
+                                    href="?page={{ page_obj.next_page_number }}"
+                                >
+                                    Next
+                                </a>
+
+                            </li>
+
+                        {% endif %}
+
+                    </ul>
+
+                </nav>
+
+            {% endif %}
+
+
+        {% else %}
+
+            <div class="bmk-gallery-empty">
+
+                <i
+                    class="bi bi-images"
+                    style="font-size:3rem;"
+                ></i>
+
+                <h3 class="mt-3">
+                    Gallery Coming Soon
+                </h3>
+
+                <p>
+                    BMK Academy photographs will appear here soon.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+    </div>
+
+</section>
+
+{% endblock %}

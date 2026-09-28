@@ -7,17 +7,30 @@ from django.contrib.auth.password_validation import validate_password
 
 
 class AdmissionApplicationForm(forms.ModelForm):
+
     class Meta:
         model = AdmissionApplication
+
         fields = [
-            "academic_year", "term", "desired_class",
-            "first_name", "middle_name", "last_name", "date_of_birth",
-            "gender", "previous_school",
-            "parent_name", "parent_phone", "parent_email",
-            "parent_address", "relationship",
+            "academic_year",
+            "term",
+            "desired_class",
+            "first_name",
+            "middle_name",
+            "last_name",
+            "date_of_birth",
+            "gender",
+            "previous_school",
+            "parent_name",
+            "parent_phone",
+            "parent_email",
+            "parent_address",
+            "relationship",
         ]
+
         widgets = {
-            "academic_year": forms.Select(attrs={
+            "academic_year": forms.Select(
+                attrs={
                     "class": "form-select",
                     "hx-get": "/admissions/admission-terms/",
                     "hx-target": "#id_term",
@@ -25,43 +38,191 @@ class AdmissionApplicationForm(forms.ModelForm):
                     "hx-swap": "innerHTML",
                 }
             ),
-            "term": forms.Select(attrs={"class": "form-select"}),
-            "desired_class": forms.Select(attrs={"class": "form-select"}),
-            "first_name": forms.TextInput(attrs={"class": "form-control", "placeholder": "Enter first name"}),
-            "middle_name": forms.TextInput(attrs={"class": "form-control", "placeholder": "Enter middle name"}),
-            "last_name": forms.TextInput(attrs={"class": "form-control", "placeholder": "Enter last name"}),
-            "date_of_birth": forms.DateInput(attrs={"class": "form-control", "type": "date"}),
-            "gender": forms.Select(attrs={"class": "form-select"}),
-            "previous_school": forms.TextInput(attrs={"class": "form-control", "placeholder": "Previous school (optional)"}),
-            "parent_name": forms.TextInput(attrs={"class": "form-control", "placeholder": "Parent / Guardian full name"}),
-            "parent_phone": forms.TextInput(attrs={"class": "form-control", "placeholder": "080XXXXXXXX"}),
-            "parent_email": forms.EmailInput(attrs={"class": "form-control", "placeholder": "Parent email"}),
-            "parent_address": forms.Textarea(attrs={"class": "form-control", "rows": 3, "placeholder": "Residential address"}),
-            "relationship": forms.Select(attrs={"class": "form-select"}),
+
+            "term": forms.Select(
+                attrs={
+                    "class": "form-select",
+                }
+            ),
+
+            "desired_class": forms.Select(
+                attrs={
+                    "class": "form-select",
+                }
+            ),
+
+            "first_name": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Enter first name",
+                }
+            ),
+
+            "middle_name": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Enter middle name",
+                }
+            ),
+
+            "last_name": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Enter last name",
+                }
+            ),
+
+            "date_of_birth": forms.DateInput(
+                attrs={
+                    "class": "form-control",
+                    "type": "date",
+                }
+            ),
+
+            "gender": forms.Select(
+                attrs={
+                    "class": "form-select",
+                }
+            ),
+
+            "previous_school": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Previous school (optional)",
+                }
+            ),
+
+            "parent_name": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                }
+            ),
+
+            "parent_phone": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                }
+            ),
+
+            "parent_email": forms.EmailInput(
+                attrs={
+                    "class": "form-control",
+                }
+            ),
+
+            "parent_address": forms.Textarea(
+                attrs={
+                    "class": "form-control",
+                    "rows": 3,
+                }
+            ),
+
+            "relationship": forms.Select(
+                attrs={
+                    "class": "form-select",
+                }
+            ),
         }
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, user=None, **kwargs):
+
         super().__init__(*args, **kwargs)
+
+        self.user = user
+
         self.fields["term"].queryset = Term.objects.none()
 
+        # ---------------------------------------------
+        # LOAD TERMS FOR SELECTED ACADEMIC YEAR
+        # ---------------------------------------------
+
         if "academic_year" in self.data:
+
             try:
-                academic_year_id = int(self.data.get("academic_year"))
-                self.fields["term"].queryset = Term.objects.filter(
-                    academic_year_id=academic_year_id
-                ).order_by("start_date")
+                academic_year_id = int(
+                    self.data.get("academic_year")
+                )
+
+                self.fields["term"].queryset = (
+                    Term.objects
+                    .filter(
+                        academic_year_id=academic_year_id
+                    )
+                    .order_by("start_date")
+                )
+
             except (ValueError, TypeError):
                 pass
-        elif self.instance.pk:
-            self.fields["term"].queryset = self.instance.academic_year.terms.order_by("start_date")
-        else:
-            current_year = AcademicYear.objects.filter(is_current=True).first()
-            if current_year:
-                self.fields["academic_year"].initial = current_year
-                self.fields["term"].queryset = Term.objects.filter(
-                    academic_year=current_year
-                ).order_by("start_date")
 
+        elif self.instance.pk:
+
+            self.fields["term"].queryset = (
+                self.instance
+                .academic_year
+                .terms
+                .order_by("start_date")
+            )
+
+        else:
+
+            current_year = (
+                AcademicYear.objects
+                .filter(is_current=True)
+                .first()
+            )
+
+            if current_year:
+
+                self.fields["academic_year"].initial = current_year
+
+                self.fields["term"].queryset = (
+                    Term.objects
+                    .filter(
+                        academic_year=current_year
+                    )
+                    .order_by("start_date")
+                )
+
+        # ---------------------------------------------
+        # EXISTING LOGGED-IN PARENT
+        # ---------------------------------------------
+
+        if (
+            self.user
+            and self.user.is_authenticated
+            and self.user.role == "parent"
+        ):
+
+            try:
+                parent_profile = self.user.parent_profile
+
+            except ParentProfile.DoesNotExist:
+
+                parent_profile = None
+
+            if parent_profile:
+
+                self.fields["parent_name"].initial = (
+                    self.user.get_full_name()
+                )
+
+                self.fields["parent_phone"].initial = (
+                    parent_profile.phone
+                )
+
+                self.fields["parent_email"].initial = (
+                    self.user.email
+                )
+
+                self.fields["parent_address"].initial = (
+                    parent_profile.address
+                )
+
+                # These fields are displayed as read-only.
+                self.fields["parent_name"].disabled = True
+                self.fields["parent_phone"].disabled = True
+                self.fields["parent_email"].disabled = True
+                self.fields["parent_address"].disabled = True
 
 class ClaimApplicationForm(forms.Form):
 
@@ -130,3 +291,27 @@ class ClaimApplicationForm(forms.Form):
                 )
 
         return cleaned_data
+
+class ExistingParentClaimForm(forms.Form):
+
+    username = forms.CharField(
+        max_length=150,
+        label="Username",
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Enter your existing username",
+            }
+        ),
+    )
+
+    password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Enter your existing password",
+            }
+        ),
+        label="Password",
+    )
+

@@ -1,0 +1,253 @@
+{% extends "website/base.html" %}
+
+{% block title %}
+    {{ category.name }} | BMK Academy Gallery
+{% endblock %}
+
+
+{% block content %}
+
+<!-- Category Hero -->
+<section class="gallery-hero">
+    <div class="container text-center">
+
+        <a
+            href="{% url 'gallery:gallery' %}"
+            class="btn btn-outline-primary mb-4"
+        >
+            <i class="bi bi-arrow-left"></i>
+            Back to Gallery
+        </a>
+
+        <h1 class="display-5 fw-bold">
+            {{ category.name }}
+        </h1>
+
+        {% if category.description %}
+            <p class="lead text-muted mx-auto mt-3" style="max-width: 750px;">
+                {{ category.description }}
+            </p>
+        {% endif %}
+
+    </div>
+</section>
+
+
+<!-- Category Navigation -->
+<section class="py-4 border-bottom">
+    <div class="container text-center">
+
+        <a
+            href="{% url 'gallery:gallery' %}"
+            class="category-pill btn btn-outline-primary"
+        >
+            All Photos
+        </a>
+
+        {% for item in categories %}
+
+            {% if item.slug == category.slug %}
+
+                <a
+                    href="{% url 'gallery:category_gallery' item.slug %}"
+                    class="category-pill btn btn-primary"
+                >
+                    {{ item.name }}
+                </a>
+
+            {% else %}
+
+                <a
+                    href="{% url 'gallery:category_gallery' item.slug %}"
+                    class="category-pill btn btn-outline-secondary"
+                >
+                    {{ item.name }}
+                </a>
+
+            {% endif %}
+
+        {% endfor %}
+
+    </div>
+</section>
+
+
+<!-- Photos -->
+<section class="py-5">
+    <div class="container">
+
+        {% if photos %}
+
+            <div class="row g-4">
+
+                {% for photo in photos %}
+
+                    <div class="col-md-6 col-lg-4">
+
+                        <a
+                            href="{% url 'gallery:photo_detail' photo.pk %}"
+                            class="text-decoration-none text-dark"
+                        >
+
+                            <div class="card gallery-photo-card h-100 shadow-sm">
+
+                                <img
+                                    src="{{ photo.image.url }}"
+                                    alt="{{ photo.title }}"
+                                    class="gallery-photo"
+                                >
+
+                                <div class="card-body">
+
+                                    <span class="badge bg-primary mb-2">
+                                        {{ photo.category.name }}
+                                    </span>
+
+                                    <h5 class="card-title">
+                                        {{ photo.title }}
+                                    </h5>
+
+                                    {% if photo.caption %}
+                                        <p class="card-text text-muted">
+                                            {{ photo.caption|truncatewords:20 }}
+                                        </p>
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                        </a>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            <!-- Pagination -->
+            {% if page_obj.has_other_pages %}
+
+                <nav class="mt-5" aria-label="Gallery pagination">
+
+                    <ul class="pagination justify-content-center">
+
+                        {% if page_obj.has_previous %}
+
+                            <li class="page-item">
+
+                                <a
+                                    class="page-link"
+                                    href="?page={{ page_obj.previous_page_number }}"
+                                >
+                                    Previous
+                                </a>
+
+                            </li>
+
+                        {% else %}
+
+                            <li class="page-item disabled">
+
+                                <span class="page-link">
+                                    Previous
+                                </span>
+
+                            </li>
+
+                        {% endif %}
+
+
+                        {% for num in page_obj.paginator.page_range %}
+
+                            {% if page_obj.number == num %}
+
+                                <li class="page-item active">
+
+                                    <span class="page-link">
+                                        {{ num }}
+                                    </span>
+
+                                </li>
+
+                            {% else %}
+
+                                <li class="page-item">
+
+                                    <a
+                                        class="page-link"
+                                        href="?page={{ num }}"
+                                    >
+                                        {{ num }}
+                                    </a>
+
+                                </li>
+
+                            {% endif %}
+
+                        {% endfor %}
+
+
+                        {% if page_obj.has_next %}
+
+                            <li class="page-item">
+
+                                <a
+                                    class="page-link"
+                                    href="?page={{ page_obj.next_page_number }}"
+                                >
+                                    Next
+                                </a>
+
+                            </li>
+
+                        {% else %}
+
+                            <li class="page-item disabled">
+
+                                <span class="page-link">
+                                    Next
+                                </span>
+
+                            </li>
+
+                        {% endif %}
+
+                    </ul>
+
+                </nav>
+
+            {% endif %}
+
+
+        {% else %}
+
+            <div class="empty-gallery text-center">
+
+                <i class="bi bi-images display-1 text-muted"></i>
+
+                <h3 class="mt-4">
+                    No Photos Yet
+                </h3>
+
+                <p class="text-muted">
+                    There are currently no published photos in
+                    {{ category.name }}.
+                </p>
+
+                <a
+                    href="{% url 'gallery:gallery' %}"
+                    class="btn btn-primary mt-3"
+                >
+                    View All Photos
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+</section>
+
+{% endblock %}

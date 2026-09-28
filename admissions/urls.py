@@ -53,6 +53,7 @@ urlpatterns = [
     views.resend_admission_email,
     name="resend_admission_email",
     ),
+    path( "admission-letter/<int:application_id>/", views.admission_letter, name="admission_letter", ),
     path(
     "applications/<int:application_id>/regenerate-claim/",
     views.regenerate_claim_token,

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}
+Admission Claim Link | BMK Academy
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-7 col-lg-6">
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body p-5 text-center">
+
+                    <div class="mb-4">
+
+                        <i
+                            class="bi bi-link-45deg text-warning"
+                            style="font-size: 4rem;"
+                        ></i>
+
+                    </div>
+
+                    <h3 class="fw-bold mb-3">
+                        Admission Claim Link No Longer Valid
+                    </h3>
+
+                    <p class="text-muted">
+
+                        This admission claim link is no longer valid.
+                        It may have already been used or may have expired.
+
+                    </p>
+
+                    <p class="text-muted">
+
+                        If you have already created your BMK Academy
+                        parent account, you can log in to your account
+                        to access your child's information.
+
+                    </p>
+
+                    <div class="d-grid gap-2 mt-4">
+
+                        <a
+                            href="{% url 'accounts:login' %}"
+                            class="btn btn-primary"
+                        >
+                            <i class="bi bi-box-arrow-in-right me-2"></i>
+                            Parent Login
+                        </a>
+
+                        <a
+                            href="{% url 'website:home' %}"
+                            class="btn btn-outline-secondary"
+                        >
+                            <i class="bi bi-house me-2"></i>
+                            Back to BMK Academy
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

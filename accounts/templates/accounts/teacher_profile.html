@@ -1,0 +1,357 @@
+{% extends "base.html" %}
+
+{% block title %}
+    My Profile | BMK Academy
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-4">
+
+    <!-- HEADER -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-bold mb-1">
+                My Profile
+            </h2>
+
+            <p class="text-muted mb-0">
+                Your teacher account information
+            </p>
+
+        </div>
+
+        <div class="d-flex gap-2">
+
+            <a
+                href="{% url 'accounts:change_password' %}"
+                class="btn btn-outline-primary"
+            >
+                <i class="bi bi-key"></i>
+                Change Password
+            </a>
+
+            <a
+                href="{% url 'accounts:teacher_home' %}"
+                class="btn btn-outline-secondary"
+            >
+                <i class="bi bi-arrow-left"></i>
+                Back to Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- PROFILE -->
+
+    <div class="row g-4">
+
+
+        <!-- PERSONAL INFORMATION -->
+
+        <div class="col-lg-8">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body p-4">
+
+                    <h5 class="fw-bold mb-4">
+                        Personal Information
+                    </h5>
+
+
+                    <form method="post">
+
+                        {% csrf_token %}
+
+
+                        <!-- FIRST NAME -->
+
+                        <div class="mb-3">
+
+                            <label
+                                for="{{ user_form.first_name.id_for_label }}"
+                                class="form-label fw-semibold"
+                            >
+                                First Name
+                            </label>
+
+                            {{ user_form.first_name }}
+
+                            {% if user_form.first_name.errors %}
+
+                                <div class="text-danger small mt-1">
+                                    {{ user_form.first_name.errors }}
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- LAST NAME -->
+
+                        <div class="mb-3">
+
+                            <label
+                                for="{{ user_form.last_name.id_for_label }}"
+                                class="form-label fw-semibold"
+                            >
+                                Last Name
+                            </label>
+
+                            {{ user_form.last_name }}
+
+                            {% if user_form.last_name.errors %}
+
+                                <div class="text-danger small mt-1">
+                                    {{ user_form.last_name.errors }}
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- EMAIL -->
+
+                        <div class="mb-3">
+
+                            <label
+                                for="{{ user_form.email.id_for_label }}"
+                                class="form-label fw-semibold"
+                            >
+                                Email
+                            </label>
+
+                            {{ user_form.email }}
+
+                            {% if user_form.email.errors %}
+
+                                <div class="text-danger small mt-1">
+                                    {{ user_form.email.errors }}
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- PHONE -->
+
+                        <div class="mb-3">
+
+                            <label
+                                for="{{ teacher_form.phone.id_for_label }}"
+                                class="form-label fw-semibold"
+                            >
+                                Phone
+                            </label>
+
+                            {{ teacher_form.phone }}
+
+                            {% if teacher_form.phone.errors %}
+
+                                <div class="text-danger small mt-1">
+                                    {{ teacher_form.phone.errors }}
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- QUALIFICATION -->
+
+                        <div class="mb-3">
+
+                            <label
+                                for="{{ teacher_form.qualification.id_for_label }}"
+                                class="form-label fw-semibold"
+                            >
+                                Qualification
+                            </label>
+
+                            {{ teacher_form.qualification }}
+
+                            {% if teacher_form.qualification.errors %}
+
+                                <div class="text-danger small mt-1">
+                                    {{ teacher_form.qualification.errors }}
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="d-flex justify-content-end">
+
+                            <button
+                                type="submit"
+                                class="btn btn-primary"
+                            >
+                                <i class="bi bi-check-circle"></i>
+                                Save Changes
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PROFESSIONAL / ACCOUNT SUMMARY -->
+
+        <div class="col-lg-4">
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <!-- PROFILE ICON -->
+
+                    <div class="text-center mb-4">
+
+                        <div
+                            class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center"
+                            style="width: 80px; height: 80px;"
+                        >
+
+                            <i class="bi bi-person fs-1"></i>
+
+                        </div>
+
+                        <h5 class="fw-bold mt-3 mb-1">
+
+                            {{ teacher.user.get_full_name|default:teacher.user.username }}
+
+                        </h5>
+
+                        <small class="text-muted">
+                            Teacher
+                        </small>
+
+                    </div>
+
+
+                    <!-- ACCOUNT INFORMATION -->
+
+                    <div class="mt-4">
+
+                        <h6 class="fw-bold mb-3">
+                            Account Information
+                        </h6>
+
+
+                        <!-- USERNAME -->
+
+                        <div class="mb-3">
+
+                            <small class="text-muted">
+                                Username
+                            </small>
+
+                            <div class="fw-semibold">
+                                {{ teacher.user.username }}
+                            </div>
+
+                        </div>
+
+
+                        <!-- EMAIL -->
+
+                        <div class="mb-3">
+
+                            <small class="text-muted">
+                                Email
+                            </small>
+
+                            <div class="fw-semibold">
+                                {{ teacher.user.email|default:"-" }}
+                            </div>
+
+                        </div>
+
+
+                        <!-- EMPLOYEE ID -->
+
+                        <div class="mb-3">
+
+                            <small class="text-muted">
+                                Employee ID
+                            </small>
+
+                            <div class="fw-semibold">
+                                {{ teacher.employee_id }}
+                            </div>
+
+                        </div>
+
+
+                        <!-- DATE JOINED -->
+
+                        <div class="mb-3">
+
+                            <small class="text-muted">
+                                Date Joined
+                            </small>
+
+                            <div class="fw-semibold">
+                                {{ teacher.date_joined|date:"d M Y" }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <hr>
+
+
+                    <!-- ACCOUNT STATUS -->
+
+                    <div class="d-flex justify-content-between">
+
+                        <span class="text-muted">
+                            Account Status
+                        </span>
+
+                        {% if teacher.is_active %}
+
+                            <span class="badge bg-success">
+                                Active
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge bg-danger">
+                                Inactive
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+{% endblock %}

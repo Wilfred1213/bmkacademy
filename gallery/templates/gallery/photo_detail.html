@@ -1,0 +1,82 @@
+{% extends "website/base.html" %}
+
+{% block title %}
+{{ photo.title }} | BMK Academy
+{% endblock %}
+
+
+
+{% block content %}
+
+<section class="bmk-photo-detail">
+
+    <div class="container">
+
+        <a
+            href="{% url 'gallery:gallery' %}"
+            class="bmk-photo-back"
+        >
+            <i class="bi bi-arrow-left"></i>
+            Back to Gallery
+        </a>
+
+
+        <article class="bmk-photo-card">
+
+            <!-- Photograph -->
+
+            <div class="bmk-photo-image-container">
+
+                <img
+                    src="{{ photo.image.url }}"
+                    alt="{{ photo.title }}"
+                    class="bmk-photo-image"
+                >
+
+            </div>
+
+
+            <!-- Information -->
+
+            <div class="bmk-photo-information">
+
+                <div class="bmk-photo-category">
+
+                    <i class="bi bi-folder2-open"></i>
+
+                    {{ photo.category.name }}
+
+                </div>
+
+
+                <h1>
+                    {{ photo.title }}
+                </h1>
+
+
+                {% if photo.caption %}
+
+                    <p class="bmk-photo-caption">
+                        {{ photo.caption }}
+                    </p>
+
+                {% endif %}
+
+
+                <div class="bmk-photo-meta">
+
+                    <i class="bi bi-calendar3 me-2"></i>
+
+                    Added to the BMK Academy gallery
+
+                </div>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+{% endblock %}

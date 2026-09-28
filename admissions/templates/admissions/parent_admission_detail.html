@@ -337,13 +337,28 @@ Admission Status | BMK Academy
 
             {% endif %}
 
-            <a
-                href="{% url 'accounts:parent_home' %}"
-                class="btn btn-success w-100"
-            >
-                <i class="bi bi-speedometer2 me-2"></i>
-                Go to Parent Dashboard
-            </a>
+            
+            <div class="d-grid gap-2">
+
+                <a
+                    href="{% url 'admissions:admission_letter' application.id %}"
+                    class="btn btn-primary"
+                >
+                    <i class="bi bi-file-earmark-text me-2"></i>
+                    View Admission Letter
+                </a>
+
+                <a
+                    href="{% url 'accounts:parent_home' %}"
+                    class="btn btn-success"
+                >
+                    <i class="bi bi-speedometer2 me-2"></i>
+                    Go to Parent Dashboard
+                </a>
+
+            </div>
+
+
 
         </div>
 

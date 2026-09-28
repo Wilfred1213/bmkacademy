@@ -1,0 +1,3256 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {% block title %}
+            BMK Academy
+        {% endblock %}
+    </title>
+
+    <meta
+        name="description"
+        content="BMK Academy - Baki and Mairam Kwasari Nursery and Primary School."
+    >
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+    
+
+    {% block extra_css %}
+    <style>
+        
+        /* =========================================
+        BMK HERO CAROUSEL
+        ========================================= */
+
+        .bmk-hero {
+            position: relative;
+            overflow: hidden;
+        }
+
+
+        /* Hero image */
+
+        .bmk-hero-image {
+            width: 100%;
+            height: 680px;
+            object-fit: cover;
+            object-position: center;
+        }
+
+
+        /* Dark gradient overlay */
+
+        .bmk-hero-overlay {
+            position: absolute;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(0, 0, 0, 0.78) 0%,
+                    rgba(0, 0, 0, 0.55) 45%,
+                    rgba(0, 0, 0, 0.20) 100%
+                );
+        }
+
+
+        /* Hero content */
+
+        .bmk-hero-content {
+            position: absolute;
+
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+
+            display: flex;
+            align-items: center;
+
+            text-align: left;
+
+            padding: 0;
+        }
+
+
+        /* BMK badge */
+
+        .bmk-hero-badge {
+            display: inline-flex;
+            align-items: center;
+
+            background: rgba(255, 255, 255, 0.12);
+
+            border: 1px solid rgba(255, 255, 255, 0.35);
+
+            backdrop-filter: blur(8px);
+
+            color: #ffffff;
+
+            padding: 9px 18px;
+
+            border-radius: 50px;
+
+            font-size: 0.9rem;
+
+            font-weight: 600;
+
+            margin-bottom: 20px;
+        }
+
+
+        /* Main heading */
+
+        .bmk-hero-title {
+            color: #ffffff;
+
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+
+            font-weight: 800;
+
+            line-height: 1.08;
+
+            margin-bottom: 24px;
+
+            letter-spacing: -1px;
+        }
+
+
+        /* Subtitle */
+
+        .bmk-hero-subtitle {
+            color: rgba(255, 255, 255, 0.92);
+
+            font-size: 1.15rem;
+
+            line-height: 1.7;
+
+            max-width: 680px;
+
+            margin-bottom: 32px;
+        }
+
+
+        /* Main button */
+
+        .bmk-hero-button {
+            display: inline-flex;
+
+            align-items: center;
+
+            padding: 13px 25px;
+
+            border-radius: 8px;
+
+            background: #ffffff;
+
+            color: #0d6efd;
+
+            font-weight: 600;
+
+            border: none;
+
+            transition: all 0.25s ease;
+        }
+
+
+        /* Button hover */
+
+        .bmk-hero-button:hover {
+            transform: translateY(-2px);
+
+            background: #f8f9fa;
+
+            color: #0d6efd;
+
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
+        }
+
+
+        /* =========================================
+        CAROUSEL ARROWS
+        ========================================= */
+
+        .bmk-carousel-control {
+            width: 70px;
+
+            opacity: 1;
+        }
+
+
+        .bmk-carousel-arrow {
+            width: 46px;
+
+            height: 46px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: rgba(255, 255, 255, 0.16);
+
+            border: 1px solid rgba(255, 255, 255, 0.3);
+
+            backdrop-filter: blur(5px);
+
+            transition: all 0.25s ease;
+        }
+
+
+        /* Arrow hover */
+
+        .bmk-carousel-arrow:hover {
+            background: rgba(255, 255, 255, 0.28);
+
+            transform: scale(1.05);
+        }
+
+
+        /* =========================================
+        CAROUSEL INDICATORS
+        ========================================= */
+
+        .bmk-hero .carousel-indicators {
+            margin-bottom: 28px;
+        }
+
+
+        .bmk-hero .carousel-indicators button {
+            width: 30px;
+
+            height: 4px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            margin: 0 4px;
+
+            background: rgba(255, 255, 255, 0.55);
+        }
+
+
+        .bmk-hero .carousel-indicators button.active {
+            width: 50px;
+
+            background: #ffffff;
+        }
+
+
+        /* =========================================
+        FALLBACK
+        ========================================= */
+
+        .bmk-hero-empty {
+            min-height: 500px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #f1f5f9;
+        }
+
+
+        /* =========================================
+        MOBILE
+        ========================================= */
+
+        @media (max-width: 767.98px) {
+
+            .bmk-hero-image {
+                height: 600px;
+            }
+
+
+            .bmk-hero-overlay {
+                background:
+                    linear-gradient(
+                        90deg,
+                        rgba(0, 0, 0, 0.78),
+                        rgba(0, 0, 0, 0.45)
+                    );
+            }
+
+
+            .bmk-hero-content {
+                padding: 0 20px;
+            }
+
+
+            .bmk-hero-title {
+                font-size: 2.35rem;
+
+                margin-bottom: 18px;
+            }
+
+
+            .bmk-hero-subtitle {
+                font-size: 1rem;
+
+                line-height: 1.6;
+
+                margin-bottom: 25px;
+            }
+
+
+            /* Hide arrows on small screens */
+
+            .bmk-carousel-control {
+                display: none;
+            }
+
+
+            .bmk-hero .carousel-indicators {
+                margin-bottom: 18px;
+            }
+
+        }
+
+
+        /* =========================================
+        BMK ABOUT SECTION
+        ========================================= */
+
+        .bmk-about {
+            background: #ffffff;
+        }
+
+
+        /* Small section label */
+
+        .bmk-section-label {
+            display: inline-block;
+
+            color: #0d6efd;
+
+            font-size: 0.82rem;
+
+            font-weight: 700;
+
+            letter-spacing: 1.5px;
+
+            margin-bottom: 14px;
+        }
+
+
+        /* Main section heading */
+
+        .bmk-section-title {
+            font-size: clamp(2rem, 4vw, 3.2rem);
+
+            font-weight: 800;
+
+            line-height: 1.15;
+
+            color: #1f2937;
+
+            margin-bottom: 24px;
+        }
+
+
+        /* About paragraphs */
+
+        .bmk-about-text {
+            color: #64748b;
+
+            font-size: 1.05rem;
+
+            line-height: 1.8;
+
+            margin-bottom: 18px;
+        }
+
+
+        /* =========================================
+        ABOUT IMAGE
+        ========================================= */
+
+        .bmk-about-image-wrapper {
+            position: relative;
+
+            padding-right: 35px;
+
+            padding-bottom: 35px;
+        }
+
+
+        .bmk-about-image {
+            width: 100%;
+
+            height: 500px;
+
+            object-fit: cover;
+
+            border-radius: 20px;
+
+            display: block;
+
+            box-shadow:
+                0 20px 50px rgba(15, 23, 42, 0.12);
+        }
+
+
+        /* Small floating card */
+
+        .bmk-about-image-card {
+            position: absolute;
+
+            right: 0;
+
+            bottom: 0;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+
+            background: #ffffff;
+
+            padding: 18px 22px;
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 12px 35px rgba(15, 23, 42, 0.15);
+        }
+
+
+        .bmk-about-image-card > i {
+            width: 45px;
+
+            height: 45px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 12px;
+
+            background: #e8f1ff;
+
+            color: #0d6efd;
+
+            font-size: 1.25rem;
+        }
+
+
+        .bmk-about-image-card strong {
+            display: block;
+
+            color: #1f2937;
+
+            font-size: 0.95rem;
+        }
+
+
+        .bmk-about-image-card small {
+            display: block;
+
+            color: #64748b;
+
+            margin-top: 3px;
+        }
+
+
+        /* =========================================
+        ABOUT FEATURES
+        ========================================= */
+
+        .bmk-about-feature {
+            display: flex;
+
+            gap: 16px;
+
+            margin-top: 24px;
+        }
+
+
+        .bmk-about-feature-icon {
+            flex: 0 0 48px;
+
+            width: 48px;
+
+            height: 48px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 12px;
+
+            background: #f0f6ff;
+
+            color: #0d6efd;
+
+            font-size: 1.15rem;
+        }
+
+
+        .bmk-about-feature h5 {
+            color: #1f2937;
+
+            font-size: 1.05rem;
+
+            font-weight: 700;
+
+            margin-bottom: 5px;
+        }
+
+
+        .bmk-about-feature p {
+            color: #64748b;
+
+            line-height: 1.6;
+
+            margin-bottom: 0;
+        }
+
+
+        /* =========================================
+        MOBILE
+        ========================================= */
+
+        @media (max-width: 991.98px) {
+
+            .bmk-about-image-wrapper {
+                padding-right: 20px;
+
+                padding-bottom: 25px;
+            }
+
+
+            .bmk-about-image {
+                height: 420px;
+            }
+
+        }
+
+
+        @media (max-width: 575.98px) {
+
+            .bmk-about {
+                padding-top: 60px !important;
+
+                padding-bottom: 60px !important;
+            }
+
+
+            .bmk-about-image-wrapper {
+                padding-right: 10px;
+
+                padding-bottom: 20px;
+            }
+
+
+            .bmk-about-image {
+                height: 350px;
+
+                border-radius: 15px;
+            }
+
+
+            .bmk-about-image-card {
+                right: 0;
+
+                padding: 14px 16px;
+
+                gap: 10px;
+            }
+
+
+            .bmk-about-image-card > i {
+                width: 38px;
+
+                height: 38px;
+
+                font-size: 1rem;
+            }
+
+        }
+
+        /* =========================================
+        BMK JOURNEY SECTION
+        ========================================= */
+
+        .bmk-journey {
+            background: #f8fafc;
+            position: relative;
+        }
+
+        .bmk-journey-intro {
+            color: #64748b;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        .bmk-journey-card {
+            position: relative;
+            background: #ffffff;
+            border: 1px solid #e8edf3;
+            border-radius: 18px;
+            padding: 35px 30px;
+            overflow: hidden;
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .bmk-journey-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.10);
+        }
+
+        .bmk-journey-card.featured {
+            border-color: #0d6efd;
+            box-shadow: 0 12px 30px rgba(13, 110, 253, 0.08);
+        }
+
+        .bmk-journey-icon {
+            width: 58px;
+            height: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eaf2ff;
+            color: #0d6efd;
+            border-radius: 15px;
+            font-size: 1.45rem;
+            margin-bottom: 25px;
+        }
+
+        .bmk-journey-number {
+            position: absolute;
+            top: 24px;
+            right: 25px;
+            color: #e2e8f0;
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .bmk-journey-card h4 {
+            color: #1f2937;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .bmk-journey-card p {
+            color: #64748b;
+            line-height: 1.7;
+            margin-bottom: 0;
+        }
+
+        .bmk-journey-bottom {
+            max-width: 800px;
+            margin: 55px auto 0;
+        }
+
+        .bmk-journey-line {
+            width: 60px;
+            height: 3px;
+            background: #0d6efd;
+            border-radius: 10px;
+            margin: 0 auto 20px;
+        }
+
+        .bmk-journey-bottom p {
+            color: #475569;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 767.98px) {
+
+            .bmk-journey-card {
+                padding: 30px 25px;
+            }
+
+            .bmk-journey-number {
+                font-size: 2rem;
+                top: 20px;
+                right: 20px;
+            }
+
+            .bmk-journey-bottom {
+                margin-top: 40px;
+            }
+
+        }
+
+        /* =========================================
+        BMK ACADEMIC APPROACH
+        ========================================= */
+
+        .bmk-academics {
+            background: #ffffff;
+        }
+
+        .bmk-academics-intro {
+            color: #64748b;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 18px;
+        }
+
+        .bmk-academic-card {
+            height: 100%;
+            padding: 30px 28px;
+            background: #f8fafc;
+            border: 1px solid #e8edf3;
+            border-radius: 18px;
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease,
+                background 0.25s ease;
+        }
+
+        .bmk-academic-card:hover {
+            transform: translateY(-5px);
+            background: #ffffff;
+            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.09);
+        }
+
+        .bmk-academic-icon {
+            width: 52px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eaf2ff;
+            color: #0d6efd;
+            border-radius: 14px;
+            font-size: 1.3rem;
+            margin-bottom: 22px;
+        }
+
+        .bmk-academic-card h4 {
+            color: #1f2937;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .bmk-academic-card p {
+            color: #64748b;
+            line-height: 1.7;
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 991.98px) {
+
+            .bmk-academics {
+                padding-top: 20px;
+            }
+
+        }
+
+        @media (max-width: 575.98px) {
+
+            .bmk-academic-card {
+                padding: 25px 22px;
+            }
+
+        }
+
+        /* =========================================
+        BMK SCHOOL LIFE & GALLERY
+        ========================================= */
+
+        .bmk-school-life {
+            background: #f8fafc;
+        }
+
+        .bmk-gallery-intro {
+            color: #64748b;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        .bmk-gallery-item {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+            border-radius: 16px;
+            background: #e2e8f0;
+        }
+
+        .bmk-gallery-large {
+            height: 516px;
+        }
+
+        .bmk-gallery-wide {
+            height: 250px;
+        }
+
+        .bmk-gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .bmk-gallery-item:hover img {
+            transform: scale(1.06);
+        }
+
+        .bmk-gallery-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: flex-end;
+            padding: 25px;
+            background:
+                linear-gradient(
+                    to top,
+                    rgba(0, 0, 0, 0.70),
+                    rgba(0, 0, 0, 0.05) 70%
+                );
+        }
+
+        .bmk-gallery-overlay span {
+            display: block;
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .bmk-gallery-overlay h4,
+        .bmk-gallery-overlay h5 {
+            color: #ffffff;
+            font-weight: 700;
+            margin-bottom: 0;
+        }
+
+        .bmk-gallery-overlay h4 {
+            font-size: 1.4rem;
+        }
+
+        .bmk-gallery-overlay h5 {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 991.98px) {
+
+            .bmk-gallery-large {
+                height: 400px;
+            }
+
+        }
+
+        @media (max-width: 575.98px) {
+
+            .bmk-gallery-item,
+            .bmk-gallery-large,
+            .bmk-gallery-wide {
+                height: 230px;
+            }
+
+            .bmk-gallery-overlay {
+                padding: 18px;
+            }
+
+            .bmk-gallery-overlay h4 {
+                font-size: 1.15rem;
+            }
+
+        }
+
+
+        /* =========================================
+        BMK NEWS & STORIES
+        ========================================= */
+
+        .bmk-news {
+            background: #ffffff;
+        }
+
+        .bmk-news-intro {
+            color: #64748b;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .bmk-news-card {
+            background: #ffffff;
+            border: 1px solid #e8edf3;
+            border-radius: 18px;
+            overflow: hidden;
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .bmk-news-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.10);
+        }
+
+        .bmk-news-image {
+            height: 230px;
+            overflow: hidden;
+            background: #f1f5f9;
+        }
+
+        .bmk-news-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.45s ease;
+        }
+
+        .bmk-news-card:hover .bmk-news-image img {
+            transform: scale(1.05);
+        }
+
+        .bmk-news-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eaf2ff;
+            color: #0d6efd;
+            font-size: 3rem;
+        }
+
+        .bmk-news-content {
+            padding: 25px;
+        }
+
+        .bmk-news-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            color: #94a3b8;
+            font-size: 0.82rem;
+            margin-bottom: 12px;
+        }
+
+        .bmk-news-category {
+            color: #0d6efd;
+            font-weight: 700;
+        }
+
+        .bmk-news-title {
+            font-size: 1.25rem;
+            line-height: 1.4;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .bmk-news-title a {
+            color: #1f2937;
+            text-decoration: none;
+        }
+
+        .bmk-news-title a:hover {
+            color: #0d6efd;
+        }
+
+        .bmk-news-excerpt {
+            color: #64748b;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .bmk-news-link {
+            color: #0d6efd;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .bmk-news-link:hover {
+            color: #084298;
+        }
+
+        .bmk-news-empty {
+            padding: 60px 20px;
+            background: #f8fafc;
+            border-radius: 18px;
+        }
+
+        .bmk-news-empty-icon {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #eaf2ff;
+            color: #0d6efd;
+            font-size: 1.5rem;
+        }
+
+        .bmk-news-empty h4 {
+            color: #1f2937;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .bmk-news-empty p {
+            color: #64748b;
+            margin-bottom: 0;
+        }
+
+        /* =========================================
+        BMK ADMISSIONS
+        ========================================= */
+
+        .bmk-admissions {
+            background: #f8fafc;
+        }
+
+        .bmk-admissions-box {
+            position: relative;
+            overflow: hidden;
+            background: #0d6efd;
+            border-radius: 24px;
+            padding: 55px 55px;
+            box-shadow: 0 20px 50px rgba(13, 110, 253, 0.18);
+        }
+
+        .bmk-admissions-box::before {
+            content: "";
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            right: -100px;
+            top: -120px;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .bmk-admissions-box::after {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            right: 120px;
+            bottom: -110px;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .bmk-admissions-label {
+            display: inline-block;
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            margin-bottom: 14px;
+        }
+
+        .bmk-admissions-box h2 {
+            position: relative;
+            z-index: 1;
+            color: #ffffff;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 20px;
+        }
+
+        .bmk-admissions-box p {
+            position: relative;
+            z-index: 1;
+            color: rgba(255, 255, 255, 0.88);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            max-width: 760px;
+            margin-bottom: 14px;
+        }
+
+        .bmk-admissions-actions {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .bmk-admissions-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #ffffff;
+            color: #0d6efd;
+            font-weight: 700;
+            padding: 14px 24px;
+            border-radius: 9px;
+            border: none;
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .bmk-admissions-button:hover {
+            background: #ffffff;
+            color: #0d6efd;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .bmk-admissions-contact {
+            margin-top: 18px;
+            color: rgba(255, 255, 255, 0.78);
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+
+        .bmk-admissions-contact span {
+            color: #ffffff;
+            font-weight: 600;
+            margin-left: 4px;
+        }
+
+        .bmk-admissions-contact:hover {
+            color: #ffffff;
+        }
+
+        @media (max-width: 767.98px) {
+
+            .bmk-admissions-box {
+                padding: 40px 25px;
+                border-radius: 18px;
+            }
+
+            .bmk-admissions-actions {
+                align-items: stretch;
+            }
+
+            .bmk-admissions-button {
+                width: 100%;
+            }
+
+        }
+
+        /* =========================================
+        BMK CONTACT
+        ========================================= */
+
+        .bmk-contact {
+            background: #ffffff;
+        }
+
+        .bmk-contact-intro {
+            color: #64748b;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            max-width: 780px;
+            margin: 0 auto;
+        }
+
+        .bmk-contact-card {
+            padding: 32px 28px;
+            background: #f8fafc;
+            border: 1px solid #e8edf3;
+            border-radius: 18px;
+            text-align: center;
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .bmk-contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
+        }
+
+        .bmk-contact-icon {
+            width: 58px;
+            height: 58px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eaf2ff;
+            color: #0d6efd;
+            border-radius: 15px;
+            font-size: 1.3rem;
+        }
+
+        .bmk-contact-card h4 {
+            color: #1f2937;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .bmk-contact-card p {
+            color: #64748b;
+            line-height: 1.7;
+            margin-bottom: 0;
+        }
+
+        .bmk-contact-message {
+            max-width: 800px;
+            margin: 65px auto 0;
+            padding: 45px 30px;
+            background: #f8fafc;
+            border-radius: 20px;
+        }
+
+        .bmk-contact-message-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eaf2ff;
+            color: #0d6efd;
+            border-radius: 50%;
+            font-size: 1.35rem;
+        }
+
+        .bmk-contact-message h3 {
+            color: #1f2937;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .bmk-contact-message p {
+            color: #64748b;
+            line-height: 1.8;
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 575.98px) {
+
+            .bmk-contact-card {
+                padding: 28px 22px;
+            }
+
+            .bmk-contact-message {
+                padding: 35px 22px;
+                margin-top: 45px;
+            }
+
+        }
+
+        /* =========================================
+        BMK IDENTITY / MOTTO
+        ========================================= */
+
+        .bmk-identity {
+            background: #f8fafc;
+        }
+
+        .bmk-identity-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .bmk-identity-icon {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eaf2ff;
+            color: #0d6efd;
+            border-radius: 50%;
+            font-size: 1.4rem;
+        }
+
+        .bmk-identity-label {
+            display: block;
+            color: #0d6efd;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            margin-bottom: 10px;
+        }
+
+        .bmk-identity h2 {
+            color: #1f2937;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .bmk-identity-content p {
+            color: #64748b;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 22px;
+        }
+
+        .bmk-identity-date {
+            display: inline-flex;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        .bmk-identity-date i {
+            color: #0d6efd;
+        }
+
+        .bmk-identity-date strong {
+            color: #1f2937;
+            margin-left: 5px;
+        }
+
+        /* =========================================
+        BMK LOGO NAVBAR
+        ========================================= */
+        .bmk-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: #1f2937;
+            text-decoration: none;
+        }
+    
+        .bmk-brand:hover {
+            color: #1f2937;
+        }
+    
+        .bmk-logo {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+        }
+    
+        .bmk-brand span {
+            font-size: 1.15rem;
+            font-weight: 800;
+        }
+    
+        @media (max-width: 575.98px) {
+    
+            .bmk-logo {
+                width: 42px;
+                height: 42px;
+            }
+    
+            .bmk-brand span {
+                font-size: 1rem;
+            }
+    
+        }
+    
+        /* =========================================
+        BMK LOGO FOOTER
+        ========================================= */
+        .bmk-footer-logo {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+        }
+        /* =========================================
+        BMK SAFEGUARDING
+        ========================================= */
+
+        .bmk-safeguarding {
+            background: #f8fafc;
+        }
+
+        .bmk-safeguarding-box {
+            background: #ffffff;
+            border: 1px solid #e5eaf0;
+            border-radius: 22px;
+            padding: 45px;
+            text-align: center;
+            box-shadow: 0 12px 35px rgba(15, 23, 42, 0.06);
+        }
+
+        .bmk-safeguarding-icon {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eaf2ff;
+            color: #0d6efd;
+            border-radius: 50%;
+            font-size: 1.5rem;
+        }
+
+        .bmk-safeguarding-box h2 {
+            color: #1f2937;
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .bmk-safeguarding-box > p {
+            color: #64748b;
+            line-height: 1.8;
+            font-size: 1.02rem;
+            max-width: 760px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .bmk-safeguarding-points {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+
+        .bmk-safeguarding-points div {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #475569;
+            font-size: 0.95rem;
+        }
+
+        .bmk-safeguarding-points i {
+            color: #0d6efd;
+        }
+
+        .bmk-safeguarding-actions {
+            margin-top: 25px;
+        }
+
+        .bmk-safeguarding-note {
+            margin-top: 20px;
+            margin-bottom: 0;
+            font-size: 0.85rem !important;
+            color: #94a3b8 !important;
+        }
+
+        @media (max-width: 575.98px) {
+
+            .bmk-safeguarding-box {
+                padding: 32px 22px;
+            }
+
+            .bmk-safeguarding-points {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+        }
+
+        .bmk-safeguarding-hero {
+            background: #f8fafc;
+            padding: 100px 0 80px;
+        }
+        
+        .bmk-safeguarding-hero-icon {
+            width: 78px;
+            height: 78px;
+            margin: 0 auto 25px;
+        
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        
+            background: #eaf2ff;
+            color: #0d6efd;
+        
+            border-radius: 50%;
+        
+            font-size: 2rem;
+        }
+        
+        .bmk-safeguarding-hero h1 {
+            color: #1f2937;
+            font-size: clamp(2.4rem, 5vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 22px;
+        }
+        
+        .bmk-safeguarding-hero p {
+            max-width: 720px;
+            margin: 0 auto;
+        
+            color: #64748b;
+        
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        
+        .bmk-safeguarding-content {
+            background: #ffffff;
+        }
+        
+        
+        .bmk-safeguarding-card {
+            background: #ffffff;
+        
+            border: 1px solid #e5eaf0;
+            border-radius: 20px;
+        
+            padding: 40px;
+        
+            box-shadow:
+                0 10px 30px rgba(15, 23, 42, 0.05);
+        }
+        
+        .bmk-safeguarding-card h2 {
+            color: #1f2937;
+        
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+        
+            font-weight: 800;
+        
+            line-height: 1.2;
+        
+            margin-bottom: 22px;
+        }
+        
+        .bmk-safeguarding-card p {
+            color: #64748b;
+        
+            font-size: 1.02rem;
+        
+            line-height: 1.8;
+        
+            margin-bottom: 18px;
+        }
+        
+        
+        .bmk-safeguarding-feature {
+            height: 100%;
+        
+            background: #f8fafc;
+        
+            border: 1px solid #e8edf3;
+        
+            border-radius: 18px;
+        
+            padding: 30px 25px;
+        
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+        
+        .bmk-safeguarding-feature:hover {
+            transform: translateY(-5px);
+        
+            box-shadow:
+                0 15px 35px rgba(15, 23, 42, 0.08);
+        }
+        
+        .bmk-safeguarding-feature-icon {
+            width: 52px;
+            height: 52px;
+        
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        
+            background: #eaf2ff;
+        
+            color: #0d6efd;
+        
+            border-radius: 14px;
+        
+            font-size: 1.3rem;
+        
+            margin-bottom: 20px;
+        }
+        
+        .bmk-safeguarding-feature h4 {
+            color: #1f2937;
+        
+            font-size: 1.15rem;
+        
+            font-weight: 700;
+        
+            margin-bottom: 12px;
+        }
+        
+        .bmk-safeguarding-feature p {
+            color: #64748b;
+        
+            line-height: 1.7;
+        
+            margin-bottom: 0;
+        }
+        
+        
+        .bmk-safeguarding-action {
+            margin-top: 28px;
+        }
+        
+        
+        .bmk-safeguarding-note {
+            display: flex;
+            align-items: flex-start;
+        
+            gap: 5px;
+        
+            padding: 20px 22px;
+        
+            background: #f8fafc;
+        
+            border: 1px solid #e5eaf0;
+        
+            border-radius: 12px;
+        
+            color: #64748b;
+        
+            font-size: 0.9rem;
+        
+            line-height: 1.7;
+        }
+        
+        .bmk-safeguarding-note i {
+            color: #0d6efd;
+        
+            margin-top: 3px;
+        }
+        
+        
+        @media (max-width: 767.98px) {
+        
+            .bmk-safeguarding-hero {
+                padding: 75px 0 60px;
+            }
+        
+            .bmk-safeguarding-card {
+                padding: 30px 22px;
+            }
+        
+            .bmk-safeguarding-feature {
+                padding: 25px 22px;
+            }
+        
+        }
+        .bmk-about-hero {
+            background: #f8fafc;
+            padding: 100px 0 85px;
+        }
+        
+        .bmk-about-hero h1 {
+            color: #1f2937;
+            font-size: clamp(2.5rem, 5vw, 4.2rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+        
+        .bmk-about-hero p {
+            max-width: 760px;
+            margin: 0 auto;
+            color: #64748b;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        
+        .bmk-about-story {
+            background: #ffffff;
+        }
+        
+        .bmk-about-story-image {
+            overflow: hidden;
+            border-radius: 22px;
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12);
+        }
+        
+        .bmk-about-story-image img {
+            width: 100%;
+            height: 520px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .bmk-about-story p {
+            color: #64748b;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 18px;
+        }
+        
+        
+        .bmk-name-section {
+            background: #f8fafc;
+        }
+        
+        .bmk-name-intro {
+            color: #64748b;
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+        
+        .bmk-name-card {
+            height: 100%;
+            background: #ffffff;
+            border: 1px solid #e5eaf0;
+            border-radius: 20px;
+            padding: 35px 30px;
+            text-align: center;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        
+        .bmk-name-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
+        }
+        
+        .bmk-name-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eaf2ff;
+            color: #0d6efd;
+            border-radius: 50%;
+            font-size: 1.4rem;
+        }
+        
+        .bmk-name-card > span {
+            color: #0d6efd;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 1.3px;
+        }
+        
+        .bmk-name-card h3 {
+            color: #1f2937;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin: 10px 0 15px;
+        }
+        
+        .bmk-name-card p {
+            color: #64748b;
+            line-height: 1.7;
+            margin-bottom: 0;
+        }
+        
+        
+        .bmk-beginning {
+            background: #ffffff;
+        }
+        
+        .bmk-beginning-intro {
+            color: #64748b;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+        
+        .bmk-timeline-card {
+            position: relative;
+            height: 100%;
+            background: #f8fafc;
+            border: 1px solid #e5eaf0;
+            border-radius: 18px;
+            padding: 35px 30px;
+            overflow: hidden;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        
+        .bmk-timeline-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
+        }
+        
+        .bmk-timeline-card.featured {
+            background: #ffffff;
+            border-color: #0d6efd;
+            box-shadow: 0 12px 30px rgba(13, 110, 253, 0.08);
+        }
+        
+        .bmk-timeline-number {
+            position: absolute;
+            top: 22px;
+            right: 25px;
+            color: #dbe5f2;
+            font-size: 2.5rem;
+            font-weight: 800;
+        }
+        
+        .bmk-timeline-icon {
+            width: 58px;
+            height: 58px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eaf2ff;
+            color: #0d6efd;
+            border-radius: 15px;
+            font-size: 1.4rem;
+        }
+        
+        .bmk-timeline-card h4 {
+            color: #1f2937;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+        
+        .bmk-timeline-card p {
+            color: #64748b;
+            line-height: 1.7;
+            margin-bottom: 0;
+        }
+        
+        
+        .bmk-scl-section {
+            background: #f8fafc;
+        }
+        
+        .bmk-scl-text {
+            color: #64748b;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 18px;
+        }
+        
+        
+        .bmk-service-section {
+            background: #ffffff;
+        }
+        
+        .bmk-service-icon {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eaf2ff;
+            color: #0d6efd;
+            border-radius: 50%;
+            font-size: 1.6rem;
+        }
+        
+        .bmk-service-section h2 {
+            color: #1f2937;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 22px;
+        }
+        
+        .bmk-service-section p {
+            max-width: 760px;
+            margin-left: auto;
+            margin-right: auto;
+            color: #64748b;
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+        
+        
+        .bmk-commissioning {
+            background: #f8fafc;
+        }
+        
+        .bmk-commissioning-box {
+            background: #ffffff;
+            border: 1px solid #e5eaf0;
+            border-radius: 20px;
+            padding: 40px 30px;
+        }
+        
+        .bmk-commissioning-box > i {
+            display: block;
+            color: #0d6efd;
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        
+        .bmk-commissioning-box > span {
+            color: #0d6efd;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1.4px;
+        }
+        
+        .bmk-commissioning-box h2 {
+            color: #1f2937;
+            font-size: clamp(1.7rem, 4vw, 2.4rem);
+            font-weight: 800;
+            margin: 12px 0 15px;
+        }
+        
+        .bmk-commissioning-box p {
+            max-width: 700px;
+            margin: 0 auto;
+            color: #64748b;
+            line-height: 1.8;
+        }
+        
+        
+        @media (max-width: 767.98px) {
+        
+            .bmk-about-hero {
+                padding: 75px 0 60px;
+            }
+        
+            .bmk-about-story-image img {
+                height: 380px;
+            }
+        
+            .bmk-name-card,
+            .bmk-timeline-card {
+                padding: 28px 22px;
+            }
+        
+        }
+        .bmk-admissions-points {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px 28px;
+            margin-top: 28px;
+        }
+        
+        .bmk-admissions-points div {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        
+            color: rgba(255, 255, 255, 0.92);
+            font-size: 0.95rem;
+        }
+        
+        .bmk-admissions-points i {
+            color: #ffffff;
+        }
+        
+        @media (max-width: 767.98px) {
+            .bmk-admissions-points {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+        .bmk-academics-hero {
+            background: #f8fafc;
+            padding: 100px 0 85px;
+        }
+        
+        .bmk-academics-hero h1 {
+            color: #1f2937;
+            font-size: clamp(2.5rem, 5vw, 4.2rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+        
+        .bmk-academics-hero p {
+            max-width: 760px;
+            margin: 0 auto;
+            color: #64748b;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        
+        .bmk-academic-approach {
+            background: #ffffff;
+        }
+        
+        .bmk-academic-page-text {
+            color: #64748b;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 18px;
+        }
+        
+        .bmk-academic-page-card {
+            height: 100%;
+            padding: 30px 27px;
+            background: #f8fafc;
+            border: 1px solid #e5eaf0;
+            border-radius: 18px;
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease,
+                background 0.25s ease;
+        }
+        
+        .bmk-academic-page-card:hover {
+            transform: translateY(-5px);
+            background: #ffffff;
+            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
+        }
+        
+        .bmk-academic-page-icon {
+            width: 52px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eaf2ff;
+            color: #0d6efd;
+            border-radius: 14px;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+        }
+        
+        .bmk-academic-page-card h4 {
+            color: #1f2937;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        
+        .bmk-academic-page-card p {
+            color: #64748b;
+            line-height: 1.7;
+            margin-bottom: 0;
+        }
+        
+        
+        .bmk-learning-journey {
+            background: #f8fafc;
+        }
+        
+        .bmk-learning-intro {
+            color: #64748b;
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+        
+        .bmk-learning-stage {
+            position: relative;
+            height: 100%;
+            padding: 35px 30px;
+            background: #ffffff;
+            border: 1px solid #e5eaf0;
+            border-radius: 18px;
+            overflow: hidden;
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+        
+        .bmk-learning-stage:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
+        }
+        
+        .bmk-learning-stage.featured {
+            border-color: #0d6efd;
+            box-shadow: 0 12px 30px rgba(13, 110, 253, 0.08);
+        }
+        
+        .bmk-learning-stage-number {
+            position: absolute;
+            top: 20px;
+            right: 23px;
+            color: #e2e8f0;
+            font-size: 2.5rem;
+            font-weight: 800;
+        }
+        
+        .bmk-learning-stage-icon {
+            width: 58px;
+            height: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eaf2ff;
+            color: #0d6efd;
+            border-radius: 15px;
+            font-size: 1.4rem;
+            margin-bottom: 24px;
+        }
+        
+        .bmk-learning-stage h3 {
+            color: #1f2937;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+        
+        .bmk-learning-stage p {
+            color: #64748b;
+            line-height: 1.7;
+            margin-bottom: 0;
+        }
+        
+        
+        .bmk-whole-child {
+            background: #ffffff;
+        }
+        
+        .bmk-whole-child-box {
+            padding: 40px;
+            background: #f8fafc;
+            border: 1px solid #e5eaf0;
+            border-radius: 22px;
+        }
+        
+        .bmk-whole-child-icon {
+            width: 62px;
+            height: 62px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eaf2ff;
+            color: #0d6efd;
+            border-radius: 15px;
+            font-size: 1.5rem;
+            margin-bottom: 22px;
+        }
+        
+        .bmk-whole-child-box h3 {
+            color: #1f2937;
+            font-size: 1.7rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+        
+        .bmk-whole-child-box > p {
+            color: #64748b;
+            line-height: 1.8;
+        }
+        
+        .bmk-whole-child-list {
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+            margin-top: 25px;
+        }
+        
+        .bmk-whole-child-list div {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #475569;
+        }
+        
+        .bmk-whole-child-list i {
+            color: #0d6efd;
+        }
+        
+        
+        .bmk-academic-service {
+            background: #f8fafc;
+        }
+        
+        .bmk-academic-service-box {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 45px 30px;
+            background: #ffffff;
+            border: 1px solid #e5eaf0;
+            border-radius: 22px;
+        }
+        
+        .bmk-academic-service-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eaf2ff;
+            color: #0d6efd;
+            border-radius: 50%;
+            font-size: 1.6rem;
+        }
+        
+        .bmk-academic-service-box h2 {
+            color: #1f2937;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+        
+        .bmk-academic-service-box p {
+            max-width: 700px;
+            margin: 0 auto;
+            color: #64748b;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+        
+        
+        @media (max-width: 767.98px) {
+        
+            .bmk-academics-hero {
+                padding: 75px 0 60px;
+            }
+        
+            .bmk-academic-page-card {
+                padding: 25px 22px;
+            }
+        
+            .bmk-learning-stage {
+                padding: 30px 24px;
+            }
+        
+            .bmk-whole-child-box {
+                padding: 30px 22px;
+            }
+        
+        }
+        .bmk-contact-hero {
+            background: linear-gradient(
+                135deg,
+                #0f172a 0%,
+                #1e3a5f 55%,
+                #2563eb 100%
+            );
+            color: #fff;
+            padding: 90px 0;
+        }
+    
+        .bmk-contact-hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+        }
+    
+        .bmk-contact-hero p {
+            max-width: 700px;
+            color: rgba(255,255,255,.85);
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+    
+        .bmk-contact-section {
+            padding: 80px 0;
+        }
+    
+        .bmk-contact-card {
+            height: 100%;
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 10px 35px rgba(15,23,42,.07);
+            transition: transform .25s ease, box-shadow .25s ease;
+        }
+    
+        .bmk-contact-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(15,23,42,.11);
+        }
+    
+        .bmk-contact-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eff6ff;
+            color: #2563eb;
+            font-size: 1.35rem;
+            margin-bottom: 20px;
+        }
+    
+        .bmk-contact-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+    
+        .bmk-contact-card p {
+            color: #64748b;
+            line-height: 1.7;
+            margin-bottom: 0;
+        }
+    
+        .bmk-location {
+            background: #f8fafc;
+            padding: 80px 0;
+        }
+    
+        .bmk-location-image {
+            width: 100%;
+            height: 480px;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(15,23,42,.12);
+        }
+    
+        .bmk-location-content h2 {
+            font-size: 2.3rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 20px;
+        }
+    
+        .bmk-location-content p {
+            color: #64748b;
+            line-height: 1.8;
+        }
+    
+        .bmk-location-address {
+            background: #fff;
+            border-left: 4px solid #2563eb;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 25px 0;
+            box-shadow: 0 8px 25px rgba(15,23,42,.06);
+        }
+    
+        .bmk-location-address strong {
+            color: #0f172a;
+        }
+    
+        .bmk-map-wrapper {
+            border-radius: 20px;
+            overflow: hidden;
+            min-height: 430px;
+            background: #e2e8f0;
+            box-shadow: 0 15px 40px rgba(15,23,42,.10);
+        }
+    
+        .bmk-map-wrapper iframe {
+            width: 100%;
+            height: 430px;
+            border: 0;
+        }
+    
+        .bmk-directions {
+            margin-top: 20px;
+        }
+    
+        .bmk-directions .btn {
+            border-radius: 8px;
+            padding: 12px 22px;
+            font-weight: 600;
+        }
+    
+        .bmk-contact-form-section {
+            padding: 80px 0;
+        }
+    
+        .bmk-form-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 45px rgba(15,23,42,.08);
+            border: 1px solid #e5e7eb;
+        }
+    
+        .bmk-form-card h2 {
+            font-weight: 800;
+            color: #0f172a;
+        }
+    
+        .bmk-form-card .form-label {
+            font-weight: 600;
+            color: #334155;
+        }
+    
+        .bmk-form-card .form-control {
+            min-height: 50px;
+            border-radius: 8px;
+            border-color: #dbe2ea;
+        }
+    
+        .bmk-form-card textarea.form-control {
+            min-height: 150px;
+        }
+    
+        .bmk-form-card .form-control:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 .2rem rgba(37,99,235,.12);
+        }
+    
+        .bmk-contact-note {
+            background: #eff6ff;
+            border-radius: 16px;
+            padding: 25px;
+            color: #334155;
+        }
+    
+        .bmk-contact-note i {
+            color: #2563eb;
+        }
+    
+        @media (max-width: 767.98px) {
+            .bmk-contact-hero {
+                padding: 65px 0;
+            }
+    
+            .bmk-contact-section,
+            .bmk-location,
+            .bmk-contact-form-section {
+                padding: 60px 0;
+            }
+    
+            .bmk-location-image {
+                height: 320px;
+            }
+    
+            .bmk-form-card {
+                padding: 25px;
+            }
+        }
+
+        .bmk-gallery-hero {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(15, 23, 42, .96),
+                    rgba(37, 99, 235, .88)
+                );
+            color: white;
+            padding: 90px 0;
+        }
+    
+        .bmk-gallery-hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+        }
+    
+        .bmk-gallery-hero p {
+            max-width: 700px;
+            color: rgba(255,255,255,.85);
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+    
+    
+        .bmk-gallery-section {
+            padding: 80px 0;
+        }
+    
+    
+        .bmk-gallery-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 45px;
+        }
+    
+        .bmk-gallery-filter .btn {
+            border-radius: 50px;
+            padding: 9px 20px;
+            font-weight: 600;
+        }
+    
+    
+        .bmk-gallery-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+            background: #fff;
+            box-shadow: 0 8px 25px rgba(15,23,42,.08);
+            height: 100%;
+        }
+    
+    
+        .bmk-gallery-image-wrapper {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 4 / 3;
+        }
+    
+    
+        .bmk-gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .45s ease;
+        }
+    
+    
+        .bmk-gallery-card:hover .bmk-gallery-image {
+            transform: scale(1.06);
+        }
+    
+    
+        .bmk-gallery-overlay {
+            position: absolute;
+            inset: 0;
+    
+            background:
+                linear-gradient(
+                    to top,
+                    rgba(0,0,0,.72),
+                    rgba(0,0,0,0)
+                );
+    
+            opacity: 0;
+            transition: opacity .3s ease;
+    
+            display: flex;
+            align-items: flex-end;
+            padding: 22px;
+        }
+    
+    
+        .bmk-gallery-card:hover .bmk-gallery-overlay {
+            opacity: 1;
+        }
+    
+    
+        .bmk-gallery-overlay-content {
+            color: white;
+        }
+    
+    
+        .bmk-gallery-overlay-content h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+    
+    
+        .bmk-gallery-overlay-content span {
+            font-size: .85rem;
+            color: rgba(255,255,255,.8);
+        }
+    
+    
+        .bmk-gallery-info {
+            padding: 18px;
+        }
+    
+    
+        .bmk-gallery-info h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+    
+    
+        .bmk-gallery-category {
+            color: #2563eb;
+            font-size: .85rem;
+            font-weight: 600;
+        }
+    
+    
+        .bmk-gallery-pagination {
+            margin-top: 55px;
+        }
+    
+    
+        .bmk-gallery-pagination .page-link {
+            border-radius: 8px;
+            margin: 0 4px;
+            border: 1px solid #e2e8f0;
+        }
+    
+    
+        .bmk-gallery-empty {
+            padding: 80px 20px;
+            text-align: center;
+            color: #64748b;
+        }
+    
+    
+        @media (max-width: 767.98px) {
+    
+            .bmk-gallery-hero {
+                padding: 65px 0;
+            }
+    
+            .bmk-gallery-section {
+                padding: 60px 0;
+            }
+    
+            .bmk-gallery-overlay {
+                opacity: 1;
+            }
+    
+        }
+        .bmk-category-hero {
+            background: #f8fafc;
+            padding: 70px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+    
+        .bmk-category-hero h1 {
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            color: #0f172a;
+        }
+    
+        .bmk-category-hero p {
+            max-width: 700px;
+            color: #64748b;
+            line-height: 1.8;
+        }
+    
+        .bmk-category-section {
+            padding: 75px 0;
+        }
+    
+        .bmk-gallery-card {
+            overflow: hidden;
+            border-radius: 16px;
+            background: #fff;
+            box-shadow: 0 8px 25px rgba(15,23,42,.08);
+        }
+    
+        .bmk-gallery-image-wrapper {
+            aspect-ratio: 4 / 3;
+            overflow: hidden;
+        }
+    
+        .bmk-gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .4s ease;
+        }
+    
+        .bmk-gallery-card:hover .bmk-gallery-image {
+            transform: scale(1.05);
+        }
+    
+        .bmk-gallery-info {
+            padding: 18px;
+        }
+    
+        .bmk-gallery-info h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+        }
+    
+        .bmk-gallery-category {
+            color: #2563eb;
+            font-size: .85rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+    
+        .bmk-photo-detail {
+            background: #f8fafc;
+            padding: 70px 0 90px;
+            min-height: 75vh;
+        }
+    
+    
+        .bmk-photo-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+    
+    
+        .bmk-photo-back:hover {
+            color: #1d4ed8;
+        }
+    
+    
+        .bmk-photo-card {
+            background: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 45px rgba(15,23,42,.10);
+        }
+    
+    
+        .bmk-photo-image-container {
+            background: #0f172a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+        }
+    
+    
+        .bmk-photo-image {
+            display: block;
+            max-width: 100%;
+            max-height: 750px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+    
+    
+        .bmk-photo-information {
+            padding: 35px;
+        }
+    
+    
+        .bmk-photo-category {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            color: #2563eb;
+            font-size: .9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+            margin-bottom: 12px;
+        }
+    
+    
+        .bmk-photo-information h1 {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 18px;
+        }
+    
+    
+        .bmk-photo-caption {
+            color: #64748b;
+            line-height: 1.8;
+            font-size: 1.05rem;
+            max-width: 800px;
+        }
+    
+    
+        .bmk-photo-meta {
+            border-top: 1px solid #e5e7eb;
+            margin-top: 25px;
+            padding-top: 20px;
+            color: #94a3b8;
+            font-size: .9rem;
+        }
+    
+    
+        @media (max-width: 767.98px) {
+    
+            .bmk-photo-detail {
+                padding: 50px 0 60px;
+            }
+    
+            .bmk-photo-image-container {
+                padding: 12px;
+            }
+    
+            .bmk-photo-information {
+                padding: 25px;
+            }
+    
+        }
+
+        .gallery-hero {
+            background: linear-gradient(
+                135deg,
+                #f8f9fa 0%,
+                #eef4ff 100%
+            );
+            padding: 70px 0;
+        }
+    
+        .gallery-photo-card {
+            border: 0;
+            border-radius: 14px;
+            overflow: hidden;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+    
+        .gallery-photo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+        }
+    
+        .gallery-photo {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            transition: transform 0.35s ease;
+        }
+    
+        .gallery-photo-card:hover .gallery-photo {
+            transform: scale(1.04);
+        }
+    
+        .category-pill {
+            border-radius: 50px;
+            padding: 8px 18px;
+            margin: 4px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
+    
+        .category-pill:hover {
+            transform: translateY(-2px);
+        }
+    
+        .empty-gallery {
+            padding: 70px 20px;
+        }
+
+        .gallery-main-photo {
+            width: 100%;
+            height: 520px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+        
+        .gallery-small-photo {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+        
+        .position-relative:hover .gallery-main-photo,
+        .position-relative:hover .gallery-small-photo {
+            transform: scale(1.05);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: flex-end;
+            padding: 30px;
+            background: linear-gradient(
+                to top,
+                rgba(0, 0, 0, 0.75),
+                rgba(0, 0, 0, 0.05)
+            );
+        }
+        
+        .gallery-small-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 18px;
+            background: linear-gradient(
+                to top,
+                rgba(0, 0, 0, 0.75),
+                rgba(0, 0, 0, 0.05)
+            );
+        }
+        
+        @media (max-width: 991.98px) {
+        
+            .gallery-main-photo {
+                height: 400px;
+            }
+        
+            .gallery-small-photo {
+                height: 220px;
+            }
+        
+        }
+        
+        @media (max-width: 575.98px) {
+        
+            .gallery-main-photo {
+                height: 300px;
+            }
+        
+            .gallery-small-photo {
+                height: 180px;
+            }
+        
+        }
+    </style>
+    {% endblock %}
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
+
+    <div class="container">
+
+        <a
+            class="navbar-brand bmk-brand"
+            href="{% url 'website:home' %}"
+        >
+            <img
+                src="{% static 'website/images/bmk-logo.jpg' %}"
+                alt="BMK Academy Logo"
+                class="bmk-logo"
+            >
+
+            <span>BMK Academy</span>
+        </a>
+
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNavbar"
+            aria-controls="mainNavbar"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+
+        <div
+            class="collapse navbar-collapse"
+            id="mainNavbar"
+        >
+
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="{% url 'website:home' %}"
+                    >
+                        Home
+                    </a>
+
+                </li>
+                {% comment %} <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="{% url 'website:safeguarding' %}"
+                    >
+                        Safeguarding
+                    </a>
+                </li> {% endcomment %}
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="{% url 'website:about' %}"
+                    >
+                        About
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="{% url 'website:academics' %}"
+                    >
+                        Academics
+                    </a>
+
+                </li>
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="{% url 'gallery:gallery' %}"
+                    >
+                        Gallery
+                    </a>
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="{% url 'blog:post_list' %}"
+                    >
+                        News & Blog
+                    </a>
+
+                </li>
+                <li class="nav-item">
+                    <a
+                        href="{% url 'website:safeguarding' %}"
+                        class="nav-link text-decoration-none"
+                    >
+                        Safeguarding
+                    </a>
+                </li>
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="{% url 'website:contact' %}"
+                    >
+                        Contact
+                    </a>
+
+                </li>
+                
+
+                <li class="nav-item ms-lg-3">
+
+                    <a
+                        href="{% url 'admissions:admission_application' %}"
+                        class="btn btn-primary px-4"
+                    >
+                        Admissions
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- =========================
+     MAIN CONTENT
+========================= -->
+
+<main>
+
+    {% block content %}
+    {% endblock %}
+
+</main>
+
+<!-- =========================================
+BMK IDENTITY / MOTTO
+========================================= -->
+
+<section class="bmk-identity">
+
+    <div class="container py-5">
+
+        <div class="bmk-identity-content text-center">
+
+            <div class="bmk-identity-icon">
+                <i class="bi bi-mortarboard-fill"></i>
+            </div>
+
+            <span class="bmk-identity-label">
+                BMK ACADEMY
+            </span>
+
+            <h2>
+                Education for Service
+            </h2>
+
+            <p>
+                Established within SCL Farm to provide education for
+                the children of SCL staff, BMK Academy began its journey
+                with Nursery 1 and Nursery 2 and continues to grow with
+                its learners.
+            </p>
+
+            <div class="bmk-identity-date">
+
+                <i class="bi bi-calendar-event me-2"></i>
+
+                Commissioned on
+                <strong>19 October 2024</strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer class="bg-dark text-white pt-5 pb-4">
+
+    <div class="container">
+
+        <div class="row g-4">
+
+            <div class="col-lg-5">
+
+                <img
+                    src="{% static 'website/images/bmk-logo.jpg' %}"
+                    alt="BMK Academy Logo"
+                    class="bmk-footer-logo mb-3"
+                >
+            
+                <h5 class="fw-bold">
+                    Baki and Mairam Kwasari
+                    Nursery and Primary School
+                </h5>
+            
+                <p class="text-white-50 mb-2">
+                    Education for Service
+                </p>
+            
+                <p class="text-white-50">
+                    Located within SCL Farm, BMK Academy was established
+                    to provide education for the children of SCL staff.
+                </p>
+            
+            </div>
+
+
+            <div class="col-lg-3">
+
+                <h6 class="fw-bold">
+                    Quick Links
+                </h6>
+
+                <ul class="list-unstyled">
+
+                    <li class="mb-2">
+                        <a
+                            href="{% url 'website:home' %}"
+                            class="text-white-50 text-decoration-none"
+                        >
+                            Home
+                        </a>
+                    </li>
+
+                    <li class="mb-2">
+                        <a
+                            href="#about"
+                            class="text-white-50 text-decoration-none"
+                        >
+                            About
+                        </a>
+                    </li>
+
+                    <li class="mb-2">
+                        <a
+                            href="{% url 'blog:post_list' %}"
+                            class="text-white-50 text-decoration-none"
+                        >
+                            News & Blog
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a
+                            href="{% url 'website:safeguarding' %}"
+                            class="text-white-50 text-decoration-none"
+                        >
+                            Safeguarding
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="#contact"
+                            class="text-white-50 text-decoration-none"
+                        >
+                            Contact
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <div class="col-lg-4">
+
+                <h6 class="fw-bold">
+                    Contact
+                </h6>
+
+                <p class="text-white-50 mb-2">
+                    <i class="bi bi-geo-alt me-2"></i>
+                    BMK Academy
+                </p>
+
+                <p class="text-white-50 mb-2">
+                    <i class="bi bi-telephone me-2"></i>
+                    Contact the school
+                </p>
+
+                <p class="text-white-50">
+                    <i class="bi bi-envelope me-2"></i>
+                    School Email
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <hr class="border-secondary my-4">
+
+
+        <div class="text-center text-white-50">
+
+            <small>
+                &copy; {% now "Y" %} BMK Academy.
+                All rights reserved.
+            </small>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- Bootstrap JS -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+></script>
+
+
+{% block extra_js %}
+{% endblock %}
+
+
+</body>
+
+</html>

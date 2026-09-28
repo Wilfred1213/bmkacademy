@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Link Child to Parent Account - BMK Academy
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-7 col-lg-6">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <div class="text-center mb-4">
+
+                        <h3 class="fw-bold">
+                            Your Parent Account Already Exists
+                        </h3>
+
+                        <p class="text-muted mb-0">
+                            BMK Academy
+                        </p>
+
+                    </div>
+
+                    <div class="alert alert-success">
+
+                        <strong>
+                            Admission Approved
+                        </strong>
+
+                        <br>
+
+                        The admission application for
+
+                        <strong>
+                            {{ application.first_name }}
+                            {{ application.middle_name }}
+                            {{ application.last_name }}
+                        </strong>
+
+                        has been approved.
+
+                    </div>
+
+                    <p>
+                        We found an existing BMK Academy parent account
+                        associated with this admission application.
+                    </p>
+
+                    <p>
+                        Please log in with your existing parent account
+                        to link this child to your account.
+                    </p>
+
+                    {% if form.non_field_errors %}
+
+                        <div class="alert alert-danger">
+
+                            {{ form.non_field_errors }}
+
+                        </div>
+
+                    {% endif %}
+
+                    <form method="post">
+
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Username
+                            </label>
+
+                            {{ form.username }}
+
+                            {% for error in form.username.errors %}
+
+                                <div class="text-danger small">
+                                    {{ error }}
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Password
+                            </label>
+
+                            {{ form.password }}
+
+                            {% for error in form.password.errors %}
+
+                                <div class="text-danger small">
+                                    {{ error }}
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary w-100"
+                        >
+                            Link Child to My Account
+                        </button>
+
+                    </form>
+
+                    <div class="text-center mt-4">
+
+                        <p class="small text-muted mb-2">
+                            Forgot your password?
+                        </p>
+
+                        <a
+                            href="{% url 'accounts:login' %}"
+                            class="text-decoration-none"
+                        >
+                            Go to Parent Login
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

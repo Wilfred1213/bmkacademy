@@ -1,0 +1,347 @@
+{% extends "website/base.html" %}
+{% load static %}
+
+{% block title %}Contact Us | BMK Academy{% endblock %}
+
+
+{% block content %}
+
+<!-- Hero -->
+<section class="bmk-contact-hero">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <span class="badge rounded-pill bg-light text-primary px-3 py-2 mb-3">
+                    <i class="bi bi-chat-dots me-2"></i>
+                    Get in Touch
+                </span>
+
+                <h1>We'd Love to Hear From You</h1>
+
+                <p class="mt-4">
+                    Whether you would like to learn more about BMK Academy,
+                    ask about admissions, or simply get in touch with the
+                    school, we welcome your enquiry.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Contact Information -->
+<section class="bmk-contact-section">
+    <div class="container">
+
+        <div class="text-center mb-5">
+            <span class="text-primary fw-semibold text-uppercase">
+                Contact BMK Academy
+            </span>
+
+            <h2 class="fw-bold mt-2">
+                How to Reach Us
+            </h2>
+
+            <p class="text-muted mx-auto" style="max-width: 700px;">
+                BMK Academy is located within SCL Farms in Damakusa,
+                Kwali Area Council, Abuja.
+            </p>
+        </div>
+
+        <div class="row g-4">
+
+            <!-- Location -->
+            <div class="col-md-6 col-lg-4">
+                <div class="bmk-contact-card">
+                    <div class="bmk-contact-icon">
+                        <i class="bi bi-geo-alt-fill"></i>
+                    </div>
+
+                    <h3>Our Location</h3>
+
+                    <p>
+                        BMK Academy<br>
+                        Baki and Mairam Kwasari Nursery and Primary School<br>
+                        SCL Farms, Damakusa Village<br>
+                        Kwali Area Council, Abuja, Nigeria
+                    </p>
+                </div>
+            </div>
+
+
+            <!-- Admissions -->
+            <div class="col-md-6 col-lg-4">
+                <div class="bmk-contact-card">
+                    <div class="bmk-contact-icon">
+                        <i class="bi bi-mortarboard-fill"></i>
+                    </div>
+
+                    <h3>Admissions</h3>
+
+                    <p>
+                        Interested in enrolling your child at BMK Academy?
+                        Visit our admissions page to begin the application
+                        process.
+                    </p>
+
+                    <a
+                        href="{% url 'admissions:admission_application' %}"
+                        class="btn btn-primary mt-3"
+                    >
+                        Apply for Admission
+                    </a>
+                </div>
+            </div>
+
+
+            <!-- General Enquiries -->
+            <div class="col-md-6 col-lg-4">
+                <div class="bmk-contact-card">
+                    <div class="bmk-contact-icon">
+                        <i class="bi bi-envelope-fill"></i>
+                    </div>
+
+                    <h3>General Enquiries</h3>
+
+                    <p>
+                        For school enquiries, admissions questions and other
+                        matters, please use the enquiry form below.
+                    </p>
+
+                    <a
+                        href="#enquiry"
+                        class="btn btn-outline-primary mt-3"
+                    >
+                        Send an Enquiry
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- Location -->
+<section class="bmk-location">
+    <div class="container">
+
+        <div class="row g-5 align-items-center">
+
+            <div class="col-lg-5">
+
+                <div class="bmk-location-content">
+
+                    <span class="text-primary fw-semibold text-uppercase">
+                        Find BMK
+                    </span>
+
+                    <h2 class="mt-2">
+                        Located Within SCL Farms
+                    </h2>
+
+                    <p>
+                        BMK Academy is located within SCL Farms at
+                        Damakusa Village, Kwali Area Council, Abuja.
+                        The school forms part of the wider SCL environment
+                        while maintaining its own identity as a nursery
+                        and primary school.
+                    </p>
+
+                    <div class="bmk-location-address">
+                        <i class="bi bi-pin-map-fill text-primary me-2"></i>
+
+                        <strong>BMK Academy</strong>
+
+                        <div class="mt-2 text-muted">
+                            SCL Farms, Damakusa Village,<br>
+                            Kwali Area Council,<br>
+                            Abuja, Nigeria.
+                        </div>
+                    </div>
+
+                    <div class="bmk-directions">
+                        <a
+                            href="https://www.google.com/maps/search/?api=1&query=SCL+Farms+Damakusa+Village+Kwali+Abuja+Nigeria"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="btn btn-primary"
+                        >
+                            <i class="bi bi-map me-2"></i>
+                            Get Directions
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-7">
+
+                <div class="bmk-map-wrapper">
+
+                    <iframe
+                        src="https://www.google.com/maps?q=SCL+Farms,+Damakusa+Village,+Kwali,+Abuja,+Nigeria&output=embed"
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        allowfullscreen>
+                    </iframe>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- Enquiry -->
+<section class="bmk-contact-form-section" id="enquiry">
+    <div class="container">
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-9">
+
+                <div class="bmk-form-card">
+
+                    <div class="text-center mb-4">
+
+                        <span class="text-primary fw-semibold text-uppercase">
+                            Send Us a Message
+                        </span>
+
+                        <h2 class="mt-2">
+                            Have a Question?
+                        </h2>
+
+                        <p class="text-muted">
+                            Complete the form below and the school can
+                            respond to your enquiry.
+                        </p>
+
+                    </div>
+
+
+                    <form method="post" id="enquiry">
+
+                        {% csrf_token %}
+                    
+                        <div class="row g-4">
+                    
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    Your Name
+                                </label>
+                    
+                                {{ form.name }}
+                    
+                                {% for error in form.name.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                    
+                    
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    Email Address
+                                </label>
+                    
+                                {{ form.email }}
+                    
+                                {% for error in form.email.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                    
+                    
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    Phone Number
+                                </label>
+                    
+                                {{ form.phone }}
+                    
+                                {% for error in form.phone.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                    
+                    
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    Subject
+                                </label>
+                    
+                                {{ form.subject }}
+                    
+                                {% for error in form.subject.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                    
+                    
+                            <div class="col-12">
+                                <label class="form-label">
+                                    Message
+                                </label>
+                    
+                                {{ form.message }}
+                    
+                                {% for error in form.message.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                    
+                    
+                            <div class="col-12">
+                    
+                                <div class="bmk-contact-note">
+                                    <i class="bi bi-info-circle-fill me-2"></i>
+                    
+                                    Please provide accurate contact details so the school
+                                    can respond to your enquiry.
+                                </div>
+                    
+                            </div>
+                    
+                    
+                            <div class="col-12 text-center">
+                    
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary px-5 py-3"
+                                >
+                                    <i class="bi bi-send me-2"></i>
+                                    Send Message
+                                </button>
+                    
+                            </div>
+                    
+                        </div>
+                    
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

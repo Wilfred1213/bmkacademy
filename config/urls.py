@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import render
+from django.conf import settings
+from django.conf.urls.static import static
 
 def custom_permission_denied(request, exception=None):
     return render(
@@ -27,6 +29,7 @@ def custom_permission_denied(request, exception=None):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("", include("website.urls")),
     path(
     "attendance/",
     include("attendance.urls"),
@@ -62,6 +65,12 @@ urlpatterns = [
     path(
     "notifications/",
     include("notifications.urls")
-),
+    ),
+    path("blog/", include("blog.urls")),
+    path("gallery/", include("gallery.urls")),
 ]
+urlpatterns += static(
+    settings.MEDIA_URL,
+    document_root=settings.MEDIA_ROOT,
+)
 handler403 = "config.urls.custom_permission_denied"

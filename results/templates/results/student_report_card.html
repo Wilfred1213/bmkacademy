@@ -1,5 +1,6 @@
 
 {% extends "base.html" %}
+{% load static %}
 {% load result_tags %}
 
 {% block title %}
@@ -23,8 +24,8 @@
 
             <!-- Temporary logo -->
             <img
-                src="https://via.placeholder.com/150"
-                alt="BMK Academy Logo"
+                src="{% static 'website/images/bmk-logo.jpg' %}"
+                alt="BMK Academy"
                 class="school-logo"
             >
 

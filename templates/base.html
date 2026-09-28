@@ -23,6 +23,7 @@
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"
     >
+
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
         rel="stylesheet"
@@ -30,48 +31,54 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+
     <style>
+
+        /* =========================================================
+           PRINT
+        ========================================================= */
+
         @media print {
-    
+
             @page {
                 size: A4 portrait;
                 margin: 12mm;
             }
-    
+
             body {
                 background: white !important;
                 font-size: 12px;
             }
-    
+
             .no-print {
                 display: none !important;
             }
-    
+
             .print-receipt {
                 width: 100%;
                 max-width: 180mm;
                 margin: 0 auto;
                 padding: 0;
             }
-    
+
             .card {
                 border: 1px solid #000 !important;
                 box-shadow: none !important;
             }
-    
+
             .table {
                 font-size: 12px;
             }
-    
+
             .table th,
             .table td {
                 padding: 6px 8px !important;
             }
-    
+
             .receipt-header {
                 margin-bottom: 12px !important;
             }
-    
+
             h1,
             h2,
             h3,
@@ -80,107 +87,109 @@
                 margin-top: 0 !important;
                 margin-bottom: 6px !important;
             }
-    
+
             p {
                 margin-bottom: 4px !important;
             }
-    
+
             .receipt-section {
                 margin-bottom: 10px !important;
             }
-    
+
             footer {
                 display: none !important;
             }
         }
 
-    
 
-        /* ================================
-            REPORT CARD SCREEN
-        ================================= */
-    
+        /* =========================================================
+           REPORT CARD SCREEN
+        ========================================================= */
+
         .report-wrapper {
             max-width: 900px;
             margin: 20px auto;
         }
-    
+
         .report-card {
             background: #fff;
             border: 1px solid #222;
             padding: 18px;
             font-size: 12px;
         }
-    
+
+
         /* HEADER */
-    
+
         .school-header {
             text-align: center;
             border-bottom: 2px solid #222;
             padding-bottom: 10px;
             margin-bottom: 10px;
         }
-    
+
         .school-logo {
             width: 65px;
             height: 65px;
             object-fit: contain;
             margin-bottom: 4px;
         }
-    
+
         .school-name {
             font-size: 24px;
             font-weight: 800;
             margin: 0;
             letter-spacing: 1px;
         }
-    
+
         .school-motto {
             font-size: 11px;
             margin: 2px 0;
         }
-    
+
         .school-title {
             font-size: 15px;
             font-weight: 700;
             margin: 5px 0 0;
         }
-    
+
         .school-contact {
             font-size: 10px;
             margin-top: 3px;
         }
-    
+
+
         /* STUDENT INFORMATION */
-    
+
         .student-info {
             border: 1px solid #333;
             margin-bottom: 10px;
         }
-    
+
         .student-info-title {
             font-weight: 700;
             padding: 5px 8px;
             border-bottom: 1px solid #333;
             background: #f2f2f2;
         }
-    
+
         .student-info table {
             width: 100%;
             margin: 0;
         }
-    
+
         .student-info td {
             padding: 4px 7px;
             border-right: 1px solid #ddd;
         }
-    
+
         .label {
             font-weight: 700;
         }
-    
+
+
         /* STATUS */
-    
+
         .status-box {
             text-align: center;
             padding: 5px;
@@ -188,21 +197,22 @@
             border: 1px solid #777;
             font-weight: 700;
         }
-    
+
         .status-incomplete {
             background: #fff3cd;
         }
-    
+
         .status-complete {
             background: #d1e7dd;
         }
-    
+
         .status-draft {
             background: #e2e3e5;
         }
-    
+
+
         /* SECTION TITLE */
-    
+
         .section-title {
             font-size: 13px;
             font-weight: 700;
@@ -212,182 +222,192 @@
             margin-bottom: 5px;
             background: #f2f2f2;
         }
-    
+
+
         /* RESULTS TABLE */
-    
+
         .results-table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 8px;
         }
-    
+
         .results-table th,
         .results-table td {
             border: 1px solid #444;
             padding: 3px 4px;
             vertical-align: middle;
         }
-    
+
         .results-table th {
             text-align: center;
             font-size: 10px;
             background: #f2f2f2;
         }
-    
+
         .results-table td {
             font-size: 10px;
         }
-    
+
         .subject-name {
             font-weight: 600;
         }
-    
+
         .center {
             text-align: center;
         }
-    
+
+
         /* SUMMARY */
-    
+
         .summary-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 8px;
             margin-bottom: 8px;
         }
-    
+
         .summary-box {
             border: 1px solid #444;
         }
-    
+
         .summary-title {
             font-weight: 700;
             background: #f2f2f2;
             padding: 4px 6px;
             border-bottom: 1px solid #444;
         }
-    
+
         .summary-content {
             padding: 5px 7px;
         }
-    
+
         .summary-row {
             display: flex;
             justify-content: space-between;
             padding: 2px 0;
             border-bottom: 1px dotted #ccc;
         }
-    
+
         .summary-row:last-child {
             border-bottom: none;
         }
-    
+
+
         /* ATTENDANCE */
-    
+
         .attendance-table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 8px;
         }
-    
+
         .attendance-table td {
             border: 1px solid #444;
             padding: 5px;
             text-align: center;
         }
-    
+
         .attendance-number {
             font-size: 16px;
             font-weight: 700;
         }
-    
+
+
         /* BEHAVIOUR */
-    
+
         .behaviour-table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 8px;
         }
-    
+
         .behaviour-table th,
         .behaviour-table td {
             border: 1px solid #444;
             padding: 3px 5px;
         }
-    
+
         .behaviour-table th {
             background: #f2f2f2;
         }
-    
+
+
         /* REMARKS */
-    
+
         .remarks-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 8px;
             margin-bottom: 8px;
         }
-    
+
         .remark-box {
             border: 1px solid #444;
             min-height: 55px;
             padding: 6px;
         }
-    
+
         .remark-title {
             font-weight: 700;
             margin-bottom: 4px;
         }
-    
+
         .next-term {
             border: 1px solid #444;
             padding: 5px 7px;
             margin-bottom: 8px;
         }
-    
+
+
         /* SIGNATURES */
-    
+
         .signatures {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
             margin-top: 12px;
         }
-    
+
         .signature-line {
             border-top: 1px solid #333;
             text-align: center;
             padding-top: 3px;
             margin-top: 22px;
         }
-    
+
+
         /* ACTION BUTTONS */
-    
+
         .report-actions {
             margin: 15px auto;
             max-width: 900px;
         }
-    
-        /* PRINT */
-    
+
+
+        /* =========================================================
+           REPORT CARD PRINT
+        ========================================================= */
+
         @media print {
-    
+
             @page {
                 size: A4 portrait;
                 margin: 8mm;
             }
-    
+
             body {
                 margin: 0 !important;
                 padding: 0 !important;
                 background: white !important;
             }
-    
+
             .report-wrapper {
                 width: 100%;
                 max-width: none;
                 margin: 0;
             }
-    
+
             .report-card {
                 width: 100%;
                 border: 1px solid #222;
@@ -395,72 +415,67 @@
                 font-size: 10px;
                 box-sizing: border-box;
             }
-    
+
             .report-actions,
             .no-print,
             nav,
             footer {
                 display: none !important;
             }
-    
+
             .school-logo {
                 width: 55px;
                 height: 55px;
             }
-    
+
             .school-name {
                 font-size: 20px;
             }
-    
+
             .school-title {
                 font-size: 13px;
             }
-    
+
             .school-contact,
             .school-motto {
                 font-size: 9px;
             }
-    
+
             .section-title {
                 font-size: 11px;
                 padding: 3px 5px;
             }
-    
+
             .results-table th,
             .results-table td {
                 padding: 2px 3px;
                 font-size: 8.5px;
             }
-    
+
             .student-info td {
                 padding: 3px 5px;
             }
-    
+
             .attendance-table td {
                 padding: 3px;
             }
-    
+
             .behaviour-table th,
             .behaviour-table td {
                 padding: 2px 4px;
                 font-size: 8.5px;
             }
-    
+
             .remark-box {
                 min-height: 42px;
                 padding: 4px;
                 font-size: 9px;
             }
-    
+
             .signatures {
                 margin-top: 8px;
             }
-    
-            /*
-                Prevent individual sections from
-                breaking across pages.
-            */
-    
+
             .student-info,
             .results-table,
             .summary-grid,
@@ -472,10 +487,57 @@
                 break-inside: avoid;
                 page-break-inside: avoid;
             }
-    
+
         }
-        
-        
+
+
+        /* =========================================================
+           NAVIGATION
+        ========================================================= */
+
+        .navbar .dropdown-menu {
+            max-height: 75vh;
+            overflow-y: auto;
+        }
+
+        .navbar .dropdown-item {
+            padding-top: 8px;
+            padding-bottom: 8px;
+        }
+
+        .navbar .dropdown-header {
+            font-size: 0.85rem;
+        }
+
+
+        /* =========================================================
+           MOBILE NAVIGATION
+        ========================================================= */
+
+        @media (max-width: 991.98px) {
+
+            .navbar-nav {
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+
+            .navbar .dropdown-menu {
+                border: 0 !important;
+                box-shadow: none !important;
+                background: rgba(255, 255, 255, 0.08);
+            }
+
+            .navbar .dropdown-item {
+                color: rgba(255, 255, 255, 0.9);
+            }
+
+            .navbar .dropdown-item:hover,
+            .navbar .dropdown-item:focus {
+                color: #000;
+            }
+
+        }
+
     </style>
 
 </head>
@@ -484,18 +546,16 @@
 <body>
 
 
-
-    <!-- ========================= -->
-    <!-- Navigation -->
-    <!-- ========================= -->
+    <!-- =========================================================
+         NAVIGATION
+    ========================================================= -->
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
 
         <div class="container">
 
-            <!-- ========================= -->
-            <!-- Brand -->
-            <!-- ========================= -->
+
+            <!-- BRAND -->
 
             <a
                 class="navbar-brand d-flex align-items-center gap-2 fw-bold"
@@ -511,9 +571,7 @@
             </a>
 
 
-            <!-- ========================= -->
-            <!-- Mobile Menu Button -->
-            <!-- ========================= -->
+            <!-- MOBILE MENU BUTTON -->
 
             <button
                 class="navbar-toggler"
@@ -530,9 +588,7 @@
             </button>
 
 
-            <!-- ========================= -->
-            <!-- Navigation -->
-            <!-- ========================= -->
+            <!-- NAVIGATION CONTENT -->
 
             <div
                 class="collapse navbar-collapse"
@@ -542,9 +598,9 @@
                 <ul class="navbar-nav ms-auto align-items-lg-center">
 
 
-                    <!-- ========================= -->
-                    <!-- Dashboard -->
-                    <!-- ========================= -->
+                    <!-- =================================================
+                         DASHBOARD
+                    ================================================= -->
 
                     {% if request.user.is_authenticated %}
 
@@ -556,8 +612,11 @@
                                 class="nav-link"
                                 href="{% url 'accounts:parent_home' %}"
                             >
+
                                 <i class="bi bi-speedometer2 me-1"></i>
+
                                 Dashboard
+
                             </a>
 
                         {% elif request.user.role == "teacher" %}
@@ -566,18 +625,24 @@
                                 class="nav-link"
                                 href="{% url 'accounts:teacher_home' %}"
                             >
+
                                 <i class="bi bi-speedometer2 me-1"></i>
+
                                 Dashboard
+
                             </a>
 
                         {% elif request.user.role == "admin" %}
 
                             <a
                                 class="nav-link"
-                                href="{% url 'admin:index' %}"
+                                href="{% url 'accounts:admin_home' %}"
                             >
+
                                 <i class="bi bi-speedometer2 me-1"></i>
+
                                 Dashboard
+
                             </a>
 
                         {% endif %}
@@ -587,10 +652,11 @@
                     {% endif %}
 
 
+                    <!-- =================================================
+                         ACADEMICS
+                    ================================================= -->
 
-                    <!-- ========================= -->
-                    <!-- Admissions -->
-                    <!-- ========================= -->
+                    {% if request.user.role == "admin" or request.user.role == "teacher" %}
 
                     <li class="nav-item dropdown">
 
@@ -602,92 +668,35 @@
                             aria-expanded="false"
                         >
 
-                            <i class="bi bi-person-plus me-1"></i>
+                            <i class="bi bi-mortarboard me-1"></i>
 
-                            Admissions
-
-                        </a>
-
-
-                        <ul class="dropdown-menu shadow-sm border-0">
-                            {% if request.user.role == "admin" or request.user.role == "teacher" %}
-                            <li>
-                                <a
-                                    class="dropdown-item"
-                                    href="{% url 'admissions:admission_list' %}"
-                                >
-                                    <i class="bi bi-file-earmark-text me-2"></i>
-                                    Admission Applications
-                                </a>
-                            </li>
-                            {% endif %}
-                            <li>
-
-                                <a
-                                    class="dropdown-item"
-                                    href="{% url 'admissions:admission_application' %}"
-                                >
-
-                                    <i class="bi bi-file-earmark-plus me-2"></i>
-
-                                    Apply for Admission
-
-                                </a>
-
-                            </li>
-
-                        </ul>
-
-                    </li>
-
-
-                    <!-- ========================= -->
-                    <!-- Students -->
-                    <!-- ========================= -->
-
-                    {% if request.user.role == "admin" or request.user.role == "teacher" %}
-
-                    <li class="nav-item">
-
-                        <a
-                            class="nav-link"
-                            href="{% url 'students:student_list' %}"
-                        >
-
-                            <i class="bi bi-people me-1"></i>
-
-                            Students
-
-                        </a>
-
-                    </li>
-
-                    {% endif %}
-
-
-                    <!-- ========================= -->
-                    <!-- Teachers -->
-                    <!-- ========================= -->
-                    {% if request.user.role == "admin" or request.user.role == "teacher" %}
-                    <li class="nav-item dropdown">
-
-                        <a
-                            class="nav-link dropdown-toggle"
-                            href="#"
-                            role="button"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                        >
-
-                            <i class="bi bi-person-badge me-1"></i>
-
-                            Teachers
+                            Academics
 
                         </a>
 
 
                         <ul class="dropdown-menu shadow-sm border-0">
 
+
+                            <!-- STUDENTS -->
+
+                            <li>
+
+                                <a
+                                    class="dropdown-item"
+                                    href="{% url 'students:student_list' %}"
+                                >
+
+                                    <i class="bi bi-people me-2"></i>
+
+                                    Students
+
+                                </a>
+
+                            </li>
+
+
+                            <!-- TEACHERS -->
 
                             <li>
 
@@ -696,11 +705,29 @@
                                     href="{% url 'teachers:teacher_list' %}"
                                 >
 
-                                    <i class="bi bi-people me-2"></i>
+                                    <i class="bi bi-person-badge me-2"></i>
 
-                                    All Teachers
+                                    Teachers
 
                                 </a>
+
+                            </li>
+
+
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+
+
+                            <!-- TEACHER MANAGEMENT -->
+
+                            <li>
+
+                                <h6 class="dropdown-header">
+
+                                    Teacher Management
+
+                                </h6>
 
                             </li>
 
@@ -717,13 +744,6 @@
                                     Add Teacher
 
                                 </a>
-
-                            </li>
-
-
-                            <li>
-
-                                <hr class="dropdown-divider">
 
                             </li>
 
@@ -762,13 +782,6 @@
 
                             <li>
 
-                                <hr class="dropdown-divider">
-
-                            </li>
-
-
-                            <li>
-
                                 <a
                                     class="dropdown-item"
                                     href="{% url 'teachers:class_teacher_assignment_list' %}"
@@ -799,39 +812,12 @@
                             </li>
 
 
-                        </ul>
-
-                    </li>
-                    {% endif %}
-
-                    <!-- ========================= -->
-                    <!-- Attendance -->
-                    <!-- ========================= -->
-
-                    
-                    {% if request.user.role == "admin" or request.user.role == "teacher" %}
-
-                    <li class="nav-item dropdown">
-
-                        <a
-                            class="nav-link dropdown-toggle"
-                            href="#"
-                            role="button"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                        >
-
-                            <i class="bi bi-calendar-check me-1"></i>
-
-                            Attendance
-
-                        </a>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
 
 
-                        <ul class="dropdown-menu shadow-sm border-0">
-
-
-                            <!-- Attendance Dashboard -->
+                            <!-- ATTENDANCE -->
 
                             <li>
 
@@ -840,88 +826,16 @@
                                     href="{% url 'attendance:attendance_dashboard' %}"
                                 >
 
-                                    <i class="bi bi-bar-chart-line me-2"></i>
+                                    <i class="bi bi-calendar-check me-2"></i>
 
-                                    Attendance Dashboard
-
-                                </a>
-
-                            </li>
-
-
-                            <li>
-
-                                <hr class="dropdown-divider">
-
-                            </li>
-
-
-                            <!-- Mark Attendance -->
-
-                            <li>
-
-                                <a
-                                    class="dropdown-item"
-                                    href="{% url 'attendance:mark_attendance' %}"
-                                >
-
-                                    <i class="bi bi-check2-square me-2"></i>
-
-                                    Mark Attendance
+                                    Attendance
 
                                 </a>
 
                             </li>
 
 
-                            <!-- Attendance History -->
-
-                            <li>
-
-                                <a
-                                    class="dropdown-item"
-                                    href="{% url 'attendance:attendance_history' %}"
-                                >
-
-                                    <i class="bi bi-clock-history me-2"></i>
-
-                                    Attendance History
-
-                                </a>
-
-                            </li>
-
-
-                        </ul>
-
-                    </li>
-
-                    {% endif %}
-
-
-                    <!-- ========================= -->
-                    <!-- Results -->
-                    <!-- ========================= -->
-                    {% if request.user.role == "admin" or request.user.role == "teacher" %}
-                    <li class="nav-item dropdown">
-
-                        <a
-                            class="nav-link dropdown-toggle"
-                            href="#"
-                            role="button"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                        >
-
-                            <i class="bi bi-bar-chart me-1"></i>
-
-                            Results
-
-                        </a>
-
-
-                        <ul class="dropdown-menu shadow-sm border-0">
-
+                            <!-- RESULTS -->
 
                             <li>
 
@@ -930,41 +844,27 @@
                                     href="{% url 'results:enter_results' %}"
                                 >
 
-                                    <i class="bi bi-pencil-square me-2"></i>
+                                    <i class="bi bi-bar-chart me-2"></i>
 
-                                    Enter Results
-
-                                </a>
-
-                            </li>
-
-
-                            <li>
-
-                                <a
-                                    class="dropdown-item"
-                                    href="{% url 'results:enter_behaviour_ratings' %}"
-                                >
-
-                                    <i class="bi bi-emoji-smile me-2"></i>
-
-                                    Behaviour / Psychomotor Ratings
+                                    Results
 
                                 </a>
 
                             </li>
 
 
+                            <!-- REPORTS -->
+
                             <li>
 
                                 <a
-                                    href="{% url 'results:enter_report_remarks' %}"
                                     class="dropdown-item"
+                                    href="{% url 'reports:report_dashboard' %}"
                                 >
 
-                                    <i class="bi bi-chat-left-text me-2"></i>
+                                    <i class="bi bi-file-earmark-bar-graph me-2"></i>
 
-                                    Report Remarks
+                                    Reports
 
                                 </a>
 
@@ -974,12 +874,14 @@
                         </ul>
 
                     </li>
+
                     {% endif %}
 
-                    <!-- ========================= -->
-                    <!-- Reports -->
-                    <!-- ========================= -->
-                    {% if request.user.role == "admin" or request.user.role == "teacher" %}
+
+                    <!-- =================================================
+                         ADMISSIONS
+                    ================================================= -->
+
                     <li class="nav-item dropdown">
 
                         <a
@@ -990,42 +892,46 @@
                             aria-expanded="false"
                         >
 
-                            <i class="bi bi-file-earmark-bar-graph me-1"></i>
+                            <i class="bi bi-person-plus me-1"></i>
 
-                            Reports
+                            Admissions
 
                         </a>
 
 
-                        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+                        <ul class="dropdown-menu shadow-sm border-0">
 
+
+                            {% if request.user.role == "admin" or request.user.role == "teacher" %}
 
                             <li>
 
                                 <a
                                     class="dropdown-item"
-                                    href="{% url 'reports:report_dashboard' %}"
+                                    href="{% url 'admissions:admission_list' %}"
                                 >
 
-                                    <i class="bi bi-grid me-2"></i>
+                                    <i class="bi bi-file-earmark-text me-2"></i>
 
-                                    Report Dashboard
+                                    Admission Applications
 
                                 </a>
 
                             </li>
 
+                            {% endif %}
+
 
                             <li>
 
                                 <a
                                     class="dropdown-item"
-                                    href="{% url 'reports:report_dashboard' %}#studentReports"
+                                    href="{% url 'admissions:admission_application' %}"
                                 >
 
-                                    <i class="bi bi-file-person me-2"></i>
+                                    <i class="bi bi-file-earmark-plus me-2"></i>
 
-                                    Student Reports
+                                    Apply for Admission
 
                                 </a>
 
@@ -1035,12 +941,14 @@
                         </ul>
 
                     </li>
-                    {% endif %}
 
-                    <!-- ========================= -->
-                    <!-- Fees -->
-                    <!-- ========================= -->
+
+                    <!-- =================================================
+                         FEES
+                    ================================================= -->
+
                     {% if request.user.role == "admin" or request.user.role == "teacher" %}
+
                     <li class="nav-item dropdown">
 
                         <a
@@ -1061,6 +969,8 @@
                         <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
 
 
+                            <!-- INVOICES -->
+
                             <li>
 
                                 <a
@@ -1078,6 +988,13 @@
 
 
                             <li>
+                                <hr class="dropdown-divider">
+                            </li>
+
+
+                            <!-- COLLECTION REPORT -->
+
+                            <li>
 
                                 <a
                                     class="dropdown-item"
@@ -1092,6 +1009,8 @@
 
                             </li>
 
+
+                            <!-- MONTHLY COLLECTIONS -->
 
                             <li>
 
@@ -1109,6 +1028,8 @@
                             </li>
 
 
+                            <!-- OUTSTANDING FEES -->
+
                             <li>
 
                                 <a
@@ -1124,6 +1045,8 @@
 
                             </li>
 
+
+                            <!-- CLASS FEE SUMMARY -->
 
                             <li>
 
@@ -1144,55 +1067,57 @@
                         </ul>
 
                     </li>
+
                     {% endif %}
 
-                    <!-- ========================= -->
-                    <!-- Notifications -->
-                    <!-- ========================= -->
+
+                    <!-- =================================================
+                         NOTIFICATIONS
+                    ================================================= -->
 
                     {% if request.user.is_authenticated %}
 
-                        <li class="nav-item dropdown ms-lg-2">
+                    <li class="nav-item dropdown ms-lg-2">
 
-                            <a
-                                class="nav-link position-relative px-3"
-                                href="#"
-                                id="notificationDropdown"
-                                role="button"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                                title="Notifications"
+                        <a
+                            class="nav-link position-relative px-3"
+                            href="#"
+                            id="notificationDropdown"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                            title="Notifications"
+                        >
+
+                            <i class="bi bi-bell fs-5"></i>
+
+
+                            {% if notification_unread_count > 0 %}
+
+                            <span
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
                             >
 
-                                <i class="bi bi-bell fs-5"></i>
+                                {{ notification_unread_count }}
+
+                                <span class="visually-hidden">
+                                    unread notifications
+                                </span>
+
+                            </span>
+
+                            {% endif %}
+
+                        </a>
 
 
-                                {% if notification_unread_count > 0 %}
-
-                                    <span
-                                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                                    >
-
-                                        {{ notification_unread_count }}
-
-                                        <span class="visually-hidden">
-                                            unread notifications
-                                        </span>
-
-                                    </span>
-
-                                {% endif %}
-
-                            </a>
+                        <ul
+                            class="dropdown-menu dropdown-menu-end shadow-sm border-0"
+                            aria-labelledby="notificationDropdown"
+                            style="min-width: 320px;"
+                        >
 
 
-                            <ul
-                                class="dropdown-menu dropdown-menu-end shadow-sm border-0"
-                                aria-labelledby="notificationDropdown"
-                                style="min-width: 320px;"
-                            >
-
-                        
                             <li>
 
                                 <h6 class="dropdown-header">
@@ -1210,57 +1135,61 @@
 
                                 {% for notification in latest_notifications %}
 
-                                    <li>
+                                <li>
 
-                                        <a
-                                            class="dropdown-item py-2
-                                            {% if not notification.is_read %}
-                                                bg-light
-                                            {% endif %}"
-                                            href="{% url 'notifications:mark_notification_as_read' notification.id %}"
+                                    <a
+                                        class="dropdown-item py-2
+                                        {% if not notification.is_read %}
+                                            bg-light
+                                        {% endif %}"
+                                        href="{% url 'notifications:mark_notification_as_read' notification.id %}"
+                                    >
+
+                                        <div
+                                            class="d-flex justify-content-between align-items-start gap-2"
                                         >
 
-                                            <div class="d-flex justify-content-between align-items-start gap-2">
+                                            <div>
+
+                                                <div class="fw-semibold">
+
+                                                    {{ notification.title }}
+
+                                                    {% if not notification.is_read %}
+
+                                                        <span class="badge bg-primary ms-1">
+                                                            New
+                                                        </span>
+
+                                                    {% endif %}
+
+                                                </div>
+
+
+                                                <small class="text-muted">
+
+                                                    {{ notification.message|truncatechars:45 }}
+
+                                                </small>
+
 
                                                 <div>
 
-                                                    <div class="fw-semibold">
-
-                                                        {{ notification.title }}
-
-                                                        {% if not notification.is_read %}
-
-                                                            <span class="badge bg-primary ms-1">
-                                                                New
-                                                            </span>
-
-                                                        {% endif %}
-
-                                                    </div>
-
                                                     <small class="text-muted">
 
-                                                        {{ notification.message|truncatechars:45 }}
+                                                        {{ notification.created_at|date:"M d, Y - h:i A" }}
 
                                                     </small>
-
-                                                    <div>
-
-                                                        <small class="text-muted">
-
-                                                            {{ notification.created_at|date:"M d, Y - h:i A" }}
-
-                                                        </small>
-
-                                                    </div>
 
                                                 </div>
 
                                             </div>
 
-                                        </a>
+                                        </div>
 
-                                    </li>
+                                    </a>
+
+                                </li>
 
                                 {% endfor %}
 
@@ -1268,7 +1197,9 @@
 
                                 <li>
 
-                                    <div class="dropdown-item-text text-muted text-center py-3">
+                                    <div
+                                        class="dropdown-item-text text-muted text-center py-3"
+                                    >
 
                                         <i class="bi bi-bell-slash fs-4 d-block mb-2"></i>
 
@@ -1303,199 +1234,218 @@
 
                             </li>
 
-                            </ul>
 
-                        </li>
+                        </ul>
+
+                    </li>
 
                     {% endif %}
 
 
-                    <!-- ========================= -->
-                    <!-- Account -->
-                    <!-- ========================= -->
+                    <!-- =================================================
+                         ACCOUNT
+                    ================================================= -->
 
                     {% if request.user.is_authenticated %}
 
-                        <li class="nav-item dropdown ms-lg-2">
+                    <li class="nav-item dropdown ms-lg-2">
 
-                            <a
-                                class="nav-link dropdown-toggle d-flex align-items-center gap-2"
-                                href="#"
-                                role="button"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
+                        <a
+                            class="nav-link dropdown-toggle d-flex align-items-center gap-2"
+                            href="#"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                        >
+
+                            <span
+                                class="rounded-circle bg-white text-primary d-inline-flex align-items-center justify-content-center"
+                                style="width: 32px; height: 32px;"
                             >
 
-                                <span
-                                    class="rounded-circle bg-white text-primary d-inline-flex align-items-center justify-content-center"
-                                    style="width: 32px; height: 32px;"
-                                >
+                                <i class="bi bi-person-fill"></i>
 
-                                    <i class="bi bi-person-fill"></i>
-
-                                </span>
+                            </span>
 
 
-                                <span class="d-none d-lg-inline">
+                            <span class="d-none d-lg-inline">
 
-                                    {{ request.user.get_full_name|default:request.user.username }}
+                                {{ request.user.get_full_name|default:request.user.username }}
 
-                                </span>
+                            </span>
 
-                            </a>
+                        </a>
 
 
-                            <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
-                                
+                        <ul
+                            class="dropdown-menu dropdown-menu-end shadow-sm border-0"
+                        >
 
-                                <li>
 
-                                    <div class="dropdown-header">
+                            <!-- ACCOUNT HEADER -->
 
-                                        <div class="fw-semibold">
+                            <li>
 
-                                            {{ request.user.get_full_name|default:request.user.username }}
+                                <div class="dropdown-header">
 
-                                        </div>
+                                    <div class="fw-semibold">
 
-                                        <small class="text-muted">
-
-                                            {{ request.user.get_role_display }}
-
-                                        </small>
+                                        {{ request.user.get_full_name|default:request.user.username }}
 
                                     </div>
 
-                                </li>
-                                <li>
+                                    <small class="text-muted">
 
-                                    <hr class="dropdown-divider">
+                                        {{ request.user.get_role_display }}
 
-                                </li>
-                                {% if request.user.role == "parent" %}
+                                    </small>
 
-                                <li>
+                                </div>
 
-                                    <a
-                                        class="dropdown-item"
-                                        href="{% url 'accounts:parent_profile' %}"
+                            </li>
+
+
+                            <li>
+
+                                <hr class="dropdown-divider">
+
+                            </li>
+
+
+                            <!--  PROFILE  -->
+
+                            {% if request.user.role == "admin" %}
+
+                                <a
+                                    class="dropdown-item"
+                                    href="{% url 'accounts:admin_profile' %}"
+                                >
+                                    <i class="bi bi-person me-2"></i>
+                                    My Profile
+                                </a>
+
+                            {% elif request.user.role == "teacher" %}
+
+                                <a
+                                    class="dropdown-item"
+                                    href="{% url 'accounts:teacher_profile' %}"
+                                >
+                                    <i class="bi bi-person me-2"></i>
+                                    My Profile
+                                </a>
+
+                            {% elif request.user.role == "parent" %}
+
+                                <a
+                                    class="dropdown-item"
+                                    href="{% url 'accounts:parent_profile' %}"
+                                >
+                                    <i class="bi bi-person me-2"></i>
+                                    My Profile
+                                </a>
+
+                            {% endif %}
+
+
+                            <!-- CHANGE PASSWORD -->
+
+                            {% if request.user.role == "parent" %}
+
+                            <li>
+
+                                <a
+                                    class="dropdown-item"
+                                    href="{% url 'accounts:parent_change_password' %}"
+                                >
+
+                                    <i class="bi bi-key me-2"></i>
+
+                                    Change Password
+
+                                </a>
+
+                            </li>
+
+                            {% else %}
+
+                            <li>
+
+                                <a
+                                    class="dropdown-item"
+                                    href="{% url 'accounts:change_password' %}"
+                                >
+
+                                    <i class="bi bi-key me-2"></i>
+
+                                    Change Password
+
+                                </a>
+
+                            </li>
+
+                            {% endif %}
+
+
+                            <li>
+
+                                <hr class="dropdown-divider">
+
+                            </li>
+
+
+                            <!-- LOGOUT -->
+
+                            <li>
+
+                                <form
+                                    method="post"
+                                    action="{% url 'accounts:logout' %}"
+                                    class="px-2"
+                                >
+
+                                    {% csrf_token %}
+
+                                    <button
+                                        type="submit"
+                                        class="dropdown-item text-danger"
                                     >
 
-                                        <i class="bi bi-person me-2"></i>
+                                        <i class="bi bi-box-arrow-right me-2"></i>
 
-                                        My Profile
+                                        Logout
 
-                                    </a>
+                                    </button>
 
-                                </li>
+                                </form>
 
-                                
-
-                                {% endif %}
+                            </li>
 
 
+                        </ul>
 
-                                <li>
+                    </li>
 
-                                    <hr class="dropdown-divider">
-
-                                </li>
-
-
-                                {% if request.user.role == "parent" %}
-
-                                
-                                <li>
-
-                                    <a
-                                        class="dropdown-item"
-                                        href="{% url 'accounts:parent_change_password' %}"
-                                    >
-
-                                        <i class="bi bi-key me-2"></i>
-
-                                        Change Password
-
-                                    </a>
-
-                                </li>
-                                
-
-                                {% else %}
-
-
-                                <li>
-
-                                    <a
-                                        class="dropdown-item"
-                                        href="{% url 'accounts:change_password' %}"
-                                    >
-
-                                        <i class="bi bi-key me-2"></i>
-
-                                        Change Password
-
-                                    </a>
-
-                                </li>
-
-                                {% endif %}
-
-
-
-                                <li>
-
-                                    <hr class="dropdown-divider">
-
-                                </li>
-
-
-                                <li>
-
-                                    <form
-                                        method="post"
-                                        action="{% url 'accounts:logout' %}"
-                                        class="px-2"
-                                    >
-
-                                        {% csrf_token %}
-
-                                        <button
-                                            type="submit"
-                                            class="dropdown-item text-danger"
-                                        >
-
-                                            <i class="bi bi-box-arrow-right me-2"></i>
-
-                                            Logout
-
-                                        </button>
-
-                                    </form>
-
-                                </li>
-
-
-                            </ul>
-
-                        </li>
 
                     {% else %}
 
-                        <li class="nav-item ms-lg-2">
 
-                            <a
-                                class="btn btn-light btn-sm px-3"
-                                href="{% url 'accounts:login' %}"
-                            >
+                    <!-- LOGIN -->
 
-                                <i class="bi bi-box-arrow-in-right me-1"></i>
+                    <li class="nav-item ms-lg-2">
 
-                                Login
+                        <a
+                            class="btn btn-light btn-sm px-3"
+                            href="{% url 'accounts:login' %}"
+                        >
 
-                            </a>
+                            <i class="bi bi-box-arrow-in-right me-1"></i>
 
-                        </li>
+                            Login
+
+                        </a>
+
+                    </li>
+
 
                     {% endif %}
 
@@ -1509,53 +1459,50 @@
     </nav>
 
 
-
-    <!-- ========================= -->
-    <!-- Main Content -->
-    <!-- ========================= -->
+    <!-- =========================================================
+         MAIN CONTENT
+    ========================================================= -->
 
     <main class="container py-4">
 
 
-        <!-- ========================= -->
-        <!-- Messages -->
-        <!-- ========================= -->
-    
+        <!-- MESSAGES -->
+
         {% if messages %}
-    
+
             {% for message in messages %}
-    
-                <div
-                    class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show"
-                    role="alert"
-                >
-    
-                    {{ message }}
-    
-                    <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="alert"
-                    ></button>
-    
-                </div>
-    
+
+            <div
+                class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show"
+                role="alert"
+            >
+
+                {{ message }}
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                ></button>
+
+            </div>
+
             {% endfor %}
-    
+
         {% endif %}
-    
-    
+
+
         {% block content %}
-    
+
         {% endblock %}
-    
-    
+
+
     </main>
 
 
-    <!-- ========================= -->
-    <!-- Footer -->
-    <!-- ========================= -->
+    <!-- =========================================================
+         FOOTER
+    ========================================================= -->
 
     <footer class="border-top mt-5 py-4">
 
@@ -1581,15 +1528,17 @@
     </footer>
 
 
-
-    <!-- ========================= -->
-    <!-- Bootstrap JavaScript -->
-    <!-- ========================= -->
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================= -->
 
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     ></script>
-    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+
+    <script
+        src="https://unpkg.com/htmx.org@2.0.4"
+    ></script>
 
 
 </body>
