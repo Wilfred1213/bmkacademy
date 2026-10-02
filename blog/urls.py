@@ -40,5 +40,31 @@ urlpatterns = [
     "category/<slug:slug>/",
     views.category_posts,
     name="category_posts",
+    ),
+    path(
+    "manage/",
+    views.manage_posts,
+    name="manage_posts",
+    ),
+    path(
+    "manage/<int:post_id>/edit/",
+    views.edit_post,
+    name="edit_post",
+    ),
+    path(
+    "manage/<int:post_id>/publish/",
+    views.publish_post,
+    name="publish_post",
+    ),
+
+    path(
+        "manage/<int:post_id>/unpublish/",
+        views.unpublish_post,
+        name="unpublish_post",
+    ),
+    path(
+    "manage/<int:post_id>/delete/",
+    views.delete_post,
+    name="delete_post",
 ),
 ]

@@ -1,0 +1,152 @@
+{% load static %}
+<!-- =========================
+     BMK ACADEMY FOOTER
+========================= -->
+
+<footer class="bg-dark text-white pt-5 pb-4">
+
+    <div class="container">
+
+        <div class="row g-4">
+
+            <div class="col-lg-5">
+
+                <img
+                    src="{% static 'website/images/bmk-logo.png' %}"
+                    alt="BMK Academy Logo"
+                    class="bmk-footer-logo mb-3"
+                >
+
+                <h5 class="fw-bold">
+                    Baki and Mairam Kwasari
+                    Nursery and Primary School
+                </h5>
+
+                <p class="text-white-50 mb-2">
+                    Education for Service
+                </p>
+
+                <p class="text-white-50">
+                    Located within SCL Farm, BMK Academy was established
+                    to provide education for the children of SCL staff.
+                </p>
+
+            </div>
+
+
+            <div class="col-lg-3">
+
+                <h6 class="fw-bold">
+                    Quick Links
+                </h6>
+
+                <ul class="list-unstyled">
+
+                    <li class="mb-2">
+                        <a
+                            href="{% url 'website:home' %}"
+                            class="text-white-50 text-decoration-none"
+                        >
+                            Home
+                        </a>
+                    </li>
+
+                    <li class="mb-2">
+                        <a
+                            href="{% url 'website:about' %}"
+                            class="text-white-50 text-decoration-none"
+                        >
+                            About
+                        </a>
+                    </li>
+
+                    <li class="mb-2">
+                        <a
+                            href="{% url 'blog:post_list' %}"
+                            class="text-white-50 text-decoration-none"
+                        >
+                            News & Blog
+                        </a>
+                    </li>
+
+                    <li class="mb-2">
+                        <a
+                            href="{% url 'website:events' %}"
+                            class="text-white-50 text-decoration-none"
+                        >
+                            Events
+                        </a>
+                    </li>
+
+                    <li class="mb-2">
+                        <a
+                            href="{% url 'website:safeguarding' %}"
+                            class="text-white-50 text-decoration-none"
+                        >
+                            Safeguarding
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="{% url 'website:contact' %}"
+                            class="text-white-50 text-decoration-none"
+                        >
+                            Contact
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <div class="col-lg-4">
+
+                <h6 class="fw-bold">
+                    Contact
+                </h6>
+
+                <p class="text-white-50 mb-2">
+                    <i class="bi bi-geo-alt me-2"></i>
+                    BMK Academy
+                </p>
+
+                <p class="text-white-50 mb-2">
+                    <i class="bi bi-telephone me-2"></i>
+                    Contact the school
+                </p>
+
+                <p class="text-white-50">
+                    <i class="bi bi-envelope me-2"></i>
+                    School Email
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <hr class="border-secondary my-4">
+
+
+        <div class="text-center text-white-50">
+
+            <small>
+                &copy; {% now "Y" %} BMK Academy.
+                All rights reserved.
+            </small>
+
+            <div class="mt-2">
+
+                <small class="text-white-50">
+                    Website developed by Wilfred Mathias
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</footer>

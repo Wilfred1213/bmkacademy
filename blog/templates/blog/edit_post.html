@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Edit Blog Post | BMK Academy
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <div class="mb-4">
+
+                        <h2 class="fw-bold mb-1">
+                            Edit Blog Post
+                        </h2>
+
+                        <p class="text-muted mb-0">
+                            Update "{{ post.title }}".
+                        </p>
+
+                    </div>
+
+
+                    <form
+                        method="post"
+                        enctype="multipart/form-data"
+                    >
+
+                        {% csrf_token %}
+
+                        {{ form.as_p }}
+
+
+                        <div class="d-flex gap-2 mt-4">
+
+                            <button
+                                type="submit"
+                                class="btn btn-primary"
+                            >
+                                <i class="bi bi-save me-1"></i>
+                                Save Changes
+                            </button>
+
+
+                            <a
+                                href="{% url 'blog:manage_posts' %}"
+                                class="btn btn-outline-secondary"
+                            >
+                                Cancel
+                            </a>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -350,3 +350,72 @@ class AttendanceService:
             statistics["attendance_rate"] = 0
 
         return statistics
+
+    @classmethod
+    def get_daily_statistics(
+        cls,
+        attendance_date,
+    ):
+        total_students = (
+            Student.objects
+            .filter(
+                enrollments__is_current=True,
+            )
+            .distinct()
+            .count()
+        )
+
+        statistics = Attendance.objects.filter(
+            attendance_date=attendance_date,
+        ).aggregate(
+            marked=Count("id"),
+
+            present=Count(
+                "id",
+                filter=Q(status="present"),
+            ),
+
+            absent=Count(
+                "id",
+                filter=Q(status="absent"),
+            ),
+
+            late=Count(
+                "id",
+                filter=Q(status="late"),
+            ),
+
+            excused=Count(
+                "id",
+                filter=Q(status="excused"),
+            ),
+        )
+
+        marked = statistics["marked"]
+
+        not_marked = max(
+            total_students - marked,
+            0,
+        )
+
+        if total_students:
+            attendance_rate = round(
+                (
+                    statistics["present"]
+                    / total_students
+                ) * 100,
+                2,
+            )
+        else:
+            attendance_rate = 0
+
+        return {
+            "total_students": total_students,
+            "marked": marked,
+            "present": statistics["present"],
+            "absent": statistics["absent"],
+            "late": statistics["late"],
+            "excused": statistics["excused"],
+            "not_marked": not_marked,
+            "attendance_rate": attendance_rate,
+        }

@@ -1,0 +1,192 @@
+{% extends "website/base.html" %}
+
+{% block title %}
+    {{ event.title }} | BMK Academy
+{% endblock %}
+
+
+{% block content %}
+
+<section class="py-5">
+
+    <div class="container">
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-9">
+
+                <!-- EVENT IMAGE -->
+
+                {% if event.image %}
+
+                    <div class="mb-4">
+
+                        <img
+                            src="{{ event.image.url }}"
+                            alt="{{ event.title }}"
+                            class="img-fluid rounded shadow-sm w-100"
+                            style="
+                                max-height: 500px;
+                                object-fit: cover;
+                            "
+                        >
+
+                    </div>
+
+                {% endif %}
+
+
+                <!-- EVENT CONTENT -->
+
+                <div class="mb-4">
+
+                    <span class="text-primary fw-semibold">
+                        BMK ACADEMY EVENT
+                    </span>
+
+                    <h1 class="fw-bold mt-2">
+                        {{ event.title }}
+                    </h1>
+
+                </div>
+
+
+                <!-- EVENT INFORMATION -->
+
+                <div class="card border-0 shadow-sm mb-4">
+
+                    <div class="card-body p-4">
+
+                        <div class="row g-4">
+
+                            <div class="col-md-4">
+
+                                <div class="d-flex align-items-start">
+
+                                    <i
+                                        class="bi bi-calendar-event
+                                               text-primary fs-4 me-3"
+                                    ></i>
+
+                                    <div>
+
+                                        <small class="text-muted d-block">
+                                            Date
+                                        </small>
+
+                                        <strong>
+                                            {{ event.event_date|date:"l, j F Y" }}
+                                        </strong>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            {% if event.event_time %}
+
+                                <div class="col-md-4">
+
+                                    <div class="d-flex align-items-start">
+
+                                        <i
+                                            class="bi bi-clock
+                                                   text-primary fs-4 me-3"
+                                        ></i>
+
+                                        <div>
+
+                                            <small class="text-muted d-block">
+                                                Time
+                                            </small>
+
+                                            <strong>
+                                                {{ event.event_time|time:"g:i A" }}
+                                            </strong>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            {% endif %}
+
+
+                            {% if event.venue %}
+
+                                <div class="col-md-4">
+
+                                    <div class="d-flex align-items-start">
+
+                                        <i
+                                            class="bi bi-geo-alt
+                                                   text-primary fs-4 me-3"
+                                        ></i>
+
+                                        <div>
+
+                                            <small class="text-muted d-block">
+                                                Venue
+                                            </small>
+
+                                            <strong>
+                                                {{ event.venue }}
+                                            </strong>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+
+                {% if event.description %}
+
+                    <div class="mb-4">
+
+                        <h3 class="fw-bold mb-3">
+                            About This Event
+                        </h3>
+
+                        <div class="text-muted">
+                            {{ event.description|linebreaks }}
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+
+                <!-- BACK -->
+
+                <a
+                    href="{% url 'website:events' %}"
+                    class="btn btn-outline-primary"
+                >
+                    <i class="bi bi-arrow-left me-1"></i>
+                    Back to Events
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
+

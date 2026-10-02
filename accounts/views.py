@@ -1,10 +1,10 @@
 
 from django.contrib import messages
 from django.contrib.auth import login
-from django.contrib.auth.forms import AuthenticationForm
+# from django.contrib.auth.forms import AuthenticationForm
 
 from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.forms import PasswordChangeForm
+# from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth import logout
 from .decorators import role_required
@@ -34,8 +34,10 @@ from .forms import (
     ParentProfileForm,
     UserProfileForm,
     TeacherProfileForm,
+    BMKLoginForm,
+    BMKPasswordChangeForm,
 )
-
+from django.utils import timezone
 
 @login_required
 @role_required("admin")
@@ -76,7 +78,7 @@ def login_view(request):
 
     if request.method == "POST":
 
-        form = AuthenticationForm(
+        form = BMKLoginForm(
             request,
             data=request.POST,
         )
@@ -101,7 +103,7 @@ def login_view(request):
 
     else:
 
-        form = AuthenticationForm()
+        form = BMKLoginForm()
 
     return render(
         request,
@@ -110,7 +112,6 @@ def login_view(request):
             "form": form,
         },
     )
-
 def logout_view(request):
 
     if request.method == "POST":
@@ -127,7 +128,7 @@ def change_password(request):
 
     if request.method == "POST":
 
-        form = PasswordChangeForm(
+        form = BMKPasswordChangeForm(
             request.user,
             request.POST,
         )
@@ -154,14 +155,13 @@ def change_password(request):
                 "Your password has been changed successfully.",
             )
 
-            
             return redirect(
                 "accounts:role_home"
             )
 
     else:
 
-        form = PasswordChangeForm(
+        form = BMKPasswordChangeForm(
             request.user
         )
 
@@ -172,7 +172,6 @@ def change_password(request):
             "form": form,
         },
     )
-
 @login_required
 @role_required("admin")
 def user_list(request):
@@ -474,9 +473,37 @@ def role_home(request):
 @role_required("admin")
 def admin_home(request):
 
+    today = timezone.localdate()
+
     fee_summary = FeeService.get_fee_summary()
 
     collection_report = FeeService.get_collection_report()
+
+    monthly_collections = FeeService.get_monthly_payment_report()
+
+    attendance_today = AttendanceService.get_daily_statistics(
+        attendance_date=today,
+    )
+    notifications = (
+    NotificationService
+    .get_user_notifications(request.user)
+    .order_by("-created_at")[:5]
+    )
+
+    unread_notification_count = (
+        NotificationService
+        .get_unread_count(request.user)
+    )
+
+    recent_admissions = (
+        AdmissionApplication.objects
+        .select_related(
+            "desired_class",
+            "academic_year",
+            "term",
+        )
+        .order_by("-submitted_at")[:5]
+    )
 
     context = {
         "total_users": User.objects.count(),
@@ -496,6 +523,14 @@ def admin_home(request):
         "fee_summary": fee_summary,
 
         "collection_report": collection_report,
+
+        "monthly_collections": monthly_collections,
+
+        "attendance_today": attendance_today,
+
+        "recent_admissions": recent_admissions,
+        "notifications": notifications,
+        "unread_notification_count": unread_notification_count,
     }
 
     return render(
@@ -1236,14 +1271,19 @@ def parent_change_password(request):
 
     if request.method == "POST":
 
-        form = PasswordChangeForm(
+        form = BMKPasswordChangeForm(
             user=request.user,
             data=request.POST,
         )
 
         if form.is_valid():
 
-            form.save()
+            user = form.save()
+
+            update_session_auth_hash(
+                request,
+                user,
+            )
 
             messages.success(
                 request,
@@ -1256,7 +1296,7 @@ def parent_change_password(request):
 
     else:
 
-        form = PasswordChangeForm(
+        form = BMKPasswordChangeForm(
             user=request.user,
         )
 

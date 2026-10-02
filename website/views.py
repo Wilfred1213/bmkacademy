@@ -9,13 +9,27 @@ from django.http import Http404
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
 from academics.services import AcademicService
-from .forms import ContactMessageForm
+from academics.models import SchoolClass
+
 
 
 def home(request):
+
     hero_slides = WebsiteService.get_active_hero_slides()
-    latest_posts = BlogService.get_latest_posts(limit=3)
-    featured_photos = GalleryService.get_featured_photos(limit=4)
+
+    latest_posts = BlogService.get_latest_posts(
+        limit=3
+    )
+
+    featured_photos = GalleryService.get_featured_photos(
+        limit=4
+    )
+
+    popup_event = WebsiteService.get_popup_event()
+
+    upcoming_events = WebsiteService.get_upcoming_events(
+        limit=3
+    )
 
     return render(
         request,
@@ -24,8 +38,13 @@ def home(request):
             "hero_slides": hero_slides,
             "latest_posts": latest_posts,
             "featured_photos": featured_photos,
+            "popup_event": popup_event,
+            "upcoming_events": upcoming_events,
         },
     )
+
+
+
 
 def safeguarding(request):
     return render(
@@ -97,3 +116,35 @@ def academic_class_detail(request, slug):
             "school_class": school_class,
         },
     )
+
+
+def events(request):
+
+    public_events = WebsiteService.get_public_events()
+
+    return render(
+        request,
+        "website/events.html",
+        {
+            "upcoming_events": public_events["upcoming"],
+            "past_events": public_events["past"],
+        },
+    )
+
+def event_detail(request, slug):
+
+    event = WebsiteService.get_public_event_detail(
+        slug
+    )
+
+    if not event:
+        raise Http404
+
+    return render(
+        request,
+        "website/event_detail.html",
+        {
+            "event": event,
+        },
+    )
+

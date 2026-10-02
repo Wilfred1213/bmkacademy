@@ -257,7 +257,186 @@
 
     </div>
 
+    <!-- ATTENDANCE OVERVIEW -->
+    <div class="row g-4 mb-4">
 
+        <!-- Present -->
+        <div class="col-md-6 col-lg">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <p class="text-muted mb-1">
+                        Present Today
+                    </p>
+
+                    <h3 class="fw-bold text-success">
+                        {{ attendance_today.present }}
+                    </h3>
+
+                    <small class="text-muted">
+                        Students marked present
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Absent -->
+        <div class="col-md-6 col-lg">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <p class="text-muted mb-1">
+                        Absent Today
+                    </p>
+
+                    <h3 class="fw-bold text-danger">
+                        {{ attendance_today.absent }}
+                    </h3>
+
+                    <small class="text-muted">
+                        Students marked absent
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Late -->
+        <div class="col-md-6 col-lg">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <p class="text-muted mb-1">
+                        Late Today
+                    </p>
+
+                    <h3 class="fw-bold text-warning">
+                        {{ attendance_today.late }}
+                    </h3>
+
+                    <small class="text-muted">
+                        Students marked late
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Excused -->
+        <div class="col-md-6 col-lg">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <p class="text-muted mb-1">
+                        Excused Today
+                    </p>
+
+                    <h3 class="fw-bold text-info">
+                        {{ attendance_today.excused }}
+                    </h3>
+
+                    <small class="text-muted">
+                        Students excused
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- Not Marked -->
+        <div class="col-md-6 col-lg">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <p class="text-muted mb-1">
+                        Not Marked
+                    </p>
+
+                    <h3 class="fw-bold text-secondary">
+                        {{ attendance_today.not_marked }}
+                    </h3>
+
+                    <small class="text-muted">
+                        Students without attendance records
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- ATTENDANCE RATE -->
+    <div class="row mb-4">
+
+        <div class="col-12">
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between mb-2">
+
+                        <h5 class="fw-bold mb-0">
+                            Today's Attendance Rate
+                        </h5>
+
+                        <span class="fw-bold">
+                            {{ attendance_today.attendance_rate }}%
+                        </span>
+
+                    </div>
+
+                    <div
+                        class="progress"
+                        style="height: 10px;"
+                    >
+
+                        <div
+                            class="progress-bar bg-success"
+                            role="progressbar"
+                            style="width: {{ attendance_today.attendance_rate }}%;"
+                            aria-valuenow="{{ attendance_today.attendance_rate }}"
+                            aria-valuemin="0"
+                            aria-valuemax="100"
+                        >
+                        </div>
+
+                    </div>
+
+                    <small class="text-muted">
+                        Based on students with attendance records today.
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
     <!-- Main Dashboard -->
     <div class="row g-4">
 
@@ -378,7 +557,7 @@
 
 
                         <a
-                            href="#"
+                            href="{% url 'students:student_list' %}"
                             class="btn btn-outline-primary text-start"
                         >
                             <i class="bi bi-mortarboard me-2"></i>
@@ -387,11 +566,18 @@
 
 
                         <a
-                            href="#"
+                            href="{% url 'teachers:teacher_list' %}"
                             class="btn btn-outline-primary text-start"
                         >
                             <i class="bi bi-person-workspace me-2"></i>
                             Manage Teachers
+                        </a>
+                        <a
+                            href="{% url 'attendance:mark_attendance' %}"
+                            class="btn btn-outline-info"
+                        >
+                            <i class="bi bi-calendar-check me-1"></i>
+                            Mark Attendance
                         </a>
 
                     </div>
@@ -579,8 +765,415 @@
 
         </div>
 
+        <!-- Monthly Fee Collections -->
+        <div class="row g-4 mt-1">
+
+            <div class="col-12">
+
+                <div class="card border-0 shadow-sm">
+
+                    <div class="card-body p-4">
+
+                        <div class="mb-4">
+
+                            <h5 class="fw-bold mb-1">
+                                Monthly Fee Collections
+                            </h5>
+
+                            <p class="text-muted mb-0">
+                                Monthly payments received by BMK Academy.
+                            </p>
+
+                        </div>
+
+
+                        <div style="height: 300px;">
+
+                            <canvas id="monthlyCollectionsChart"></canvas>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- Recent Admissions -->
+        <div class="row g-4 mt-1">
+
+            <div class="col-12">
+
+                <div class="card border-0 shadow-sm">
+
+                    <div class="card-body p-4">
+
+                        <div class="d-flex justify-content-between
+                                    align-items-center mb-4">
+
+                            <div>
+
+                                <h5 class="fw-bold mb-1">
+                                    Recent Admission Applications
+                                </h5>
+
+                                <p class="text-muted mb-0">
+                                    The latest admission applications submitted.
+                                </p>
+
+                            </div>
+
+                            <a
+                                href="{% url 'admissions:admission_list' %}"
+                                class="btn btn-sm btn-outline-primary"
+                            >
+                                View All
+                            </a>
+
+                        </div>
+
+
+                        {% if recent_admissions %}
+
+                            <div class="table-responsive">
+
+                                <table class="table table-hover align-middle mb-0">
+
+                                    <thead>
+
+                                        <tr>
+
+                                            <th>
+                                                Student
+                                            </th>
+
+                                            <th>
+                                                Class
+                                            </th>
+
+                                            <th>
+                                                Academic Year
+                                            </th>
+
+                                            <th>
+                                                Term
+                                            </th>
+
+                                            <th>
+                                                Status
+                                            </th>
+
+                                            <th>
+                                                Submitted
+                                            </th>
+
+                                        </tr>
+
+                                    </thead>
+
+
+                                    <tbody>
+
+                                        {% for application in recent_admissions %}
+
+                                            <tr>
+
+                                                <td>
+
+                                                    <strong>
+                                                        {{ application.first_name }}
+                                                        {{ application.last_name }}
+                                                    </strong>
+
+                                                </td>
+
+
+                                                <td>
+                                                    {{ application.desired_class }}
+                                                </td>
+
+
+                                                <td>
+                                                    {{ application.academic_year }}
+                                                </td>
+
+
+                                                <td>
+                                                    {{ application.term }}
+                                                </td>
+
+
+                                                <td>
+
+                                                    {% if application.status == "pending" %}
+
+                                                        <span class="badge text-bg-warning">
+                                                            Pending
+                                                        </span>
+
+                                                    {% elif application.status == "approved" %}
+
+                                                        <span class="badge text-bg-success">
+                                                            Approved
+                                                        </span>
+
+                                                    {% elif application.status == "rejected" %}
+
+                                                        <span class="badge text-bg-danger">
+                                                            Rejected
+                                                        </span>
+
+                                                    {% endif %}
+
+                                                </td>
+
+
+                                                <td>
+                                                    {{ application.submitted_at|date:"d M Y" }}
+                                                </td>
+
+                                            </tr>
+
+                                        {% endfor %}
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                        {% else %}
+
+                            <div class="text-center py-4">
+
+                                <i class="bi bi-inbox fs-1 text-muted"></i>
+
+                                <p class="text-muted mt-2 mb-0">
+                                    No admission applications have been submitted yet.
+                                </p>
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- RECENT NOTIFICATIONS -->
+        <div class="row g-4 mt-1">
+
+            <div class="col-12">
+
+                <div class="card border-0 shadow-sm">
+
+                    <div class="card-body p-4">
+
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+
+                            <div>
+
+                                <h5 class="fw-bold mb-1">
+                                    Recent Notifications
+                                </h5>
+
+                                <p class="text-muted mb-0">
+                                    Recent activity and important notifications.
+                                </p>
+
+                            </div>
+
+                            {% if unread_notification_count %}
+
+                                <span class="badge bg-danger">
+                                    {{ unread_notification_count }} unread
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge bg-success">
+                                    All caught up
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        {% if notifications %}
+
+                            <div class="list-group list-group-flush">
+
+                                {% for notification in notifications %}
+
+                                    <div class="list-group-item px-0">
+
+                                        <div class="d-flex justify-content-between align-items-start">
+
+                                            <div>
+
+                                                <h6 class="fw-bold mb-1">
+
+                                                    {{ notification.title }}
+
+                                                    {% if not notification.is_read %}
+
+                                                        <span
+                                                            class="badge bg-primary ms-2"
+                                                        >
+                                                            New
+                                                        </span>
+
+                                                    {% endif %}
+
+                                                </h6>
+
+                                                <p class="text-muted mb-1">
+                                                    {{ notification.message }}
+                                                </p>
+
+                                                <small class="text-muted">
+                                                    {{ notification.created_at|date:"M d, Y • h:i A" }}
+                                                </small>
+
+                                            </div>
+
+
+                                            {% if notification.link %}
+
+                                                <a
+                                                    href="{{ notification.link }}"
+                                                    class="btn btn-sm btn-outline-primary ms-3"
+                                                >
+                                                    View
+                                                </a>
+
+                                            {% endif %}
+
+                                        </div>
+
+                                    </div>
+
+                                {% endfor %}
+
+                            </div>
+
+                        {% else %}
+
+                            <div class="text-center py-4">
+
+                                <i
+                                    class="bi bi-bell text-muted"
+                                    style="font-size: 2rem;"
+                                ></i>
+
+                                <p class="text-muted mt-2 mb-0">
+                                    No notifications yet.
+                                </p>
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
 
 </div>
+
+
+
+
+<script>
+
+    const monthlyCollections = [
+        {% for item in monthly_collections %}
+        {
+            month: "{{ item.month_name }}",
+            total: {{ item.total|default:0 }}
+        }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    ];
+
+
+    const monthlyLabels = monthlyCollections.map(
+        item => item.month
+    );
+
+
+    const monthlyTotals = monthlyCollections.map(
+        item => Number(item.total)
+    );
+
+
+    const ctx = document.getElementById(
+        "monthlyCollectionsChart"
+    );
+
+
+    new Chart(ctx, {
+
+        type: "bar",
+
+        data: {
+
+            labels: monthlyLabels,
+
+            datasets: [
+
+                {
+                    label: "Monthly Collections",
+
+                    data: monthlyTotals,
+
+                    borderWidth: 1
+                }
+
+            ]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            scales: {
+
+                y: {
+
+                    beginAtZero: true,
+
+                    ticks: {
+
+                        callback: function(value) {
+
+                            return "₦" +
+                                Number(value).toLocaleString();
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    });
+
+</script>
 
 {% endblock %}

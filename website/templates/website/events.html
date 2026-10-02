@@ -1,0 +1,354 @@
+{% extends "website/base.html" %}
+
+{% block title %}
+    School Events | BMK Academy
+{% endblock %}
+
+
+{% block content %}
+
+<section class="py-5">
+
+    <div class="container">
+
+
+        <!-- PAGE HEADER -->
+
+        <div class="text-center mb-5">
+
+            <span class="text-primary fw-semibold">
+                BMK ACADEMY
+            </span>
+
+            <h1 class="fw-bold mt-2">
+                School Events
+            </h1>
+
+            <p
+                class="text-muted mx-auto"
+                style="max-width: 700px;"
+            >
+                Stay informed about upcoming activities,
+                celebrations, meetings and important events
+                at BMK Academy.
+            </p>
+
+        </div>
+
+
+
+        <!-- UPCOMING EVENTS -->
+
+        {% if upcoming_events %}
+
+            <div class="mb-5">
+
+                <div class="mb-4">
+
+                    <span class="text-primary fw-semibold">
+                        WHAT'S COMING UP
+                    </span>
+
+                    <h2 class="fw-bold mt-2">
+                        Upcoming Events
+                    </h2>
+
+                </div>
+
+
+                <div class="row g-4">
+
+                    {% for event in upcoming_events %}
+
+                        <div class="col-md-6 col-lg-4">
+
+                            <div
+                                class="card h-100 border-0 shadow-sm"
+                            >
+
+                                {% if event.image %}
+
+                                    <img
+                                        src="{{ event.image.url }}"
+                                        class="card-img-top"
+                                        alt="{{ event.title }}"
+                                        style="
+                                            height: 220px;
+                                            object-fit: cover;
+                                        "
+                                    >
+
+                                {% endif %}
+
+
+                                <div class="card-body p-4">
+
+                                    <span
+                                        class="badge bg-primary mb-3"
+                                    >
+                                        Upcoming
+                                    </span>
+
+
+                                    <h4 class="fw-bold">
+                                        {{ event.title }}
+                                    </h4>
+
+
+                                    <div
+                                        class="text-muted mb-3"
+                                    >
+
+                                        <div class="mb-2">
+
+                                            <i
+                                                class="bi bi-calendar-event text-primary me-2"
+                                            ></i>
+
+                                            {{ event.event_date|date:"j F Y" }}
+
+                                        </div>
+
+
+                                        {% if event.event_time %}
+
+                                            <div class="mb-2">
+
+                                                <i
+                                                    class="bi bi-clock text-primary me-2"
+                                                ></i>
+
+                                                {{ event.event_time|time:"g:i A" }}
+
+                                            </div>
+
+                                        {% endif %}
+
+
+                                        {% if event.venue %}
+
+                                            <div>
+
+                                                <i
+                                                    class="bi bi-geo-alt text-primary me-2"
+                                                ></i>
+
+                                                {{ event.venue }}
+
+                                            </div>
+
+                                        {% endif %}
+
+                                    </div>
+
+
+                                    {% if event.description %}
+
+                                        <p class="text-muted">
+
+                                            {{ event.description|truncatewords:20 }}
+
+                                        </p>
+
+                                    {% endif %}
+
+
+                                    <a
+                                        href="{% url 'website:event_detail' event.slug %}"
+                                        class="btn btn-outline-primary"
+                                    >
+                                        View Event
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        {% endif %}
+
+
+
+        <!-- PAST EVENTS -->
+
+        {% if past_events %}
+
+            <div>
+
+                <div class="mb-4">
+
+                    <span class="text-muted fw-semibold">
+                        EVENT HISTORY
+                    </span>
+
+                    <h2 class="fw-bold mt-2">
+                        Past Events
+                    </h2>
+
+                </div>
+
+
+                <div class="row g-4">
+
+                    {% for event in past_events %}
+
+                        <div class="col-md-6 col-lg-4">
+
+                            <div
+                                class="card h-100 border-0 shadow-sm"
+                            >
+
+                                {% if event.image %}
+
+                                    <img
+                                        src="{{ event.image.url }}"
+                                        class="card-img-top"
+                                        alt="{{ event.title }}"
+                                        style="
+                                            height: 220px;
+                                            object-fit: cover;
+                                        "
+                                    >
+
+                                {% endif %}
+
+
+                                <div class="card-body p-4">
+
+                                    <span
+                                        class="badge bg-secondary mb-3"
+                                    >
+                                        Past Event
+                                    </span>
+
+
+                                    <h4 class="fw-bold">
+                                        {{ event.title }}
+                                    </h4>
+
+
+                                    <div
+                                        class="text-muted mb-3"
+                                    >
+
+                                        <div class="mb-2">
+
+                                            <i
+                                                class="bi bi-calendar-event me-2"
+                                            ></i>
+
+                                            {{ event.event_date|date:"j F Y" }}
+
+                                        </div>
+
+
+                                        {% if event.event_time %}
+
+                                            <div class="mb-2">
+
+                                                <i
+                                                    class="bi bi-clock me-2"
+                                                ></i>
+
+                                                {{ event.event_time|time:"g:i A" }}
+
+                                            </div>
+
+                                        {% endif %}
+
+
+                                        {% if event.venue %}
+
+                                            <div>
+
+                                                <i
+                                                    class="bi bi-geo-alt me-2"
+                                                ></i>
+
+                                                {{ event.venue }}
+
+                                            </div>
+
+                                        {% endif %}
+
+                                    </div>
+
+
+                                    {% if event.description %}
+
+                                        <p class="text-muted">
+
+                                            {{ event.description|truncatewords:20 }}
+
+                                        </p>
+
+                                    {% endif %}
+
+
+                                    <a
+                                        href="{% url 'website:event_detail' event.slug %}"
+                                        class="btn btn-outline-secondary"
+                                    >
+                                        View Event
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        {% endif %}
+
+
+
+        <!-- NO EVENTS -->
+
+        {% if not upcoming_events and not past_events %}
+
+            <div class="text-center py-5">
+
+                <div class="mb-3">
+
+                    <i
+                        class="bi bi-calendar-x text-muted"
+                        style="font-size: 3rem;"
+                    ></i>
+
+                </div>
+
+
+                <h4 class="fw-bold">
+                    No Events Available
+                </h4>
+
+
+                <p class="text-muted">
+
+                    There are currently no school events
+                    to display.
+
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

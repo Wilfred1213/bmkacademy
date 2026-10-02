@@ -1,5 +1,8 @@
 from django import forms
-
+from django.contrib.auth.forms import (
+    AuthenticationForm,
+    PasswordChangeForm,
+)
 from .models import ParentProfile, User
 from teachers.models import Teacher
 
@@ -95,3 +98,57 @@ class TeacherProfileForm(forms.ModelForm):
                 }
             ),
         }
+
+class BMKLoginForm(AuthenticationForm):
+
+    username = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Enter username",
+                "autocomplete": "username",
+            }
+        )
+    )
+
+    password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Enter password",
+                "autocomplete": "current-password",
+            }
+        )
+    )
+
+class BMKPasswordChangeForm(PasswordChangeForm):
+
+    old_password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Enter current password",
+                "autocomplete": "current-password",
+            }
+        )
+    )
+
+    new_password1 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Enter new password",
+                "autocomplete": "new-password",
+            }
+        )
+    )
+
+    new_password2 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Confirm new password",
+                "autocomplete": "new-password",
+            }
+        )
+    )

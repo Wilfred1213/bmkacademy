@@ -1,7 +1,6 @@
 from django.contrib import admin
 
-from .models import ContactMessage, HeroSlide
-
+from .models import HeroSlide, ContactMessage, SchoolEvent
 
 @admin.register(ContactMessage)
 class ContactMessageAdmin(admin.ModelAdmin):
@@ -52,3 +51,34 @@ class HeroSlideAdmin(admin.ModelAdmin):
         "order",
         "-created_at",
     )
+
+
+@admin.register(SchoolEvent)
+class SchoolEventAdmin(admin.ModelAdmin):
+
+    list_display = (
+        "title",
+        "event_date",
+        "event_time",
+        "venue",
+        "is_active",
+        "show_popup",
+    )
+
+    list_filter = (
+        "is_active",
+        "show_popup",
+        "event_date",
+    )
+
+    search_fields = (
+        "title",
+        "description",
+        "venue",
+    )
+
+    ordering = (
+        "event_date",
+        "event_time",
+    )
+

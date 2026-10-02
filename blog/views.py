@@ -209,3 +209,135 @@ def category_posts(request, slug):
             "page_obj": page_obj,
         },
     )
+
+@login_required
+@role_required("admin")
+def manage_posts(request):
+
+    posts = BlogService.get_all_posts()
+
+    return render(
+        request,
+        "blog/manage_posts.html",
+        {
+            "posts": posts,
+        },
+    )
+
+@login_required
+@role_required("admin")
+def edit_post(request, post_id):
+
+    post = get_object_or_404(
+        Post,
+        id=post_id,
+    )
+
+    if request.method == "POST":
+
+        form = PostForm(
+            request.POST,
+            request.FILES,
+            instance=post,
+        )
+
+        if form.is_valid():
+
+            BlogService.update_post(
+                post=post,
+                title=form.cleaned_data["title"],
+                category=form.cleaned_data["category"],
+                content=form.cleaned_data["content"],
+                excerpt=form.cleaned_data["excerpt"],
+                featured_image=form.cleaned_data["featured_image"],
+                status=form.cleaned_data["status"],
+            )
+
+            messages.success(
+                request,
+                "Blog post updated successfully.",
+            )
+
+            return redirect(
+                "blog:manage_posts"
+            )
+
+    else:
+
+        form = PostForm(
+            instance=post,
+        )
+
+    return render(
+        request,
+        "blog/edit_post.html",
+        {
+            "form": form,
+            "post": post,
+        },
+    )
+
+@login_required
+@role_required("admin")
+def publish_post(request, post_id):
+
+    if request.method != "POST":
+        return redirect("blog:manage_posts")
+
+    post = get_object_or_404(
+        Post,
+        id=post_id,
+    )
+
+    BlogService.publish_post(post)
+
+    messages.success(
+        request,
+        "Blog post published successfully.",
+    )
+
+    return redirect("blog:manage_posts")
+
+@login_required
+@role_required("admin")
+def unpublish_post(request, post_id):
+
+    if request.method != "POST":
+        return redirect("blog:manage_posts")
+
+    post = get_object_or_404(
+        Post,
+        id=post_id,
+    )
+
+    BlogService.unpublish_post(post)
+
+    messages.success(
+        request,
+        "Blog post moved back to draft.",
+    )
+
+    return redirect("blog:manage_posts")
+
+@login_required
+@role_required("admin")
+def delete_post(request, post_id):
+
+    if request.method != "POST":
+        return redirect("blog:manage_posts")
+
+    post = get_object_or_404(
+        Post,
+        id=post_id,
+    )
+
+    BlogService.delete_post(post)
+
+    messages.success(
+        request,
+        "Blog post deleted successfully.",
+    )
+
+    return redirect(
+        "blog:manage_posts"
+    )

@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.core.mail import send_mail
-
-from .models import ContactMessage
+from django.utils import timezone
+from .models import ContactMessage, SchoolEvent
 
 
 class WebsiteService:
@@ -48,3 +48,88 @@ class WebsiteService:
         )
 
         return contact_message
+
+    @classmethod
+    def get_popup_event(cls):
+
+        today = timezone.localdate()
+
+        return (
+            SchoolEvent.objects
+            .filter(
+                is_active=True,
+                show_popup=True,
+                event_date__gte=today,
+            )
+            .order_by(
+                "event_date",
+                "event_time",
+            )
+            .first()
+        )
+
+
+    @classmethod
+    def get_upcoming_events(cls, limit=3):
+
+        today = timezone.localdate()
+
+        return (
+            SchoolEvent.objects
+            .filter(
+                is_active=True,
+                event_date__gte=today,
+            )
+            .order_by(
+                "event_date",
+                "event_time",
+            )[:limit]
+        )
+
+    
+    @classmethod
+    def get_public_events(cls):
+        today = timezone.localdate()
+
+        upcoming_events = (
+            SchoolEvent.objects
+            .filter(
+                is_active=True,
+                event_date__gte=today,
+            )
+            .order_by(
+                "event_date",
+                "event_time",
+            )
+        )
+
+        past_events = (
+            SchoolEvent.objects
+            .filter(
+                is_active=True,
+                event_date__lt=today,
+            )
+            .order_by(
+                "-event_date",
+                "-event_time",
+            )
+        )
+
+        return {
+            "upcoming": upcoming_events,
+            "past": past_events,
+        }
+
+
+    @classmethod
+    def get_public_event_detail(cls, slug):
+
+        return (
+            SchoolEvent.objects
+            .filter(
+                slug=slug,
+                is_active=True,
+            )
+            .first()
+        )
+

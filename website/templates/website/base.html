@@ -2917,7 +2917,7 @@
             href="{% url 'website:home' %}"
         >
             <img
-                src="{% static 'website/images/bmk-logo.jpg' %}"
+                src="{% static 'website/images/bmk-logo.png' %}"
                 alt="BMK Academy Logo"
                 class="bmk-logo"
             >
@@ -2958,14 +2958,7 @@
                     </a>
 
                 </li>
-                {% comment %} <li class="nav-item">
-                    <a
-                        class="nav-link"
-                        href="{% url 'website:safeguarding' %}"
-                    >
-                        Safeguarding
-                    </a>
-                </li> {% endcomment %}
+                
 
 
                 <li class="nav-item">
@@ -3011,13 +3004,18 @@
 
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'website:events' %}">
+                        Events
+                    </a>
+                </li>
+                {% comment %} <li class="nav-item">
                     <a
                         href="{% url 'website:safeguarding' %}"
                         class="nav-link text-decoration-none"
                     >
                         Safeguarding
                     </a>
-                </li>
+                </li> {% endcomment %}
 
                 <li class="nav-item">
 
@@ -3041,7 +3039,146 @@
                     </a>
 
                 </li>
+                <!-- SCHOOL PORTAL / USER MENU -->
 
+                <!-- USER / LOGIN MENU -->
+
+                <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+
+                    {% if request.user.is_authenticated %}
+
+                        <div class="dropdown">
+
+                            <a
+                                class="nav-link dropdown-toggle fw-semibold"
+                                href="#"
+                                role="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                            >
+
+                                <i class="bi bi-person-circle me-1"></i>
+
+                                {{ request.user.get_full_name|default:request.user.username }}
+
+                            </a>
+
+
+                            <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+
+                                <!-- SCHOOL PORTAL -->
+
+                                <li>
+                                    <a
+                                        class="dropdown-item"
+                                        href="{% url 'accounts:role_home' %}"
+                                    >
+                                        <i class="bi bi-speedometer2 me-2"></i>
+                                        School Portal
+                                    </a>
+                                </li>
+
+
+                                <!-- PROFILE -->
+
+                                {% if request.user.role == "admin" %}
+
+                                    <li>
+                                        <a
+                                            class="dropdown-item"
+                                            href="{% url 'accounts:admin_profile' %}"
+                                        >
+                                            <i class="bi bi-person me-2"></i>
+                                            My Profile
+                                        </a>
+                                    </li>
+
+                                {% elif request.user.role == "teacher" %}
+
+                                    <li>
+                                        <a
+                                            class="dropdown-item"
+                                            href="{% url 'accounts:teacher_profile' %}"
+                                        >
+                                            <i class="bi bi-person me-2"></i>
+                                            My Profile
+                                        </a>
+                                    </li>
+
+                                {% elif request.user.role == "parent" %}
+
+                                    <li>
+                                        <a
+                                            class="dropdown-item"
+                                            href="{% url 'accounts:parent_profile' %}"
+                                        >
+                                            <i class="bi bi-person me-2"></i>
+                                            My Profile
+                                        </a>
+                                    </li>
+
+                                {% endif %}
+
+
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+
+
+                                <!-- CHANGE PASSWORD -->
+
+                                <li>
+                                    <a
+                                        class="dropdown-item"
+                                        href="{% url 'accounts:change_password' %}"
+                                    >
+                                        <i class="bi bi-key me-2"></i>
+                                        Change Password
+                                    </a>
+                                </li>
+
+
+                                <!-- LOGOUT -->
+
+                                <li>
+
+                                    <form
+                                        method="post"
+                                        action="{% url 'accounts:logout' %}"
+                                    >
+
+                                        {% csrf_token %}
+
+                                        <button
+                                            type="submit"
+                                            class="dropdown-item"
+                                        >
+                                            <i class="bi bi-box-arrow-right me-2"></i>
+                                            Logout
+                                        </button>
+
+                                    </form>
+
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+                    {% else %}
+
+                        <a
+                            href="{% url 'accounts:login' %}"
+                            class="btn btn-primary"
+                        >
+                            <i class="bi bi-box-arrow-in-right me-1"></i>
+                            Login
+                        </a>
+
+                    {% endif %}
+
+                </li>
+                    
             </ul>
 
         </div>
@@ -3060,184 +3197,10 @@
     {% block content %}
     {% endblock %}
 
-</main>
-
-<!-- =========================================
-BMK IDENTITY / MOTTO
-========================================= -->
-
-<section class="bmk-identity">
-
-    <div class="container py-5">
-
-        <div class="bmk-identity-content text-center">
-
-            <div class="bmk-identity-icon">
-                <i class="bi bi-mortarboard-fill"></i>
-            </div>
-
-            <span class="bmk-identity-label">
-                BMK ACADEMY
-            </span>
-
-            <h2>
-                Education for Service
-            </h2>
-
-            <p>
-                Established within SCL Farm to provide education for
-                the children of SCL staff, BMK Academy began its journey
-                with Nursery 1 and Nursery 2 and continues to grow with
-                its learners.
-            </p>
-
-            <div class="bmk-identity-date">
-
-                <i class="bi bi-calendar-event me-2"></i>
-
-                Commissioned on
-                <strong>19 October 2024</strong>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
 <!-- =========================
      FOOTER
 ========================= -->
-
-<footer class="bg-dark text-white pt-5 pb-4">
-
-    <div class="container">
-
-        <div class="row g-4">
-
-            <div class="col-lg-5">
-
-                <img
-                    src="{% static 'website/images/bmk-logo.jpg' %}"
-                    alt="BMK Academy Logo"
-                    class="bmk-footer-logo mb-3"
-                >
-            
-                <h5 class="fw-bold">
-                    Baki and Mairam Kwasari
-                    Nursery and Primary School
-                </h5>
-            
-                <p class="text-white-50 mb-2">
-                    Education for Service
-                </p>
-            
-                <p class="text-white-50">
-                    Located within SCL Farm, BMK Academy was established
-                    to provide education for the children of SCL staff.
-                </p>
-            
-            </div>
-
-
-            <div class="col-lg-3">
-
-                <h6 class="fw-bold">
-                    Quick Links
-                </h6>
-
-                <ul class="list-unstyled">
-
-                    <li class="mb-2">
-                        <a
-                            href="{% url 'website:home' %}"
-                            class="text-white-50 text-decoration-none"
-                        >
-                            Home
-                        </a>
-                    </li>
-
-                    <li class="mb-2">
-                        <a
-                            href="#about"
-                            class="text-white-50 text-decoration-none"
-                        >
-                            About
-                        </a>
-                    </li>
-
-                    <li class="mb-2">
-                        <a
-                            href="{% url 'blog:post_list' %}"
-                            class="text-white-50 text-decoration-none"
-                        >
-                            News & Blog
-                        </a>
-                    </li>
-                    <li class="mb-2">
-                        <a
-                            href="{% url 'website:safeguarding' %}"
-                            class="text-white-50 text-decoration-none"
-                        >
-                            Safeguarding
-                        </a>
-                    </li>
-
-                    <li>
-                        <a
-                            href="#contact"
-                            class="text-white-50 text-decoration-none"
-                        >
-                            Contact
-                        </a>
-                    </li>
-
-                </ul>
-
-            </div>
-
-
-            <div class="col-lg-4">
-
-                <h6 class="fw-bold">
-                    Contact
-                </h6>
-
-                <p class="text-white-50 mb-2">
-                    <i class="bi bi-geo-alt me-2"></i>
-                    BMK Academy
-                </p>
-
-                <p class="text-white-50 mb-2">
-                    <i class="bi bi-telephone me-2"></i>
-                    Contact the school
-                </p>
-
-                <p class="text-white-50">
-                    <i class="bi bi-envelope me-2"></i>
-                    School Email
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <hr class="border-secondary my-4">
-
-
-        <div class="text-center text-white-50">
-
-            <small>
-                &copy; {% now "Y" %} BMK Academy.
-                All rights reserved.
-            </small>
-
-        </div>
-
-    </div>
-
-</footer>
+{% include "includes/footer.html" %}
 
 
 <!-- Bootstrap JS -->

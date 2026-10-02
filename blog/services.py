@@ -166,3 +166,49 @@ class BlogService:
             .select_related("category", "author")
             .order_by("-published_at")[:limit]
         )
+
+    @classmethod
+    def get_all_posts(cls):
+        return (
+            Post.objects
+            .select_related(
+                "category",
+                "author",
+            )
+            .order_by("-created_at")
+        )
+
+
+    @classmethod
+    def delete_post(cls, post):
+        post.delete()
+
+    @classmethod
+    def update_post(
+        cls,
+        post,
+        title,
+        category,
+        content,
+        excerpt="",
+        featured_image=None,
+        status="draft",
+    ):
+        post.title = title
+        post.category = category
+        post.content = content
+        post.excerpt = excerpt
+        post.status = status
+
+        if featured_image is not None:
+            post.featured_image = featured_image
+
+        if status == "published":
+            if not post.published_at:
+                post.published_at = timezone.now()
+        else:
+            post.published_at = None
+
+        post.save()
+
+        return post
