@@ -1,32 +1,133 @@
 {% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'website/css/admissions.css' %}"
+>
+{% endblock %}
+{% block title %}
+Admission Claim Link Expired | BMK Academy
+{% endblock %}
 
 {% block content %}
 
-<div class="container py-5">
+<div class="bmk-claim-expired-page">
 
-    <div class="row justify-content-center">
 
-        <div class="col-md-6">
+<section class="bmk-claim-expired-header">
 
-            <div class="alert alert-warning text-center">
+    <div class="bmk-claim-expired-header-inner">
 
-                <h4>Claim Link Expired</h4>
+        <div class="bmk-claim-expired-brand">
+            <i class="bi bi-mortarboard-fill"></i>
+        </div>
 
-                <p>
-                    This admission account claim link has expired.
-                </p>
+        <span class="bmk-claim-expired-eyebrow">
+            BMK ACADEMY • PARENT PORTAL
+        </span>
+
+        <h1>
+            Admission Claim Link
+        </h1>
+
+        <p>
+            This admission claim link can no longer be used.
+        </p>
+
+    </div>
+
+</section>
+
+
+<section class="bmk-claim-expired-content">
+
+    <div class="bmk-claim-expired-card">
+
+        <div class="bmk-claim-expired-icon">
+            <i class="bi bi-clock-history"></i>
+        </div>
+
+        <span class="bmk-claim-expired-label">
+            LINK EXPIRED
+        </span>
+
+        <h2>
+            Claim Link
+            <span>Has Expired</span>
+        </h2>
+
+        <p class="bmk-claim-expired-message">
+            This admission account claim link has expired and
+            can no longer be used to create your BMK Academy
+            parent account.
+        </p>
+
+
+        <div class="bmk-claim-expired-info">
+
+            <div class="bmk-claim-expired-info-icon">
+                <i class="bi bi-info-circle-fill"></i>
+            </div>
+
+            <div>
+
+                <strong>
+                    Need another claim link?
+                </strong>
 
                 <p>
                     Please contact BMK Academy for assistance.
+                    The school can help you with the next steps
+                    for accessing your parent account.
                 </p>
 
             </div>
 
         </div>
 
+
+        <div class="bmk-claim-expired-contact">
+
+            <div class="bmk-claim-expired-contact-icon">
+                <i class="bi bi-headset"></i>
+            </div>
+
+            <div>
+
+                <span>
+                    NEED ASSISTANCE?
+                </span>
+
+                <h3>
+                    Contact BMK Academy
+                </h3>
+
+                <p>
+                    Our school team will assist you with your
+                    admission account and claim process.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="bmk-claim-expired-footer">
+
+            <i class="bi bi-shield-check"></i>
+
+            <span>
+                BMK Academy • Education for Service.
+            </span>
+
+        </div>
+
     </div>
+
+</section>
+
 
 </div>
 
 {% endblock %}
-

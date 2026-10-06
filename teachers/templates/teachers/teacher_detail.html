@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 
 {% block title %}
@@ -8,187 +9,68 @@
 {% endblock %}
 
 
-{% block content %}
+{% block extra_css %}
 
-
-<!-- ========================= -->
-<!-- PAGE HEADER -->
-<!-- ========================= -->
-
-<div
-    class="d-flex justify-content-between align-items-center mb-4"
+<link
+    rel="stylesheet"
+    href="{% static 'website/css/teacher.css' %}"
 >
 
-    <div>
-
-        <h2 class="mb-1">
-
-            Teacher Profile
-
-        </h2>
-
-        <p class="text-muted mb-0">
-
-            {{ teacher.user.get_full_name }}
-
-        </p>
-
-    </div>
+{% endblock %}
 
 
-    <div class="d-flex gap-2">
+{% block content %}
+
+<div class="teacher-page">
 
 
-        <a
-            href="{% url 'teachers:update_teacher' teacher.id %}"
-            class="btn btn-primary"
-        >
+    <!-- =================================================
+         PROFILE HERO
+    ================================================== -->
 
-            Edit Teacher
+    <section class="teacher-profile-hero">
 
-        </a>
+        <div class="teacher-profile-main">
 
+            <div class="teacher-profile-avatar">
 
-        <a
-            href="{% url 'teachers:teacher_list' %}"
-            class="btn btn-outline-secondary"
-        >
+                {{ teacher.user.first_name|first|upper }}
 
-            Back to Teachers
+                {% if teacher.user.last_name %}
+                    {{ teacher.user.last_name|first|upper }}
+                {% endif %}
 
-        </a>
-
-
-    </div>
-
-</div>
+            </div>
 
 
+            <div class="teacher-profile-identity">
 
-<!-- ========================= -->
-<!-- TEACHER INFORMATION -->
-<!-- ========================= -->
-
-<div class="row">
-
-
-    <div class="col-lg-4 mb-4">
-
-        <div class="card shadow-sm h-100">
-
-            <div class="card-body">
+                <span class="teacher-profile-eyebrow">
+                    TEACHER PROFILE
+                </span>
 
 
-                <h5 class="card-title mb-4">
-
-                    Teacher Information
-
-                </h5>
-
-
-                <p>
-
-                    <strong>
-                        Employee ID:
-                    </strong>
-
-                    <br>
-
-                    {{ teacher.employee_id }}
-
-                </p>
-
-
-                <p>
-
-                    <strong>
-                        Full Name:
-                    </strong>
-
-                    <br>
-
+                <h2>
                     {{ teacher.user.get_full_name }}
-
-                </p>
-
-
-                <p>
-
-                    <strong>
-                        Username:
-                    </strong>
-
-                    <br>
-
-                    {{ teacher.user.username }}
-
-                </p>
+                </h2>
 
 
-                <p>
+                <div class="teacher-profile-meta">
 
-                    <strong>
-                        Email:
-                    </strong>
+                    <span>
 
-                    <br>
+                        <i class="bi bi-person-badge"></i>
 
-                    {{ teacher.user.email|default:"-" }}
+                        {{ teacher.employee_id }}
 
-                </p>
-
-
-                <p>
-
-                    <strong>
-                        Phone:
-                    </strong>
-
-                    <br>
-
-                    {{ teacher.phone|default:"-" }}
-
-                </p>
-
-
-                <p>
-
-                    <strong>
-                        Qualification:
-                    </strong>
-
-                    <br>
-
-                    {{ teacher.qualification|default:"-" }}
-
-                </p>
-
-
-                <p>
-
-                    <strong>
-                        Date Joined:
-                    </strong>
-
-                    <br>
-
-                    {{ teacher.date_joined }}
-
-                </p>
-
-
-                <p class="mb-0">
-
-                    <strong>
-                        Status:
-                    </strong>
-
-                    <br>
+                    </span>
 
 
                     {% if teacher.is_active %}
 
-                        <span class="badge text-bg-success">
+                        <span class="teacher-profile-status active">
+
+                            <span></span>
 
                             Active
 
@@ -196,7 +78,9 @@
 
                     {% else %}
 
-                        <span class="badge text-bg-secondary">
+                        <span class="teacher-profile-status inactive">
+
+                            <span></span>
 
                             Inactive
 
@@ -204,87 +88,365 @@
 
                     {% endif %}
 
-                </p>
-
+                </div>
 
             </div>
 
         </div>
 
-    </div>
+
+        <div class="teacher-profile-actions">
+
+            <a
+                href="{% url 'teachers:update_teacher' teacher.id %}"
+                class="teacher-profile-edit-btn"
+            >
+
+                <i class="bi bi-pencil-square"></i>
+
+                Edit Teacher
+
+            </a>
+
+
+            <a
+                href="{% url 'teachers:teacher_list' %}"
+                class="teacher-profile-back-btn"
+            >
+
+                <i class="bi bi-arrow-left"></i>
+
+                Teachers
+
+            </a>
+
+        </div>
+
+    </section>
 
 
 
-    <!-- ========================= -->
-    <!-- ASSIGNMENTS -->
-    <!-- ========================= -->
+    <!-- =================================================
+         PROFILE CONTENT
+    ================================================== -->
 
-    <div class="col-lg-8">
+    <div class="row g-4">
 
 
-        <!-- SUBJECT TEACHING ASSIGNMENTS -->
+        <!-- =================================================
+             TEACHER INFORMATION
+        ================================================== -->
 
-        <div class="card shadow-sm mb-4">
+        <div class="col-lg-4">
 
-            <div class="card-header bg-white">
 
-                <div
-                    class="d-flex justify-content-between align-items-center"
-                >
+            <section class="teacher-profile-card">
 
-                    <h5 class="mb-0">
 
-                        Teaching Assignments
+                <div class="teacher-profile-card-header">
 
-                    </h5>
+                    <div class="teacher-profile-card-icon">
+
+                        <i class="bi bi-person-vcard"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h5>
+                            Teacher Information
+                        </h5>
+
+                        <p>
+                            Personal and account details.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="teacher-profile-information">
+
+
+                    <!-- Employee ID -->
+
+                    <div class="teacher-profile-info-item">
+
+                        <span class="teacher-profile-info-label">
+
+                            <i class="bi bi-person-badge"></i>
+
+                            Employee ID
+
+                        </span>
+
+
+                        <strong>
+                            {{ teacher.employee_id }}
+                        </strong>
+
+                    </div>
+
+
+
+                    <!-- Full Name -->
+
+                    <div class="teacher-profile-info-item">
+
+                        <span class="teacher-profile-info-label">
+
+                            <i class="bi bi-person"></i>
+
+                            Full Name
+
+                        </span>
+
+
+                        <strong>
+                            {{ teacher.user.get_full_name }}
+                        </strong>
+
+                    </div>
+
+
+
+                    <!-- Username -->
+
+                    <div class="teacher-profile-info-item">
+
+                        <span class="teacher-profile-info-label">
+
+                            <i class="bi bi-at"></i>
+
+                            Username
+
+                        </span>
+
+
+                        <strong>
+                            {{ teacher.user.username }}
+                        </strong>
+
+                    </div>
+
+
+
+                    <!-- Email -->
+
+                    <div class="teacher-profile-info-item">
+
+                        <span class="teacher-profile-info-label">
+
+                            <i class="bi bi-envelope"></i>
+
+                            Email
+
+                        </span>
+
+
+                        <strong class="teacher-profile-break">
+
+                            {{ teacher.user.email|default:"Not provided" }}
+
+                        </strong>
+
+                    </div>
+
+
+
+                    <!-- Phone -->
+
+                    <div class="teacher-profile-info-item">
+
+                        <span class="teacher-profile-info-label">
+
+                            <i class="bi bi-telephone"></i>
+
+                            Phone
+
+                        </span>
+
+
+                        <strong>
+                            {{ teacher.phone|default:"Not provided" }}
+                        </strong>
+
+                    </div>
+
+
+
+                    <!-- Qualification -->
+
+                    <div class="teacher-profile-info-item">
+
+                        <span class="teacher-profile-info-label">
+
+                            <i class="bi bi-mortarboard"></i>
+
+                            Qualification
+
+                        </span>
+
+
+                        <strong>
+
+                            {{ teacher.qualification|default:"Not provided" }}
+
+                        </strong>
+
+                    </div>
+
+
+
+                    <!-- Date Joined -->
+
+                    <div class="teacher-profile-info-item">
+
+                        <span class="teacher-profile-info-label">
+
+                            <i class="bi bi-calendar3"></i>
+
+                            Date Joined
+
+                        </span>
+
+
+                        <strong>
+                            {{ teacher.date_joined }}
+                        </strong>
+
+                    </div>
+
+
+
+                    <!-- Status -->
+
+                    <div class="teacher-profile-info-item">
+
+                        <span class="teacher-profile-info-label">
+
+                            <i class="bi bi-toggle-on"></i>
+
+                            Account Status
+
+                        </span>
+
+
+                        {% if teacher.is_active %}
+
+                            <span class="teacher-status teacher-status-active">
+
+                                <span class="teacher-status-dot"></span>
+
+                                Active
+
+                            </span>
+
+                        {% else %}
+
+                            <span class="teacher-status teacher-status-inactive">
+
+                                <span class="teacher-status-dot"></span>
+
+                                Inactive
+
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+        </div>
+
+
+
+        <!-- =================================================
+             ASSIGNMENTS
+        ================================================== -->
+
+        <div class="col-lg-8">
+
+
+            <!-- =================================================
+                 TEACHING ASSIGNMENTS
+            ================================================== -->
+
+            <section class="teacher-assignment-card">
+
+
+                <div class="teacher-assignment-header">
+
+                    <div class="teacher-assignment-title">
+
+                        <div class="teacher-assignment-icon">
+
+                            <i class="bi bi-journal-bookmark"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <h5>
+                                Teaching Assignments
+                            </h5>
+
+                            <p>
+                                Subjects and classes currently assigned.
+                            </p>
+
+                        </div>
+
+                    </div>
 
 
                     <a
                         href="{% url 'teachers:assign_subject_teacher' %}"
-                        class="btn btn-sm btn-outline-primary"
+                        class="teacher-assignment-add-btn"
                     >
 
-                        Add Assignment
+                        <i class="bi bi-plus-lg"></i>
+
+                        <span>
+                            Add Assignment
+                        </span>
 
                     </a>
 
                 </div>
 
-            </div>
-
-
-            <div class="card-body">
 
 
                 {% if teaching_assignments %}
 
-                    <div class="table-responsive">
 
-                        <table class="table table-hover mb-0">
+                    <div class="teacher-assignment-table-wrapper">
 
+                        <table class="teacher-assignment-table">
 
-                            <thead class="table-light">
+                            <thead>
 
                                 <tr>
 
                                     <th>
-
                                         Class
-
                                     </th>
 
-
                                     <th>
-
                                         Subject
-
                                     </th>
 
-
                                     <th>
-
                                         Academic Year
-
                                     </th>
 
                                 </tr>
@@ -301,21 +463,48 @@
 
                                         <td>
 
-                                            {{ assignment.class_subject.school_class }}
+                                            <span class="teacher-class-pill">
+
+                                                <i class="bi bi-people"></i>
+
+                                                {{ assignment.class_subject.school_class }}
+
+                                            </span>
 
                                         </td>
 
 
                                         <td>
 
-                                            {{ assignment.class_subject.subject }}
+                                            <div class="teacher-subject-cell">
+
+                                                <span class="teacher-subject-icon">
+
+                                                    <i class="bi bi-book"></i>
+
+                                                </span>
+
+
+                                                <strong>
+
+                                                    {{ assignment.class_subject.subject }}
+
+                                                </strong>
+
+                                            </div>
 
                                         </td>
 
 
                                         <td>
 
-                                            {{ assignment.academic_year }}
+                                            <span class="teacher-year-cell">
+
+                                                <i class="bi bi-calendar3"></i>
+
+                                                {{ assignment.academic_year }}
+
+                                            </span>
 
                                         </td>
 
@@ -333,77 +522,106 @@
 
                 {% else %}
 
-                    <p class="text-muted mb-0">
 
-                        No active teaching assignments.
+                    <div class="teacher-assignment-empty">
 
-                    </p>
+                        <div class="teacher-assignment-empty-icon">
+
+                            <i class="bi bi-journal-x"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                No Teaching Assignments
+                            </strong>
+
+                            <p>
+                                This teacher does not currently have
+                                any subject teaching assignments.
+                            </p>
+
+                        </div>
+
+                    </div>
+
 
                 {% endif %}
 
 
-            </div>
-
-        </div>
+            </section>
 
 
 
-        <!-- CLASS TEACHER ASSIGNMENTS -->
+            <!-- =================================================
+                 CLASS TEACHER ASSIGNMENTS
+            ================================================== -->
 
-        <div class="card shadow-sm">
+            <section class="teacher-assignment-card teacher-class-assignment-card">
 
-            <div class="card-header bg-white">
 
-                <div
-                    class="d-flex justify-content-between align-items-center"
-                >
+                <div class="teacher-assignment-header">
 
-                    <h5 class="mb-0">
+                    <div class="teacher-assignment-title">
 
-                        Class Teacher Assignments
+                        <div class="teacher-assignment-icon teacher-class-icon">
 
-                    </h5>
+                            <i class="bi bi-people"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <h5>
+                                Class Teacher Assignments
+                            </h5>
+
+                            <p>
+                                Classes where this teacher serves as class teacher.
+                            </p>
+
+                        </div>
+
+                    </div>
 
 
                     <a
                         href="{% url 'teachers:assign_class_teacher' %}"
-                        class="btn btn-sm btn-outline-primary"
+                        class="teacher-assignment-add-btn"
                     >
 
-                        Assign Class Teacher
+                        <i class="bi bi-plus-lg"></i>
+
+                        <span>
+                            Assign Class
+                        </span>
 
                     </a>
 
                 </div>
 
-            </div>
-
-
-            <div class="card-body">
 
 
                 {% if class_teacher_assignments %}
 
-                    <div class="table-responsive">
 
-                        <table class="table table-hover mb-0">
+                    <div class="teacher-assignment-table-wrapper">
 
+                        <table class="teacher-assignment-table">
 
-                            <thead class="table-light">
+                            <thead>
 
                                 <tr>
 
                                     <th>
-
                                         Class
-
                                     </th>
 
-
                                     <th>
-
                                         Academic Year
-
                                     </th>
 
                                 </tr>
@@ -420,14 +638,26 @@
 
                                         <td>
 
-                                            {{ assignment.school_class }}
+                                            <span class="teacher-class-pill teacher-class-pill-green">
+
+                                                <i class="bi bi-mortarboard"></i>
+
+                                                {{ assignment.school_class }}
+
+                                            </span>
 
                                         </td>
 
 
                                         <td>
 
-                                            {{ assignment.academic_year }}
+                                            <span class="teacher-year-cell">
+
+                                                <i class="bi bi-calendar3"></i>
+
+                                                {{ assignment.academic_year }}
+
+                                            </span>
 
                                         </td>
 
@@ -445,17 +675,37 @@
 
                 {% else %}
 
-                    <p class="text-muted mb-0">
 
-                        This teacher is not currently assigned
-                        as a class teacher.
+                    <div class="teacher-assignment-empty">
 
-                    </p>
+                        <div class="teacher-assignment-empty-icon teacher-empty-green">
+
+                            <i class="bi bi-people"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                No Class Teacher Assignment
+                            </strong>
+
+                            <p>
+                                This teacher is not currently assigned
+                                as a class teacher.
+                            </p>
+
+                        </div>
+
+                    </div>
+
 
                 {% endif %}
 
 
-            </div>
+            </section>
+
 
         </div>
 

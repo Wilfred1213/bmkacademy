@@ -38,6 +38,7 @@ from django.db.models import Q
 
 
 
+
 @login_required
 @role_required("admin", "teacher")
 def enter_results(request):
@@ -46,6 +47,10 @@ def enter_results(request):
         AcademicYear.objects
         .order_by("-start_date")
     )
+
+    # =================================
+    # AVAILABLE CLASSES
+    # =================================
 
     if request.user.role == "admin":
 
@@ -101,6 +106,10 @@ def enter_results(request):
                 "name",
             )
         )
+
+    # =================================
+    # DEFAULT VALUES
+    # =================================
 
     selected_academic_year = None
     selected_term = None
@@ -166,12 +175,21 @@ def enter_results(request):
             and selected_academic_year
         ):
 
+            # IMPORTANT:
+            # The browser may still send the old
+            # term when the academic year changes.
+            #
+            # If that term does not belong to the
+            # selected academic year, simply ignore it
+            # instead of returning a 404.
+
             selected_term = (
-                get_object_or_404(
-                    Term,
+                Term.objects
+                .filter(
                     id=term_id,
                     academic_year=selected_academic_year,
                 )
+                .first()
             )
 
         # -------------------------------
@@ -180,47 +198,20 @@ def enter_results(request):
 
         if school_class_id:
 
-            selected_class = get_object_or_404(
-                school_classes,
-                id=school_class_id,
+            selected_class = (
+                school_classes
+                .filter(
+                    id=school_class_id
+                )
+                .first()
             )
 
-            if request.user.role == "admin":
+            # If the class is not available to
+            # this user, simply don't select it.
 
-                class_subjects = (
-                    ClassSubject.objects
-                    .select_related(
-                        "subject"
-                    )
-                    .filter(
-                        school_class=selected_class,
-                        is_active=True,
-                    )
-                    .order_by(
-                        "subject__name"
-                    )
-                )
+            if selected_class:
 
-            else:
-
-                teacher = get_object_or_404(
-                    Teacher,
-                    user=request.user,
-                    is_active=True,
-                )
-
-                is_class_teacher = (
-                    ClassTeacherAssignment.objects
-                    .filter(
-                        teacher=teacher,
-                        school_class=selected_class,
-                        academic_year=selected_academic_year,
-                        is_active=True,
-                    )
-                    .exists()
-                )
-
-                if is_class_teacher:
+                if request.user.role == "admin":
 
                     class_subjects = (
                         ClassSubject.objects
@@ -238,23 +229,58 @@ def enter_results(request):
 
                 else:
 
-                    class_subjects = (
-                        ClassSubject.objects
-                        .select_related(
-                            "subject"
-                        )
-                        .filter(
-                            school_class=selected_class,
-                            is_active=True,
-                            teaching_assignments__teacher=teacher,
-                            teaching_assignments__academic_year=selected_academic_year,
-                            teaching_assignments__is_active=True,
-                        )
-                        .distinct()
-                        .order_by(
-                            "subject__name"
-                        )
+                    teacher = get_object_or_404(
+                        Teacher,
+                        user=request.user,
+                        is_active=True,
                     )
+
+                    is_class_teacher = (
+                        ClassTeacherAssignment.objects
+                        .filter(
+                            teacher=teacher,
+                            school_class=selected_class,
+                            academic_year=selected_academic_year,
+                            is_active=True,
+                        )
+                        .exists()
+                    )
+
+                    if is_class_teacher:
+
+                        class_subjects = (
+                            ClassSubject.objects
+                            .select_related(
+                                "subject"
+                            )
+                            .filter(
+                                school_class=selected_class,
+                                is_active=True,
+                            )
+                            .order_by(
+                                "subject__name"
+                            )
+                        )
+
+                    else:
+
+                        class_subjects = (
+                            ClassSubject.objects
+                            .select_related(
+                                "subject"
+                            )
+                            .filter(
+                                school_class=selected_class,
+                                is_active=True,
+                                teaching_assignments__teacher=teacher,
+                                teaching_assignments__academic_year=selected_academic_year,
+                                teaching_assignments__is_active=True,
+                            )
+                            .distinct()
+                            .order_by(
+                                "subject__name"
+                            )
+                        )
 
         # -------------------------------
         # Class Subject
@@ -532,23 +558,14 @@ def enter_results(request):
             "terms": terms,
             "class_subjects": class_subjects,
             "students": students,
-            "assessment_components": (
-                assessment_components
-            ),
-            "selected_academic_year": (
-                selected_academic_year
-            ),
-            "selected_term": (
-                selected_term
-            ),
-            "selected_class": (
-                selected_class
-            ),
-            "selected_class_subject": (
-                selected_class_subject
-            ),
+            "assessment_components": assessment_components,
+            "selected_academic_year": selected_academic_year,
+            "selected_term": selected_term,
+            "selected_class": selected_class,
+            "selected_class_subject": selected_class_subject,
         },
     )
+
 
 
 

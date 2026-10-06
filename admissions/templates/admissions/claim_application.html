@@ -1,140 +1,382 @@
 {% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'website/css/admissions.css' %}"
+>
+{% endblock %}
 
-{% block title %}Create Parent Account - BMK Academy{% endblock %}
+{% block title %}
+Create Parent Account | BMK Academy
+{% endblock %}
 
 {% block content %}
 
-<div class="container py-5">
+<div class="bmk-claim-page">
 
-    <div class="row justify-content-center">
 
-        <div class="col-md-7 col-lg-6">
+<!-- Header -->
+<section class="bmk-claim-header">
 
-            <div class="card shadow-sm">
+    <div class="bmk-claim-header-inner">
 
-                <div class="card-body p-4">
+        <div class="bmk-claim-brand-mark">
+            <i class="bi bi-mortarboard-fill"></i>
+        </div>
 
-                    <div class="text-center mb-4">
+        <span class="bmk-claim-eyebrow">
+            BMK ACADEMY • PARENT PORTAL
+        </span>
 
-                        <h3 class="fw-bold">
-                            Create Your Parent Account
-                        </h3>
+        <h1>
+            Welcome to BMK Academy
+        </h1>
 
-                        <p class="text-muted mb-0">
-                            BMK Academy
-                        </p>
+        <p>
+            Your child's admission has been approved.
+            Create your parent account to continue.
+        </p>
 
-                    </div>
+    </div>
 
-                    <div class="alert alert-success">
+</section>
 
-                        <strong>
-                            Admission Approved
-                        </strong>
 
-                        <br>
+<!-- Main Content -->
+<section class="bmk-claim-content">
 
-                        The admission application for
+    <div class="bmk-claim-layout">
 
-                        <strong>
-                            {{ application.first_name }}
-                            {{ application.middle_name }}
-                            {{ application.last_name }}
-                        </strong>
 
-                        has been approved.
+        <!-- LEFT: FORM -->
+        <div class="bmk-claim-form-card">
 
-                    </div>
+            <div class="bmk-claim-form-header">
 
-                    <p>
-                        Please create your username and password
-                        below to access the BMK Academy Parent Portal.
-                    </p>
+                <div class="bmk-claim-form-icon">
+                    <i class="bi bi-person-plus-fill"></i>
+                </div>
 
-                    {% if form.non_field_errors %}
+                <div>
 
-                        <div class="alert alert-danger">
+                    <span class="bmk-claim-section-label">
+                        PARENT ACCOUNT
+                    </span>
 
-                            {{ form.non_field_errors }}
-
-                        </div>
-
-                    {% endif %}
-
-                    <form method="post">
-
-                        {% csrf_token %}
-
-                        <div class="mb-3">
-
-                            <label class="form-label">
-                                Username
-                            </label>
-
-                            {{ form.username }}
-
-                            {% for error in form.username.errors %}
-
-                                <div class="text-danger small">
-                                    {{ error }}
-                                </div>
-
-                            {% endfor %}
-
-                        </div>
-
-                        <div class="mb-3">
-
-                            <label class="form-label">
-                                Password
-                            </label>
-
-                            {{ form.password }}
-
-                            {% for error in form.password.errors %}
-
-                                <div class="text-danger small">
-                                    {{ error }}
-                                </div>
-
-                            {% endfor %}
-
-                        </div>
-
-                        <div class="mb-3">
-
-                            <label class="form-label">
-                                Confirm Password
-                            </label>
-
-                            {{ form.confirm_password }}
-
-                            {% for error in form.confirm_password.errors %}
-
-                                <div class="text-danger small">
-                                    {{ error }}
-                                </div>
-
-                            {% endfor %}
-
-                        </div>
-
-                        <button
-                            type="submit"
-                            class="btn btn-primary w-100"
-                        >
-                            Create Parent Account
-                        </button>
-
-                    </form>
+                    <h2>
+                        Create Your Account
+                    </h2>
 
                 </div>
 
             </div>
 
+
+            <!-- Approved Notice -->
+            <div class="bmk-claim-approved">
+
+                <div class="bmk-claim-approved-icon">
+                    <i class="bi bi-check-lg"></i>
+                </div>
+
+                <div>
+
+                    <span class="bmk-claim-approved-label">
+                        ADMISSION APPROVED
+                    </span>
+
+                    <p>
+                        The admission application for
+                        <strong>
+                            {{ application.first_name }}
+                            {% if application.middle_name %}
+                                {{ application.middle_name }}
+                            {% endif %}
+                            {{ application.last_name }}
+                        </strong>
+                        has been approved.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="bmk-claim-intro">
+
+                <p>
+                    Please create your username and password below
+                    to access the BMK Academy Parent Portal.
+                </p>
+
+            </div>
+
+
+            {% if form.non_field_errors %}
+
+                <div class="bmk-claim-error">
+
+                    <div class="bmk-claim-error-icon">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                    </div>
+
+                    <div>
+                        {{ form.non_field_errors }}
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- Account Form -->
+            <form method="post" class="bmk-claim-form">
+
+                {% csrf_token %}
+
+
+                <!-- Username -->
+                <div class="bmk-claim-field">
+
+                    <label for="{{ form.username.id_for_label }}">
+                        Username
+                    </label>
+
+                    <div class="bmk-claim-input-wrap">
+
+                        <i class="bi bi-person"></i>
+
+                        {{ form.username }}
+
+                    </div>
+
+                    {% for error in form.username.errors %}
+
+                        <div class="bmk-claim-field-error">
+                            <i class="bi bi-exclamation-circle"></i>
+                            {{ error }}
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- Password -->
+                <div class="bmk-claim-field">
+
+                    <label for="{{ form.password.id_for_label }}">
+                        Password
+                    </label>
+
+                    <div class="bmk-claim-input-wrap">
+
+                        <i class="bi bi-lock"></i>
+
+                        {{ form.password }}
+
+                    </div>
+
+                    {% for error in form.password.errors %}
+
+                        <div class="bmk-claim-field-error">
+                            <i class="bi bi-exclamation-circle"></i>
+                            {{ error }}
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- Confirm Password -->
+                <div class="bmk-claim-field">
+
+                    <label for="{{ form.confirm_password.id_for_label }}">
+                        Confirm Password
+                    </label>
+
+                    <div class="bmk-claim-input-wrap">
+
+                        <i class="bi bi-shield-lock"></i>
+
+                        {{ form.confirm_password }}
+
+                    </div>
+
+                    {% for error in form.confirm_password.errors %}
+
+                        <div class="bmk-claim-field-error">
+                            <i class="bi bi-exclamation-circle"></i>
+                            {{ error }}
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="bmk-claim-submit"
+                >
+                    <span>
+                        <i class="bi bi-person-check-fill"></i>
+                        Create Parent Account
+                    </span>
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </button>
+
+            </form>
+
+
+            <div class="bmk-claim-security">
+
+                <i class="bi bi-shield-check"></i>
+
+                <span>
+                    Your account information is securely protected.
+                </span>
+
+            </div>
+
         </div>
 
+
+        <!-- RIGHT: INFORMATION -->
+        <aside class="bmk-claim-sidebar">
+
+
+            <!-- Child Card -->
+            <div class="bmk-claim-child-card">
+
+                <div class="bmk-claim-child-icon">
+                    <i class="bi bi-person-vcard-fill"></i>
+                </div>
+
+                <span class="bmk-claim-section-label light">
+                    ADMISSION FOR
+                </span>
+
+                <h2>
+                    {{ application.first_name }}
+                    {% if application.middle_name %}
+                        {{ application.middle_name }}
+                    {% endif %}
+                    {{ application.last_name }}
+                </h2>
+
+                <div class="bmk-claim-child-line"></div>
+
+                <p>
+                    Your parent account will give you access to
+                    information and services related to your child's
+                    education at BMK Academy.
+                </p>
+
+            </div>
+
+
+            <!-- What You Get -->
+            <div class="bmk-claim-benefits">
+
+                <span class="bmk-claim-section-label">
+                    PARENT PORTAL
+                </span>
+
+                <h3>
+                    What you can access
+                </h3>
+
+
+                <div class="bmk-claim-benefit">
+
+                    <div class="bmk-claim-benefit-icon">
+                        <i class="bi bi-person-lines-fill"></i>
+                    </div>
+
+                    <div>
+                        <strong>Child Information</strong>
+                        <span>View your child's school information.</span>
+                    </div>
+
+                </div>
+
+
+                <div class="bmk-claim-benefit">
+
+                    <div class="bmk-claim-benefit-icon">
+                        <i class="bi bi-wallet2"></i>
+                    </div>
+
+                    <div>
+                        <strong>School Fees</strong>
+                        <span>Monitor invoices and payment history.</span>
+                    </div>
+
+                </div>
+
+
+                <div class="bmk-claim-benefit">
+
+                    <div class="bmk-claim-benefit-icon">
+                        <i class="bi bi-calendar-check"></i>
+                    </div>
+
+                    <div>
+                        <strong>Attendance</strong>
+                        <span>View your child's attendance records.</span>
+                    </div>
+
+                </div>
+
+
+                <div class="bmk-claim-benefit">
+
+                    <div class="bmk-claim-benefit-icon">
+                        <i class="bi bi-bar-chart-line-fill"></i>
+                    </div>
+
+                    <div>
+                        <strong>Results</strong>
+                        <span>Access published academic results.</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Motto -->
+            <div class="bmk-claim-motto">
+
+                <div class="bmk-claim-motto-icon">
+                    <i class="bi bi-stars"></i>
+                </div>
+
+                <div>
+
+                    <span>
+                        BMK ACADEMY
+                    </span>
+
+                    <h3>
+                        Education for Service.
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </aside>
+
     </div>
+
+</section>
+
 
 </div>
 

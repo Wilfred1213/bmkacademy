@@ -1,0 +1,1602 @@
+/* =========================================
+   BMK SAFEGUARDING SECTION
+   ========================================= */
+
+   .bmk-safeguarding {
+    position: relative;
+    overflow: hidden;
+    background:
+        linear-gradient(
+            135deg,
+            #f4f8fc 0%,
+            #ffffff 52%,
+            #eef5ff 100%
+        );
+}
+
+
+/* Decorative background */
+
+.bmk-safeguarding::before {
+    content: "";
+    position: absolute;
+
+    width: 420px;
+    height: 420px;
+
+    top: -220px;
+    right: -150px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(29, 78, 216, 0.09);
+
+    pointer-events: none;
+}
+
+
+.bmk-safeguarding::after {
+    content: "";
+    position: absolute;
+
+    width: 300px;
+    height: 300px;
+
+    bottom: -170px;
+    left: -130px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(224, 168, 62, 0.12);
+
+    pointer-events: none;
+}
+
+
+.bmk-safeguarding .container {
+    position: relative;
+    z-index: 1;
+}
+
+
+/* =========================================
+   SAFEGUARDING BOX
+   ========================================= */
+
+.bmk-safeguarding-box {
+    position: relative;
+    overflow: hidden;
+
+    padding: 55px 60px;
+
+    border-radius: 28px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0b1f33 0%,
+            #0f2747 58%,
+            #14365e 100%
+        );
+
+    box-shadow:
+        0 28px 70px rgba(15, 35, 55, 0.18);
+
+    text-align: center;
+}
+
+
+/* Blue glow */
+
+.bmk-safeguarding-box::before {
+    content: "";
+
+    position: absolute;
+
+    width: 360px;
+    height: 360px;
+
+    top: -180px;
+    right: -130px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(29, 78, 216, 0.30),
+            transparent 68%
+        );
+
+    pointer-events: none;
+}
+
+
+/* Gold glow */
+
+.bmk-safeguarding-box::after {
+    content: "";
+
+    position: absolute;
+
+    width: 250px;
+    height: 250px;
+
+    bottom: -160px;
+    left: -100px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(224, 168, 62, 0.18),
+            transparent 68%
+        );
+
+    pointer-events: none;
+}
+
+
+/* Keep content above decorations */
+
+.bmk-safeguarding-box > * {
+    position: relative;
+    z-index: 1;
+}
+
+
+/* =========================================
+   SHIELD ICON
+   ========================================= */
+
+.bmk-safeguarding-icon {
+    width: 76px;
+    height: 76px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 22px;
+
+    border-radius: 22px;
+
+    color: var(--bmk-navy);
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--bmk-gold-light),
+            var(--bmk-gold)
+        );
+
+    box-shadow:
+        0 15px 32px rgba(0, 0, 0, 0.20);
+
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+
+.bmk-safeguarding-box:hover .bmk-safeguarding-icon {
+    transform: translateY(-5px) rotate(-2deg);
+
+    box-shadow:
+        0 20px 38px rgba(0, 0, 0, 0.25);
+}
+
+
+.bmk-safeguarding-icon i {
+    font-size: 2rem;
+}
+
+
+/* =========================================
+   LABEL
+   ========================================= */
+
+.bmk-safeguarding-box .bmk-section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+
+    margin-bottom: 12px;
+
+    color: var(--bmk-gold-light);
+
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 1.7px;
+}
+
+
+.bmk-safeguarding-box .bmk-section-label::before {
+    content: "";
+
+    width: 28px;
+    height: 2px;
+
+    border-radius: 20px;
+
+    background: var(--bmk-gold);
+}
+
+
+/* =========================================
+   HEADING
+   ========================================= */
+
+.bmk-safeguarding-box h2 {
+    margin-bottom: 20px;
+
+    color: #ffffff;
+
+    font-size: clamp(2rem, 4vw, 2.8rem);
+
+    line-height: 1.15;
+
+    letter-spacing: -0.5px;
+}
+
+
+/* =========================================
+   DESCRIPTION
+   ========================================= */
+
+.bmk-safeguarding-box > p:not(.bmk-safeguarding-note) {
+    max-width: 760px;
+
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+
+    color: rgba(255, 255, 255, 0.70);
+
+    font-size: 0.93rem;
+
+    line-height: 1.85;
+}
+
+
+/* =========================================
+   SAFEGUARDING POINTS
+   ========================================= */
+
+.bmk-safeguarding-points {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    gap: 12px 24px;
+
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+
+.bmk-safeguarding-points > div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: rgba(255, 255, 255, 0.88);
+
+    font-size: 0.83rem;
+    font-weight: 600;
+}
+
+
+.bmk-safeguarding-points i {
+    color: var(--bmk-gold-light);
+
+    font-size: 0.95rem;
+}
+
+
+/* =========================================
+   ACTION BUTTON
+   ========================================= */
+
+.bmk-safeguarding-actions {
+    margin-top: 25px;
+}
+
+
+.bmk-safeguarding-actions .btn-primary {
+    border: 0;
+    border-radius: 12px;
+
+    padding: 13px 22px !important;
+
+    color: var(--bmk-navy);
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--bmk-gold-light),
+            var(--bmk-gold)
+        );
+
+    font-size: 0.86rem;
+    font-weight: 800;
+
+    box-shadow:
+        0 12px 26px rgba(0, 0, 0, 0.18);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        filter 0.3s ease;
+}
+
+
+.bmk-safeguarding-actions .btn-primary:hover {
+    color: var(--bmk-navy);
+
+    transform: translateY(-3px);
+
+    filter: brightness(1.05);
+
+    box-shadow:
+        0 17px 34px rgba(0, 0, 0, 0.25);
+}
+
+
+/* =========================================
+   NOTE
+   ========================================= */
+
+.bmk-safeguarding-note {
+    max-width: 650px;
+
+    margin: 20px auto 0;
+
+    color: rgba(255, 255, 255, 0.45);
+
+    font-size: 0.75rem;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================
+   SCROLL REVEAL
+   ========================================= */
+
+.bmk-safeguarding-box {
+    opacity: 1;
+    transform: none;
+}
+
+
+.bmk-safeguarding.bmk-safeguarding-visible
+.bmk-safeguarding-box {
+    animation:
+        bmkSafeguardingIn
+        0.9s
+        ease
+        both;
+}
+
+
+@keyframes bmkSafeguardingIn {
+
+    from {
+        opacity: 0;
+        transform:
+            translateY(45px)
+            scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateY(0)
+            scale(1);
+    }
+
+}
+
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 767.98px) {
+
+    .bmk-safeguarding {
+        overflow: hidden;
+    }
+
+    .bmk-safeguarding-box {
+        padding: 38px 22px;
+
+        border-radius: 22px;
+    }
+
+    .bmk-safeguarding-icon {
+        width: 64px;
+        height: 64px;
+
+        border-radius: 18px;
+
+        margin-bottom: 18px;
+    }
+
+    .bmk-safeguarding-icon i {
+        font-size: 1.7rem;
+    }
+
+    .bmk-safeguarding-box h2 {
+        font-size: 2rem;
+    }
+
+    .bmk-safeguarding-box > p:not(.bmk-safeguarding-note) {
+        font-size: 0.86rem;
+        line-height: 1.75;
+    }
+
+    .bmk-safeguarding-points {
+        flex-direction: column;
+        align-items: flex-start;
+
+        gap: 11px;
+
+        margin-top: 25px;
+        margin-bottom: 25px;
+
+        padding-left: 5px;
+    }
+
+    .bmk-safeguarding-points > div {
+        font-size: 0.80rem;
+    }
+
+    .bmk-safeguarding-actions .btn-primary {
+        width: 100%;
+    }
+
+    .bmk-safeguarding-note {
+        font-size: 0.72rem;
+    }
+}
+
+
+/* =========================================================
+   BMK ACADEMY
+   SAFEGUARDING PAGE
+   ========================================================= */
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.bmk-safeguarding-hero {
+    position: relative;
+    overflow: hidden;
+
+    padding: 105px 0 100px;
+
+    color: #ffffff;
+
+    background:
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(224, 168, 62, 0.18),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 10% 85%,
+            rgba(29, 78, 216, 0.25),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #081a2e 0%,
+            #0f2747 55%,
+            #173e6d 100%
+        );
+}
+
+
+.bmk-safeguarding-hero-glow {
+    position: absolute;
+
+    width: 500px;
+    height: 500px;
+
+    right: -220px;
+    top: -220px;
+
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+
+.bmk-safeguarding-hero-glow::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 70px;
+
+    border: 1px solid rgba(224,168,62,0.10);
+    border-radius: 50%;
+}
+
+
+.bmk-safeguarding-hero .container {
+    position: relative;
+    z-index: 1;
+}
+
+
+.bmk-safeguarding-hero-content {
+    max-width: 720px;
+}
+
+
+.bmk-safeguarding-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+
+    margin-bottom: 20px;
+    padding: 8px 15px;
+
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 50px;
+
+    color: #f3d58a;
+    background: rgba(255,255,255,0.07);
+
+    font-size: 0.72rem;
+    font-weight: 800;
+
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+}
+
+
+.bmk-safeguarding-eyebrow i {
+    font-size: 0.95rem;
+}
+
+
+.bmk-safeguarding-hero h1 {
+    margin: 0;
+
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 800;
+
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+}
+
+
+.bmk-safeguarding-hero h1 span {
+    display: block;
+
+    color: var(--bmk-gold-light);
+}
+
+
+.bmk-safeguarding-hero-content > p {
+    max-width: 680px;
+
+    margin: 28px 0 0;
+
+    color: rgba(255,255,255,0.76);
+
+    font-size: 1.06rem;
+    line-height: 1.8;
+}
+
+
+.bmk-safeguarding-hero-points {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+
+    margin-top: 30px;
+}
+
+
+.bmk-safeguarding-hero-points div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: rgba(255,255,255,0.78);
+
+    font-size: 0.78rem;
+}
+
+
+.bmk-safeguarding-hero-points i {
+    color: var(--bmk-gold);
+}
+
+
+/* =========================================================
+   HERO SHIELD CARD
+   ========================================================= */
+
+.bmk-safeguarding-shield-card {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    max-width: 360px;
+
+    margin-left: auto;
+    padding: 42px 35px;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(255,255,255,0.13);
+    border-radius: 28px;
+
+    text-align: center;
+
+    background: rgba(255,255,255,0.07);
+
+    backdrop-filter: blur(12px);
+
+    box-shadow: 0 30px 70px rgba(0,0,0,0.22);
+}
+
+
+.bmk-safeguarding-shield {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 110px;
+    height: 125px;
+
+    margin-bottom: 25px;
+
+    color: var(--bmk-gold);
+
+    font-size: 4.3rem;
+
+    filter: drop-shadow(
+        0 12px 20px rgba(0,0,0,0.20)
+    );
+}
+
+
+.bmk-safeguarding-shield-card > span {
+    position: relative;
+    z-index: 2;
+
+    color: rgba(255,255,255,0.58);
+
+    font-size: 0.65rem;
+    font-weight: 800;
+
+    letter-spacing: 0.15em;
+}
+
+
+.bmk-safeguarding-shield-card strong {
+    position: relative;
+    z-index: 2;
+
+    margin-top: 9px;
+
+    color: #ffffff;
+
+    font-size: 1.45rem;
+}
+
+
+.bmk-safeguarding-shield-card p {
+    position: relative;
+    z-index: 2;
+
+    margin: 12px 0 0;
+
+    color: rgba(255,255,255,0.65);
+
+    font-size: 0.82rem;
+    line-height: 1.7;
+}
+
+
+.bmk-shield-orbit {
+    position: absolute;
+
+    border: 1px solid rgba(224,168,62,0.13);
+    border-radius: 50%;
+}
+
+
+.orbit-one {
+    width: 230px;
+    height: 230px;
+
+    top: 18px;
+    left: 50%;
+
+    transform: translateX(-50%);
+}
+
+
+.orbit-two {
+    width: 310px;
+    height: 310px;
+
+    top: -22px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    border-color: rgba(255,255,255,0.06);
+}
+
+
+/* =========================================================
+   COMMITMENT
+   ========================================================= */
+
+.bmk-safeguarding-commitment {
+    padding: 100px 0;
+
+    background: #ffffff;
+}
+
+
+.bmk-safeguarding-section-intro h2 {
+    max-width: 470px;
+
+    margin: 12px 0 0;
+
+    color: var(--bmk-navy);
+
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 800;
+
+    line-height: 1.15;
+    letter-spacing: -0.035em;
+}
+
+
+.bmk-safeguarding-section-intro h2 span {
+    color: var(--bmk-blue);
+}
+
+
+.bmk-safeguarding-label {
+    display: inline-block;
+
+    color: var(--bmk-blue);
+
+    font-size: 0.7rem;
+    font-weight: 800;
+
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+
+.bmk-safeguarding-label.light {
+    color: var(--bmk-gold-light);
+}
+
+
+.bmk-safeguarding-accent {
+    width: 55px;
+    height: 4px;
+
+    margin-top: 25px;
+
+    border-radius: 10px;
+
+    background: var(--bmk-gold);
+}
+
+
+.bmk-safeguarding-commitment-text {
+    opacity: 0;
+    transform: translateX(25px);
+
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
+}
+
+
+.bmk-safeguarding-commitment-text.bmk-safeguarding-visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+
+.bmk-safeguarding-commitment-text p {
+    margin-bottom: 18px;
+
+    color: var(--bmk-muted);
+
+    font-size: 0.98rem;
+    line-height: 1.85;
+}
+
+
+.bmk-safeguarding-commitment-text p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* =========================================================
+   PRINCIPLES
+   ========================================================= */
+
+.bmk-safeguarding-principles {
+    padding: 100px 0;
+
+    background: #f6f8fb;
+}
+
+
+.bmk-safeguarding-heading {
+    max-width: 700px;
+
+    margin: 0 auto 50px;
+
+    text-align: center;
+}
+
+
+.bmk-safeguarding-heading h2 {
+    margin: 10px 0 14px;
+
+    color: var(--bmk-navy);
+
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 800;
+
+    letter-spacing: -0.035em;
+}
+
+
+.bmk-safeguarding-heading p {
+    margin: 0;
+
+    color: var(--bmk-muted);
+
+    font-size: 0.95rem;
+    line-height: 1.8;
+}
+
+
+.bmk-safeguarding-principle {
+    position: relative;
+
+    height: 100%;
+
+    padding: 35px 30px;
+
+    overflow: hidden;
+
+    border: 1px solid var(--bmk-border);
+    border-radius: 22px;
+
+    background: #ffffff;
+
+    box-shadow: 0 12px 35px rgba(15,35,55,0.06);
+
+    opacity: 0;
+    transform: translateY(25px);
+
+    transition:
+        opacity 0.7s ease,
+        transform 0.7s ease,
+        box-shadow 0.3s ease;
+}
+
+
+.bmk-safeguarding-principle.bmk-safeguarding-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+.bmk-safeguarding-principle:hover {
+    transform: translateY(-7px);
+
+    box-shadow: 0 23px 48px rgba(15,35,55,0.11);
+}
+
+
+.bmk-principle-number {
+    position: absolute;
+
+    top: 20px;
+    right: 24px;
+
+    color: #edf1f5;
+
+    font-size: 2.8rem;
+    font-weight: 800;
+
+    line-height: 1;
+}
+
+
+.bmk-principle-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 58px;
+    height: 58px;
+
+    margin-bottom: 25px;
+
+    border-radius: 16px;
+
+    font-size: 1.3rem;
+}
+
+
+.bmk-principle-icon.protection {
+    color: #2563eb;
+    background: #eef5ff;
+}
+
+
+.bmk-principle-icon.respect {
+    color: #3f7d58;
+    background: #edf7f0;
+}
+
+
+.bmk-principle-icon.concerns {
+    color: #b7791f;
+    background: #fff7e8;
+}
+
+
+.bmk-safeguarding-principle > span {
+    color: var(--bmk-muted);
+
+    font-size: 0.65rem;
+    font-weight: 800;
+
+    letter-spacing: 0.13em;
+}
+
+
+.bmk-safeguarding-principle h3 {
+    margin: 9px 0 13px;
+
+    color: var(--bmk-navy);
+
+    font-size: 1.35rem;
+    font-weight: 750;
+}
+
+
+.bmk-safeguarding-principle p {
+    margin: 0;
+
+    color: var(--bmk-muted);
+
+    font-size: 0.87rem;
+    line-height: 1.75;
+}
+
+
+/* =========================================================
+   SCL FRAMEWORK
+   ========================================================= */
+
+.bmk-safeguarding-framework {
+    padding: 100px 0;
+
+    background: #ffffff;
+}
+
+
+.bmk-framework-card {
+    position: relative;
+
+    padding: 65px;
+
+    overflow: hidden;
+
+    border-radius: 28px;
+
+    color: #ffffff;
+
+    background:
+        radial-gradient(
+            circle at 90% 10%,
+            rgba(224,168,62,0.18),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #081a2e,
+            #0f2747 60%,
+            #173e6d
+        );
+
+    box-shadow: 0 25px 65px rgba(15,35,55,0.16);
+
+    opacity: 0;
+    transform: translateY(30px);
+
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
+}
+
+
+.bmk-framework-card.bmk-safeguarding-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+.bmk-framework-card h2 {
+    max-width: 600px;
+
+    margin: 12px 0 22px;
+
+    color: #ffffff;
+
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 800;
+
+    line-height: 1.15;
+    letter-spacing: -0.035em;
+}
+
+
+.bmk-framework-card h2 span {
+    color: var(--bmk-gold-light);
+}
+
+
+.bmk-framework-card p {
+    max-width: 690px;
+
+    color: rgba(255,255,255,0.70);
+
+    font-size: 0.9rem;
+    line-height: 1.8;
+}
+
+
+.bmk-safeguarding-primary-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+
+    margin-top: 15px;
+    padding: 13px 20px;
+
+    border-radius: 12px;
+
+    color: var(--bmk-navy);
+    background: var(--bmk-gold);
+
+    font-size: 0.82rem;
+    font-weight: 750;
+
+    text-decoration: none;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.bmk-safeguarding-primary-btn:hover {
+    color: var(--bmk-navy);
+
+    transform: translateY(-3px);
+
+    box-shadow: 0 16px 30px rgba(0,0,0,0.22);
+}
+
+
+.bmk-framework-visual {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 38px 25px;
+
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 22px;
+
+    text-align: center;
+
+    background: rgba(255,255,255,0.06);
+}
+
+
+.bmk-framework-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 70px;
+    height: 70px;
+
+    margin-bottom: 20px;
+
+    border-radius: 20px;
+
+    color: var(--bmk-gold);
+    background: rgba(224,168,62,0.12);
+
+    font-size: 1.8rem;
+}
+
+
+.bmk-framework-visual > span {
+    color: rgba(255,255,255,0.50);
+
+    font-size: 0.65rem;
+    font-weight: 800;
+
+    letter-spacing: 0.15em;
+}
+
+
+.bmk-framework-visual strong {
+    max-width: 220px;
+
+    margin-top: 8px;
+
+    color: #ffffff;
+
+    font-size: 1.35rem;
+    line-height: 1.2;
+}
+
+
+.bmk-framework-lines {
+    width: 100%;
+
+    margin-top: 25px;
+
+    text-align: left;
+}
+
+
+.bmk-framework-lines div {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    padding: 9px 0;
+
+    border-top: 1px solid rgba(255,255,255,0.08);
+
+    color: rgba(255,255,255,0.68);
+
+    font-size: 0.78rem;
+}
+
+
+.bmk-framework-lines i {
+    color: var(--bmk-gold);
+}
+
+
+/* =========================================================
+   RAISING A CONCERN
+   ========================================================= */
+
+.bmk-safeguarding-concern {
+    padding: 100px 0;
+
+    background: #f6f8fb;
+}
+
+
+.bmk-concern-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+
+    padding: 45px;
+
+    border: 1px solid var(--bmk-border);
+    border-radius: 25px;
+
+    background: #ffffff;
+
+    box-shadow: 0 18px 45px rgba(15,35,55,0.08);
+
+    opacity: 0;
+    transform: translateY(30px);
+
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
+}
+
+
+.bmk-concern-card.bmk-safeguarding-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+.bmk-concern-icon {
+    flex: 0 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 65px;
+    height: 65px;
+
+    border-radius: 18px;
+
+    color: #b7791f;
+    background: #fff7e8;
+
+    font-size: 1.4rem;
+}
+
+
+.bmk-concern-content {
+    flex: 1;
+}
+
+
+.bmk-concern-content h2 {
+    margin: 10px 0 15px;
+
+    color: var(--bmk-navy);
+
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 800;
+
+    letter-spacing: -0.03em;
+}
+
+
+.bmk-concern-content p {
+    max-width: 750px;
+
+    margin-bottom: 12px;
+
+    color: var(--bmk-muted);
+
+    font-size: 0.9rem;
+    line-height: 1.8;
+}
+
+
+.bmk-concern-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+
+    margin-top: 25px;
+}
+
+
+.bmk-safeguarding-secondary-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+
+    padding: 13px 20px;
+
+    border: 1px solid var(--bmk-border);
+    border-radius: 12px;
+
+    color: var(--bmk-navy);
+    background: #ffffff;
+
+    font-size: 0.82rem;
+    font-weight: 750;
+
+    text-decoration: none;
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        background-color 0.25s ease;
+}
+
+
+.bmk-safeguarding-secondary-btn:hover {
+    color: var(--bmk-navy);
+
+    border-color: #cbd5e1;
+
+    background: #f8fafc;
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   NOTE
+   Standalone page note is scoped so it cannot override
+   the homepage .bmk-safeguarding-note
+   ========================================================= */
+
+.bmk-safeguarding-note-section {
+    padding: 0 0 90px;
+
+    background: #f6f8fb;
+}
+
+
+.bmk-safeguarding-note-section .bmk-safeguarding-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+
+    max-width: none;
+    margin: 0;
+
+    padding: 20px 22px;
+
+    border: 1px solid #e4eaf1;
+    border-radius: 16px;
+
+    color: inherit;
+    background: #ffffff;
+
+    opacity: 0;
+    transform: translateY(20px);
+
+    transition:
+        opacity 0.7s ease,
+        transform 0.7s ease;
+}
+
+
+.bmk-safeguarding-note-section
+.bmk-safeguarding-note.bmk-safeguarding-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+.bmk-note-icon {
+    flex: 0 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 38px;
+    height: 38px;
+
+    border-radius: 11px;
+
+    color: var(--bmk-blue);
+    background: var(--bmk-light-blue);
+}
+
+
+.bmk-safeguarding-note-section
+.bmk-safeguarding-note strong {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: var(--bmk-navy);
+
+    font-size: 0.82rem;
+}
+
+
+.bmk-safeguarding-note-section
+.bmk-safeguarding-note p {
+    margin: 0;
+
+    color: var(--bmk-muted);
+
+    font-size: 0.76rem;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 991.98px) {
+
+    .bmk-safeguarding-hero {
+        padding: 80px 0;
+    }
+
+
+    .bmk-safeguarding-shield-card {
+        margin: 15px auto 0;
+    }
+
+
+    .bmk-safeguarding-commitment,
+    .bmk-safeguarding-principles,
+    .bmk-safeguarding-framework,
+    .bmk-safeguarding-concern {
+        padding: 75px 0;
+    }
+
+
+    .bmk-framework-card {
+        padding: 45px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .bmk-safeguarding-hero {
+        padding: 65px 0 70px;
+    }
+
+
+    .bmk-safeguarding-hero h1 {
+        font-size: 2.7rem;
+    }
+
+
+    .bmk-safeguarding-hero-content > p {
+        font-size: 0.94rem;
+    }
+
+
+    .bmk-safeguarding-hero-points {
+        flex-direction: column;
+        gap: 11px;
+    }
+
+
+    .bmk-safeguarding-shield-card {
+        padding: 35px 25px;
+    }
+
+
+    .bmk-safeguarding-commitment,
+    .bmk-safeguarding-principles,
+    .bmk-safeguarding-framework,
+    .bmk-safeguarding-concern {
+        padding: 65px 0;
+    }
+
+
+    .bmk-safeguarding-section-intro h2,
+    .bmk-safeguarding-heading h2 {
+        font-size: 2rem;
+    }
+
+
+    .bmk-safeguarding-principle {
+        padding: 28px 25px;
+    }
+
+
+    .bmk-framework-card {
+        padding: 32px 22px;
+
+        border-radius: 22px;
+    }
+
+
+    .bmk-framework-card h2 {
+        font-size: 2rem;
+    }
+
+
+    .bmk-framework-visual {
+        margin-top: 10px;
+    }
+
+
+    .bmk-concern-card {
+        flex-direction: column;
+
+        padding: 30px 24px;
+
+        gap: 20px;
+    }
+
+
+    .bmk-concern-content h2 {
+        font-size: 1.85rem;
+    }
+
+
+    .bmk-concern-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+
+    .bmk-safeguarding-primary-btn,
+    .bmk-safeguarding-secondary-btn {
+        justify-content: center;
+    }
+
+
+    .bmk-safeguarding-note-section .bmk-safeguarding-note {
+        padding: 17px;
+    }
+}
+
+
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 420px) {
+
+    .bmk-safeguarding-hero h1 {
+        font-size: 2.35rem;
+    }
+
+
+    .bmk-safeguarding-shield-card {
+        padding: 30px 20px;
+    }
+
+
+    .bmk-safeguarding-shield {
+        font-size: 3.7rem;
+    }
+
+
+    .bmk-framework-card {
+        padding: 28px 18px;
+    }
+
+
+    .bmk-concern-card {
+        padding: 26px 18px;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .bmk-safeguarding-commitment-text,
+    .bmk-safeguarding-principle,
+    .bmk-framework-card,
+    .bmk-concern-card,
+    .bmk-safeguarding-note-section .bmk-safeguarding-note {
+        opacity: 1;
+        transform: none;
+
+        transition: none;
+    }
+
+}

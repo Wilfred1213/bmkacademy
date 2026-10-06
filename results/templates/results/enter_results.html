@@ -1,400 +1,397 @@
 {% extends "base.html" %}
-
-
-{% block title %}
-    Enter Results | BMK Academy
+{% load static %}
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'website/css/results.css' %}"
+>
 {% endblock %}
-
+{% block title %}
+Enter Results | BMK Academy
+{% endblock %}
 
 {% block content %}
 
-<div class="container-fluid">
 
 
-    <!-- ================================= -->
-    <!-- PAGE HEADER -->
-    <!-- ================================= -->
+<div class="container-fluid results-page">
 
-    <div class="mb-4">
 
-        <h2 class="mb-1">
-            Enter Student Results
-        </h2>
+<!-- =====================================================
+     PAGE HEADER
+====================================================== -->
 
-        <p class="text-muted mb-0">
-            Enter academic results for students.
+<div class="results-hero">
+
+    <div class="results-hero-content">
+
+        <div class="results-hero-icon">
+            <i class="bi bi-pencil-square"></i>
+        </div>
+
+        <h2>Enter Student Results</h2>
+
+        <p>
+            Select the academic period, class and subject,
+            then enter students' assessment scores.
         </p>
 
     </div>
 
+</div>
 
-    <!-- ================================= -->
-    <!-- SELECTION FORM -->
-    <!-- ================================= -->
 
-    <div class="card shadow-sm mb-4">
+<!-- =====================================================
+     SELECTION CARD
+====================================================== -->
 
-        <div class="card-header">
+<div class="results-card">
 
-            <h5 class="mb-0">
-                Select Result Class
-            </h5>
+    <div class="results-card-header">
 
-        </div>
+        <div class="selection-step">
 
+            <span class="selection-number active">
+                1
+            </span>
 
-        <div class="card-body">
+            <div>
+                <h5>Set Result Parameters</h5>
 
-            <form method="get">
-
-
-                <div class="row g-3">
-
-
-                    <!-- Academic Year -->
-
-                    <div class="col-md-3">
-
-                        <label class="form-label fw-semibold">
-
-                            Academic Year
-
-                        </label>
-
-
-                        <select
-                            name="academic_year"
-                            class="form-select"
-                            onchange="this.form.submit()"
-                            required
-                        >
-
-                            <option value="">
-
-                                Select Academic Year
-
-                            </option>
-
-
-                            {% for year in academic_years %}
-
-                                <option
-                                    value="{{ year.id }}"
-                                    {% if selected_academic_year and selected_academic_year.id == year.id %}
-                                        selected
-                                    {% endif %}
-                                >
-
-                                    {{ year.name }}
-
-                                </option>
-
-                            {% endfor %}
-
-                        </select>
-
-                    </div>
-
-
-                    <!-- Term -->
-
-                    <div class="col-md-3">
-
-                        <label class="form-label fw-semibold">
-
-                            Term
-
-                        </label>
-
-
-                        <select
-                            name="term"
-                            class="form-select"
-                            onchange="this.form.submit()"
-                            {% if not selected_academic_year %}
-                                disabled
-                            {% endif %}
-                        >
-
-                            <option value="">
-
-                                Select Term
-
-                            </option>
-
-
-                            {% for term in terms %}
-
-                                <option
-                                    value="{{ term.id }}"
-                                    {% if selected_term and selected_term.id == term.id %}
-                                        selected
-                                    {% endif %}
-                                >
-
-                                    {{ term.get_name_display }}
-
-                                </option>
-
-                            {% endfor %}
-
-                        </select>
-
-                    </div>
-
-
-                    <!-- Class -->
-
-                    <div class="col-md-3">
-
-                        <label class="form-label fw-semibold">
-
-                            Class
-
-                        </label>
-
-
-                        <select
-                            name="school_class"
-                            class="form-select"
-                            onchange="this.form.submit()"
-                            required
-                        >
-
-                            <option value="">
-
-                                Select Class
-
-                            </option>
-
-
-                            {% for school_class in school_classes %}
-
-                                <option
-                                    value="{{ school_class.id }}"
-                                    {% if selected_class and selected_class.id == school_class.id %}
-                                        selected
-                                    {% endif %}
-                                >
-
-                                    {{ school_class.name }}
-
-                                </option>
-
-                            {% endfor %}
-
-                        </select>
-
-                    </div>
-
-
-                    <!-- Subject -->
-
-                    <div class="col-md-3">
-
-                        <label class="form-label fw-semibold">
-
-                            Subject
-
-                        </label>
-
-
-                        <select
-                            name="class_subject"
-                            class="form-select"
-                            onchange="this.form.submit()"
-                            {% if not selected_class %}
-                                disabled
-                            {% endif %}
-                        >
-
-                            <option value="">
-
-                                Select Subject
-
-                            </option>
-
-
-                            {% for class_subject in class_subjects %}
-
-                                <option
-                                    value="{{ class_subject.id }}"
-                                    {% if selected_class_subject and selected_class_subject.id == class_subject.id %}
-                                        selected
-                                    {% endif %}
-                                >
-
-                                    {{ class_subject.subject.name }}
-
-                                </option>
-
-                            {% endfor %}
-
-                        </select>
-
-                    </div>
-
-
-                </div>
-
-            </form>
+                <p>
+                    Select the academic year, term, class and subject
+                    you want to enter results for.
+                </p>
+            </div>
 
         </div>
 
     </div>
 
 
-    <!-- ================================= -->
-    <!-- SELECTED INFORMATION -->
-    <!-- ================================= -->
+    <div class="results-card-body">
 
-    {% if selected_class_subject %}
+        <form method="get">
 
-        <div class="card shadow-sm mb-4">
-
-            <div class="card-body">
-
-                <div class="row text-center">
+            <div class="row g-3">
 
 
-                    <div class="col-md-3">
+                <!-- Academic Year -->
 
-                        <small class="text-muted">
-                            Academic Year
-                        </small>
+                <div class="col-lg-3 col-md-6">
 
-                        <div class="fw-bold">
+                    <label class="results-label">
+                        Academic Year
+                    </label>
 
-                            {{ selected_academic_year.name }}
+                    <select
+                        name="academic_year"
+                        class="form-select results-select"
+                        onchange="this.form.submit()"
+                        required
+                    >
 
-                        </div>
+                        <option value="">
+                            Select Academic Year
+                        </option>
 
-                    </div>
+                        {% for year in academic_years %}
 
+                            <option
+                                value="{{ year.id }}"
+                                {% if selected_academic_year and selected_academic_year.id == year.id %}
+                                    selected
+                                {% endif %}
+                            >
 
-                    <div class="col-md-3">
+                                {{ year.name }}
 
-                        <small class="text-muted">
-                            Term
-                        </small>
+                            </option>
 
-                        <div class="fw-bold">
+                        {% endfor %}
 
-                            {{ selected_term.get_name_display }}
+                    </select>
 
-                        </div>
-
-                    </div>
-
-
-                    <div class="col-md-3">
-
-                        <small class="text-muted">
-                            Class
-                        </small>
-
-                        <div class="fw-bold">
-
-                            {{ selected_class.name }}
-
-                        </div>
-
-                    </div>
+                </div>
 
 
-                    <div class="col-md-3">
+                <!-- Term -->
 
-                        <small class="text-muted">
-                            Subject
-                        </small>
+                <div class="col-lg-3 col-md-6">
 
-                        <div class="fw-bold">
+                    <label class="results-label">
+                        Term
+                    </label>
 
-                            {{ selected_class_subject.subject.name }}
+                    <select
+                        name="term"
+                        class="form-select results-select"
+                        onchange="this.form.submit()"
+                        {% if not selected_academic_year %}
+                            disabled
+                        {% endif %}
+                    >
 
-                        </div>
+                        <option value="">
+                            Select Term
+                        </option>
 
-                    </div>
+                        {% for term in terms %}
 
+                            <option
+                                value="{{ term.id }}"
+                                {% if selected_term and selected_term.id == term.id %}
+                                    selected
+                                {% endif %}
+                            >
+
+                                {{ term.get_name_display }}
+
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <!-- Class -->
+
+                <div class="col-lg-3 col-md-6">
+
+                    <label class="results-label">
+                        Class
+                    </label>
+
+                    <select
+                        name="school_class"
+                        class="form-select results-select"
+                        onchange="this.form.submit()"
+                        required
+                    >
+
+                        <option value="">
+                            Select Class
+                        </option>
+
+                        {% for school_class in school_classes %}
+
+                            <option
+                                value="{{ school_class.id }}"
+                                {% if selected_class and selected_class.id == school_class.id %}
+                                    selected
+                                {% endif %}
+                            >
+
+                                {{ school_class.name }}
+
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <!-- Subject -->
+
+                <div class="col-lg-3 col-md-6">
+
+                    <label class="results-label">
+                        Subject
+                    </label>
+
+                    <select
+                        name="class_subject"
+                        class="form-select results-select"
+                        onchange="this.form.submit()"
+                        {% if not selected_class %}
+                            disabled
+                        {% endif %}
+                    >
+
+                        <option value="">
+                            Select Subject
+                        </option>
+
+                        {% for class_subject in class_subjects %}
+
+                            <option
+                                value="{{ class_subject.id }}"
+                                {% if selected_class_subject and selected_class_subject.id == class_subject.id %}
+                                    selected
+                                {% endif %}
+                            >
+
+                                {{ class_subject.subject.name }}
+
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
 
                 </div>
 
             </div>
 
-        </div>
-
-    {% endif %}
+        </form>
 
 
-    <!-- ================================= -->
-    <!-- RESULTS TABLE -->
-    <!-- ================================= -->
+        <!-- =================================================
+             SELECTED CONTEXT
+        ================================================== -->
 
-    {% if students and assessment_components %}
+        {% if selected_class_subject %}
 
-        <form method="post">
+            <div class="selected-context">
 
-            {% csrf_token %}
+                <div class="row align-items-center text-center">
 
+                    <div class="col-md-3 context-item">
 
-            <!-- Hidden fields -->
+                        <span class="context-label">
+                            Academic Year
+                        </span>
 
-            <input
-                type="hidden"
-                name="academic_year"
-                value="{{ selected_academic_year.id }}"
-            >
+                        <span class="context-value">
+                            {{ selected_academic_year.name }}
+                        </span>
 
-            <input
-                type="hidden"
-                name="term"
-                value="{{ selected_term.id }}"
-            >
-
-            <input
-                type="hidden"
-                name="school_class"
-                value="{{ selected_class.id }}"
-            >
-
-            <input
-                type="hidden"
-                name="class_subject"
-                value="{{ selected_class_subject.id }}"
-            >
+                    </div>
 
 
-            <div class="card shadow-sm">
+                    <div class="col-md-3 context-item">
+
+                        <span class="context-label">
+                            Term
+                        </span>
+
+                        <span class="context-value">
+                            {{ selected_term.get_name_display }}
+                        </span>
+
+                    </div>
 
 
-                <!-- Header -->
+                    <div class="col-md-3 context-item">
 
-                <div class="card-header">
+                        <span class="context-label">
+                            Class
+                        </span>
 
-                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="context-value">
+                            {{ selected_class.name }}
+                        </span>
 
-                        <div>
+                    </div>
 
-                            <h5 class="mb-1">
 
-                                {{ selected_class_subject.subject.name }}
+                    <div class="col-md-3 context-item">
 
-                            </h5>
+                        <span class="context-label">
+                            Subject
+                        </span>
 
-                            <small class="text-muted">
+                        <span class="context-value">
+                            {{ selected_class_subject.subject.name }}
+                        </span>
 
-                                {{ students|length }}
-                                student{{ students|length|pluralize }}
+                    </div>
 
-                            </small>
+                </div>
 
-                        </div>
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     RESULTS ENTRY
+====================================================== -->
+
+{% if students and assessment_components %}
+
+    <form method="post">
+
+        {% csrf_token %}
+
+
+        <!-- Hidden fields -->
+
+        <input
+            type="hidden"
+            name="academic_year"
+            value="{{ selected_academic_year.id }}"
+        >
+
+        <input
+            type="hidden"
+            name="term"
+            value="{{ selected_term.id }}"
+        >
+
+        <input
+            type="hidden"
+            name="school_class"
+            value="{{ selected_class.id }}"
+        >
+
+        <input
+            type="hidden"
+            name="class_subject"
+            value="{{ selected_class_subject.id }}"
+        >
+
+
+        <div class="results-entry-card">
+
+
+            <!-- =================================================
+                 ENTRY HEADER
+            ================================================== -->
+
+            <div class="entry-header">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <h5>
+                            {{ selected_class_subject.subject.name }}
+                        </h5>
+
+                        <small>
+                            Enter assessment scores for this class.
+                        </small>
+
+                    </div>
+
+
+                    <div class="d-flex align-items-center gap-2">
+
+                        <span class="student-count">
+
+                            <i class="bi bi-people"></i>
+
+                            {{ students|length }}
+                            student{{ students|length|pluralize }}
+
+                        </span>
 
 
                         <button
                             type="submit"
-                            class="btn btn-primary"
+                            class="btn save-results-btn"
                         >
+
+                            <i class="bi bi-check2-circle me-1"></i>
 
                             Save Results
 
@@ -404,50 +401,600 @@
 
                 </div>
 
-
-                <!-- Table -->
-
-                <div class="card-body p-0">
-
-                    <div class="table-responsive">
-
-                        <table
-                            class="table table-bordered table-hover align-middle mb-0"
-                        >
+            </div>
 
 
-                            <thead class="table-light">
+            <!-- =================================================
+                 RESULTS TABLE
+            ================================================== -->
+
+            <div class="results-table-wrapper">
+
+                <table
+                    class="table results-table align-middle"
+                >
+
+                    <thead>
+
+                        <tr>
+
+                            <th class="student-cell">
+                                Student
+                            </th>
+
+
+                            {% for component in assessment_components %}
+
+                                <th class="text-center">
+
+                                    {{ component.name }}
+
+                                    <span class="maximum-score">
+                                        Maximum: {{ component.max_score }}
+                                    </span>
+
+                                </th>
+
+                            {% endfor %}
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for enrollment in students %}
+
+                            <tr>
+
+
+                                <!-- Student -->
+
+                                <td class="student-cell">
+
+                                    <div class="student-name">
+
+                                        {{ enrollment.student.first_name }}
+
+                                        {% if enrollment.student.middle_name %}
+
+                                            {{ enrollment.student.middle_name }}
+
+                                        {% endif %}
+
+                                        {{ enrollment.student.last_name }}
+
+                                    </div>
+
+
+                                    {% extends "base.html" %}
+{% load result_extras %}
+{% load static %}
+
+{% block extra_css %}
+
+<link
+    rel="stylesheet"
+    href="{% static 'website/css/result.css' %}"
+>
+{% endblock %}
+
+{% block title %}
+Behaviour Ratings | BMK Academy
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid results-page behaviour-results-page">
+
+```
+<!-- =====================================================
+     PAGE HEADER
+====================================================== -->
+
+<div class="results-hero behaviour-results-hero">
+
+    <div class="results-hero-content">
+
+        <div class="results-hero-icon">
+            <i class="bi bi-person-check"></i>
+        </div>
+
+        <h2>
+            Behaviour & Psychomotor Ratings
+        </h2>
+
+        <p>
+            Record students' behavioural, affective and psychomotor
+            development throughout the term.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     SELECTION CARD
+====================================================== -->
+
+<div class="results-card">
+
+    <div class="results-card-header">
+
+        <div class="selection-step">
+
+            <span class="selection-number active">
+                1
+            </span>
+
+            <div>
+
+                <h5>
+                    Select Student
+                </h5>
+
+                <p>
+                    Select the academic year, term, class and student
+                    you want to assess.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="results-card-body">
+
+        <form
+            method="get"
+            id="behaviourSelectionForm"
+        >
+
+            <div class="row g-3">
+
+
+                <!-- Academic Year -->
+
+                <div class="col-lg-3 col-md-6">
+
+                    <label class="results-label">
+                        Academic Year
+                    </label>
+
+                    <select
+                        name="academic_year"
+                        id="behaviourAcademicYear"
+                        class="form-select results-select"
+                    >
+
+                        <option value="">
+                            Select Academic Year
+                        </option>
+
+                        {% for academic_year in academic_years %}
+
+                            <option
+                                value="{{ academic_year.id }}"
+                                {% if selected_academic_year and academic_year.id == selected_academic_year.id %}
+                                    selected
+                                {% endif %}
+                            >
+                                {{ academic_year.name }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <!-- Term -->
+
+                <div class="col-lg-3 col-md-6">
+
+                    <label class="results-label">
+                        Term
+                    </label>
+
+                    <select
+                        name="term"
+                        id="behaviourTerm"
+                        class="form-select results-select"
+                        {% if not selected_academic_year %}
+                            disabled
+                        {% endif %}
+                    >
+
+                        <option value="">
+                            Select Term
+                        </option>
+
+                        {% for term in terms %}
+
+                            <option
+                                value="{{ term.id }}"
+                                {% if selected_term and term.id == selected_term.id %}
+                                    selected
+                                {% endif %}
+                            >
+                                {{ term.get_name_display }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <!-- Class -->
+
+                <div class="col-lg-3 col-md-6">
+
+                    <label class="results-label">
+                        Class
+                    </label>
+
+                    <select
+                        name="school_class"
+                        id="behaviourClass"
+                        class="form-select results-select"
+                    >
+
+                        <option value="">
+                            Select Class
+                        </option>
+
+                        {% for school_class in school_classes %}
+
+                            <option
+                                value="{{ school_class.id }}"
+                                {% if selected_class and school_class.id == selected_class.id %}
+                                    selected
+                                {% endif %}
+                            >
+                                {{ school_class.name }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <!-- Student -->
+
+                <div class="col-lg-3 col-md-6">
+
+                    <label class="results-label">
+                        Student
+                    </label>
+
+                    <select
+                        name="enrollment"
+                        id="behaviourEnrollment"
+                        class="form-select results-select"
+                        {% if not students %}
+                            disabled
+                        {% endif %}
+                    >
+
+                        <option value="">
+                            Select Student
+                        </option>
+
+                        {% for enrollment in students %}
+
+                            <option
+                                value="{{ enrollment.id }}"
+                                {% if selected_enrollment and enrollment.id == selected_enrollment.id %}
+                                    selected
+                                {% endif %}
+                            >
+                                {{ enrollment.student }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </form>
+
+
+        <!-- =================================================
+             SELECTED CONTEXT
+        ================================================== -->
+
+        {% if selected_enrollment %}
+
+            <div class="selected-context behaviour-selected-context">
+
+                <div class="row align-items-center text-center">
+
+
+                    <div class="col-md-3 context-item">
+
+                        <span class="context-label">
+                            Academic Year
+                        </span>
+
+                        <span class="context-value">
+                            {{ selected_academic_year.name }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="col-md-3 context-item">
+
+                        <span class="context-label">
+                            Term
+                        </span>
+
+                        <span class="context-value">
+                            {{ selected_term.get_name_display }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="col-md-3 context-item">
+
+                        <span class="context-label">
+                            Class
+                        </span>
+
+                        <span class="context-value">
+                            {{ selected_class.name }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="col-md-3 context-item">
+
+                        <span class="context-label">
+                            Student
+                        </span>
+
+                        <span class="context-value">
+                            {{ selected_enrollment.student }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     BEHAVIOUR ENTRY CARD
+====================================================== -->
+
+{% if selected_enrollment %}
+
+    <form method="post">
+
+        {% csrf_token %}
+
+
+        <!-- Preserve selected information -->
+
+        <input
+            type="hidden"
+            name="academic_year"
+            value="{{ selected_academic_year.id }}"
+        >
+
+        <input
+            type="hidden"
+            name="term"
+            value="{{ selected_term.id }}"
+        >
+
+        <input
+            type="hidden"
+            name="school_class"
+            value="{{ selected_class.id }}"
+        >
+
+        <input
+            type="hidden"
+            name="enrollment"
+            value="{{ selected_enrollment.id }}"
+        >
+
+
+        <div class="behaviour-entry-card">
+
+
+            <!-- =================================================
+                 ENTRY HEADER
+            ================================================== -->
+
+            <div class="behaviour-entry-header">
+
+                <div>
+
+                    <h5>
+                        {{ selected_enrollment.student }}
+                    </h5>
+
+                    <small>
+                        Behaviour and psychomotor assessment
+                    </small>
+
+                </div>
+
+
+                <div class="behaviour-student-badge">
+
+                    <i class="bi bi-person-check"></i>
+
+                    {{ selected_enrollment.school_class }}
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 RATING GUIDE
+            ================================================== -->
+
+            <div class="behaviour-rating-guide">
+
+                <div class="behaviour-guide-title">
+
+                    <i class="bi bi-star-fill"></i>
+
+                    <div>
+
+                        <strong>
+                            Rating Scale
+                        </strong>
+
+                        <small>
+                            Select the level that best describes
+                            the student's performance.
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="behaviour-rating-scale">
+
+                    <div class="behaviour-scale-item">
+
+                        <span>1</span>
+
+                        <small>
+                            Lowest
+                        </small>
+
+                    </div>
+
+
+                    <div class="behaviour-scale-item">
+
+                        <span>2</span>
+
+                        <small>
+                            Fair
+                        </small>
+
+                    </div>
+
+
+                    <div class="behaviour-scale-item">
+
+                        <span>3</span>
+
+                        <small>
+                            Good
+                        </small>
+
+                    </div>
+
+
+                    <div class="behaviour-scale-item">
+
+                        <span>4</span>
+
+                        <small>
+                            High
+                        </small>
+
+                    </div>
+
+
+                    <div class="behaviour-scale-item">
+
+                        <span>5</span>
+
+                        <small>
+                            Excellent
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 RATING TABLE
+            ================================================== -->
+
+            {% if behaviour_categories %}
+
+                <div class="behaviour-table-section">
+
+                    <div class="behaviour-table-title">
+
+                        <div>
+
+                            <span>
+                                Assessment Areas
+                            </span>
+
+                            <h5>
+                                Behaviour & Psychomotor Development
+                            </h5>
+
+                        </div>
+
+                        <div class="behaviour-count">
+
+                            <i class="bi bi-list-check"></i>
+
+                            {{ behaviour_categories|length }}
+                            area{{ behaviour_categories|length|pluralize }}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="behaviour-table-wrapper">
+
+                        <table class="table behaviour-table">
+
+                            <thead>
 
                                 <tr>
 
-
-                                    <!-- Student -->
-
-                                    <th
-                                        style="min-width: 250px;"
-                                    >
-
-                                        Student
-
+                                    <th class="behaviour-number">
+                                        #
                                     </th>
 
+                                    <th>
+                                        Behaviour / Psychomotor Area
+                                    </th>
 
-                                    <!-- Assessment Components -->
-
-                                    {% for component in assessment_components %}
-
-                                            <th class="text-center">
-
-                                                {{ component.name }}
-
-                                                <small class="text-muted d-block">
-                                                    / {{ component.max_score }}
-                                                </small>
-
-                                            </th>
-
-                                        {% endfor %}
-
+                                    <th class="behaviour-rating-column text-center">
+                                        Rating
+                                    </th>
 
                                 </tr>
 
@@ -456,119 +1003,279 @@
 
                             <tbody>
 
-
-                                {% for enrollment in students %}
+                                {% for category in behaviour_categories %}
 
                                     <tr>
 
+                                        <td class="behaviour-number">
 
-                                        <!-- Student -->
-
-                                        <td>
-
-                                            <strong>
-
-                                                {{ enrollment.student.first_name }}
-
-                                                {% if enrollment.student.middle_name %}
-
-                                                    {{ enrollment.student.middle_name }}
-
-                                                {% endif %}
-
-                                                {{ enrollment.student.last_name }}
-
-                                            </strong>
-
-
-                                            <br>
-
-
-                                            <small class="text-muted">
-
-                                                {{ enrollment.student.admission_number }}
-
-                                            </small>
+                                            <span>
+                                                {{ forloop.counter }}
+                                            </span>
 
                                         </td>
 
 
-                                        <!-- Scores -->
+                                        <td>
 
-                                        {% for result_score in enrollment.result_scores %}
+                                            <div class="behaviour-category-name">
 
-                                            <td>
+                                                <span class="behaviour-category-icon">
+                                                    <i class="bi bi-check2"></i>
+                                                </span>
 
-                                                <input
-                                                    type="number"
-                                                    name="score_{{ enrollment.id }}_{{ result_score.component.id }}"
-                                                    class="form-control text-center"
-                                                    min="0"
-                                                    max="{{ result_score.component.max_score }}"
-                                                    step="0.01"
-                                                    value="{{ result_score.score|default_if_none:'' }}"
-                                                >
+                                                {{ category.name }}
 
-                                            </td>
+                                            </div>
 
-                                        {% endfor %}
+                                        </td>
 
+
+                                        <td class="text-center">
+
+                                            <select
+                                                name="rating_{{ category.id }}"
+                                                class="form-select behaviour-rating-select"
+                                            >
+
+                                                <option value="">
+                                                    Not Rated
+                                                </option>
+
+                                                {% for value in "12345" %}
+
+                                                    <option
+                                                        value="{{ value }}"
+                                                        {% if existing_ratings|get_item:category.id|stringformat:"s" == value %}
+                                                            selected
+                                                        {% endif %}
+                                                    >
+                                                        {{ value }}
+                                                    </option>
+
+                                                {% endfor %}
+
+                                            </select>
+
+                                        </td>
 
                                     </tr>
 
                                 {% endfor %}
 
-
                             </tbody>
 
-
                         </table>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         FOOTER
+                    ================================================== -->
+
+                    <div class="behaviour-entry-footer">
+
+                        <div class="behaviour-footer-note">
+
+                            <i class="bi bi-info-circle"></i>
+
+                            <span>
+                                Review all ratings before saving the
+                                student's assessment.
+                            </span>
+
+                        </div>
+
+
+                        <div class="behaviour-footer-actions">
+
+                            <a
+                                href="{% url 'students:student_detail' selected_enrollment.student.id %}"
+                                class="btn behaviour-back-btn"
+                            >
+
+                                <i class="bi bi-arrow-left me-1"></i>
+
+                                Back to Student
+
+                            </a>
+
+
+                            <button
+                                type="submit"
+                                class="btn behaviour-save-btn"
+                            >
+
+                                <i class="bi bi-check2-circle me-1"></i>
+
+                                Save Behaviour Ratings
+
+                            </button>
+
+                        </div>
 
                     </div>
 
                 </div>
 
 
-                <!-- Footer -->
+            {% else %}
 
-                <div class="card-footer text-end">
+                <div class="behaviour-empty">
 
-                    <button
-                        type="submit"
-                        class="btn btn-primary"
-                    >
+                    <div class="behaviour-empty-icon">
 
-                        Save Results
+                        <i class="bi bi-clipboard-x"></i>
 
-                    </button>
+                    </div>
+
+                    <h5>
+                        No Behaviour Categories
+                    </h5>
+
+                    <p>
+                        No behaviour categories have been configured
+                        for the school yet.
+                    </p>
 
                 </div>
 
-
-            </div>
-
-        </form>
-
-
-    {% elif selected_class_subject %}
-
-        <div class="alert alert-warning">
-
-            <strong>
-                No students or assessment components found.
-            </strong>
-
-            <br>
-
-            Make sure this class has active students and
-            that assessment components have been created
-            for the selected term.
+            {% endif %}
 
         </div>
 
-    {% endif %}
+    </form>
 
+
+{% elif selected_class %}
+
+    <div class="behaviour-empty">
+
+        <div class="behaviour-empty-icon">
+
+            <i class="bi bi-person-x"></i>
+
+        </div>
+
+        <h5>
+            No Student Selected
+        </h5>
+
+        <p>
+            Select a student above to begin entering behaviour
+            and psychomotor ratings.
+        </p>
+
+    </div>
+
+{% endif %}
+```
 
 </div>
 
+<!-- =====================================================
+     JAVASCRIPT
+====================================================== -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const form = document.getElementById("behaviourSelectionForm");
+
+    const academicYear = document.getElementById(
+        "behaviourAcademicYear"
+    );
+
+    const term = document.getElementById(
+        "behaviourTerm"
+    );
+
+    const schoolClass = document.getElementById(
+        "behaviourClass"
+    );
+
+    const enrollment = document.getElementById(
+        "behaviourEnrollment"
+    );
+
+
+    if (!form) {
+        return;
+    }
+
+
+    /* -----------------------------------------------------
+       Academic Year
+    ----------------------------------------------------- */
+
+    academicYear.addEventListener("change", function () {
+
+        term.value = "";
+        schoolClass.value = "";
+        enrollment.value = "";
+
+        if (!academicYear.value) {
+            return;
+        }
+
+        form.submit();
+
+    });
+
+
+    /* -----------------------------------------------------
+       Term
+    ----------------------------------------------------- */
+
+    term.addEventListener("change", function () {
+
+        enrollment.value = "";
+
+        if (!term.value) {
+            return;
+        }
+
+        form.submit();
+
+    });
+
+
+    /* -----------------------------------------------------
+       Class
+    ----------------------------------------------------- */
+
+    schoolClass.addEventListener("change", function () {
+
+        enrollment.value = "";
+
+        if (!schoolClass.value) {
+            return;
+        }
+
+        form.submit();
+
+    });
+
+
+    /* -----------------------------------------------------
+       Student
+    ----------------------------------------------------- */
+
+    enrollment.addEventListener("change", function () {
+
+        if (!enrollment.value) {
+            return;
+        }
+
+        form.submit();
+
+    });
+
+});
+
+</script>
+
 {% endblock %}
+

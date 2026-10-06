@@ -1,76 +1,138 @@
 {% extends "base.html" %}
-
+{% load static %}
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'website/css/admissions.css' %}"
+>
+{% endblock %}
 {% block title %}
 Admission Claim Link | BMK Academy
 {% endblock %}
 
 {% block content %}
 
-<div class="container py-5">
+<div class="bmk-claim-invalid-page">
 
-    <div class="row justify-content-center">
 
-        <div class="col-md-7 col-lg-6">
+<section class="bmk-claim-invalid-header">
 
-            <div class="card border-0 shadow-sm">
+    <div class="bmk-claim-invalid-header-inner">
 
-                <div class="card-body p-5 text-center">
+        <div class="bmk-claim-invalid-brand">
+            <i class="bi bi-mortarboard-fill"></i>
+        </div>
 
-                    <div class="mb-4">
+        <span class="bmk-claim-invalid-eyebrow">
+            BMK ACADEMY • PARENT PORTAL
+        </span>
 
-                        <i
-                            class="bi bi-link-45deg text-warning"
-                            style="font-size: 4rem;"
-                        ></i>
+        <h1>
+            Admission Claim Link
+        </h1>
 
-                    </div>
+        <p>
+            We could not continue with this admission claim.
+        </p>
 
-                    <h3 class="fw-bold mb-3">
-                        Admission Claim Link No Longer Valid
-                    </h3>
+    </div>
 
-                    <p class="text-muted">
+</section>
 
-                        This admission claim link is no longer valid.
-                        It may have already been used or may have expired.
 
-                    </p>
+<section class="bmk-claim-invalid-content">
 
-                    <p class="text-muted">
+    <div class="bmk-claim-invalid-card">
 
-                        If you have already created your BMK Academy
-                        parent account, you can log in to your account
-                        to access your child's information.
+        <div class="bmk-claim-invalid-icon">
+            <i class="bi bi-link-45deg"></i>
+        </div>
 
-                    </p>
 
-                    <div class="d-grid gap-2 mt-4">
+        <span class="bmk-claim-invalid-label">
+            LINK UNAVAILABLE
+        </span>
 
-                        <a
-                            href="{% url 'accounts:login' %}"
-                            class="btn btn-primary"
-                        >
-                            <i class="bi bi-box-arrow-in-right me-2"></i>
-                            Parent Login
-                        </a>
 
-                        <a
-                            href="{% url 'website:home' %}"
-                            class="btn btn-outline-secondary"
-                        >
-                            <i class="bi bi-house me-2"></i>
-                            Back to BMK Academy
-                        </a>
+        <h2>
+            Admission Claim Link
+            <span>Is No Longer Valid</span>
+        </h2>
 
-                    </div>
 
-                </div>
+        <p class="bmk-claim-invalid-message">
+            This admission claim link is no longer valid.
+            It may have already been used or may have expired.
+        </p>
+
+
+        <div class="bmk-claim-invalid-info">
+
+            <div class="bmk-claim-invalid-info-icon">
+                <i class="bi bi-info-circle-fill"></i>
+            </div>
+
+            <div>
+
+                <strong>
+                    Already created your account?
+                </strong>
+
+                <p>
+                    If you have already created your BMK Academy
+                    parent account, you can log in to your account
+                    to access your child's information.
+                </p>
 
             </div>
 
         </div>
 
+
+        <div class="bmk-claim-invalid-actions">
+
+            <a
+                href="{% url 'accounts:login' %}"
+                class="bmk-claim-invalid-button primary"
+            >
+                <span>
+                    <i class="bi bi-box-arrow-in-right"></i>
+                    Parent Login
+                </span>
+
+                <i class="bi bi-arrow-right"></i>
+            </a>
+
+
+            <a
+                href="{% url 'website:home' %}"
+                class="bmk-claim-invalid-button secondary"
+            >
+                <span>
+                    <i class="bi bi-house"></i>
+                    Back to BMK Academy
+                </span>
+
+                <i class="bi bi-arrow-right"></i>
+            </a>
+
+        </div>
+
+
+        <div class="bmk-claim-invalid-footer">
+
+            <i class="bi bi-shield-check"></i>
+
+            <span>
+                BMK Academy • Education for Service.
+            </span>
+
+        </div>
+
     </div>
+
+</section>
+
 
 </div>
 

@@ -1,125 +1,144 @@
 {% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
 
-
-{% block title %}
-    Record Payment | BMK Academy
+<link rel="stylesheet" href="{% static 'website/css/fees.css' %}">
 {% endblock %}
 
+{% block title %}
+Record Payment | BMK Academy
+{% endblock %}
 
 {% block content %}
 
-<div class="row">
 
-    <div class="col-lg-8 mx-auto">
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
+<div class="bmk-record-payment-page">
 
-            <div>
+<div class="container">
 
-                <h2 class="fw-bold mb-1">
-                    Record Payment
-                </h2>
+    <div class="bmk-payment-header">
 
-                <p class="text-muted mb-0">
-                    Record a school fee payment.
-                </p>
+        <div>
 
+            <div class="bmk-payment-eyebrow">
+                Fee Management
             </div>
 
-            <a
-                href="{% url 'fees:student_fees' student.id %}"
-                class="btn btn-outline-secondary"
-            >
-                ← Back to Fees
-            </a>
+            <h1 class="bmk-payment-title">
+                Record Payment
+            </h1>
+
+            <p class="bmk-payment-subtitle">
+                Record a school fee payment for this invoice.
+            </p>
+
+        </div>
+
+        <a
+            href="{% url 'fees:student_fees' student.id %}"
+            class="bmk-back-fees"
+        >
+            <i class="bi bi-arrow-left"></i>
+            Back to Fees
+        </a>
+
+    </div>
+
+
+    <!-- Invoice Information -->
+
+    <div class="bmk-payment-card">
+
+        <div class="bmk-payment-card-header">
+
+            <div class="bmk-payment-card-icon">
+                <i class="bi bi-receipt-cutoff"></i>
+            </div>
+
+            <div>
+                <h2 class="bmk-payment-card-title">
+                    Invoice Information
+                </h2>
+
+                <p class="bmk-payment-card-subtitle">
+                    Review the invoice before recording the payment.
+                </p>
+            </div>
 
         </div>
 
 
-        <!-- Student / Invoice Summary -->
+        <div class="bmk-payment-card-body">
 
-        <div class="card shadow-sm mb-4">
+            <div class="bmk-invoice-grid">
 
-            <div class="card-header">
+                <div class="bmk-invoice-item student">
 
-                <strong>
-                    Invoice Information
-                </strong>
+                    <span class="bmk-invoice-label">
+                        Student
+                    </span>
 
-            </div>
+                    <div class="bmk-invoice-value">
+                        {{ student.first_name }}
 
-            <div class="card-body">
+                        {% if student.middle_name %}
+                            {{ student.middle_name }}
+                        {% endif %}
 
-                <div class="row g-4">
-
-                    <div class="col-md-6">
-
-                        <small class="text-muted">
-                            Student
-                        </small>
-
-                        <div class="fw-semibold">
-                            {{ student.first_name }}
-
-                            {% if student.middle_name %}
-                                {{ student.middle_name }}
-                            {% endif %}
-
-                            {{ student.last_name }}
-                        </div>
-
+                        {{ student.last_name }}
                     </div>
 
+                </div>
 
-                    <div class="col-md-6">
 
-                        <small class="text-muted">
-                            Admission Number
-                        </small>
+                <div class="bmk-invoice-item admission">
 
-                        <div class="fw-semibold">
-                            {{ student.admission_number }}
-                        </div>
+                    <span class="bmk-invoice-label">
+                        Admission Number
+                    </span>
 
+                    <div class="bmk-invoice-value">
+                        {{ student.admission_number }}
                     </div>
 
+                </div>
 
-                    <div class="col-md-4">
 
-                        <small class="text-muted">
-                            Invoice Amount
-                        </small>
+                <div class="bmk-invoice-item bmk-invoice-amount">
 
-                        <div class="fw-semibold">
-                            ₦{{ summary.amount|floatformat:2 }}
-                        </div>
+                    <span class="bmk-invoice-label">
+                        Invoice Amount
+                    </span>
 
+                    <div class="bmk-invoice-value">
+                        ₦{{ summary.amount|floatformat:2 }}
                     </div>
 
+                </div>
 
-                    <div class="col-md-4">
 
-                        <small class="text-muted">
-                            Paid
-                        </small>
+                <div class="bmk-invoice-item bmk-invoice-paid">
 
-                        <div class="fw-semibold text-success">
-                            ₦{{ summary.paid|floatformat:2 }}
-                        </div>
+                    <span class="bmk-invoice-label">
+                        Paid
+                    </span>
 
+                    <div class="bmk-invoice-value">
+                        ₦{{ summary.paid|floatformat:2 }}
                     </div>
 
+                </div>
 
-                    <div class="col-md-4">
 
-                        <small class="text-muted">
-                            Outstanding
-                        </small>
+                <div class="bmk-invoice-item bmk-invoice-balance">
 
-                        <div class="fw-semibold text-danger">
-                            ₦{{ summary.balance|floatformat:2 }}
-                        </div>
+                    <span class="bmk-invoice-label">
+                        Outstanding
+                    </span>
 
+                    <div class="bmk-invoice-value">
+                        ₦{{ summary.balance|floatformat:2 }}
                     </div>
 
                 </div>
@@ -128,192 +147,234 @@
 
         </div>
 
+    </div>
 
-        <!-- Payment Form -->
 
-        <div class="card shadow-sm">
+    <!-- Payment Form -->
 
-            <div class="card-header">
+    <div class="bmk-payment-card">
 
-                <strong>
-                    Payment Details
-                </strong>
+        <div class="bmk-payment-card-header">
 
+            <div class="bmk-payment-card-icon">
+                <i class="bi bi-cash-coin"></i>
             </div>
 
+            <div>
+                <h2 class="bmk-payment-card-title">
+                    Payment Details
+                </h2>
 
-            <div class="card-body">
-
-                <form method="post">
-
-                    {% csrf_token %}
-
-
-                    <div class="mb-3">
-
-                        <label
-                            for="amount"
-                            class="form-label"
-                        >
-                            Payment Amount
-                        </label>
-
-                        <div class="input-group">
-
-                            <span class="input-group-text">
-                                ₦
-                            </span>
-
-                            <input
-                                type="number"
-                                name="amount"
-                                id="amount"
-                                class="form-control"
-                                min="0.01"
-                                max="{{ summary.balance }}"
-                                step="0.01"
-                                required
-                            >
-
-                        </div>
-
-                        <div class="form-text">
-
-                            Maximum payment:
-                            ₦{{ summary.balance|floatformat:2 }}
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="mb-3">
-
-                        <label
-                            for="payment_date"
-                            class="form-label"
-                        >
-                            Payment Date
-                        </label>
-
-                        <input
-                            type="date"
-                            name="payment_date"
-                            id="payment_date"
-                            class="form-control"
-                            value="{{ today|date:'Y-m-d' }}"
-                            required
-                        >
-
-                    </div>
-
-
-                    <div class="mb-3">
-
-                        <label
-                            for="payment_method"
-                            class="form-label"
-                        >
-                            Payment Method
-                        </label>
-
-                        <select
-                            name="payment_method"
-                            id="payment_method"
-                            class="form-select"
-                            required
-                        >
-
-                            <option value="">
-                                Select payment method
-                            </option>
-
-                            <option value="cash">
-                                Cash
-                            </option>
-
-                            <option value="bank_transfer">
-                                Bank Transfer
-                            </option>
-
-                            <option value="pos">
-                                POS
-                            </option>
-
-                            <option value="card">
-                                Card
-                            </option>
-
-                        </select>
-
-                    </div>
-
-
-                    <div class="mb-3">
-
-                        <label
-                            for="reference"
-                            class="form-label"
-                        >
-                            Payment Reference
-                        </label>
-
-                        <input
-                            type="text"
-                            name="reference"
-                            id="reference"
-                            class="form-control"
-                            placeholder="e.g. TRX-2026-001"
-                        >
-
-                    </div>
-
-
-                    <div class="mb-4">
-
-                        <label
-                            for="remarks"
-                            class="form-label"
-                        >
-                            Remarks
-                        </label>
-
-                        <textarea
-                            name="remarks"
-                            id="remarks"
-                            class="form-control"
-                            rows="3"
-                            placeholder="Optional remarks"
-                        ></textarea>
-
-                    </div>
-
-
-                    <div class="d-flex justify-content-end gap-2">
-
-                        <a
-                            href="{% url 'fees:student_fees' student.id %}"
-                            class="btn btn-outline-secondary"
-                        >
-                            Cancel
-                        </a>
-
-                        <button
-                            type="submit"
-                            class="btn btn-success"
-                        >
-                            Save Payment
-                        </button>
-
-                    </div>
-
-                </form>
-
+                <p class="bmk-payment-card-subtitle">
+                    Enter the payment information below.
+                </p>
             </div>
 
         </div>
 
+
+        <div class="bmk-payment-card-body">
+
+            <div class="bmk-balance-highlight">
+
+                <div class="bmk-balance-copy">
+
+                    <div class="bmk-balance-icon">
+                        <i class="bi bi-wallet2"></i>
+                    </div>
+
+                    <div>
+                        <p class="bmk-balance-label">
+                            Maximum Payment Allowed
+                        </p>
+
+                        <p class="bmk-balance-text">
+                            Payment cannot exceed the outstanding balance.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="bmk-balance-amount">
+                    ₦{{ summary.balance|floatformat:2 }}
+                </div>
+
+            </div>
+
+
+            <form method="post">
+
+                {% csrf_token %}
+
+
+                <div class="bmk-field">
+
+                    <label
+                        for="amount"
+                        class="bmk-field-label"
+                    >
+                        Payment Amount
+                        <span class="bmk-required">*</span>
+                    </label>
+
+                    <div class="bmk-amount-wrapper">
+
+                        <span class="bmk-amount-prefix">
+                            ₦
+                        </span>
+
+                        <input
+                            type="number"
+                            name="amount"
+                            id="amount"
+                            class="bmk-input bmk-amount-input"
+                            min="0.01"
+                            max="{{ summary.balance }}"
+                            step="0.01"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="bmk-field-help">
+                        <i class="bi bi-info-circle"></i>
+                        Maximum payment: ₦{{ summary.balance|floatformat:2 }}
+                    </div>
+
+                </div>
+
+
+                <div class="bmk-field">
+
+                    <label
+                        for="payment_date"
+                        class="bmk-field-label"
+                    >
+                        Payment Date
+                        <span class="bmk-required">*</span>
+                    </label>
+
+                    <input
+                        type="date"
+                        name="payment_date"
+                        id="payment_date"
+                        class="bmk-input"
+                        value="{{ today|date:'Y-m-d' }}"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="bmk-field">
+
+                    <label
+                        for="payment_method"
+                        class="bmk-field-label"
+                    >
+                        Payment Method
+                        <span class="bmk-required">*</span>
+                    </label>
+
+                    <select
+                        name="payment_method"
+                        id="payment_method"
+                        class="bmk-select"
+                        required
+                    >
+
+                        <option value="">
+                            Select payment method
+                        </option>
+
+                        <option value="cash">
+                            Cash
+                        </option>
+
+                        <option value="bank_transfer">
+                            Bank Transfer
+                        </option>
+
+                        <option value="pos">
+                            POS
+                        </option>
+
+                        <option value="card">
+                            Card
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="bmk-field">
+
+                    <label
+                        for="reference"
+                        class="bmk-field-label"
+                    >
+                        Payment Reference
+                    </label>
+
+                    <input
+                        type="text"
+                        name="reference"
+                        id="reference"
+                        class="bmk-input"
+                        placeholder="e.g. TRX-2026-001"
+                    >
+
+                </div>
+
+
+                <div class="bmk-field">
+
+                    <label
+                        for="remarks"
+                        class="bmk-field-label"
+                    >
+                        Remarks
+                    </label>
+
+                    <textarea
+                        name="remarks"
+                        id="remarks"
+                        class="bmk-textarea"
+                        rows="3"
+                        placeholder="Optional remarks"
+                    ></textarea>
+
+                </div>
+
+
+                <div class="bmk-form-actions">
+
+                    <a
+                        href="{% url 'fees:student_fees' student.id %}"
+                        class="bmk-cancel-btn"
+                    >
+                        <i class="bi bi-x-lg"></i>
+                        Cancel
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="bmk-save-payment-btn"
+                    >
+                        <i class="bi bi-check2-circle"></i>
+                        Save Payment
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
     </div>
+
+</div>
 
 </div>
 

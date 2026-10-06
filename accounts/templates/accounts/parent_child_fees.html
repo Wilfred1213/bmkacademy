@@ -1,4 +1,9 @@
 {% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+
+<link rel="stylesheet" href="{% static 'website/css/reports.css' %}">
+{% endblock %}
 
 {% block title %}
 Fees - {{ child.get_full_name }}
@@ -6,67 +11,101 @@ Fees - {{ child.get_full_name }}
 
 {% block content %}
 
-<div class="container py-4">
 
+<section class="bmk-child-fees">
 
-<!-- HEADER -->
+<div class="container">
 
-<div class="d-flex justify-content-between align-items-center mb-4">
+    <!-- =========================
+         PAGE HEADER
+         ========================= -->
 
-    <div>
+    <div class="bmk-fees-header">
 
-        <h2 class="fw-bold mb-1">
-            {{ child.get_full_name }}
-        </h2>
+        <div class="bmk-fees-header-content">
 
-        {% if enrollment %}
+            <div class="bmk-fees-header-left">
 
-            <p class="text-muted mb-0">
-                {{ enrollment.school_class.name }}
-                —
-                {{ enrollment.academic_year.name }}
-                —
-                {{ enrollment.term.name }}
-            </p>
+                <div class="bmk-fees-avatar">
+                    <i class="bi bi-wallet2"></i>
+                </div>
 
-        {% else %}
+                <div>
 
-            <p class="text-muted mb-0">
-                Fee information
-            </p>
+                    <p class="bmk-fees-eyebrow">
+                        School Fees
+                    </p>
 
-        {% endif %}
+                    <h2>
+                        {{ child.get_full_name }}
+                    </h2>
+
+                    {% if enrollment %}
+
+                        <p class="bmk-fees-subtitle">
+
+                            {{ enrollment.school_class.name }}
+
+                            <span class="mx-1">•</span>
+
+                            {{ enrollment.academic_year.name }}
+
+                            <span class="mx-1">•</span>
+
+                            {{ enrollment.term.name }}
+
+                        </p>
+
+                    {% else %}
+
+                        <p class="bmk-fees-subtitle">
+                            Fee information
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            <a
+                href="{% url 'accounts:parent_home' %}"
+                class="bmk-fees-back-btn"
+            >
+                <i class="bi bi-arrow-left"></i>
+                Back to Dashboard
+            </a>
+
+        </div>
 
     </div>
 
-    <a
-        href="{% url 'accounts:parent_home' %}"
-        class="btn btn-outline-secondary"
-    >
-        <i class="bi bi-arrow-left"></i>
-        Back to Dashboard
-    </a>
 
-</div>
+    {% if enrollment %}
 
+        <!-- =========================
+             FEE SUMMARY
+             ========================= -->
 
-{% if enrollment %}
+        <div class="row g-3 bmk-fee-summary">
 
-    <!-- FEE SUMMARY -->
+            <div class="col-md-4">
 
-    <div class="row g-3 mb-4">
+                <div class="bmk-fee-stat bmk-fee-invoiced">
 
-        <div class="col-md-4">
+                    <div class="bmk-fee-stat-top">
 
-            <div class="card border-0 shadow-sm h-100">
+                        <div class="bmk-fee-stat-icon">
+                            <i class="bi bi-receipt"></i>
+                        </div>
 
-                <div class="card-body">
+                    </div>
 
-                    <p class="text-muted mb-1">
+                    <p class="bmk-fee-stat-label">
                         Total Invoiced
                     </p>
 
-                    <h3 class="fw-bold mb-0">
+                    <h3 class="bmk-fee-stat-value">
                         ₦{{ fee_summary.total_invoiced|floatformat:2 }}
                     </h3>
 
@@ -74,20 +113,24 @@ Fees - {{ child.get_full_name }}
 
             </div>
 
-        </div>
 
+            <div class="col-md-4">
 
-        <div class="col-md-4">
+                <div class="bmk-fee-stat bmk-fee-paid">
 
-            <div class="card border-0 shadow-sm h-100">
+                    <div class="bmk-fee-stat-top">
 
-                <div class="card-body">
+                        <div class="bmk-fee-stat-icon">
+                            <i class="bi bi-check2-circle"></i>
+                        </div>
 
-                    <p class="text-muted mb-1">
+                    </div>
+
+                    <p class="bmk-fee-stat-label">
                         Total Paid
                     </p>
 
-                    <h3 class="fw-bold text-success mb-0">
+                    <h3 class="bmk-fee-stat-value">
                         ₦{{ fee_summary.total_paid|floatformat:2 }}
                     </h3>
 
@@ -95,20 +138,24 @@ Fees - {{ child.get_full_name }}
 
             </div>
 
-        </div>
 
+            <div class="col-md-4">
 
-        <div class="col-md-4">
+                <div class="bmk-fee-stat bmk-fee-outstanding">
 
-            <div class="card border-0 shadow-sm h-100">
+                    <div class="bmk-fee-stat-top">
 
-                <div class="card-body">
+                        <div class="bmk-fee-stat-icon">
+                            <i class="bi bi-exclamation-circle"></i>
+                        </div>
 
-                    <p class="text-muted mb-1">
+                    </div>
+
+                    <p class="bmk-fee-stat-label">
                         Outstanding
                     </p>
 
-                    <h3 class="fw-bold text-danger mb-0">
+                    <h3 class="bmk-fee-stat-value">
                         ₦{{ fee_summary.outstanding|floatformat:2 }}
                     </h3>
 
@@ -118,36 +165,45 @@ Fees - {{ child.get_full_name }}
 
         </div>
 
-    </div>
 
+        <!-- =========================
+             INVOICES
+             ========================= -->
 
-    <!-- INVOICES -->
+        <div class="bmk-invoices-card">
 
-    <div class="card border-0 shadow-sm">
+            <div class="bmk-invoices-header">
 
-        <div class="card-body">
+                <div class="bmk-invoices-title">
 
-            <div class="mb-3">
+                    <div class="bmk-invoices-icon">
+                        <i class="bi bi-receipt-cutoff"></i>
+                    </div>
 
-                <h5 class="fw-bold mb-1">
-                    Fee Invoices
-                </h5>
+                    <div>
 
-                <p class="text-muted mb-0">
-                    Fees assigned for
-                    {{ enrollment.term.name }}
-                </p>
+                        <h5>
+                            Fee Invoices
+                        </h5>
+
+                        <p>
+                            Fees assigned for {{ enrollment.term.name }}
+                        </p>
+
+                    </div>
+
+                </div>
 
             </div>
 
 
             {% if invoices %}
 
-                <div class="table-responsive">
+                <div class="bmk-invoices-table-wrapper">
 
-                    <table class="table table-hover align-middle">
+                    <table class="table bmk-invoices-table">
 
-                        <thead class="table-light">
+                        <thead>
 
                             <tr>
 
@@ -166,6 +222,7 @@ Fees - {{ child.get_full_name }}
                                 <th>
                                     Status
                                 </th>
+
                                 <th>
                                     Action
                                 </th>
@@ -174,7 +231,6 @@ Fees - {{ child.get_full_name }}
 
                         </thead>
 
-
                         <tbody>
 
                             {% for invoice in invoices %}
@@ -182,54 +238,81 @@ Fees - {{ child.get_full_name }}
                                 <tr>
 
                                     <td>
-                                        {{ invoice.description }}
+
+                                        <div class="bmk-invoice-description">
+
+                                            <div class="bmk-invoice-description-icon">
+                                                <i class="bi bi-file-earmark-text"></i>
+                                            </div>
+
+                                            <span>
+                                                {{ invoice.description }}
+                                            </span>
+
+                                        </div>
+
                                     </td>
 
                                     <td>
-                                        ₦{{ invoice.amount|floatformat:2 }}
+
+                                        <span class="bmk-invoice-amount">
+                                            ₦{{ invoice.amount|floatformat:2 }}
+                                        </span>
+
                                     </td>
 
                                     <td>
-                                        {{ invoice.due_date|date:"M d, Y" }}
+
+                                        <span class="bmk-due-date">
+
+                                            <i class="bi bi-calendar3"></i>
+
+                                            {{ invoice.due_date|date:"M d, Y" }}
+
+                                        </span>
+
                                     </td>
 
                                     <td>
 
                                         {% if invoice.status == "paid" %}
 
-                                            <span class="badge bg-success">
+                                            <span class="bmk-payment-status bmk-status-paid">
                                                 Paid
                                             </span>
 
                                         {% elif invoice.status == "partial" %}
 
-                                            <span class="badge bg-warning text-dark">
+                                            <span class="bmk-payment-status bmk-status-partial">
                                                 Partially Paid
                                             </span>
 
                                         {% elif invoice.status == "unpaid" %}
 
-                                            <span class="badge bg-danger">
+                                            <span class="bmk-payment-status bmk-status-unpaid">
                                                 Unpaid
                                             </span>
 
                                         {% else %}
 
-                                            <span class="badge bg-secondary">
+                                            <span class="bmk-payment-status bmk-status-other">
                                                 {{ invoice.get_status_display }}
                                             </span>
 
                                         {% endif %}
 
                                     </td>
+
                                     <td>
+
                                         <a
                                             href="{% url 'accounts:parent_invoice_payment_history' invoice.id %}"
-                                            class="btn btn-sm btn-outline-primary"
+                                            class="bmk-payment-history-btn"
                                         >
                                             <i class="bi bi-clock-history"></i>
                                             Payment History
                                         </a>
+
                                     </td>
 
                                 </tr>
@@ -244,9 +327,17 @@ Fees - {{ child.get_full_name }}
 
             {% else %}
 
-                <div class="text-center py-4">
+                <div class="bmk-no-invoices">
 
-                    <p class="text-muted mb-0">
+                    <div class="bmk-no-invoices-icon">
+                        <i class="bi bi-receipt"></i>
+                    </div>
+
+                    <h6>
+                        No Fees Assigned
+                    </h6>
+
+                    <p>
                         No fees have been assigned for this term.
                     </p>
 
@@ -256,30 +347,34 @@ Fees - {{ child.get_full_name }}
 
         </div>
 
-    </div>
+    {% else %}
 
-{% else %}
+        <!-- =========================
+             NO CURRENT ENROLLMENT
+             ========================= -->
 
-    <div class="card border-0 shadow-sm">
+        <div class="bmk-no-enrollment">
 
-        <div class="card-body text-center py-5">
+            <div class="bmk-no-enrollment-icon">
+                <i class="bi bi-person-exclamation"></i>
+            </div>
 
-            <h5 class="fw-bold">
+            <h5>
                 No Current Enrollment
             </h5>
 
-            <p class="text-muted mb-0">
+            <p>
                 There is no current enrollment information
                 available for this child.
             </p>
 
         </div>
 
-    </div>
-
-{% endif %}
-
+    {% endif %}
 
 </div>
+
+
+</section>
 
 {% endblock %}

@@ -1,6 +1,11 @@
 {% extends "website/base.html" %}
 {% load static %}
+{% block extra_css %}
 
+<link rel="stylesheet" href="{% static 'website/css/home.css' %}">
+<link rel="stylesheet" href="{% static 'website/css/safeguarding.css' %}">
+
+{% endblock %}
 {% block title %}
     BMK Academy | Baki and Mairam Kwasari Nursery and Primary School
 {% endblock %}
@@ -8,117 +13,117 @@
 
 {% block content %}
 
+<div class="bmk-home">
+    <!-- =========================
+        HERO CAROUSEL
+    ========================= -->
 
-<!-- =========================
-     HERO CAROUSEL
-========================= -->
 
+    <section class="bmk-hero">
 
-<section class="bmk-hero">
+        {% if hero_slides %}
 
-    {% if hero_slides %}
-
-        <div
-            id="bmkHeroCarousel"
+        <div id="bmkHeroCarousel"
             class="carousel slide carousel-fade"
             data-bs-ride="carousel"
-            data-bs-interval="6000"
-        >
+            data-bs-interval="6000">
 
-            <!-- Carousel Indicators -->
-            <div class="carousel-indicators">
+                <!-- Carousel Indicators -->
+                <div class="carousel-indicators">
 
-                {% for slide in hero_slides %}
+                    {% for slide in hero_slides %}
 
-                    <button
-                        type="button"
-                        data-bs-target="#bmkHeroCarousel"
-                        data-bs-slide-to="{{ forloop.counter0 }}"
-                        {% if forloop.first %}
-                            class="active"
-                            aria-current="true"
-                        {% endif %}
-                        aria-label="Slide {{ forloop.counter }}"
-                    ></button>
+                        <button
+                            type="button"
+                            data-bs-target="#bmkHeroCarousel"
+                            data-bs-slide-to="{{ forloop.counter0 }}"
+                            {% if forloop.first %}
+                                class="active"
+                                aria-current="true"
+                            {% endif %}
+                            aria-label="Slide {{ forloop.counter }}"
+                        ></button>
 
-                {% endfor %}
+                    {% endfor %}
 
-            </div>
-
-
-            <!-- Carousel Slides -->
-            <div class="carousel-inner">
-
-                {% for slide in hero_slides %}
-
-                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
-
-                        <!-- Slide Image -->
-                        <img
-                            src="{{ slide.image.url }}"
-                            class="bmk-hero-image"
-                            alt="{{ slide.title }}"
-                        >
+                </div>
 
 
-                        <!-- Dark Gradient Overlay -->
-                        <div class="bmk-hero-overlay"></div>
+                <!-- Carousel Slides -->
+                <div class="carousel-inner">
+
+                    {% for slide in hero_slides %}
+
+                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+
+                            <!-- Slide Image -->
+                            <img
+                                src="{{ slide.image.url }}"
+                                class="bmk-hero-image"
+                                alt="{{ slide.title }}"
+                            >
 
 
-                        <!-- Slide Content -->
-                        <div class="carousel-caption bmk-hero-content">
-
-                            <div class="container">
-
-                                <div class="row">
-
-                                    <div class="col-lg-8 col-xl-7 text-start">
-
-                                        <!-- BMK Badge -->
-                                        <span class="bmk-hero-badge">
-
-                                            <i class="bi bi-mortarboard-fill me-2"></i>
-
-                                            BMK Academy
-
-                                        </span>
+                            <!-- Dark Gradient Overlay -->
+                            <div class="bmk-hero-overlay"></div>
 
 
-                                        <!-- Slide Title -->
-                                        <h1 class="bmk-hero-title">
+                            <!-- Slide Content -->
+                            <div class="carousel-caption bmk-hero-content">
 
-                                            {{ slide.title }}
+                                <div class="container">
 
-                                        </h1>
+                                    <div class="row">
+
+                                        <div class="col-lg-8 col-xl-7 text-start">
+
+                                            <!-- BMK Badge -->
+                                            <span class="bmk-hero-badge">
+
+                                                <i class="bi bi-mortarboard-fill me-2"></i>
+
+                                                BMK Academy
+
+                                            </span>
 
 
-                                        <!-- Slide Subtitle -->
-                                        {% if slide.subtitle %}
+                                            <!-- Slide Title -->
+                                            <h1 class="bmk-hero-title">
 
-                                            <p class="bmk-hero-subtitle">
+                                                {{ slide.title }}
 
-                                                {{ slide.subtitle }}
-
-                                            </p>
-
-                                        {% endif %}
+                                            </h1>
 
 
-                                        <!-- Slide Button -->
-                                        {% if slide.button_text and slide.button_url %}
+                                            <!-- Slide Subtitle -->
+                                            {% if slide.subtitle %}
 
-                                            <a
-                                                href="{{ slide.button_url }}"
-                                                class="btn bmk-hero-button"
-                                            >
+                                                <p class="bmk-hero-subtitle">
 
-                                                {{ slide.button_text }}
+                                                    {{ slide.subtitle }}
 
-                                                <i class="bi bi-arrow-right ms-2"></i>
+                                                </p>
 
-                                            </a>
+                                            {% endif %}
 
-                                        {% endif %}
+
+                                            <!-- Slide Button -->
+                                            {% if slide.button_text and slide.button_url %}
+
+                                                <a
+                                                    href="{{ slide.button_url }}"
+                                                    class="btn bmk-hero-button"
+                                                >
+
+                                                    {{ slide.button_text }}
+
+                                                    <i class="bi bi-arrow-right ms-2"></i>
+
+                                                </a>
+
+                                            {% endif %}
+
+                                        </div>
 
                                     </div>
 
@@ -128,1230 +133,1372 @@
 
                         </div>
 
-                    </div>
+                    {% endfor %}
 
-                {% endfor %}
-
-            </div>
+                </div>
 
 
-            <!-- Previous Button -->
-            <button
-                class="carousel-control-prev bmk-carousel-control"
-                type="button"
-                data-bs-target="#bmkHeroCarousel"
-                data-bs-slide="prev"
-            >
-
-                <span class="bmk-carousel-arrow">
-
-                    <i class="bi bi-chevron-left"></i>
-
-                </span>
-
-                <span class="visually-hidden">
-                    Previous
-                </span>
-
-            </button>
-
-
-            <!-- Next Button -->
-            <button
-                class="carousel-control-next bmk-carousel-control"
-                type="button"
-                data-bs-target="#bmkHeroCarousel"
-                data-bs-slide="next"
-            >
-
-                <span class="bmk-carousel-arrow">
-
-                    <i class="bi bi-chevron-right"></i>
-
-                </span>
-
-                <span class="visually-hidden">
-                    Next
-                </span>
-
-            </button>
-
-        </div>
-
-
-    {% else %}
-
-        <!-- Fallback when there are no carousel slides -->
-
-        <div class="bmk-hero-empty">
-
-            <div class="container text-center">
-
-                <span class="bmk-hero-badge">
-
-                    <i class="bi bi-mortarboard-fill me-2"></i>
-
-                    Welcome to BMK Academy
-
-                </span>
-
-
-                <h1 class="display-4 fw-bold mt-3">
-
-                    Building Bright Futures
-
-                </h1>
-
-
-                <p class="lead">
-
-                    Baki and Mairam Kwasari Nursery and Primary School
-
-                </p>
-
-            </div>
-
-        </div>
-
-    {% endif %}
-
-</section> 
-
-{% if popup_event %}
-
-<div
-    class="modal fade"
-    id="schoolEventModal"
-    tabindex="-1"
-    aria-labelledby="schoolEventModalLabel"
-    aria-hidden="true"
->
-    <div class="modal-dialog modal-dialog-centered">
-
-        <div class="modal-content border-0 shadow-lg">
-
-            <!-- HEADER -->
-            <div class="modal-header">
-
-                <h5
-                    class="modal-title fw-bold"
-                    id="schoolEventModalLabel"
-                >
-                    {{ popup_event.title }}
-                </h5>
-
+                <!-- Previous Button -->
                 <button
+                    class="carousel-control-prev bmk-carousel-control"
                     type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                ></button>
+                    data-bs-target="#bmkHeroCarousel"
+                    data-bs-slide="prev"
+                >
+
+                    <span class="bmk-carousel-arrow">
+
+                        <i class="bi bi-chevron-left"></i>
+
+                    </span>
+
+                    <span class="visually-hidden">
+                        Previous
+                    </span>
+
+                </button>
+
+
+                <!-- Next Button -->
+                <button
+                    class="carousel-control-next bmk-carousel-control"
+                    type="button"
+                    data-bs-target="#bmkHeroCarousel"
+                    data-bs-slide="next"
+                >
+
+                    <span class="bmk-carousel-arrow">
+
+                        <i class="bi bi-chevron-right"></i>
+
+                    </span>
+
+                    <span class="visually-hidden">
+                        Next
+                    </span>
+
+                </button>
 
             </div>
 
 
-            <!-- BODY -->
-            <div class="modal-body p-0">
+        {% else %}
 
-                {% if popup_event.image %}
+            <!-- Fallback when there are no carousel slides -->
+
+            <div class="bmk-hero-empty">
+
+                <div class="container text-center">
+
+                    <span class="bmk-hero-badge">
+
+                        <i class="bi bi-mortarboard-fill me-2"></i>
+
+                        Welcome to BMK Academy
+
+                    </span>
+
+
+                    <h1 class="display-4 fw-bold mt-3">
+
+                        Building Bright Futures
+
+                    </h1>
+
+
+                    <p class="lead">
+
+                        Baki and Mairam Kwasari Nursery and Primary School
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        {% endif %}
+
+    </section> 
+
+    {% if popup_event %}
+
+    <div
+        class="modal fade bmk-event-modal"
+        id="schoolEventModal"
+        tabindex="-1"
+        aria-labelledby="schoolEventModalLabel"
+        aria-hidden="true"
+    >
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+
+            <div class="modal-content bmk-event-modal-content">
+
+                <!-- HEADER -->
+                <div class="modal-header bmk-event-modal-header">
+
+                    <div>
+                
+                        <span class="bmk-event-modal-label">
+                            BMK ACADEMY EVENT
+                        </span>
+                
+                        <h5
+                            class="modal-title"
+                            id="schoolEventModalLabel"
+                        >
+                            {{ popup_event.title }}
+                        </h5>
+                
+                    </div>
+                
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                    ></button>
+                
+                </div>
+
+
+                <!-- BODY -->
+                <div class="modal-body p-0">
+
+                    {% if popup_event.image %}
 
                     <img
                         src="{{ popup_event.image.url }}"
                         alt="{{ popup_event.title }}"
-                        class="w-100"
-                        style="max-height: 280px; object-fit: cover;"
+                        class="bmk-event-modal-image"
                     >
-
-                {% endif %}
-
-
-                <div class="p-4">
-
-                    <div class="mb-3">
-
-                        <div class="mb-2">
-                            <i class="bi bi-calendar-event me-2 text-primary"></i>
-
-                            <strong>
-                                {{ popup_event.event_date|date:"l, j F Y" }}
-                            </strong>
-                        </div>
-
-
-                        {% if popup_event.event_time %}
-
-                            <div class="mb-2">
-                                <i class="bi bi-clock me-2 text-primary"></i>
-
-                                {{ popup_event.event_time|time:"g:i A" }}
-                            </div>
-
-                        {% endif %}
-
-
-                        {% if popup_event.venue %}
-
-                            <div>
-                                <i class="bi bi-geo-alt me-2 text-primary"></i>
-
-                                {{ popup_event.venue }}
-                            </div>
-
-                        {% endif %}
-
-                    </div>
-
-
-                    {% if popup_event.description %}
-
-                        <p class="text-muted mb-0">
-                            {{ popup_event.description }}
-                        </p>
 
                     {% endif %}
 
-                </div>
 
-            </div>
-
-
-            <!-- FOOTER -->
-            <div class="modal-footer">
-
-                <button
-                    type="button"
-                    class="btn btn-outline-secondary"
-                    data-bs-dismiss="modal"
-                >
-                    Continue to BMK Academy
-                </button>
-            
-            
-                <a
-                    href="{% url 'website:event_detail' popup_event.slug %}"
-                    class="btn btn-primary"
-                >
-                    View Event Details
-                </a>
-            
-            </div>
-
-        </div>
-
-    </div>
-</div>
-
-{% endif %}
-
-
-<!-- =========================================
-ABOUT BMK ACADEMY
-========================================= -->
-
-<section id="about" class="bmk-about py-5">
-
-    <div class="container py-lg-5">
-
-        <div class="row align-items-center g-5">
-
-            <!-- Left: Image -->
-            <div class="col-lg-6">
-
-                <div class="bmk-about-image-wrapper">
-
-                    <!--
-                        IMAGE NEEDED:
-                        Upload a real BMK photograph here.
-
-                        Recommended:
-                        - pupils learning
-                        - teacher with pupils
-                        - school activity
-                        - landscape photograph
-                    -->
-
-                    <img
-                        src="{% static 'website/images/IMG_20260819_101121.jpg' %}"
-                        alt="Students at BMK Academy"
-                        class="bmk-about-image"
-                    >
-
-                    <div class="bmk-about-image-card">
-
-                        <i class="bi bi-mortarboard-fill"></i>
-
-                        <div>
-                            <strong>BMK Academy</strong>
-                            <small>Learning • Character • Growth</small>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- Right: Content -->
-            <div class="col-lg-6">
-
-                <span class="bmk-section-label">
-                    ABOUT BMK ACADEMY
-                </span>
-
-                <h2 class="bmk-section-title">
-                    Building Strong Foundations for a Bright Future
-                </h2>
-
-                <p class="bmk-about-text">
-                    Baki and Mairam Kwasari Nursery and Primary School,
-                    known as BMK Academy, was established within SCL Farm
-                    to provide education for the children of SCL staff.
-                </p>
-
-                <p class="bmk-about-text">
-                    Commissioned on 19 October 2024, BMK Academy began with
-                    Nursery 1 and Nursery 2. As our first learners have grown,
-                    the school has continued to develop with them, with our
-                    Nursery 2 pupils now progressing into Primary 1.
-                </p>
-
-
-                <!-- Feature 1 -->
-
-                <div class="bmk-about-feature">
-
-                    <div class="bmk-about-feature-icon">
-
-                        <i class="bi bi-book"></i>
-
-                    </div>
-
-                    <div>
-
-                        <h5>A Strong Beginning</h5>
-
-                        <p>
-                            Providing children with a foundation for their early
-                            educational journey.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Feature 2 -->
-
-                <div class="bmk-about-feature">
-
-                    <div class="bmk-about-feature-icon">
-
-                        <i class="bi bi-heart"></i>
-
-                    </div>
-
-                    <div>
-
-                        <h5>Growing With Our Learners</h5>
-
-                        <p>
-                            Developing alongside our pupils as they progress from
-                            the nursery stage into primary education.   
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Feature 3 -->
-
-                <div class="bmk-about-feature">
-
-                    <div class="bmk-about-feature-icon">
-
-                        <i class="bi bi-stars"></i>
-
-                    </div>
-
-                    <div>
-
-                        <h5>Education for Service</h5>
-
-                        <p>
-                            Guided by our motto, we seek to develop children who
-                            can use their knowledge, character and abilities in
-                            meaningful service.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <a
-                    href="#academics"
-                    class="btn btn-primary px-4 py-3 mt-3"
-                >
-                    Discover Our Approach
-
-                    <i class="bi bi-arrow-right ms-2"></i>
-
-                </a>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-<!-- =========================================
-WHY CHOOSE BMK / OUR JOURNEY
-========================================= -->
-
-<section class="bmk-journey">
-
-    <div class="container py-5 py-lg-6">
-
-        <!-- Section Heading -->
-        <div class="row justify-content-center text-center mb-5">
-
-            <div class="col-lg-8">
-
-                <span class="bmk-section-label">
-                    OUR JOURNEY
-                </span>
-
-                <h2 class="bmk-section-title">
-                    Growing With Our Children
-                </h2>
-
-                <p class="bmk-journey-intro">
-                    BMK Academy began its journey with Nursery 1 and
-                    Nursery 2. Today, our first learners are taking
-                    their next step into Primary 1, marking an important
-                    stage in the growth of our school community.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <!-- Journey Cards -->
-        <div class="row g-4">
-
-            <!-- Card 1 -->
-            <div class="col-md-4">
-
-                <div class="bmk-journey-card h-100">
-
-                    <div class="bmk-journey-icon">
-                        <i class="bi bi-house-heart-fill"></i>
-                    </div>
-
-                    <span class="bmk-journey-number">
-                        01
-                    </span>
-
-                    <h4>
-                        A Strong Beginning
-                    </h4>
-
-                    <p>
-                        BMK Academy began with Nursery 1 and Nursery 2,
-                        creating an early learning environment where
-                        children could begin their educational journey.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <!-- Card 2 -->
-            <div class="col-md-4">
-
-                <div class="bmk-journey-card h-100 featured">
-
-                    <div class="bmk-journey-icon">
-                        <i class="bi bi-arrow-up-circle-fill"></i>
-                    </div>
-
-                    <span class="bmk-journey-number">
-                        02
-                    </span>
-
-                    <h4>
-                        Growing With Our Learners
-                    </h4>
-
-                    <p>
-                        As our pupils have grown, BMK Academy has
-                        continued to grow with them, expanding beyond
-                        the nursery stage.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <!-- Card 3 -->
-            <div class="col-md-4">
-
-                <div class="bmk-journey-card h-100">
-
-                    <div class="bmk-journey-icon">
-                        <i class="bi bi-mortarboard-fill"></i>
-                    </div>
-
-                    <span class="bmk-journey-number">
-                        03
-                    </span>
-
-                    <h4>
-                        The Journey Continues
-                    </h4>
-
-                    <p>
-                        Our Nursery 2 learners are now progressing into
-                        Primary 1, opening a new chapter in their
-                        academic journey and in the growth of BMK Academy.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- Bottom Statement -->
-        <div class="bmk-journey-bottom text-center">
-
-            <div class="bmk-journey-line"></div>
-
-            <p>
-                From the first steps of early learning to the next
-                stages of education, we are committed to growing
-                alongside every child.
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-<!-- UPCOMING EVENTS -->
-<section class="py-5 bg-light">
-
-    <div class="container">
-
-        <div class="text-center mb-5">
-
-            <span class="text-primary fw-semibold">
-                SCHOOL EVENTS
-            </span>
-
-            <h2 class="fw-bold mt-2">
-                Upcoming Events
-            </h2>
-
-            <p class="text-muted mx-auto" style="max-width: 700px;">
-                Stay informed about upcoming activities,
-                celebrations and important events at BMK Academy.
-            </p>
-
-        </div>
-
-
-        {% if upcoming_events %}
-
-            <div class="row g-4">
-
-                {% for event in upcoming_events %}
-
-                    <div class="col-md-6 col-lg-4">
-
-                        <div class="card h-100 border-0 shadow-sm">
-
-                            {% if event.image %}
-
-                                <img
-                                    src="{{ event.image.url }}"
-                                    class="card-img-top"
-                                    alt="{{ event.title }}"
-                                    style="
-                                        height: 220px;
-                                        object-fit: cover;
-                                    "
-                                >
-
-                            {% endif %}
-
-
-                            <div class="card-body p-4">
-
-                                <h4 class="fw-bold mb-3">
-                                    {{ event.title }}
-                                </h4>
-
-
-                                <div class="text-muted mb-3">
-
-                                    <div class="mb-2">
-
-                                        <i class="bi bi-calendar-event text-primary me-2"></i>
-
-                                        {{ event.event_date|date:"j F Y" }}
-
-                                    </div>
-
-
-                                    {% if event.event_time %}
-
-                                        <div class="mb-2">
-
-                                            <i class="bi bi-clock text-primary me-2"></i>
-
-                                            {{ event.event_time|time:"g:i A" }}
-
-                                        </div>
-
-                                    {% endif %}
-
-
-                                    {% if event.venue %}
-
-                                        <div>
-
-                                            <i class="bi bi-geo-alt text-primary me-2"></i>
-
-                                            {{ event.venue }}
-
-                                        </div>
-
-                                    {% endif %}
-
+                    <div class="bmk-event-modal-body">
+
+                        <div class="bmk-event-details">
+                    
+                            <div class="bmk-event-detail">
+                    
+                                <div class="bmk-event-detail-icon">
+                                    <i class="bi bi-calendar-event"></i>
                                 </div>
+                    
+                                <div>
+                                    <span>Date</span>
+                                    <strong>
+                                        {{ popup_event.event_date|date:"l, j F Y" }}
+                                    </strong>
+                                </div>
+                    
+                            </div>
+                    
+                    
+                            {% if popup_event.event_time %}
+                    
+                                <div class="bmk-event-detail">
+                    
+                                    <div class="bmk-event-detail-icon">
+                                        <i class="bi bi-clock"></i>
+                                    </div>
+                    
+                                    <div>
+                                        <span>Time</span>
+                                        <strong>
+                                            {{ popup_event.event_time|time:"g:i A" }}
+                                        </strong>
+                                    </div>
+                    
+                                </div>
+                    
+                            {% endif %}
+                    
+                    
+                            {% if popup_event.venue %}
+                    
+                                <div class="bmk-event-detail">
+                    
+                                    <div class="bmk-event-detail-icon">
+                                        <i class="bi bi-geo-alt"></i>
+                                    </div>
+                    
+                                    <div>
+                                        <span>Venue</span>
+                                        <strong>
+                                            {{ popup_event.venue }}
+                                        </strong>
+                                    </div>
+                    
+                                </div>
+                    
+                            {% endif %}
+                    
+                        </div>
+                    
+                    
+                        {% if popup_event.description %}
+                    
+                            <div class="bmk-event-description">
+                    
+                                <span>ABOUT THIS EVENT</span>
+                    
+                                <p>
+                                    {{ popup_event.description }}
+                                </p>
+                    
+                            </div>
+                    
+                        {% endif %}
+                    
+                    </div>
+
+                </div>
 
 
-                                {% if event.description %}
+                <!-- FOOTER -->
+                <div class="modal-footer bmk-event-modal-footer">
 
-                                    <p class="text-muted">
+                    <button
+                        type="button"
+                        class="btn bmk-event-dismiss-btn"
+                        data-bs-dismiss="modal"
+                    >
+                        Continue to BMK Academy
+                    </button>
+                
+                
+                    <a
+                        href="{% url 'website:event_detail' popup_event.slug %}"
+                        class="btn btn-primary"
+                    >
+                        View Event Details
+                    </a>
+                
+                </div>
 
-                                        {{ event.description|truncatewords:20 }}
+            </div>
 
-                                    </p>
+        </div>
+    </div>
+
+    {% endif %}
+
+
+    <!-- =========================================
+     ABOUT BMK ACADEMY
+    ========================================= -->
+
+    <section id="about" class="bmk-about py-5">
+
+    
+        <div class="container py-lg-5">
+        
+            <div class="row align-items-center g-5">
+        
+                <!-- IMAGE -->
+                <div class="col-lg-6">
+        
+                    <div class="bmk-about-image-wrapper">
+        
+                        <img
+                            src="{% static 'website/images/IMG_20260819_101121.jpg' %}"
+                            alt="Students at BMK Academy"
+                            class="bmk-about-image"
+                        >
+        
+                        <div class="bmk-about-image-card">
+        
+                            <i class="bi bi-mortarboard-fill"></i>
+        
+                            <div>
+                                <strong>BMK Academy</strong>
+                                <small>
+                                    Learning • Character • Growth
+                                </small>
+                            </div>
+        
+                        </div>
+        
+                    </div>
+        
+                </div>
+        
+        
+                <!-- CONTENT -->
+                <div class="col-lg-6">
+        
+                    <span class="bmk-section-label">
+                        ABOUT BMK ACADEMY
+                    </span>
+        
+                    <h2 class="bmk-section-title">
+                        Building Strong Foundations for a Bright Future
+                    </h2>
+        
+                    <p class="bmk-about-text">
+                        Baki and Mairam Kwasari Nursery and Primary School,
+                        known as BMK Academy, was established within SCL Farm
+                        to provide quality education for the children of SCL
+                        staff.
+                    </p>
+        
+                    <p class="bmk-about-text">
+                        Commissioned on 19 October 2024, BMK Academy began
+                        with Nursery 1 and Nursery 2. As our first learners
+                        have grown, the school has continued to develop
+                        alongside them, with our Nursery 2 pupils now
+                        progressing into Primary 1.
+                    </p>
+        
+        
+                    <!-- FEATURE 1 -->
+        
+                    <div class="bmk-about-feature">
+        
+                        <div class="bmk-about-feature-icon">
+                            <i class="bi bi-book"></i>
+                        </div>
+        
+                        <div>
+        
+                            <h5>
+                                Strong Educational Foundations
+                            </h5>
+        
+                            <p>
+                                Giving children the knowledge, confidence and
+                                learning habits they need for the next stages
+                                of their educational journey.
+                            </p>
+        
+                        </div>
+        
+                    </div>
+        
+        
+                    <!-- FEATURE 2 -->
+        
+                    <div class="bmk-about-feature">
+        
+                        <div class="bmk-about-feature-icon">
+                            <i class="bi bi-people-fill"></i>
+                        </div>
+        
+                        <div>
+        
+                            <h5>
+                                Growing With Our Learners
+                            </h5>
+        
+                            <p>
+                                Developing alongside our pupils as they move
+                                from the nursery stage into primary education.
+                            </p>
+        
+                        </div>
+        
+                    </div>
+        
+        
+                    <!-- FEATURE 3 -->
+        
+                    <div class="bmk-about-feature">
+        
+                        <div class="bmk-about-feature-icon">
+                            <i class="bi bi-stars"></i>
+                        </div>
+        
+                        <div>
+        
+                            <h5>
+                                Education for Service
+                            </h5>
+        
+                            <p>
+                                Building character, responsibility and a
+                                willingness to use knowledge and abilities
+                                in meaningful service to others.
+                            </p>
+        
+                        </div>
+        
+                    </div>
+        
+        
+                    <a
+                        href="{% url 'website:about' %}"
+                        class="btn btn-primary px-4 py-3 mt-3"
+                    >
+                        Discover Our Story
+                        <i class="bi bi-arrow-right ms-2"></i>
+                    </a>
+        
+                </div>
+        
+            </div>
+        
+        </div>
+    
+    
+    </section>
+    
+
+    <!-- =========================================
+    WHY CHOOSE BMK / OUR JOURNEY
+    ========================================= -->
+
+    <!-- OUR JOURNEY -->
+    <section class="bmk-journey">
+        <div class="container py-5 py-lg-6">
+
+            <!-- Section heading -->
+            <div class="row justify-content-center text-center mb-5 mb-lg-6">
+                <div class="col-lg-8">
+                    <span class="bmk-section-label">OUR JOURNEY</span>
+
+                    <h2 class="bmk-section-title">
+                        Growing With Our Children
+                    </h2>
+
+                    <p class="bmk-journey-intro">
+                        From our first nursery learners to the next stage of
+                        primary education, BMK Academy continues to grow
+                        alongside the children entrusted to us.
+                    </p>
+                </div>
+            </div>
+
+
+            <!-- Journey timeline -->
+            <div class="bmk-journey-timeline">
+
+                <!-- Journey item 1 -->
+                <div class="bmk-journey-item bmk-journey-item-one">
+
+                    <div class="bmk-journey-content">
+                        <div class="bmk-journey-card">
+
+                            <div class="bmk-journey-icon">
+                                <i class="bi bi-house-heart-fill"></i>
+                            </div>
+
+                            <span class="bmk-journey-stage">
+                                THE BEGINNING
+                            </span>
+
+                            <h3>A Strong Beginning</h3>
+
+                            <p>
+                                BMK Academy began with Nursery 1 and Nursery 2,
+                                creating a warm and nurturing environment where
+                                our young learners could take their first steps
+                                in education.
+                            </p>
+
+                        </div>
+                    </div>
+
+                    <div class="bmk-journey-marker">
+                        <span>01</span>
+                    </div>
+
+                </div>
+
+
+                <!-- Journey item 2 -->
+                <div class="bmk-journey-item bmk-journey-item-two">
+
+                    <div class="bmk-journey-content">
+                        <div class="bmk-journey-card">
+
+                            <div class="bmk-journey-icon">
+                                <i class="bi bi-stars"></i>
+                            </div>
+
+                            <span class="bmk-journey-stage">
+                                GROWING TOGETHER
+                            </span>
+
+                            <h3>Growing With Our Learners</h3>
+
+                            <p>
+                                As our pupils have grown, BMK Academy has grown
+                                with them, continuing to provide an environment
+                                where curiosity, character and learning can
+                                flourish.
+                            </p>
+
+                        </div>
+                    </div>
+
+                    <div class="bmk-journey-marker">
+                        <span>02</span>
+                    </div>
+
+                </div>
+
+
+                <!-- Journey item 3 -->
+                <div class="bmk-journey-item bmk-journey-item-three">
+
+                    <div class="bmk-journey-content">
+                        <div class="bmk-journey-card">
+
+                            <div class="bmk-journey-icon">
+                                <i class="bi bi-mortarboard-fill"></i>
+                            </div>
+
+                            <span class="bmk-journey-stage">
+                                THE NEXT CHAPTER
+                            </span>
+
+                            <h3>The Journey Continues</h3>
+
+                            <p>
+                                Our Nursery 2 learners are now progressing into
+                                Primary 1, opening a new chapter in their
+                                academic journey and in the continued growth
+                                of BMK Academy.
+                            </p>
+
+                        </div>
+                    </div>
+
+                    <div class="bmk-journey-marker">
+                        <span>03</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Journey conclusion -->
+            <div class="bmk-journey-bottom">
+
+                <div class="bmk-journey-bottom-icon">
+                    <i class="bi bi-arrow-up-right-circle-fill"></i>
+                </div>
+
+                <div>
+                    <span>THE BMK JOURNEY</span>
+
+                    <p>
+                        From the first steps of early learning to the next
+                        stages of education, we remain committed to growing
+                        alongside every child.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+    <!-- UPCOMING EVENTS -->
+    <section class="bmk-upcoming-events py-5">
+
+        <div class="container">
+
+            <div class="bmk-events-heading text-center mb-5">
+
+                <span class="text-primary fw-semibold">
+                    SCHOOL EVENTS
+                </span>
+
+                <h2 class="fw-bold mt-2">
+                    Upcoming Events
+                </h2>
+
+                <p class="text-muted mx-auto" style="max-width: 700px;">
+                    Stay informed about upcoming activities,
+                    celebrations and important events at BMK Academy.
+                </p>
+
+            </div>
+
+
+            {% if upcoming_events %}
+
+                <div class="row g-4">
+
+                    {% for event in upcoming_events %}
+
+                        <div class="col-md-6 col-lg-4">
+
+                            <div class="card bmk-event-card h-100">
+
+                                {% if event.image %}
+
+                                    <img
+                                        src="{{ event.image.url }}"
+                                        class="card-img-top bmk-event-card-image"
+                                        alt="{{ event.title }}"
+                                        
+                                    >
 
                                 {% endif %}
 
 
-                                <a
-                                    href="{% url 'website:event_detail' event.slug %}"
-                                    class="btn btn-outline-primary"
-                                >
-                                    View Event
-                                </a>
+                                <div class="card-body bmk-event-card-body p-4">
 
-                            </div>
+                                    <h4 class="fw-bold mb-3">
+                                        {{ event.title }}
+                                    </h4>
 
-                        </div>
 
-                    </div>
+                                    <div class="text-muted mb-3">
 
-                {% endfor %}
+                                        <div class="mb-2">
 
-            </div>
+                                            <i class="bi bi-calendar-event text-primary me-2"></i>
 
+                                            {{ event.event_date|date:"j F Y" }}
 
-            <div class="text-center mt-5">
+                                        </div>
 
-                <a
-                    href="{% url 'website:events' %}"
-                    class="btn btn-primary"
-                >
-                    View All Events
-                </a>
 
-            </div>
+                                        {% if event.event_time %}
 
-        {% else %}
+                                            <div class="mb-2">
 
-            <div class="text-center">
+                                                <i class="bi bi-clock text-primary me-2"></i>
 
-                <p class="text-muted">
-                    There are currently no upcoming school events.
-                </p>
+                                                {{ event.event_time|time:"g:i A" }}
 
-            </div>
+                                            </div>
 
-        {% endif %}
+                                        {% endif %}
 
-    </div>
 
-</section>
-<!-- =========================================
-ACADEMIC APPROACH
-========================================= -->
+                                        {% if event.venue %}
 
-<section id="academics" class="bmk-academics">
+                                            <div>
 
-    <div class="container py-5 py-lg-6">
+                                                <i class="bi bi-geo-alt text-primary me-2"></i>
 
-        <div class="row align-items-center g-5">
+                                                {{ event.venue }}
 
-            <!-- Left: Introduction -->
-            <div class="col-lg-5">
+                                            </div>
 
-                <span class="bmk-section-label">
-                    OUR ACADEMIC APPROACH
-                </span>
-
-                <h2 class="bmk-section-title">
-                    Learning That Grows With Every Child
-                </h2>
-
-                <p class="bmk-academics-intro">
-                    At BMK Academy, we understand that children develop
-                    at different stages and in different ways. Our
-                    learning journey is designed to provide a strong
-                    foundation while supporting children as they progress
-                    through their education.
-                </p>
-
-                <p class="bmk-academics-intro">
-                    From the early years of Nursery education to the
-                    beginning of Primary school, we aim to create an
-                    environment where children can build knowledge,
-                    develop confidence and grow as learners.
-                </p>
-
-                <a
-                    href="#admissions"
-                    class="btn btn-primary px-4 py-3 mt-2"
-                >
-                    Learn About Admissions
-                    <i class="bi bi-arrow-right ms-2"></i>
-                </a>
-
-            </div>
-
-
-            <!-- Right: Learning Areas -->
-            <div class="col-lg-7">
-
-                <div class="row g-4">
-
-                    <!-- Learning Card -->
-                    <div class="col-md-6">
-
-                        <div class="bmk-academic-card">
-
-                            <div class="bmk-academic-icon">
-                                <i class="bi bi-book-half"></i>
-                            </div>
-
-                            <h4>
-                                Foundational Learning
-                            </h4>
-
-                            <p>
-                                Helping children develop the essential
-                                knowledge and skills they need as they
-                                progress through their education.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- Learning Card -->
-                    <div class="col-md-6">
-
-                        <div class="bmk-academic-card">
-
-                            <div class="bmk-academic-icon">
-                                <i class="bi bi-lightbulb-fill"></i>
-                            </div>
-
-                            <h4>
-                                Curiosity & Discovery
-                            </h4>
-
-                            <p>
-                                Encouraging children to ask questions,
-                                explore ideas and develop an interest
-                                in the world around them.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- Learning Card -->
-                    <div class="col-md-6">
-
-                        <div class="bmk-academic-card">
-
-                            <div class="bmk-academic-icon">
-                                <i class="bi bi-chat-heart-fill"></i>
-                            </div>
-
-                            <h4>
-                                Confidence & Expression
-                            </h4>
-
-                            <p>
-                                Supporting children as they develop
-                                confidence in communicating their ideas,
-                                participating and expressing themselves.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- Learning Card -->
-                    <div class="col-md-6">
-
-                        <div class="bmk-academic-card">
-
-                            <div class="bmk-academic-icon">
-                                <i class="bi bi-person-hearts"></i>
-                            </div>
-
-                            <h4>
-                                Whole-Child Development
-                            </h4>
-
-                            <p>
-                                Recognising that education is about more
-                                than academic knowledge and includes the
-                                development of positive values and social
-                                skills.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-<!-- =========================================
-SCHOOL LIFE & GALLERY
-========================================= -->
-
-<section class="py-5 bg-light">
-
-    <div class="container">
-
-        <!-- Section Heading -->
-        <div class="text-center mb-5">
-
-            <span class="text-primary fw-semibold">
-                SCHOOL LIFE
-            </span>
-
-            <h2 class="fw-bold mt-2">
-                Moments From Life at BMK
-            </h2>
-
-            <p class="text-muted mx-auto" style="max-width: 700px;">
-                A glimpse into learning, activities and everyday life
-                at BMK Academy.
-            </p>
-
-        </div>
-
-
-        {% if featured_photos %}
-
-            <div class="row g-3">
-
-                <!-- LARGE FEATURED PHOTO -->
-                {% with main_photo=featured_photos.0 %}
-
-                    <div class="col-lg-6">
-
-                        <a
-                            href="{% url 'gallery:photo_detail' main_photo.pk %}"
-                            class="text-decoration-none"
-                        >
-
-                            <div class="position-relative overflow-hidden rounded-4 shadow-sm h-100">
-
-                                <img
-                                    src="{{ main_photo.image.url }}"
-                                    alt="{{ main_photo.title }}"
-                                    class="gallery-main-photo"
-                                >
-
-                                <div class="gallery-overlay">
-
-                                    <div>
-
-                                        <span class="badge bg-primary mb-2">
-                                            {{ main_photo.category.name }}
-                                        </span>
-
-                                        <h4 class="text-white fw-bold mb-1">
-                                            {{ main_photo.title }}
-                                        </h4>
-
-                                        {% if main_photo.caption %}
-                                            <p class="text-white-50 mb-0">
-                                                {{ main_photo.caption|truncatewords:12 }}
-                                            </p>
                                         {% endif %}
 
                                     </div>
 
+
+                                    {% if event.description %}
+
+                                        <p class="text-muted">
+
+                                            {{ event.description|truncatewords:20 }}
+
+                                        </p>
+
+                                    {% endif %}
+
+
+                                    <a
+                                        href="{% url 'website:event_detail' event.slug %}"
+                                        class="btn bmk-event-view-btn"
+                                    >
+                                        View Event
+                                    </a>
+
                                 </div>
 
                             </div>
 
-                        </a>
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <div class="text-center mt-5">
+
+                    <a
+                        href="{% url 'website:events' %}"
+                        class="btn btn-primary"
+                    >
+                        View All Events
+                    </a>
+
+                </div>
+
+            {% else %}
+
+                <div class="text-center">
+
+                    <p class="text-muted">
+                        There are currently no upcoming school events.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+    <!-- =========================================
+    ACADEMIC APPROACH
+    ========================================= -->
+
+    <section id="academics" class="bmk-academics">
+
+        <div class="container py-5 py-lg-6">
+
+            <div class="row align-items-center g-5">
+
+                <!-- Left: Introduction -->
+                <div class="col-lg-5">
+
+                    <span class="bmk-section-label">
+                        OUR ACADEMIC APPROACH
+                    </span>
+
+                    <h2 class="bmk-section-title">
+                        Learning That Grows With Every Child
+                    </h2>
+
+                    <p class="bmk-academics-intro">
+                        At BMK Academy, we understand that children develop
+                        at different stages and in different ways. Our
+                        learning journey is designed to provide a strong
+                        foundation while supporting children as they progress
+                        through their education.
+                    </p>
+
+                    <p class="bmk-academics-intro">
+                        From the early years of Nursery education to the
+                        beginning of Primary school, we aim to create an
+                        environment where children can build knowledge,
+                        develop confidence and grow as learners.
+                    </p>
+
+                    <a
+                        href="#admissions"
+                        class="btn btn-primary px-4 py-3 mt-2"
+                    >
+                        Learn About Admissions
+                        <i class="bi bi-arrow-right ms-2"></i>
+                    </a>
+
+                </div>
+
+
+                <!-- Right: Learning Areas -->
+                <div class="col-lg-7">
+
+                    <div class="row g-4">
+
+                        <!-- Learning Card -->
+                        <div class="col-md-6">
+
+                            <div class="bmk-academic-card">
+
+                                <div class="bmk-academic-icon">
+                                    <i class="bi bi-book-half"></i>
+                                </div>
+
+                                <h4>
+                                    Foundational Learning
+                                </h4>
+
+                                <p>
+                                    Helping children develop the essential
+                                    knowledge and skills they need as they
+                                    progress through their education.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Learning Card -->
+                        <div class="col-md-6">
+
+                            <div class="bmk-academic-card">
+
+                                <div class="bmk-academic-icon">
+                                    <i class="bi bi-lightbulb-fill"></i>
+                                </div>
+
+                                <h4>
+                                    Curiosity & Discovery
+                                </h4>
+
+                                <p>
+                                    Encouraging children to ask questions,
+                                    explore ideas and develop an interest
+                                    in the world around them.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Learning Card -->
+                        <div class="col-md-6">
+
+                            <div class="bmk-academic-card">
+
+                                <div class="bmk-academic-icon">
+                                    <i class="bi bi-chat-heart-fill"></i>
+                                </div>
+
+                                <h4>
+                                    Confidence & Expression
+                                </h4>
+
+                                <p>
+                                    Supporting children as they develop
+                                    confidence in communicating their ideas,
+                                    participating and expressing themselves.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Learning Card -->
+                        <div class="col-md-6">
+
+                            <div class="bmk-academic-card">
+
+                                <div class="bmk-academic-icon">
+                                    <i class="bi bi-person-hearts"></i>
+                                </div>
+
+                                <h4>
+                                    Whole-Child Development
+                                </h4>
+
+                                <p>
+                                    Recognising that education is about more
+                                    than academic knowledge and includes the
+                                    development of positive values and social
+                                    skills.
+                                </p>
+
+                            </div>
+
+                        </div>
 
                     </div>
 
-                {% endwith %}
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+    <!-- =========================================
+    SCHOOL LIFE & GALLERY
+    ========================================= -->
+
+    <section class="bmk-gallery-section py-5">
+
+        <div class="container">
+
+            <!-- Section Heading -->
+            <div class="text-center mb-5">
+
+                <span class="text-primary fw-semibold">
+                    SCHOOL LIFE
+                </span>
+
+                <h2 class="fw-bold mt-2">
+                    Moments From Life at BMK
+                </h2>
+
+                <p class="text-muted mx-auto" style="max-width: 700px;">
+                    A glimpse into learning, activities and everyday life
+                    at BMK Academy.
+                </p>
+
+            </div>
 
 
-                <!-- THREE SMALLER PHOTOS -->
-                <div class="col-lg-6">
+            {% if featured_photos %}
 
-                    <div class="row g-3 h-100">
+                <div class="row g-3">
 
-                        {% for photo in featured_photos|slice:"1:4" %}
+                    <!-- LARGE FEATURED PHOTO -->
+                    {% with main_photo=featured_photos.0 %}
 
-                            <div class="col-6">
+                        <div class="col-lg-6">
 
-                                <a
-                                    href="{% url 'gallery:photo_detail' photo.pk %}"
-                                    class="text-decoration-none"
-                                >
+                            <a
+                                href="{% url 'gallery:photo_detail' main_photo.pk %}"
+                                class="text-decoration-none"
+                            >
 
-                                    <div class="position-relative overflow-hidden rounded-4 shadow-sm">
+                                <div class="position-relative overflow-hidden rounded-4 shadow-sm h-100">
 
-                                        <img
-                                            src="{{ photo.image.url }}"
-                                            alt="{{ photo.title }}"
-                                            class="gallery-small-photo"
-                                        >
+                                    <img
+                                        src="{{ main_photo.image.url }}"
+                                        alt="{{ main_photo.title }}"
+                                        class="gallery-main-photo"
+                                    >
 
-                                        <div class="gallery-small-overlay">
+                                    <div class="gallery-overlay">
 
-                                            <span class="badge bg-primary">
-                                                {{ photo.category.name }}
+                                        <div>
+
+                                            <span class="badge bg-primary mb-2">
+                                                {{ main_photo.category.name }}
                                             </span>
 
-                                            <h6 class="text-white fw-bold mt-2 mb-0">
-                                                {{ photo.title }}
-                                            </h6>
+                                            <h4 class="text-white fw-bold mb-1">
+                                                {{ main_photo.title }}
+                                            </h4>
+
+                                            {% if main_photo.caption %}
+                                                <p class="text-white-50 mb-0">
+                                                    {{ main_photo.caption|truncatewords:12 }}
+                                                </p>
+                                            {% endif %}
 
                                         </div>
 
                                     </div>
 
-                                </a>
+                                </div>
 
-                            </div>
+                            </a>
 
-                        {% endfor %}
+                        </div>
 
-                    </div>
-
-                </div>
-
-            </div>
+                    {% endwith %}
 
 
-            <!-- VIEW ALL -->
-            <div class="text-center mt-4">
+                    <!-- THREE SMALLER PHOTOS -->
+                    <div class="col-lg-6">
 
-                <a
-                    href="{% url 'gallery:gallery' %}"
-                    class="btn btn-outline-primary px-4"
-                >
-                    View All Photos
-                    <i class="bi bi-arrow-right ms-1"></i>
-                </a>
+                        <div class="row g-3 h-100">
 
-            </div>
+                            {% for photo in featured_photos|slice:"1:4" %}
 
-        {% else %}
+                                <div class="col-6">
 
-            <!-- EMPTY STATE -->
-            <div class="text-center py-5">
-
-                <i class="bi bi-images display-1 text-muted"></i>
-
-                <h4 class="mt-3">
-                    Photos Coming Soon
-                </h4>
-
-                <p class="text-muted">
-                    Photos from life at BMK Academy will appear here.
-                </p>
-
-            </div>
-
-        {% endif %}
-
-    </div>
-
-</section>
-<!-- =========================================
-LATEST NEWS & STORIES
-========================================= -->
-
-<section class="bmk-news">
-
-    <div class="container py-5 py-lg-6">
-
-        <!-- Section Heading -->
-        <div class="row align-items-end mb-5">
-
-            <div class="col-lg-8">
-
-                <span class="bmk-section-label">
-                    NEWS & STORIES
-                </span>
-
-                <h2 class="bmk-section-title mb-3">
-                    What's Happening at BMK
-                </h2>
-
-                <p class="bmk-news-intro mb-0">
-                    Follow the latest stories, activities and updates
-                    from BMK Academy.
-                </p>
-
-            </div>
-
-            <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
-
-                <a
-                    href="{% url 'blog:post_list' %}"
-                    class="btn btn-outline-primary px-4 py-3"
-                >
-                    View All News
-                    <i class="bi bi-arrow-right ms-2"></i>
-                </a>
-
-            </div>
-
-        </div>
-
-
-        <!-- Posts -->
-        {% if latest_posts %}
-
-            <div class="row g-4">
-
-                {% for post in latest_posts %}
-
-                    <div class="col-md-6 col-lg-4">
-
-                        <article class="bmk-news-card h-100">
-
-                            <!-- Featured Image -->
-                            <div class="bmk-news-image">
-
-                                {% if post.featured_image %}
-
-                                    <img
-                                        src="{{ post.featured_image.url }}"
-                                        alt="{{ post.title }}"
+                                    <a
+                                        href="{% url 'gallery:photo_detail' photo.pk %}"
+                                        class="text-decoration-none"
                                     >
 
-                                {% else %}
+                                        <div class="position-relative overflow-hidden rounded-4 shadow-sm">
 
-                                    <div class="bmk-news-placeholder">
+                                            <img
+                                                src="{{ photo.image.url }}"
+                                                alt="{{ photo.title }}"
+                                                class="gallery-small-photo"
+                                            >
 
-                                        <i class="bi bi-newspaper"></i>
+                                            <div class="gallery-small-overlay">
 
-                                    </div>
+                                                <span class="badge bg-primary">
+                                                    {{ photo.category.name }}
+                                                </span>
 
-                                {% endif %}
+                                                <h6 class="text-white fw-bold mt-2 mb-0">
+                                                    {{ photo.title }}
+                                                </h6>
 
-                            </div>
+                                            </div>
 
+                                        </div>
 
-                            <!-- Content -->
-                            <div class="bmk-news-content">
-
-                                <div class="bmk-news-meta">
-
-                                    <span class="bmk-news-category">
-                                        {{ post.category.name }}
-                                    </span>
-
-                                    {% if post.published_at %}
-                                        <span>
-                                            {{ post.published_at|date:"M d, Y" }}
-                                        </span>
-                                    {% endif %}
+                                    </a>
 
                                 </div>
 
+                            {% endfor %}
 
-                                <h3 class="bmk-news-title">
-
-                                    <a
-                                        href="{% url 'blog:post_detail' post.slug %}"
-                                    >
-                                        {{ post.title }}
-                                    </a>
-
-                                </h3>
-
-
-                                <p class="bmk-news-excerpt">
-
-                                    {% if post.excerpt %}
-                                        {{ post.excerpt|truncatewords:24 }}
-                                    {% else %}
-                                        {{ post.content|truncatewords:24 }}
-                                    {% endif %}
-
-                                </p>
-
-
-                                <a
-                                    href="{% url 'blog:post_detail' post.slug %}"
-                                    class="bmk-news-link"
-                                >
-                                    Read Story
-                                    <i class="bi bi-arrow-right ms-1"></i>
-                                </a>
-
-                            </div>
-
-                        </article>
+                        </div>
 
                     </div>
 
-                {% endfor %}
-
-            </div>
-
-        {% else %}
-
-            <!-- Empty State -->
-            <div class="bmk-news-empty text-center">
-
-                <div class="bmk-news-empty-icon">
-                    <i class="bi bi-newspaper"></i>
                 </div>
 
-                <h4>
-                    News and stories coming soon
-                </h4>
 
-                <p>
-                    Check back soon for the latest updates from
-                    BMK Academy.
-                </p>
+                <!-- VIEW ALL -->
+                <div class="text-center mt-4">
+
+                    <a
+                        href="{% url 'gallery:gallery' %}"
+                        class="btn btn-outline-primary px-4"
+                    >
+                        View All Photos
+                        <i class="bi bi-arrow-right ms-1"></i>
+                    </a>
+
+                </div>
+
+            {% else %}
+
+                <!-- EMPTY STATE -->
+                <div class="text-center py-5">
+
+                    <i class="bi bi-images display-1 text-muted"></i>
+
+                    <h4 class="mt-3">
+                        Photos Coming Soon
+                    </h4>
+
+                    <p class="text-muted">
+                        Photos from life at BMK Academy will appear here.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+    <!-- =========================================
+    LATEST NEWS & STORIES
+    ========================================= -->
+
+    <section class="bmk-events py-5 py-lg-6">
+
+        <div class="container py-lg-4">
+    
+            <div class="row justify-content-center text-center mb-5">
+    
+                <div class="col-lg-8">
+    
+                    <span class="bmk-section-label">
+                        SCHOOL EVENTS
+                    </span>
+    
+                    <h2 class="bmk-section-title">
+                        What's Happening at BMK
+                    </h2>
+    
+                    <p class="bmk-events-intro">
+                        Stay informed about upcoming activities,
+                        celebrations and important events at BMK Academy.
+                    </p>
+    
+                </div>
+    
+            </div>
+    
+    
+            {% if upcoming_events %}
+    
+                <div class="row g-4">
+    
+                    {% for event in upcoming_events %}
+    
+                        <div class="col-md-6 col-lg-4">
+    
+                            <article class="bmk-event-card">
+    
+                                {% if event.image %}
+    
+                                    <div class="bmk-event-image">
+    
+                                        <img
+                                            src="{{ event.image.url }}"
+                                            alt="{{ event.title }}"
+                                        >
+    
+                                        <div class="bmk-event-date">
+    
+                                            <strong>
+                                                {{ event.event_date|date:"j" }}
+                                            </strong>
+    
+                                            <span>
+                                                {{ event.event_date|date:"M" }}
+                                            </span>
+    
+                                        </div>
+    
+                                    </div>
+    
+                                {% endif %}
+    
+    
+                                <div class="p-4">
+    
+                                    <h4 class="fw-bold mb-3">
+                                        {{ event.title }}
+                                    </h4>
+    
+    
+                                    <div class="text-muted small mb-3">
+    
+                                        {% if event.event_time %}
+                                            <div class="mb-2">
+                                                <i class="bi bi-clock me-2"></i>
+                                                {{ event.event_time|time:"g:i A" }}
+                                            </div>
+                                        {% endif %}
+    
+                                        {% if event.venue %}
+                                            <div>
+                                                <i class="bi bi-geo-alt me-2"></i>
+                                                {{ event.venue }}
+                                            </div>
+                                        {% endif %}
+    
+                                    </div>
+    
+    
+                                    {% if event.description %}
+    
+                                        <p class="text-muted">
+                                            {{ event.description|truncatewords:20 }}
+                                        </p>
+    
+                                    {% endif %}
+    
+    
+                                    <a
+                                        href="{% url 'website:event_detail' event.slug %}"
+                                        class="btn btn-outline-primary"
+                                    >
+                                        View Event
+                                        <i class="bi bi-arrow-right ms-1"></i>
+                                    </a>
+    
+                                </div>
+    
+                            </article>
+    
+                        </div>
+    
+                    {% endfor %}
+    
+                </div>
+    
+    
+                <div class="text-center mt-5">
+    
+                    <a
+                        href="{% url 'website:events' %}"
+                        class="btn btn-primary px-4 py-3"
+                    >
+                        View All Events
+                        <i class="bi bi-arrow-right ms-2"></i>
+                    </a>
+    
+                </div>
+    
+            {% else %}
+    
+                <div class="text-center py-5">
+    
+                    <p class="text-muted">
+                        There are currently no upcoming school events.
+                    </p>
+    
+                </div>
+    
+            {% endif %}
+    
+        </div>
+    
+    </section>
+    <!-- =========================================
+    ADMISSIONS CTA
+    ========================================= -->
+
+    <section id="admissions" class="bmk-admissions">
+
+        <div class="container py-5 py-lg-6">
+
+            <div class="bmk-admissions-box">
+
+                <div class="row align-items-center g-5">
+
+                    <div class="col-lg-8">
+
+                        <span class="bmk-admissions-label">
+                            ADMISSIONS
+                        </span>
+
+                        <h2>
+                            Begin Your Child's Journey at BMK Academy
+                        </h2>
+
+                        <p>
+                            BMK Academy was established to provide a strong
+                            educational foundation for the children of SCL
+                            staff, beginning with Nursery 1 and Nursery 2.
+                        </p>
+
+                        <p>
+                            As our school grows with its learners, we welcome
+                            families who want to learn more about our school,
+                            our approach to education and available admission
+                            opportunities.
+                        </p>
+
+                        <div class="bmk-admissions-points">
+
+                            <div>
+                                <i class="bi bi-check-circle-fill"></i>
+                                <span>Nursery and Primary education</span>
+                            </div>
+
+                            <div>
+                                <i class="bi bi-check-circle-fill"></i>
+                                <span>Learning, character and growth</span>
+                            </div>
+
+                            <div>
+                                <i class="bi bi-check-circle-fill"></i>
+                                <span>Education for Service</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-lg-4">
+
+                        <div class="bmk-admissions-actions">
+
+                            <a
+                                href="{% url 'admissions:admission_application' %}"
+                                class="btn bmk-admissions-button"
+                            >
+                                Apply for Admission
+                                <i class="bi bi-arrow-right ms-2"></i>
+                            </a>
+
+                            <a
+                                href="{% url 'website:contact' %}"
+                                class="bmk-admissions-contact"
+                            >
+                                Have a question?
+                                <span>Contact the school</span>
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
 
-        {% endif %}
+        </div>
 
-    </div>
+    </section>
+    <!-- =========================================
+    CONTACT & LOCATION
+    ========================================= -->
 
-</section>
-<!-- =========================================
-ADMISSIONS CTA
-========================================= -->
+    <section id="contact" class="bmk-contact">
 
-<section id="admissions" class="bmk-admissions">
+        <div class="container py-5 py-lg-6">
 
-    <div class="container py-5 py-lg-6">
-
-        <div class="bmk-admissions-box">
-
-            <div class="row align-items-center g-5">
+            <!-- Heading -->
+            <div class="row justify-content-center text-center mb-5">
 
                 <div class="col-lg-8">
 
-                    <span class="bmk-admissions-label">
-                        ADMISSIONS
+                    <span class="bmk-section-label">
+                        CONTACT BMK ACADEMY
                     </span>
 
-                    <h2>
-                        Begin Your Child's Journey at BMK Academy
+                    <h2 class="bmk-section-title">
+                        We Would Love to Hear From You
                     </h2>
 
-                    <p>
-                        BMK Academy was established to provide a strong
-                        educational foundation for the children of SCL
-                        staff, beginning with Nursery 1 and Nursery 2.
+                    <p class="bmk-contact-intro">
+                        BMK Academy is located within SCL Farm and serves
+                        the educational needs of children of SCL staff.
+                        Parents and guardians are welcome to contact the
+                        school for enquiries about admissions, learning
+                        and school life.
                     </p>
 
-                    <p>
-                        As our school grows with its learners, we welcome
-                        families who want to learn more about our school,
-                        our approach to education and available admission
-                        opportunities.
-                    </p>
+                </div>
 
-                    <div class="bmk-admissions-points">
+            </div>
 
-                        <div>
-                            <i class="bi bi-check-circle-fill"></i>
-                            <span>Nursery and Primary education</span>
+
+            <div class="row g-4">
+
+
+                <!-- Location -->
+                <div class="col-md-4">
+
+                    <div class="bmk-contact-card h-100">
+
+                        <div class="bmk-contact-icon">
+                            <i class="bi bi-geo-alt-fill"></i>
                         </div>
 
-                        <div>
-                            <i class="bi bi-check-circle-fill"></i>
-                            <span>Learning, character and growth</span>
-                        </div>
+                        <h4>
+                            Our Location
+                        </h4>
 
-                        <div>
-                            <i class="bi bi-check-circle-fill"></i>
-                            <span>Education for Service</span>
-                        </div>
+                        <p>
+                            Baki and Mairam Kwasari Nursery and Primary
+                            School
+                            <br>
+                            SCL Farm
+                        </p>
 
                     </div>
 
                 </div>
 
 
-                <div class="col-lg-4">
+                <!-- Phone -->
+                <div class="col-md-4">
 
-                    <div class="bmk-admissions-actions">
+                    <div class="bmk-contact-card h-100">
 
-                        <a
-                            href="{% url 'admissions:admission_application' %}"
-                            class="btn bmk-admissions-button"
-                        >
-                            Apply for Admission
-                            <i class="bi bi-arrow-right ms-2"></i>
-                        </a>
+                        <div class="bmk-contact-icon">
+                            <i class="bi bi-telephone-fill"></i>
+                        </div>
 
-                        <a
-                            href="{% url 'website:contact' %}"
-                            class="bmk-admissions-contact"
-                        >
-                            Have a question?
-                            <span>Contact the school</span>
-                        </a>
+                        <h4>
+                            Phone
+                        </h4>
+
+                        <!-- Replace with actual school number -->
+                        <p>
+                            School phone number
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Email -->
+                <div class="col-md-4">
+
+                    <div class="bmk-contact-card h-100">
+
+                        <div class="bmk-contact-icon">
+                            <i class="bi bi-envelope-fill"></i>
+                        </div>
+
+                        <h4>
+                            Email
+                        </h4>
+
+                        <!-- Replace with actual school email -->
+                        <p>
+                            School email address
+                        </p>
 
                     </div>
 
@@ -1359,113 +1506,118 @@ ADMISSIONS CTA
 
             </div>
 
-        </div>
 
-    </div>
+            <!-- Closing message -->
+            <div class="bmk-contact-message text-center">
 
-</section>
-<!-- =========================================
-CONTACT & LOCATION
-========================================= -->
+                <div class="bmk-contact-message-icon">
+                    <i class="bi bi-mortarboard-fill"></i>
+                </div>
 
-<section id="contact" class="bmk-contact">
+                <h3>
+                    Growing Together at BMK Academy
+                </h3>
 
-    <div class="container py-5 py-lg-6">
-
-        <!-- Heading -->
-        <div class="row justify-content-center text-center mb-5">
-
-            <div class="col-lg-8">
-
-                <span class="bmk-section-label">
-                    CONTACT BMK ACADEMY
-                </span>
-
-                <h2 class="bmk-section-title">
-                    We Would Love to Hear From You
-                </h2>
-
-                <p class="bmk-contact-intro">
-                    BMK Academy is located within SCL Farm and serves
-                    the educational needs of children of SCL staff.
-                    Parents and guardians are welcome to contact the
-                    school for enquiries about admissions, learning
-                    and school life.
+                <p>
+                    From our beginnings in Nursery 1 and Nursery 2 to the
+                    continued growth of our pupils into Primary education,
+                    BMK Academy remains committed to providing a supportive
+                    learning environment for the children in our community.
                 </p>
 
             </div>
 
         </div>
 
+    </section>
+    <!-- =========================================
+    SAFEGUARDING
+    ========================================= -->
 
-        <div class="row g-4">
+    <section id="safeguarding" class="bmk-safeguarding">
 
+        <div class="container py-5">
 
-            <!-- Location -->
-            <div class="col-md-4">
+            <div class="row justify-content-center">
 
-                <div class="bmk-contact-card h-100">
+                <div class="col-lg-9">
 
-                    <div class="bmk-contact-icon">
-                        <i class="bi bi-geo-alt-fill"></i>
+                    <div class="bmk-safeguarding-box">
+
+                        <div class="bmk-safeguarding-icon">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+
+                        <span class="bmk-section-label">
+                            SAFEGUARDING
+                        </span>
+
+                        <h2>
+                            Protecting Our Children
+                        </h2>
+
+                        <p>
+                            At BMK Academy, the safety, dignity and wellbeing
+                            of children are fundamental to our school community.
+                            As a school located within SCL Farm, BMK operates
+                            within an environment where safeguarding and the
+                            protection of vulnerable persons are important
+                            responsibilities.
+                        </p>
+
+                        <p>
+                            We are committed to maintaining a respectful
+                            environment in which concerns relating to the
+                            safety or wellbeing of children can be raised and
+                            addressed appropriately.
+                        </p>
+
+                        <div class="bmk-safeguarding-points">
+
+                            <div>
+                                <i class="bi bi-check-circle-fill"></i>
+                                <span>
+                                    Child protection and wellbeing
+                                </span>
+                            </div>
+
+                            <div>
+                                <i class="bi bi-check-circle-fill"></i>
+                                <span>
+                                    Respectful and safe learning environment
+                                </span>
+                            </div>
+
+                            <div>
+                                <i class="bi bi-check-circle-fill"></i>
+                                <span>
+                                    Responsible reporting of concerns
+                                </span>
+                            </div>
+
+                        </div>
+
+                        <div class="bmk-safeguarding-actions">
+
+                            <a
+                                href="{% url 'website:safeguarding' %}"
+                                target="_blank"
+                                rel="noopener"
+                                class="btn btn-primary px-4 py-3"
+                            >
+                                View SCL Safeguarding Policy
+                                <i class="bi bi-box-arrow-up-right ms-2"></i>
+                            </a>
+
+                        </div>
+
+                        <p class="bmk-safeguarding-note">
+                            The SCL Safeguarding Policy and reporting
+                            mechanisms provide the wider safeguarding
+                            framework applicable across SCL operations.
+                        </p>
+
                     </div>
-
-                    <h4>
-                        Our Location
-                    </h4>
-
-                    <p>
-                        Baki and Mairam Kwasari Nursery and Primary
-                        School
-                        <br>
-                        SCL Farm
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <!-- Phone -->
-            <div class="col-md-4">
-
-                <div class="bmk-contact-card h-100">
-
-                    <div class="bmk-contact-icon">
-                        <i class="bi bi-telephone-fill"></i>
-                    </div>
-
-                    <h4>
-                        Phone
-                    </h4>
-
-                    <!-- Replace with actual school number -->
-                    <p>
-                        School phone number
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <!-- Email -->
-            <div class="col-md-4">
-
-                <div class="bmk-contact-card h-100">
-
-                    <div class="bmk-contact-icon">
-                        <i class="bi bi-envelope-fill"></i>
-                    </div>
-
-                    <h4>
-                        Email
-                    </h4>
-
-                    <!-- Replace with actual school email -->
-                    <p>
-                        School email address
-                    </p>
 
                 </div>
 
@@ -1473,192 +1625,13 @@ CONTACT & LOCATION
 
         </div>
 
-
-        <!-- Closing message -->
-        <div class="bmk-contact-message text-center">
-
-            <div class="bmk-contact-message-icon">
-                <i class="bi bi-mortarboard-fill"></i>
-            </div>
-
-            <h3>
-                Growing Together at BMK Academy
-            </h3>
-
-            <p>
-                From our beginnings in Nursery 1 and Nursery 2 to the
-                continued growth of our pupils into Primary education,
-                BMK Academy remains committed to providing a supportive
-                learning environment for the children in our community.
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-<!-- =========================================
-SAFEGUARDING
-========================================= -->
-
-<section id="safeguarding" class="bmk-safeguarding">
-
-    <div class="container py-5">
-
-        <div class="row justify-content-center">
-
-            <div class="col-lg-9">
-
-                <div class="bmk-safeguarding-box">
-
-                    <div class="bmk-safeguarding-icon">
-                        <i class="bi bi-shield-check"></i>
-                    </div>
-
-                    <span class="bmk-section-label">
-                        SAFEGUARDING
-                    </span>
-
-                    <h2>
-                        Protecting Our Children
-                    </h2>
-
-                    <p>
-                        At BMK Academy, the safety, dignity and wellbeing
-                        of children are fundamental to our school community.
-                        As a school located within SCL Farm, BMK operates
-                        within an environment where safeguarding and the
-                        protection of vulnerable persons are important
-                        responsibilities.
-                    </p>
-
-                    <p>
-                        We are committed to maintaining a respectful
-                        environment in which concerns relating to the
-                        safety or wellbeing of children can be raised and
-                        addressed appropriately.
-                    </p>
-
-                    <div class="bmk-safeguarding-points">
-
-                        <div>
-                            <i class="bi bi-check-circle-fill"></i>
-                            <span>
-                                Child protection and wellbeing
-                            </span>
-                        </div>
-
-                        <div>
-                            <i class="bi bi-check-circle-fill"></i>
-                            <span>
-                                Respectful and safe learning environment
-                            </span>
-                        </div>
-
-                        <div>
-                            <i class="bi bi-check-circle-fill"></i>
-                            <span>
-                                Responsible reporting of concerns
-                            </span>
-                        </div>
-
-                    </div>
-
-                    <div class="bmk-safeguarding-actions">
-
-                        <a
-                            href="{% url 'website:safeguarding' %}"
-                            target="_blank"
-                            rel="noopener"
-                            class="btn btn-primary px-4 py-3"
-                        >
-                            View SCL Safeguarding Policy
-                            <i class="bi bi-box-arrow-up-right ms-2"></i>
-                        </a>
-
-                    </div>
-
-                    <p class="bmk-safeguarding-note">
-                        The SCL Safeguarding Policy and reporting
-                        mechanisms provide the wider safeguarding
-                        framework applicable across SCL operations.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
+    </section>
 
 
-{% block extra_js %}
+    {% block extra_js %}
+    <script src="{% static 'website/js/home.js' %}"></script>
 
-<script>
+    {% endblock %}
 
-    document.addEventListener("DOMContentLoaded", function () {
-
-        const modalElement = document.getElementById(
-            "schoolEventModal"
-        );
-
-        if (!modalElement) {
-            return;
-        }
-
-
-        const eventModal = new bootstrap.Modal(
-            modalElement
-        );
-
-
-        eventModal.show();
-
-
-        modalElement.addEventListener(
-            "hidden.bs.modal",
-            function () {
-
-                document.body.classList.remove(
-                    "modal-open"
-                );
-
-
-                document.body.style.removeProperty(
-                    "overflow"
-                );
-
-
-                document.body.style.removeProperty(
-                    "padding-right"
-                );
-
-
-                const backdrops =
-                    document.querySelectorAll(
-                        ".modal-backdrop"
-                    );
-
-
-                backdrops.forEach(
-                    function (backdrop) {
-
-                        backdrop.remove();
-
-                    }
-                );
-
-            }
-        );
-
-    });
-
-</script>
-
-{% endblock %}
-
-
+</div>
 {% endblock %}

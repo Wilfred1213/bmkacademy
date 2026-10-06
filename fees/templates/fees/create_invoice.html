@@ -1,191 +1,268 @@
 {% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
 
-
+<link rel="stylesheet" href="{% static 'website/css/fees.css' %}">
+{% endblock %}
 {% block title %}
     Create Invoice | {{ student.first_name }} {{ student.last_name }}
 {% endblock %}
 
-
 {% block content %}
 
-<div class="d-flex justify-content-between align-items-center mb-4">
 
-    <div>
+<div class="container-fluid bmk-create-invoice-page">
 
-        <h2 class="fw-bold mb-1">
-            Create Fee Invoice
-        </h2>
+    <!-- =========================
+         PAGE HEADER
+    ========================== -->
 
-        <p class="text-muted mb-0">
+    <div class="bmk-create-header">
 
-            {{ student.first_name }}
+        <div class="bmk-create-header-content">
 
-            {% if student.middle_name %}
-                {{ student.middle_name }}
-            {% endif %}
+            <div class="d-flex justify-content-between align-items-center">
 
-            {{ student.last_name }}
+                <div>
 
-            -
-            {{ student.admission_number }}
-
-        </p>
-
-    </div>
-
-
-    <a
-        href="{% url 'fees:student_fees' student.id %}"
-        class="btn btn-outline-secondary"
-    >
-        ← Back to School Fees
-    </a>
-
-</div>
-
-
-<div class="card shadow-sm">
-
-    <div class="card-header">
-
-        <strong>
-            Fee Invoice Details
-        </strong>
-
-    </div>
-
-
-    <div class="card-body">
-
-        <form method="post">
-
-            {% csrf_token %}
-
-
-            {% if form.non_field_errors %}
-
-                <div class="alert alert-danger">
-
-                    {{ form.non_field_errors }}
-
-                </div>
-
-            {% endif %}
-
-
-            <div class="mb-3">
-
-                <label
-                    for="{{ form.enrollment.id_for_label }}"
-                    class="form-label"
-                >
-                    Academic Year / Enrollment
-                </label>
-
-                {{ form.enrollment }}
-
-                {% if form.enrollment.errors %}
-
-                    <div class="text-danger small mt-1">
-                        {{ form.enrollment.errors }}
+                    <div class="bmk-create-eyebrow">
+                        <i class="bi bi-file-earmark-plus"></i>
+                        School Finance
                     </div>
 
-                {% endif %}
+                    <h1 class="bmk-create-title">
+                        Create Fee Invoice
+                    </h1>
 
-            </div>
+                    <p class="bmk-create-student">
 
+                        <i class="bi bi-person-badge me-1"></i>
 
-            <div class="mb-3">
+                        {{ student.first_name }}
 
-                <label
-                    for="{{ form.description.id_for_label }}"
-                    class="form-label"
-                >
-                    Description
-                </label>
+                        {% if student.middle_name %}
+                            {{ student.middle_name }}
+                        {% endif %}
 
-                {{ form.description }}
+                        {{ student.last_name }}
 
-                {% if form.description.errors %}
+                        <span class="mx-1">•</span>
 
-                    <div class="text-danger small mt-1">
-                        {{ form.description.errors }}
-                    </div>
+                        {{ student.admission_number }}
 
-                {% endif %}
-
-            </div>
-
-
-            <div class="row">
-
-                <div class="col-md-6 mb-3">
-
-                    <label
-                        for="{{ form.amount.id_for_label }}"
-                        class="form-label"
-                    >
-                        Amount
-                    </label>
-
-                    {{ form.amount }}
-
-                    {% if form.amount.errors %}
-
-                        <div class="text-danger small mt-1">
-                            {{ form.amount.errors }}
-                        </div>
-
-                    {% endif %}
+                    </p>
 
                 </div>
 
-
-                <div class="col-md-6 mb-3">
-
-                    <label
-                        for="{{ form.due_date.id_for_label }}"
-                        class="form-label"
-                    >
-                        Due Date
-                    </label>
-
-                    {{ form.due_date }}
-
-                    {% if form.due_date.errors %}
-
-                        <div class="text-danger small mt-1">
-                            {{ form.due_date.errors }}
-                        </div>
-
-                    {% endif %}
-
-                </div>
-
-            </div>
-
-
-            <div class="d-flex justify-content-end gap-2 mt-4">
 
                 <a
                     href="{% url 'fees:student_fees' student.id %}"
-                    class="btn btn-outline-secondary"
+                    class="bmk-back-fees"
                 >
-                    Cancel
+                    <i class="bi bi-arrow-left"></i>
+                    Back to School Fees
                 </a>
-
-
-                <button
-                    type="submit"
-                    class="btn btn-primary"
-                >
-                    Create Invoice
-                </button>
 
             </div>
 
+        </div>
 
-        </form>
+    </div>
+
+
+    <!-- =========================
+         FORM
+    ========================== -->
+
+    <div class="bmk-create-card">
+
+        <div class="bmk-create-card-header">
+
+            <span class="bmk-create-card-icon">
+                <i class="bi bi-receipt"></i>
+            </span>
+
+            <div>
+
+                <h2 class="bmk-create-card-title">
+                    Fee Invoice Details
+                </h2>
+
+                <p class="bmk-create-card-subtitle">
+                    Enter the fee information for this student's enrollment.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="bmk-create-card-body">
+
+            <form method="post">
+
+                {% csrf_token %}
+
+
+                {% if form.non_field_errors %}
+
+                    <div class="bmk-form-error">
+
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+
+                        <div>
+                            {{ form.non_field_errors }}
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+
+                <!-- Enrollment -->
+
+                <div class="bmk-field">
+
+                    <label
+                        for="{{ form.enrollment.id_for_label }}"
+                        class="bmk-field-label"
+                    >
+                        Academic Year / Enrollment
+                        <span class="bmk-field-required">*</span>
+                    </label>
+
+                    {{ form.enrollment }}
+
+                    {% if form.enrollment.errors %}
+
+                        <div class="bmk-field-error">
+                            {{ form.enrollment.errors }}
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- Description -->
+
+                <div class="bmk-field">
+
+                    <label
+                        for="{{ form.description.id_for_label }}"
+                        class="bmk-field-label"
+                    >
+                        Description
+                        <span class="bmk-field-required">*</span>
+                    </label>
+
+                    {{ form.description }}
+
+                    {% if form.description.errors %}
+
+                        <div class="bmk-field-error">
+                            {{ form.description.errors }}
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- Amount / Due Date -->
+
+                <div class="row">
+
+                    <div class="col-md-6">
+
+                        <div class="bmk-field">
+
+                            <label
+                                for="{{ form.amount.id_for_label }}"
+                                class="bmk-field-label"
+                            >
+                                Amount
+                                <span class="bmk-field-required">*</span>
+                            </label>
+
+                            <div class="bmk-amount-wrapper">
+
+                                <span class="bmk-amount-prefix">
+                                    ₦
+                                </span>
+
+                                {{ form.amount }}
+
+                            </div>
+
+                            {% if form.amount.errors %}
+
+                                <div class="bmk-field-error">
+                                    {{ form.amount.errors }}
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <div class="bmk-field">
+
+                            <label
+                                for="{{ form.due_date.id_for_label }}"
+                                class="bmk-field-label"
+                            >
+                                Due Date
+                                <span class="bmk-field-required">*</span>
+                            </label>
+
+                            {{ form.due_date }}
+
+                            {% if form.due_date.errors %}
+
+                                <div class="bmk-field-error">
+                                    {{ form.due_date.errors }}
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Actions -->
+
+                <div class="bmk-form-actions">
+
+                    <a
+                        href="{% url 'fees:student_fees' student.id %}"
+                        class="bmk-cancel-btn"
+                    >
+                        <i class="bi bi-x-lg"></i>
+                        Cancel
+                    </a>
+
+
+                    <button
+                        type="submit"
+                        class="bmk-submit-btn"
+                    >
+                        <i class="bi bi-check2-circle"></i>
+                        Create Invoice
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
 
     </div>
 

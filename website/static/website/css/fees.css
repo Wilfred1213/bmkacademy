@@ -1,0 +1,5065 @@
+/*===================================
+STUDENTS SHCOOL FEES
+=====================================*/
+.bmk-student-fees {
+    padding: 10px 0 40px;
+}
+
+/* =========================
+   PAGE HEADER
+========================= */
+
+.bmk-fees-header {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 28px;
+    padding: 30px;
+    border-radius: 24px;
+    background:
+        radial-gradient(circle at 90% 10%, rgba(224, 168, 62, 0.22), transparent 28%),
+        linear-gradient(135deg, #0f2747 0%, #173e6d 65%, #1d4ed8 100%);
+    color: #ffffff;
+    box-shadow: 0 20px 50px rgba(15, 39, 71, 0.18);
+}
+
+.bmk-fees-header::before {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    right: -70px;
+    bottom: -90px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.bmk-fees-header-content {
+    position: relative;
+    z-index: 1;
+}
+
+.bmk-fees-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 9px;
+    color: #f3d58a;
+    font-size: 0.73rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+}
+
+.bmk-fees-title {
+    margin: 0 0 5px;
+    color: #ffffff;
+    font-size: 1.8rem;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.bmk-fees-admission {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.bmk-back-student {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.10);
+    color: #ffffff;
+    font-size: 0.84rem;
+    font-weight: 700;
+    text-decoration: none;
+    backdrop-filter: blur(8px);
+    transition: all 0.25s ease;
+}
+
+.bmk-back-student:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.18);
+    transform: translateY(-2px);
+}
+
+/* =========================
+   SUMMARY CARDS
+========================= */
+
+.bmk-fee-stat {
+    height: 100%;
+    padding: 22px;
+    border: 1px solid #e5eaf0;
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 12px 35px rgba(15, 35, 55, 0.08);
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.bmk-fee-stat:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 42px rgba(15, 35, 55, 0.12);
+}
+
+.bmk-fee-stat-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 17px;
+}
+
+.bmk-fee-stat-label {
+    color: #64748b;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+}
+
+.bmk-fee-stat-icon {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 13px;
+    font-size: 1.05rem;
+}
+
+.bmk-icon-invoiced {
+    color: #1d4ed8;
+    background: #eef5ff;
+}
+
+.bmk-icon-paid {
+    color: #3f7d58;
+    background: #edf8f1;
+}
+
+.bmk-icon-outstanding {
+    color: #b42318;
+    background: #fff0ef;
+}
+
+.bmk-fee-stat-value {
+    margin: 0;
+    color: #0f2747;
+    font-size: 1.45rem;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.bmk-fee-stat-paid .bmk-fee-stat-value {
+    color: #3f7d58;
+}
+
+.bmk-fee-stat-outstanding .bmk-fee-stat-value {
+    color: #b42318;
+}
+
+/* =========================
+   FEES CARD
+========================= */
+
+.bmk-fees-card {
+    overflow: hidden;
+    margin-top: 28px;
+    border: 1px solid #e5eaf0;
+    border-radius: 22px;
+    background: #ffffff;
+    box-shadow: 0 15px 45px rgba(15, 35, 55, 0.09);
+}
+
+.bmk-fees-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px 24px;
+    border-bottom: 1px solid #e8edf3;
+    background: #fbfcfe;
+}
+
+.bmk-fees-section-title {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin: 0;
+    color: #0f2747;
+    font-size: 1.05rem;
+    font-weight: 800;
+}
+
+.bmk-fees-section-icon {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+    color: #ffffff;
+    background: linear-gradient(135deg, #1d4ed8, #2563eb);
+    box-shadow: 0 8px 18px rgba(29, 78, 216, 0.20);
+}
+
+.bmk-create-invoice {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 15px;
+    border: 0;
+    border-radius: 11px;
+    background: #1d4ed8;
+    color: #ffffff;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgba(29, 78, 216, 0.18);
+    transition: all 0.25s ease;
+}
+
+.bmk-create-invoice:hover {
+    color: #ffffff;
+    background: #163fae;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(29, 78, 216, 0.25);
+}
+
+.bmk-fees-card-body {
+    padding: 0;
+}
+
+/* =========================
+   TABLE
+========================= */
+
+.bmk-fees-table-wrapper {
+    overflow-x: auto;
+}
+
+.bmk-fees-table {
+    min-width: 1050px;
+    margin: 0;
+}
+
+.bmk-fees-table thead th {
+    padding: 15px 18px;
+    border-bottom: 1px solid #dfe6ee;
+    background: #f7f9fc;
+    color: #64748b;
+    font-size: 0.70rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+}
+
+.bmk-fees-table tbody td {
+    padding: 17px 18px;
+    border-bottom: 1px solid #edf1f5;
+    color: #334155;
+    font-size: 0.86rem;
+    vertical-align: middle;
+}
+
+.bmk-fees-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.bmk-fees-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.bmk-fees-table tbody tr:hover {
+    background: #fbfcff;
+}
+
+.bmk-academic-year {
+    color: #0f2747;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.bmk-description {
+    min-width: 180px;
+    color: #334155;
+    font-weight: 600;
+}
+
+.bmk-amount {
+    color: #0f2747;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.bmk-paid {
+    color: #3f7d58 !important;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.bmk-balance {
+    color: #b42318 !important;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+/* =========================
+   STATUS BADGES
+========================= */
+
+.bmk-fee-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 0.70rem;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.bmk-fee-status-paid {
+    color: #23613d;
+    background: #e9f7ee;
+}
+
+.bmk-fee-status-partial {
+    color: #8a5a00;
+    background: #fff4d6;
+}
+
+.bmk-fee-status-cancelled {
+    color: #64748b;
+    background: #eef1f4;
+}
+
+.bmk-fee-status-unpaid {
+    color: #a52318;
+    background: #ffebe9;
+}
+
+/* =========================
+   ACTIONS
+========================= */
+
+.bmk-fee-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    min-width: 245px;
+}
+
+.bmk-fee-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 6px 9px;
+    border-radius: 8px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.bmk-fee-action:hover {
+    transform: translateY(-1px);
+}
+
+.bmk-action-payments {
+    border: 1px solid #d8dee7;
+    color: #475569;
+    background: #ffffff;
+}
+
+.bmk-action-payments:hover {
+    color: #0f2747;
+    background: #f6f8fb;
+}
+
+.bmk-action-invoice {
+    border: 1px solid #d8dee7;
+    color: #0f2747;
+    background: #ffffff;
+}
+
+.bmk-action-invoice:hover {
+    color: #ffffff;
+    border-color: #0f2747;
+    background: #0f2747;
+}
+
+.bmk-action-edit {
+    border: 1px solid #bfdbfe;
+    color: #1d4ed8;
+    background: #eff6ff;
+}
+
+.bmk-action-edit:hover {
+    color: #ffffff;
+    border-color: #1d4ed8;
+    background: #1d4ed8;
+}
+
+.bmk-action-payment {
+    border: 1px solid #bbdec9;
+    color: #286341;
+    background: #eff9f2;
+}
+
+.bmk-action-payment:hover {
+    color: #ffffff;
+    border-color: #3f7d58;
+    background: #3f7d58;
+}
+
+.bmk-action-cancel {
+    border: 1px solid #f1b9b4;
+    color: #b42318;
+    background: #fff7f6;
+}
+
+.bmk-action-cancel:hover {
+    color: #ffffff;
+    border-color: #b42318;
+    background: #b42318;
+}
+
+.bmk-cancelled-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 9px;
+    border-radius: 8px;
+    color: #64748b;
+    background: #f1f3f5;
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.bmk-fees-empty {
+    padding: 65px 25px;
+    text-align: center;
+}
+
+.bmk-fees-empty-icon {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 17px;
+    border-radius: 18px;
+    color: #1d4ed8;
+    background: #eef5ff;
+    font-size: 1.45rem;
+}
+
+.bmk-fees-empty h5 {
+    margin-bottom: 7px;
+    color: #0f2747;
+    font-weight: 800;
+}
+
+.bmk-fees-empty p {
+    max-width: 480px;
+    margin: 0 auto;
+    color: #64748b;
+    font-size: 0.88rem;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 767.98px) {
+
+    .bmk-student-fees {
+        padding-top: 0;
+    }
+
+    .bmk-fees-header {
+        padding: 23px 20px;
+        border-radius: 19px;
+    }
+
+    .bmk-fees-title {
+        font-size: 1.4rem;
+    }
+
+    .bmk-fees-header .d-flex {
+        align-items: flex-start !important;
+        flex-direction: column;
+    }
+
+    .bmk-back-student {
+        margin-top: 17px;
+    }
+
+    .bmk-fee-stat {
+        padding: 18px;
+    }
+
+    .bmk-fee-stat-value {
+        font-size: 1.25rem;
+    }
+
+    .bmk-fees-card {
+        border-radius: 18px;
+    }
+
+    .bmk-fees-card-header {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 18px;
+    }
+
+    .bmk-create-invoice {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .bmk-fees-table thead th,
+    .bmk-fees-table tbody td {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+}
+/*==============================
+INVOICE LIST
+===============================*/
+.bmk-invoice-list {
+    padding: 10px 0 40px;
+}
+
+/* =========================
+   PAGE HEADER
+========================= */
+
+.bmk-invoice-header {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 28px;
+    padding: 30px;
+    border-radius: 24px;
+    background:
+        radial-gradient(
+            circle at 90% 15%,
+            rgba(224, 168, 62, 0.22),
+            transparent 28%
+        ),
+        linear-gradient(
+            135deg,
+            #0f2747 0%,
+            #173e6d 62%,
+            #1d4ed8 100%
+        );
+    color: #ffffff;
+    box-shadow: 0 20px 50px rgba(15, 39, 71, 0.18);
+}
+
+.bmk-invoice-header::before {
+    content: "";
+    position: absolute;
+    width: 210px;
+    height: 210px;
+    right: -80px;
+    bottom: -120px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.bmk-invoice-header::after {
+    content: "";
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    right: 110px;
+    top: -45px;
+    border-radius: 50%;
+    background: rgba(224, 168, 62, 0.10);
+}
+
+.bmk-invoice-header-content {
+    position: relative;
+    z-index: 1;
+}
+
+.bmk-invoice-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 9px;
+    color: #f3d58a;
+    font-size: 0.73rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+}
+
+.bmk-invoice-title {
+    margin: 0 0 6px;
+    color: #ffffff;
+    font-size: 1.85rem;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.bmk-invoice-subtitle {
+    margin: 0;
+    max-width: 600px;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.9rem;
+}
+
+/* =========================
+   SUMMARY CARDS
+========================= */
+
+.bmk-fee-stat {
+    height: 100%;
+    padding: 22px;
+    border: 1px solid #e5eaf0;
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 12px 35px rgba(15, 35, 55, 0.08);
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.bmk-fee-stat:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 42px rgba(15, 35, 55, 0.12);
+}
+
+.bmk-fee-stat-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 17px;
+}
+
+.bmk-fee-stat-label {
+    color: #64748b;
+    font-size: 0.74rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+}
+
+.bmk-fee-stat-icon {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 13px;
+    font-size: 1.05rem;
+}
+
+.bmk-icon-invoiced {
+    color: #1d4ed8;
+    background: #eef5ff;
+}
+
+.bmk-icon-paid {
+    color: #3f7d58;
+    background: #edf8f1;
+}
+
+.bmk-icon-outstanding {
+    color: #b42318;
+    background: #fff0ef;
+}
+
+.bmk-fee-stat-value {
+    margin: 0;
+    color: #0f2747;
+    font-size: 1.45rem;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.bmk-fee-stat-paid .bmk-fee-stat-value {
+    color: #3f7d58;
+}
+
+.bmk-fee-stat-outstanding .bmk-fee-stat-value {
+    color: #b42318;
+}
+
+/* =========================
+   FILTER CARD
+========================= */
+
+.bmk-filter-card {
+    overflow: hidden;
+    margin-top: 28px;
+    margin-bottom: 28px;
+    border: 1px solid #e5eaf0;
+    border-radius: 21px;
+    background: #ffffff;
+    box-shadow: 0 13px 38px rgba(15, 35, 55, 0.08);
+}
+
+.bmk-filter-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 22px;
+    border-bottom: 1px solid #e8edf3;
+    background: #fbfcfe;
+}
+
+.bmk-filter-icon {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+    color: #1d4ed8;
+    background: #eef5ff;
+}
+
+.bmk-filter-title {
+    margin: 0;
+    color: #0f2747;
+    font-size: 0.98rem;
+    font-weight: 800;
+}
+
+.bmk-filter-subtitle {
+    margin: 2px 0 0;
+    color: #64748b;
+    font-size: 0.76rem;
+}
+
+.bmk-filter-body {
+    padding: 22px;
+}
+
+.bmk-filter-label {
+    display: block;
+    margin-bottom: 7px;
+    color: #475569;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.bmk-filter-input,
+.bmk-filter-select {
+    min-height: 43px;
+    border: 1px solid #dce3eb;
+    border-radius: 10px;
+    color: #334155;
+    background: #ffffff;
+    font-size: 0.84rem;
+    box-shadow: none !important;
+}
+
+.bmk-filter-input:focus,
+.bmk-filter-select:focus {
+    border-color: #1d4ed8;
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.09) !important;
+}
+
+.bmk-filter-btn {
+    min-height: 43px;
+    border: 0;
+    border-radius: 10px;
+    background: #1d4ed8;
+    color: #ffffff;
+    font-size: 0.8rem;
+    font-weight: 800;
+    box-shadow: 0 8px 18px rgba(29, 78, 216, 0.18);
+    transition: all 0.25s ease;
+}
+
+.bmk-filter-btn:hover {
+    background: #163fae;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.bmk-clear-filter {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border: 1px solid #dce3eb;
+    border-radius: 9px;
+    color: #64748b;
+    background: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.bmk-clear-filter:hover {
+    color: #0f2747;
+    background: #f7f9fc;
+}
+
+/* =========================
+   INVOICE TABLE
+========================= */
+
+.bmk-invoices-card {
+    overflow: hidden;
+    border: 1px solid #e5eaf0;
+    border-radius: 22px;
+    background: #ffffff;
+    box-shadow: 0 15px 45px rgba(15, 35, 55, 0.09);
+}
+
+.bmk-invoices-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid #e8edf3;
+    background: #fbfcfe;
+}
+
+.bmk-invoices-title {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin: 0;
+    color: #0f2747;
+    font-size: 1.05rem;
+    font-weight: 800;
+}
+
+.bmk-invoices-title-icon {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+    color: #ffffff;
+    background: linear-gradient(135deg, #1d4ed8, #2563eb);
+    box-shadow: 0 8px 18px rgba(29, 78, 216, 0.20);
+}
+
+.bmk-invoice-count {
+    padding: 6px 10px;
+    border-radius: 999px;
+    color: #1d4ed8;
+    background: #eef5ff;
+    font-size: 0.72rem;
+    font-weight: 800;
+}
+
+.bmk-invoices-body {
+    padding: 0;
+}
+
+.bmk-invoice-table-wrapper {
+    overflow-x: auto;
+}
+
+.bmk-invoice-table {
+    min-width: 1120px;
+    margin: 0;
+}
+
+.bmk-invoice-table thead th {
+    padding: 15px 18px;
+    border-bottom: 1px solid #dfe6ee;
+    background: #f7f9fc;
+    color: #64748b;
+    font-size: 0.69rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+}
+
+.bmk-invoice-table tbody td {
+    padding: 17px 18px;
+    border-bottom: 1px solid #edf1f5;
+    color: #334155;
+    font-size: 0.84rem;
+    vertical-align: middle;
+}
+
+.bmk-invoice-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.bmk-invoice-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.bmk-invoice-table tbody tr:hover {
+    background: #fbfcff;
+}
+
+/* =========================
+   STUDENT CELL
+========================= */
+
+.bmk-student-cell {
+    min-width: 185px;
+}
+
+.bmk-student-name {
+    color: #0f2747;
+    font-weight: 800;
+    line-height: 1.35;
+}
+
+.bmk-student-admission {
+    display: block;
+    margin-top: 3px;
+    color: #64748b;
+    font-size: 0.73rem;
+}
+
+.bmk-academic-year {
+    color: #0f2747;
+    font-weight: 750;
+    white-space: nowrap;
+}
+
+.bmk-description {
+    min-width: 170px;
+    color: #475569;
+    font-weight: 600;
+}
+
+.bmk-amount,
+.bmk-paid,
+.bmk-balance {
+    white-space: nowrap;
+    font-weight: 800;
+}
+
+.bmk-amount {
+    color: #0f2747;
+}
+
+.bmk-paid {
+    color: #3f7d58 !important;
+}
+
+.bmk-balance {
+    color: #b42318 !important;
+}
+
+/* =========================
+   STATUS
+========================= */
+
+.bmk-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 0.69rem;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.bmk-status-paid {
+    color: #23613d;
+    background: #e9f7ee;
+}
+
+.bmk-status-partial {
+    color: #8a5a00;
+    background: #fff4d6;
+}
+
+.bmk-status-cancelled {
+    color: #64748b;
+    background: #eef1f4;
+}
+
+.bmk-status-unpaid {
+    color: #a52318;
+    background: #ffebe9;
+}
+
+/* =========================
+   VIEW BUTTON
+========================= */
+
+.bmk-view-invoice {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border: 1px solid #bfdbfe;
+    border-radius: 9px;
+    color: #1d4ed8;
+    background: #eff6ff;
+    font-size: 0.74rem;
+    font-weight: 800;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+.bmk-view-invoice:hover {
+    color: #ffffff;
+    border-color: #1d4ed8;
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.bmk-invoice-empty {
+    padding: 65px 25px;
+    text-align: center;
+}
+
+.bmk-invoice-empty-icon {
+    width: 65px;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 17px;
+    border-radius: 18px;
+    color: #1d4ed8;
+    background: #eef5ff;
+    font-size: 1.45rem;
+}
+
+.bmk-invoice-empty h5 {
+    margin-bottom: 7px;
+    color: #0f2747;
+    font-weight: 800;
+}
+
+.bmk-invoice-empty p {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.86rem;
+}
+
+/* =========================
+   PAGINATION
+========================= */
+
+.bmk-pagination {
+    padding: 20px 24px;
+    border-top: 1px solid #e8edf3;
+    background: #fbfcfe;
+}
+
+.bmk-pagination .pagination {
+    margin: 0;
+}
+
+.bmk-pagination .page-link {
+    min-width: 38px;
+    min-height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 3px;
+    border: 1px solid #dce3eb;
+    border-radius: 9px !important;
+    color: #475569;
+    background: #ffffff;
+    font-size: 0.76rem;
+    font-weight: 700;
+    box-shadow: none;
+    transition: all 0.2s ease;
+}
+
+.bmk-pagination .page-link:hover {
+    color: #1d4ed8;
+    border-color: #bfdbfe;
+    background: #eff6ff;
+}
+
+.bmk-pagination .page-item.active .page-link {
+    border-color: #1d4ed8;
+    background: #1d4ed8;
+    color: #ffffff;
+}
+
+.bmk-pagination .page-item.disabled .page-link {
+    color: #a0aab8;
+    background: #f4f6f8;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 767.98px) {
+
+    .bmk-invoice-list {
+        padding-top: 0;
+    }
+
+    .bmk-invoice-header {
+        padding: 23px 20px;
+        border-radius: 19px;
+    }
+
+    .bmk-invoice-title {
+        font-size: 1.45rem;
+    }
+
+    .bmk-fee-stat {
+        padding: 18px;
+    }
+
+    .bmk-fee-stat-value {
+        font-size: 1.25rem;
+    }
+
+    .bmk-filter-card {
+        border-radius: 18px;
+    }
+
+    .bmk-filter-body {
+        padding: 18px;
+    }
+
+    .bmk-invoices-card {
+        border-radius: 18px;
+    }
+
+    .bmk-invoices-card-header {
+        padding: 18px;
+    }
+
+    .bmk-pagination {
+        padding: 16px 12px;
+    }
+
+    .bmk-pagination .page-link {
+        min-width: 34px;
+        min-height: 34px;
+        margin: 0 1px;
+    }
+}
+
+/*==============================
+INVOICE DETAIIL PAGE
+================================*/
+.bmk-invoice-detail {
+    padding: 10px 0 45px;
+}
+
+/* =========================
+   PAGE HEADER
+========================= */
+
+.bmk-invoice-detail-header {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 28px;
+    padding: 30px;
+    border-radius: 24px;
+    background:
+        radial-gradient(
+            circle at 88% 15%,
+            rgba(224, 168, 62, 0.22),
+            transparent 28%
+        ),
+        linear-gradient(
+            135deg,
+            #0f2747 0%,
+            #173e6d 62%,
+            #1d4ed8 100%
+        );
+    box-shadow: 0 20px 50px rgba(15, 39, 71, 0.18);
+}
+
+.bmk-invoice-detail-header::before {
+    content: "";
+    position: absolute;
+    width: 210px;
+    height: 210px;
+    right: -85px;
+    bottom: -115px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.bmk-invoice-detail-header::after {
+    content: "";
+    position: absolute;
+    width: 85px;
+    height: 85px;
+    right: 115px;
+    top: -42px;
+    border-radius: 50%;
+    background: rgba(224, 168, 62, 0.10);
+}
+
+.bmk-invoice-detail-content {
+    position: relative;
+    z-index: 1;
+}
+
+.bmk-invoice-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 9px;
+    color: #f3d58a;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+}
+
+.bmk-invoice-detail-title {
+    margin: 0 0 6px;
+    color: #ffffff;
+    font-size: 1.8rem;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.bmk-student-meta {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.74);
+    font-size: 0.88rem;
+}
+
+.bmk-back-fees {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.10);
+    color: #ffffff;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-decoration: none;
+    backdrop-filter: blur(8px);
+    transition: all 0.25s ease;
+}
+
+.bmk-back-fees:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.18);
+    transform: translateY(-2px);
+}
+
+/* =========================
+   INVOICE CARD
+========================= */
+
+.bmk-invoice-card {
+    overflow: hidden;
+    margin-bottom: 28px;
+    border: 1px solid #e5eaf0;
+    border-radius: 22px;
+    background: #ffffff;
+    box-shadow: 0 15px 45px rgba(15, 35, 55, 0.09);
+}
+
+.bmk-invoice-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 24px;
+    border-bottom: 1px solid #e8edf3;
+    background: #fbfcfe;
+}
+
+.bmk-invoice-card-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    color: #ffffff;
+    background: linear-gradient(135deg, #1d4ed8, #2563eb);
+    box-shadow: 0 8px 18px rgba(29, 78, 216, 0.20);
+}
+
+.bmk-invoice-card-title {
+    margin: 0;
+    color: #0f2747;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.bmk-invoice-description {
+    margin: 2px 0 0;
+    color: #64748b;
+    font-size: 0.76rem;
+}
+
+.bmk-invoice-card-body {
+    padding: 25px;
+}
+
+/* =========================
+   INFORMATION
+========================= */
+
+.bmk-invoice-info-group {
+    height: 100%;
+    padding: 21px;
+    border: 1px solid #e7ecf2;
+    border-radius: 16px;
+    background: #fbfcfe;
+}
+
+.bmk-invoice-info-item {
+    margin-bottom: 19px;
+}
+
+.bmk-invoice-info-item:last-child {
+    margin-bottom: 0;
+}
+
+.bmk-info-label {
+    display: block;
+    margin-bottom: 5px;
+    color: #64748b;
+    font-size: 0.70rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.bmk-info-value {
+    color: #0f2747;
+    font-size: 0.91rem;
+    font-weight: 750;
+}
+
+.bmk-due-date {
+    color: #334155;
+}
+
+/* =========================
+   STATUS
+========================= */
+
+.bmk-invoice-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 0.70rem;
+    font-weight: 800;
+}
+
+.bmk-status-paid {
+    color: #23613d;
+    background: #e9f7ee;
+}
+
+.bmk-status-partial {
+    color: #8a5a00;
+    background: #fff4d6;
+}
+
+.bmk-status-cancelled {
+    color: #64748b;
+    background: #eef1f4;
+}
+
+.bmk-status-unpaid {
+    color: #a52318;
+    background: #ffebe9;
+}
+
+/* =========================
+   FINANCIAL SUMMARY
+========================= */
+
+.bmk-financial-item {
+    padding: 18px 0;
+    border-bottom: 1px solid #e8edf3;
+}
+
+.bmk-financial-item:first-child {
+    padding-top: 0;
+}
+
+.bmk-financial-item:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+
+.bmk-financial-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.bmk-financial-label {
+    color: #64748b;
+    font-size: 0.80rem;
+    font-weight: 700;
+}
+
+.bmk-financial-value {
+    color: #0f2747;
+    font-size: 1rem;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.bmk-financial-paid {
+    color: #3f7d58;
+}
+
+.bmk-financial-outstanding {
+    color: #b42318;
+    font-size: 1.12rem;
+}
+
+/* =========================
+   PAYMENTS CARD
+========================= */
+
+.bmk-payments-card {
+    overflow: hidden;
+    border: 1px solid #e5eaf0;
+    border-radius: 22px;
+    background: #ffffff;
+    box-shadow: 0 15px 45px rgba(15, 35, 55, 0.09);
+}
+
+.bmk-payments-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px 24px;
+    border-bottom: 1px solid #e8edf3;
+    background: #fbfcfe;
+}
+
+.bmk-payments-title {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin: 0;
+    color: #0f2747;
+    font-size: 1.05rem;
+    font-weight: 800;
+}
+
+.bmk-payments-icon {
+    width: 39px;
+    height: 39px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+    color: #ffffff;
+    background: linear-gradient(135deg, #3f7d58, #4f966c);
+    box-shadow: 0 8px 18px rgba(63, 125, 88, 0.20);
+}
+
+.bmk-record-payment {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 14px;
+    border: 0;
+    border-radius: 10px;
+    color: #ffffff;
+    background: #1d4ed8;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-decoration: none;
+    box-shadow: 0 8px 18px rgba(29, 78, 216, 0.18);
+    transition: all 0.25s ease;
+}
+
+.bmk-record-payment:hover {
+    color: #ffffff;
+    background: #163fae;
+    transform: translateY(-2px);
+}
+
+.bmk-payments-body {
+    padding: 0;
+}
+
+/* =========================
+   PAYMENT TABLE
+========================= */
+
+.bmk-payments-table-wrapper {
+    overflow-x: auto;
+}
+
+.bmk-payments-table {
+    min-width: 780px;
+    margin: 0;
+}
+
+.bmk-payments-table thead th {
+    padding: 15px 18px;
+    border-bottom: 1px solid #dfe6ee;
+    background: #f7f9fc;
+    color: #64748b;
+    font-size: 0.69rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+}
+
+.bmk-payments-table tbody td {
+    padding: 17px 18px;
+    border-bottom: 1px solid #edf1f5;
+    color: #334155;
+    font-size: 0.84rem;
+    vertical-align: middle;
+}
+
+.bmk-payments-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.bmk-payments-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.bmk-payments-table tbody tr:hover {
+    background: #fbfcff;
+}
+
+.bmk-payment-date {
+    color: #0f2747;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.bmk-payment-amount {
+    color: #3f7d58;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.bmk-payment-method {
+    color: #475569;
+    font-weight: 600;
+}
+
+.bmk-payment-reference {
+    color: #64748b;
+    font-size: 0.78rem;
+}
+
+.bmk-receipt-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 11px;
+    border: 1px solid #dce3eb;
+    border-radius: 9px;
+    color: #475569;
+    background: #ffffff;
+    font-size: 0.74rem;
+    font-weight: 800;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+.bmk-receipt-btn:hover {
+    color: #ffffff;
+    border-color: #0f2747;
+    background: #0f2747;
+    transform: translateY(-1px);
+}
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.bmk-payments-empty {
+    padding: 60px 25px;
+    text-align: center;
+}
+
+.bmk-payments-empty-icon {
+    width: 62px;
+    height: 62px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    border-radius: 18px;
+    color: #3f7d58;
+    background: #edf8f1;
+    font-size: 1.4rem;
+}
+
+.bmk-payments-empty h5 {
+    margin-bottom: 6px;
+    color: #0f2747;
+    font-weight: 800;
+}
+
+.bmk-payments-empty p {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.85rem;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 767.98px) {
+
+    .bmk-invoice-detail {
+        padding-top: 0;
+    }
+
+    .bmk-invoice-detail-header {
+        padding: 23px 20px;
+        border-radius: 19px;
+    }
+
+    .bmk-invoice-detail-title {
+        font-size: 1.45rem;
+    }
+
+    .bmk-invoice-detail-header .d-flex {
+        align-items: flex-start !important;
+        flex-direction: column;
+    }
+
+    .bmk-back-fees {
+        margin-top: 17px;
+    }
+
+    .bmk-invoice-card,
+    .bmk-payments-card {
+        border-radius: 18px;
+    }
+
+    .bmk-invoice-card-header,
+    .bmk-payments-header {
+        padding: 18px;
+    }
+
+    .bmk-invoice-card-body {
+        padding: 18px;
+    }
+
+    .bmk-payments-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .bmk-record-payment {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .bmk-invoice-info-group {
+        padding: 18px;
+    }
+}
+
+/*============================
+CREATE INVOICE / INVOICE FORM 
+==============================*/
+.bmk-create-invoice-page {
+    padding: 10px 0 45px;
+}
+
+/* =========================
+   PAGE HEADER
+========================= */
+
+.bmk-create-header {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 28px;
+    padding: 30px;
+    border-radius: 24px;
+    background:
+        radial-gradient(
+            circle at 88% 15%,
+            rgba(224, 168, 62, 0.22),
+            transparent 28%
+        ),
+        linear-gradient(
+            135deg,
+            #0f2747 0%,
+            #173e6d 62%,
+            #1d4ed8 100%
+        );
+    box-shadow: 0 20px 50px rgba(15, 39, 71, 0.18);
+}
+
+.bmk-create-header::before {
+    content: "";
+    position: absolute;
+    width: 210px;
+    height: 210px;
+    right: -85px;
+    bottom: -115px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.bmk-create-header::after {
+    content: "";
+    position: absolute;
+    width: 85px;
+    height: 85px;
+    right: 115px;
+    top: -42px;
+    border-radius: 50%;
+    background: rgba(224, 168, 62, 0.10);
+}
+
+.bmk-create-header-content {
+    position: relative;
+    z-index: 1;
+}
+
+.bmk-create-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 9px;
+    color: #f3d58a;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+}
+
+.bmk-create-title {
+    margin: 0 0 6px;
+    color: #ffffff;
+    font-size: 1.8rem;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.bmk-create-student {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.74);
+    font-size: 0.88rem;
+}
+
+.bmk-back-fees {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.10);
+    color: #ffffff;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-decoration: none;
+    backdrop-filter: blur(8px);
+    transition: all 0.25s ease;
+}
+
+.bmk-back-fees:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.18);
+    transform: translateY(-2px);
+}
+
+/* =========================
+   FORM CARD
+========================= */
+
+.bmk-create-card {
+    max-width: 900px;
+    margin: 0 auto;
+    overflow: hidden;
+    border: 1px solid #e5eaf0;
+    border-radius: 22px;
+    background: #ffffff;
+    box-shadow: 0 18px 50px rgba(15, 35, 55, 0.10);
+}
+
+.bmk-create-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 21px 25px;
+    border-bottom: 1px solid #e8edf3;
+    background: #fbfcfe;
+}
+
+.bmk-create-card-icon {
+    width: 41px;
+    height: 41px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    color: #ffffff;
+    background: linear-gradient(135deg, #1d4ed8, #2563eb);
+    box-shadow: 0 8px 18px rgba(29, 78, 216, 0.20);
+}
+
+.bmk-create-card-title {
+    margin: 0;
+    color: #0f2747;
+    font-size: 1.02rem;
+    font-weight: 800;
+}
+
+.bmk-create-card-subtitle {
+    margin: 2px 0 0;
+    color: #64748b;
+    font-size: 0.76rem;
+}
+
+.bmk-create-card-body {
+    padding: 28px;
+}
+
+/* =========================
+   FORM
+========================= */
+
+.bmk-field {
+    margin-bottom: 22px;
+}
+
+.bmk-field-label {
+    display: block;
+    margin-bottom: 8px;
+    color: #334155;
+    font-size: 0.78rem;
+    font-weight: 800;
+}
+
+.bmk-field-required {
+    color: #b42318;
+}
+
+.bmk-create-card input,
+.bmk-create-card select,
+.bmk-create-card textarea {
+    width: 100%;
+    min-height: 45px;
+    border: 1px solid #dce3eb;
+    border-radius: 10px;
+    padding: 10px 13px;
+    color: #334155;
+    background: #ffffff;
+    font-size: 0.86rem;
+    box-shadow: none;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.bmk-create-card input:focus,
+.bmk-create-card select:focus,
+.bmk-create-card textarea:focus {
+    border-color: #1d4ed8;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.09);
+}
+
+.bmk-create-card input::placeholder,
+.bmk-create-card textarea::placeholder {
+    color: #9aa5b4;
+}
+
+.bmk-field-error {
+    margin-top: 7px;
+    color: #b42318;
+    font-size: 0.76rem;
+    font-weight: 600;
+}
+
+.bmk-field-error ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+/* =========================
+   ERROR ALERT
+========================= */
+
+.bmk-form-error {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 25px;
+    padding: 14px 16px;
+    border: 1px solid #f2c0bc;
+    border-radius: 12px;
+    color: #8f2118;
+    background: #fff4f3;
+    font-size: 0.82rem;
+}
+
+.bmk-form-error i {
+    margin-top: 2px;
+    font-size: 1rem;
+}
+
+.bmk-form-error ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+/* =========================
+   AMOUNT FIELD
+========================= */
+
+.bmk-amount-wrapper {
+    position: relative;
+}
+
+.bmk-amount-prefix {
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    z-index: 2;
+    transform: translateY(-50%);
+    color: #64748b;
+    font-size: 0.82rem;
+    font-weight: 800;
+    pointer-events: none;
+}
+
+.bmk-amount-wrapper input {
+    padding-left: 34px;
+}
+
+/* =========================
+   ACTIONS
+========================= */
+
+.bmk-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 30px;
+    padding-top: 22px;
+    border-top: 1px solid #e8edf3;
+}
+
+.bmk-cancel-btn,
+.bmk-submit-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 43px;
+    padding: 9px 17px;
+    border-radius: 10px;
+    font-size: 0.80rem;
+    font-weight: 800;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.bmk-cancel-btn {
+    border: 1px solid #dce3eb;
+    color: #475569;
+    background: #ffffff;
+}
+
+.bmk-cancel-btn:hover {
+    color: #0f2747;
+    background: #f6f8fb;
+    transform: translateY(-1px);
+}
+
+.bmk-submit-btn {
+    border: 0;
+    color: #ffffff;
+    background: #1d4ed8;
+    box-shadow: 0 8px 20px rgba(29, 78, 216, 0.20);
+}
+
+.bmk-submit-btn:hover {
+    color: #ffffff;
+    background: #163fae;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(29, 78, 216, 0.26);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 767.98px) {
+
+    .bmk-create-invoice-page {
+        padding-top: 0;
+    }
+
+    .bmk-create-header {
+        padding: 23px 20px;
+        border-radius: 19px;
+    }
+
+    .bmk-create-title {
+        font-size: 1.45rem;
+    }
+
+    .bmk-create-header .d-flex {
+        align-items: flex-start !important;
+        flex-direction: column;
+    }
+
+    .bmk-back-fees {
+        margin-top: 17px;
+    }
+
+    .bmk-create-card {
+        border-radius: 18px;
+    }
+
+    .bmk-create-card-header {
+        padding: 18px;
+    }
+
+    .bmk-create-card-body {
+        padding: 20px;
+    }
+
+    .bmk-form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .bmk-cancel-btn,
+    .bmk-submit-btn {
+        width: 100%;
+    }
+}
+
+/*====================================
+EDIT INVOICE
+=====================================*/
+.bmk-edit-invoice-page {
+    min-height: 100vh;
+    padding: 34px 0 70px;
+    background:
+        radial-gradient(circle at top right, rgba(29, 78, 216, 0.07), transparent 30%),
+        linear-gradient(180deg, #f7f9fc 0%, #ffffff 72%);
+}
+
+.bmk-edit-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 30px;
+}
+
+.bmk-edit-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 9px;
+    color: #1d4ed8;
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.bmk-edit-eyebrow::before {
+    content: "";
+    width: 28px;
+    height: 2px;
+    border-radius: 10px;
+    background: #e0a83e;
+}
+
+.bmk-edit-title {
+    margin: 0;
+    color: #0f2747;
+    font-size: clamp(1.8rem, 3vw, 2.35rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+}
+
+.bmk-edit-student {
+    margin: 7px 0 0;
+    color: #64748b;
+    font-size: 0.94rem;
+}
+
+.bmk-edit-student strong {
+    color: #334155;
+    font-weight: 700;
+}
+
+.bmk-back-invoice {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 17px;
+    border: 1px solid #d9e1eb;
+    border-radius: 12px;
+    color: #334155;
+    background: #ffffff;
+    font-size: 0.86rem;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    box-shadow: 0 7px 20px rgba(15, 35, 55, 0.05);
+    transition: all 0.25s ease;
+}
+
+.bmk-back-invoice:hover {
+    color: #1d4ed8;
+    border-color: #b9c9e2;
+    transform: translateY(-2px);
+    box-shadow: 0 11px 25px rgba(15, 35, 55, 0.09);
+}
+
+.bmk-edit-card {
+    max-width: 900px;
+    margin: 0 auto;
+    overflow: hidden;
+    border: 1px solid rgba(15, 39, 71, 0.08);
+    border-radius: 24px;
+    background: #ffffff;
+    box-shadow: 0 22px 55px rgba(15, 35, 55, 0.10);
+}
+
+.bmk-edit-card-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 22px 28px;
+    color: #ffffff;
+    background: linear-gradient(135deg, #0f2747 0%, #173e6d 100%);
+}
+
+.bmk-edit-card-icon {
+    width: 46px;
+    height: 46px;
+    flex: 0 0 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    color: #0f2747;
+    background: linear-gradient(135deg, #f3d58a, #e0a83e);
+    box-shadow: 0 8px 20px rgba(224, 168, 62, 0.22);
+}
+
+.bmk-edit-card-icon i {
+    font-size: 1.15rem;
+}
+
+.bmk-edit-card-title {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 800;
+}
+
+.bmk-edit-card-subtitle {
+    margin: 3px 0 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.82rem;
+}
+
+.bmk-edit-card-body {
+    padding: 32px;
+}
+
+.bmk-field {
+    margin-bottom: 24px;
+}
+
+.bmk-field:last-child {
+    margin-bottom: 0;
+}
+
+.bmk-field-label {
+    display: block;
+    margin-bottom: 8px;
+    color: #0f2747;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+}
+
+.bmk-field-required {
+    color: #dc2626;
+}
+
+.bmk-input {
+    width: 100%;
+    min-height: 48px;
+    padding: 11px 14px;
+    border: 1px solid #dbe3ed;
+    border-radius: 12px;
+    outline: none;
+    color: #0f2747;
+    background: #ffffff;
+    font-size: 0.93rem;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.bmk-input:focus {
+    border-color: #1d4ed8;
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(29, 78, 216, 0.10);
+}
+
+.bmk-input[readonly] {
+    cursor: not-allowed;
+    color: #64748b;
+    background: #f3f6fa;
+    border-color: #dfe5ec;
+}
+
+.bmk-input[readonly]:focus {
+    border-color: #dfe5ec;
+    box-shadow: none;
+}
+
+.bmk-payment-warning {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    margin-top: 11px;
+    padding: 13px 15px;
+    border: 1px solid #f2d58c;
+    border-radius: 12px;
+    color: #7a5a00;
+    background: #fff9e8;
+    font-size: 0.82rem;
+    line-height: 1.55;
+}
+
+.bmk-payment-warning i {
+    flex: 0 0 auto;
+    margin-top: 2px;
+    color: #d99a18;
+    font-size: 1rem;
+}
+
+.bmk-payment-warning strong {
+    color: #684b00;
+}
+
+.bmk-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 30px;
+    padding-top: 24px;
+    border-top: 1px solid #edf0f4;
+}
+
+.bmk-cancel-btn,
+.bmk-save-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 46px;
+    padding: 10px 19px;
+    border-radius: 11px;
+    font-size: 0.86rem;
+    font-weight: 800;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.bmk-cancel-btn {
+    border: 1px solid #d9e1eb;
+    color: #475569;
+    background: #ffffff;
+}
+
+.bmk-cancel-btn:hover {
+    color: #0f2747;
+    background: #f7f9fc;
+    border-color: #c8d2df;
+    transform: translateY(-2px);
+}
+
+.bmk-save-btn {
+    border: 1px solid #1d4ed8;
+    color: #ffffff !important;
+    background: linear-gradient(135deg, #1d4ed8, #2563eb);
+    box-shadow: 0 9px 22px rgba(29, 78, 216, 0.20);
+}
+
+.bmk-save-btn:hover {
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 13px 28px rgba(29, 78, 216, 0.28);
+}
+
+@media (max-width: 767.98px) {
+    .bmk-edit-invoice-page {
+        padding: 25px 0 55px;
+    }
+
+    .bmk-edit-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .bmk-back-invoice {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .bmk-edit-card {
+        border-radius: 19px;
+    }
+
+    .bmk-edit-card-header {
+        padding: 19px 20px;
+    }
+
+    .bmk-edit-card-body {
+        padding: 23px 20px;
+    }
+
+    .bmk-form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .bmk-cancel-btn,
+    .bmk-save-btn {
+        width: 100%;
+    }
+}
+/*======================
+RECORD PAYMENT
+====================================================*/
+.bmk-record-payment-page {
+    min-height: 100vh;
+    padding: 34px 0 70px;
+    background:
+        radial-gradient(circle at top right, rgba(29, 78, 216, 0.07), transparent 30%),
+        linear-gradient(180deg, #f7f9fc 0%, #ffffff 72%);
+}
+
+.bmk-payment-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 28px;
+}
+
+.bmk-payment-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 9px;
+    color: #1d4ed8;
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.bmk-payment-eyebrow::before {
+    content: "";
+    width: 28px;
+    height: 2px;
+    border-radius: 10px;
+    background: #e0a83e;
+}
+
+.bmk-payment-title {
+    margin: 0;
+    color: #0f2747;
+    font-size: clamp(1.8rem, 3vw, 2.35rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+}
+
+.bmk-payment-subtitle {
+    margin: 7px 0 0;
+    color: #64748b;
+    font-size: 0.92rem;
+}
+
+.bmk-back-fees {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 17px;
+    border: 1px solid #d9e1eb;
+    border-radius: 12px;
+    color: #334155;
+    background: #ffffff;
+    font-size: 0.86rem;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    box-shadow: 0 7px 20px rgba(15, 35, 55, 0.05);
+    transition: all 0.25s ease;
+}
+
+.bmk-back-fees:hover {
+    color: #1d4ed8;
+    border-color: #b9c9e2;
+    transform: translateY(-2px);
+    box-shadow: 0 11px 25px rgba(15, 35, 55, 0.09);
+}
+
+.bmk-payment-card {
+    overflow: hidden;
+    margin-bottom: 22px;
+    border: 1px solid rgba(15, 39, 71, 0.08);
+    border-radius: 23px;
+    background: #ffffff;
+    box-shadow: 0 20px 50px rgba(15, 35, 55, 0.09);
+}
+
+.bmk-payment-card:last-child {
+    margin-bottom: 0;
+}
+
+.bmk-payment-card-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px 25px;
+    color: #ffffff;
+    background: linear-gradient(135deg, #0f2747 0%, #173e6d 100%);
+}
+
+.bmk-payment-card-icon {
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 13px;
+    color: #0f2747;
+    background: linear-gradient(135deg, #f3d58a, #e0a83e);
+    box-shadow: 0 8px 20px rgba(224, 168, 62, 0.22);
+}
+
+.bmk-payment-card-icon i {
+    font-size: 1.1rem;
+}
+
+.bmk-payment-card-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.bmk-payment-card-subtitle {
+    margin: 3px 0 0;
+    color: rgba(255, 255, 255, 0.70);
+    font-size: 0.78rem;
+}
+
+.bmk-payment-card-body {
+    padding: 27px;
+}
+
+.bmk-invoice-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 18px;
+}
+
+.bmk-invoice-item {
+    grid-column: span 2;
+    padding: 16px 17px;
+    border: 1px solid #e8edf3;
+    border-radius: 15px;
+    background: #fafbfd;
+}
+
+.bmk-invoice-item.student {
+    grid-column: span 3;
+}
+
+.bmk-invoice-item.admission {
+    grid-column: span 3;
+}
+
+.bmk-invoice-label {
+    display: block;
+    margin-bottom: 6px;
+    color: #64748b;
+    font-size: 0.69rem;
+    font-weight: 800;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+}
+
+.bmk-invoice-value {
+    color: #0f2747;
+    font-size: 0.94rem;
+    font-weight: 800;
+    line-height: 1.45;
+    word-break: break-word;
+}
+
+.bmk-invoice-amount .bmk-invoice-value {
+    color: #0f2747;
+    font-size: 1.08rem;
+}
+
+.bmk-invoice-paid .bmk-invoice-value {
+    color: #198754;
+    font-size: 1.08rem;
+}
+
+.bmk-invoice-balance {
+    border-color: #f3d58a;
+    background: linear-gradient(135deg, #fffaf0, #fffdf8);
+}
+
+.bmk-invoice-balance .bmk-invoice-value {
+    color: #b77900;
+    font-size: 1.08rem;
+}
+
+.bmk-balance-highlight {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    margin-bottom: 25px;
+    padding: 17px 19px;
+    border: 1px solid #cfe0ff;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #f2f7ff, #ffffff);
+}
+
+.bmk-balance-copy {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.bmk-balance-icon {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    color: #1d4ed8;
+    background: #e5efff;
+}
+
+.bmk-balance-label {
+    margin: 0 0 2px;
+    color: #64748b;
+    font-size: 0.74rem;
+    font-weight: 700;
+}
+
+.bmk-balance-text {
+    margin: 0;
+    color: #0f2747;
+    font-size: 0.88rem;
+    font-weight: 700;
+}
+
+.bmk-balance-amount {
+    color: #1d4ed8;
+    font-size: 1.15rem;
+    font-weight: 900;
+    white-space: nowrap;
+}
+
+.bmk-field {
+    margin-bottom: 22px;
+}
+
+.bmk-field:last-child {
+    margin-bottom: 0;
+}
+
+.bmk-field-label {
+    display: block;
+    margin-bottom: 8px;
+    color: #0f2747;
+    font-size: 0.82rem;
+    font-weight: 800;
+}
+
+.bmk-required {
+    color: #dc2626;
+}
+
+.bmk-input,
+.bmk-select,
+.bmk-textarea {
+    width: 100%;
+    border: 1px solid #dbe3ed;
+    border-radius: 12px;
+    outline: none;
+    color: #0f2747;
+    background: #ffffff;
+    font-size: 0.92rem;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.bmk-input,
+.bmk-select {
+    min-height: 48px;
+    padding: 11px 14px;
+}
+
+.bmk-textarea {
+    min-height: 100px;
+    padding: 12px 14px;
+    resize: vertical;
+}
+
+.bmk-input:focus,
+.bmk-select:focus,
+.bmk-textarea:focus {
+    border-color: #1d4ed8;
+    box-shadow: 0 0 0 4px rgba(29, 78, 216, 0.10);
+}
+
+.bmk-amount-wrapper {
+    display: flex;
+    align-items: stretch;
+}
+
+.bmk-amount-prefix {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 50px;
+    padding: 0 13px;
+    border: 1px solid #dbe3ed;
+    border-right: 0;
+    border-radius: 12px 0 0 12px;
+    color: #0f2747;
+    background: #f3f6fa;
+    font-weight: 800;
+}
+
+.bmk-amount-input {
+    border-radius: 0 12px 12px 0;
+}
+
+.bmk-field-help {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 7px;
+    color: #64748b;
+    font-size: 0.76rem;
+}
+
+.bmk-field-help i {
+    color: #1d4ed8;
+}
+
+.bmk-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 28px;
+    padding-top: 23px;
+    border-top: 1px solid #edf0f4;
+}
+
+.bmk-cancel-btn,
+.bmk-save-payment-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 47px;
+    padding: 10px 20px;
+    border-radius: 11px;
+    font-size: 0.86rem;
+    font-weight: 800;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.bmk-cancel-btn {
+    border: 1px solid #d9e1eb;
+    color: #475569;
+    background: #ffffff;
+}
+
+.bmk-cancel-btn:hover {
+    color: #0f2747;
+    background: #f7f9fc;
+    border-color: #c8d2df;
+    transform: translateY(-2px);
+}
+
+.bmk-save-payment-btn {
+    border: 1px solid #198754;
+    color: #ffffff !important;
+    background: linear-gradient(135deg, #198754, #157347);
+    box-shadow: 0 9px 22px rgba(25, 135, 84, 0.20);
+}
+
+.bmk-save-payment-btn:hover {
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 13px 28px rgba(25, 135, 84, 0.27);
+}
+
+@media (max-width: 767.98px) {
+    .bmk-record-payment-page {
+        padding: 25px 0 55px;
+    }
+
+    .bmk-payment-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .bmk-back-fees {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .bmk-payment-card {
+        border-radius: 19px;
+    }
+
+    .bmk-payment-card-header {
+        padding: 18px 20px;
+    }
+
+    .bmk-payment-card-body {
+        padding: 21px 19px;
+    }
+
+    .bmk-invoice-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .bmk-invoice-item,
+    .bmk-invoice-item.student,
+    .bmk-invoice-item.admission {
+        grid-column: span 1;
+    }
+
+    .bmk-balance-highlight {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .bmk-form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .bmk-cancel-btn,
+    .bmk-save-payment-btn {
+        width: 100%;
+    }
+}
+
+/*===========================
+PAYMENT HISTORY
+=============================*/
+.bmk-payment-history-page {
+    min-height: 100vh;
+    padding: 34px 0 70px;
+    background:
+        radial-gradient(circle at top right, rgba(29, 78, 216, 0.07), transparent 30%),
+        linear-gradient(180deg, #f7f9fc 0%, #ffffff 72%);
+}
+
+.bmk-history-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 28px;
+}
+
+.bmk-history-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 9px;
+    color: #1d4ed8;
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.bmk-history-eyebrow::before {
+    content: "";
+    width: 28px;
+    height: 2px;
+    border-radius: 10px;
+    background: #e0a83e;
+}
+
+.bmk-history-title {
+    margin: 0;
+    color: #0f2747;
+    font-size: clamp(1.8rem, 3vw, 2.35rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+}
+
+.bmk-history-student {
+    margin: 7px 0 0;
+    color: #64748b;
+    font-size: 0.92rem;
+}
+
+.bmk-history-student strong {
+    color: #334155;
+    font-weight: 700;
+}
+
+.bmk-back-fees {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 17px;
+    border: 1px solid #d9e1eb;
+    border-radius: 12px;
+    color: #334155;
+    background: #ffffff;
+    font-size: 0.86rem;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    box-shadow: 0 7px 20px rgba(15, 35, 55, 0.05);
+    transition: all 0.25s ease;
+}
+
+.bmk-back-fees:hover {
+    color: #1d4ed8;
+    border-color: #b9c9e2;
+    transform: translateY(-2px);
+    box-shadow: 0 11px 25px rgba(15, 35, 55, 0.09);
+}
+
+.bmk-history-card {
+    overflow: hidden;
+    margin-bottom: 22px;
+    border: 1px solid rgba(15, 39, 71, 0.08);
+    border-radius: 23px;
+    background: #ffffff;
+    box-shadow: 0 20px 50px rgba(15, 35, 55, 0.09);
+}
+
+.bmk-history-card:last-child {
+    margin-bottom: 0;
+}
+
+.bmk-history-card-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px 25px;
+    color: #ffffff;
+    background: linear-gradient(135deg, #0f2747 0%, #173e6d 100%);
+}
+
+.bmk-history-card-icon {
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 13px;
+    color: #0f2747;
+    background: linear-gradient(135deg, #f3d58a, #e0a83e);
+    box-shadow: 0 8px 20px rgba(224, 168, 62, 0.22);
+}
+
+.bmk-history-card-icon i {
+    font-size: 1.1rem;
+}
+
+.bmk-history-card-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.bmk-history-card-subtitle {
+    margin: 3px 0 0;
+    color: rgba(255, 255, 255, 0.70);
+    font-size: 0.78rem;
+}
+
+.bmk-history-card-body {
+    padding: 26px;
+}
+
+.bmk-invoice-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+.bmk-summary-item {
+    min-height: 92px;
+    padding: 15px 17px;
+    border: 1px solid #e7ecf2;
+    border-radius: 15px;
+    background: #fafbfd;
+}
+
+.bmk-summary-label {
+    display: block;
+    margin-bottom: 7px;
+    color: #64748b;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+}
+
+.bmk-summary-value {
+    color: #0f2747;
+    font-size: 0.93rem;
+    font-weight: 800;
+    line-height: 1.45;
+    word-break: break-word;
+}
+
+.bmk-summary-money {
+    font-size: 1.05rem;
+}
+
+.bmk-summary-paid {
+    border-color: #cfe9db;
+    background: #f4fbf7;
+}
+
+.bmk-summary-paid .bmk-summary-value {
+    color: #198754;
+}
+
+.bmk-summary-balance {
+    border-color: #f0d9a0;
+    background: #fffaf0;
+}
+
+.bmk-summary-balance .bmk-summary-value {
+    color: #b77900;
+}
+
+.bmk-summary-status {
+    display: flex;
+    align-items: center;
+    min-height: 92px;
+}
+
+.bmk-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 11px;
+    border-radius: 999px;
+    font-size: 0.73rem;
+    font-weight: 800;
+}
+
+.bmk-status-paid {
+    color: #137a4b;
+    background: #e6f6ed;
+}
+
+.bmk-status-partial {
+    color: #8a6100;
+    background: #fff2cf;
+}
+
+.bmk-status-cancelled {
+    color: #64748b;
+    background: #eef1f4;
+}
+
+.bmk-status-unpaid {
+    color: #b42318;
+    background: #fdeceb;
+}
+
+.bmk-payments-card {
+    overflow: hidden;
+    border: 1px solid rgba(15, 39, 71, 0.08);
+    border-radius: 23px;
+    background: #ffffff;
+    box-shadow: 0 20px 50px rgba(15, 35, 55, 0.09);
+}
+
+.bmk-payments-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 20px 25px;
+    border-bottom: 1px solid #edf0f4;
+}
+
+.bmk-payments-heading {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.bmk-payments-icon {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    color: #1d4ed8;
+    background: #eaf2ff;
+}
+
+.bmk-payments-title {
+    margin: 0;
+    color: #0f2747;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.bmk-payments-subtitle {
+    margin: 3px 0 0;
+    color: #64748b;
+    font-size: 0.77rem;
+}
+
+.bmk-payment-count {
+    padding: 7px 11px;
+    border-radius: 999px;
+    color: #1d4ed8;
+    background: #eef5ff;
+    font-size: 0.72rem;
+    font-weight: 800;
+}
+
+.bmk-table-wrapper {
+    overflow-x: auto;
+}
+
+.bmk-payments-table {
+    width: 100%;
+    min-width: 850px;
+    margin: 0;
+    border-collapse: collapse;
+}
+
+.bmk-payments-table thead th {
+    padding: 14px 18px;
+    border-bottom: 1px solid #e6ebf1;
+    color: #64748b;
+    background: #f8fafc;
+    font-size: 0.69rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-align: left;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.bmk-payments-table tbody td {
+    padding: 17px 18px;
+    border-bottom: 1px solid #edf0f4;
+    color: #334155;
+    font-size: 0.84rem;
+    vertical-align: middle;
+}
+
+.bmk-payments-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.bmk-payments-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.bmk-payments-table tbody tr:hover {
+    background: #fafcff;
+}
+
+.bmk-payment-date {
+    color: #0f2747;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.bmk-payment-amount {
+    color: #198754 !important;
+    font-size: 0.92rem !important;
+    font-weight: 900 !important;
+    white-space: nowrap;
+}
+
+.bmk-method {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #334155;
+    font-weight: 700;
+}
+
+.bmk-method i {
+    color: #1d4ed8;
+}
+
+.bmk-reference {
+    color: #475569;
+    font-size: 0.79rem;
+}
+
+.bmk-remarks {
+    max-width: 230px;
+    color: #64748b;
+    line-height: 1.45;
+}
+
+.bmk-receipt-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 7px 11px;
+    border: 1px solid #cfe0ff;
+    border-radius: 9px;
+    color: #1d4ed8;
+    background: #f5f9ff;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+.bmk-receipt-btn:hover {
+    color: #ffffff;
+    background: #1d4ed8;
+    border-color: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+.bmk-empty-state {
+    padding: 60px 25px;
+    text-align: center;
+}
+
+.bmk-empty-icon {
+    width: 68px;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    border-radius: 20px;
+    color: #1d4ed8;
+    background: #eaf2ff;
+}
+
+.bmk-empty-icon i {
+    font-size: 1.7rem;
+}
+
+.bmk-empty-state h3 {
+    margin: 0 0 6px;
+    color: #0f2747;
+    font-size: 1.08rem;
+    font-weight: 800;
+}
+
+.bmk-empty-state p {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.84rem;
+}
+
+@media (max-width: 767.98px) {
+    .bmk-payment-history-page {
+        padding: 25px 0 55px;
+    }
+
+    .bmk-history-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .bmk-back-fees {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .bmk-history-card,
+    .bmk-payments-card {
+        border-radius: 19px;
+    }
+
+    .bmk-history-card-header {
+        padding: 18px 20px;
+    }
+
+    .bmk-history-card-body {
+        padding: 20px;
+    }
+
+    .bmk-invoice-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .bmk-summary-status {
+        min-height: auto;
+    }
+
+    .bmk-payments-header {
+        padding: 18px 20px;
+    }
+
+    .bmk-payment-count {
+        display: none;
+    }
+}
+/*==========================
+OUTSTANDING FEES
+=============================*/
+.bmk-outstanding-page {
+    min-height: 100vh;
+    padding: 34px 0 70px;
+    background:
+        radial-gradient(circle at top right, rgba(29, 78, 216, 0.07), transparent 30%),
+        linear-gradient(180deg, #f7f9fc 0%, #ffffff 72%);
+}
+
+.bmk-outstanding-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 28px;
+}
+
+.bmk-outstanding-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 9px;
+    color: #1d4ed8;
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.bmk-outstanding-eyebrow::before {
+    content: "";
+    width: 28px;
+    height: 2px;
+    border-radius: 10px;
+    background: #e0a83e;
+}
+
+.bmk-outstanding-title {
+    margin: 0;
+    color: #0f2747;
+    font-size: clamp(1.8rem, 3vw, 2.35rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+}
+
+.bmk-outstanding-subtitle {
+    margin: 7px 0 0;
+    color: #64748b;
+    font-size: 0.92rem;
+}
+
+.bmk-report-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 17px;
+    border: 1px solid #d9e1eb;
+    border-radius: 12px;
+    color: #334155;
+    background: #ffffff;
+    font-size: 0.86rem;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    box-shadow: 0 7px 20px rgba(15, 35, 55, 0.05);
+    transition: all 0.25s ease;
+}
+
+.bmk-report-btn:hover {
+    color: #1d4ed8;
+    border-color: #b9c9e2;
+    transform: translateY(-2px);
+    box-shadow: 0 11px 25px rgba(15, 35, 55, 0.09);
+}
+
+.bmk-outstanding-stat {
+    position: relative;
+    overflow: hidden;
+    max-width: 420px;
+    margin-bottom: 23px;
+    padding: 23px 25px;
+    border: 1px solid #f0d4d1;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #fffafa, #ffffff);
+    box-shadow: 0 15px 40px rgba(15, 35, 55, 0.07);
+}
+
+.bmk-outstanding-stat::after {
+    content: "";
+    position: absolute;
+    top: -35px;
+    right: -35px;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: rgba(220, 53, 69, 0.06);
+}
+
+.bmk-stat-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 9px;
+}
+
+.bmk-stat-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    color: #dc3545;
+    background: #fdebec;
+}
+
+.bmk-stat-label {
+    color: #64748b;
+    font-size: 0.73rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.bmk-stat-value {
+    color: #c62839;
+    font-size: clamp(1.5rem, 3vw, 1.9rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+}
+
+.bmk-filter-card,
+.bmk-outstanding-card {
+    overflow: hidden;
+    margin-bottom: 22px;
+    border: 1px solid rgba(15, 39, 71, 0.08);
+    border-radius: 23px;
+    background: #ffffff;
+    box-shadow: 0 20px 50px rgba(15, 35, 55, 0.08);
+}
+
+.bmk-filter-header,
+.bmk-outstanding-card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 19px 25px;
+    border-bottom: 1px solid #edf0f4;
+}
+
+.bmk-filter-icon,
+.bmk-table-icon {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    color: #1d4ed8;
+    background: #eaf2ff;
+}
+
+.bmk-filter-title,
+.bmk-table-title {
+    margin: 0;
+    color: #0f2747;
+    font-size: 0.98rem;
+    font-weight: 800;
+}
+
+.bmk-filter-subtitle,
+.bmk-table-subtitle {
+    margin: 3px 0 0;
+    color: #64748b;
+    font-size: 0.76rem;
+}
+
+.bmk-filter-body {
+    padding: 23px 25px;
+}
+
+.bmk-filter-label {
+    display: block;
+    margin-bottom: 7px;
+    color: #0f2747;
+    font-size: 0.76rem;
+    font-weight: 800;
+}
+
+.bmk-filter-input,
+.bmk-filter-select {
+    width: 100%;
+    min-height: 45px;
+    padding: 9px 12px;
+    border: 1px solid #dbe3ed;
+    border-radius: 11px;
+    outline: none;
+    color: #334155;
+    background: #ffffff;
+    font-size: 0.84rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bmk-filter-input:focus,
+.bmk-filter-select:focus {
+    border-color: #1d4ed8;
+    box-shadow: 0 0 0 4px rgba(29, 78, 216, 0.09);
+}
+
+.bmk-filter-actions {
+    display: flex;
+    gap: 9px;
+    align-items: flex-end;
+}
+
+.bmk-filter-btn,
+.bmk-clear-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 45px;
+    padding: 9px 15px;
+    border-radius: 10px;
+    font-size: 0.82rem;
+    font-weight: 800;
+    text-decoration: none;
+    transition: all 0.22s ease;
+}
+
+.bmk-filter-btn {
+    border: 1px solid #1d4ed8;
+    color: #ffffff !important;
+    background: #1d4ed8;
+}
+
+.bmk-filter-btn:hover {
+    color: #ffffff !important;
+    background: #173fae;
+    transform: translateY(-1px);
+}
+
+.bmk-clear-btn {
+    border: 1px solid #d9e1eb;
+    color: #475569;
+    background: #ffffff;
+}
+
+.bmk-clear-btn:hover {
+    color: #0f2747;
+    background: #f7f9fc;
+    border-color: #c8d2df;
+}
+
+.bmk-outstanding-card {
+    margin-bottom: 0;
+}
+
+.bmk-outstanding-card-header {
+    justify-content: space-between;
+}
+
+.bmk-table-heading {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.bmk-table-body {
+    padding: 0;
+}
+
+.bmk-table-wrapper {
+    overflow-x: auto;
+}
+
+.bmk-outstanding-table {
+    width: 100%;
+    min-width: 1100px;
+    margin: 0;
+    border-collapse: collapse;
+}
+
+.bmk-outstanding-table thead th {
+    padding: 14px 17px;
+    border-bottom: 1px solid #e6ebf1;
+    color: #64748b;
+    background: #f8fafc;
+    font-size: 0.67rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-align: left;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.bmk-outstanding-table tbody td {
+    padding: 16px 17px;
+    border-bottom: 1px solid #edf0f4;
+    color: #334155;
+    font-size: 0.82rem;
+    vertical-align: middle;
+}
+
+.bmk-outstanding-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.bmk-outstanding-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.bmk-outstanding-table tbody tr:hover {
+    background: #fafcff;
+}
+
+.bmk-student-name {
+    color: #0f2747;
+    font-weight: 800;
+    line-height: 1.4;
+}
+
+.bmk-admission {
+    color: #64748b;
+    font-size: 0.77rem;
+    font-weight: 700;
+}
+
+.bmk-invoice-description {
+    max-width: 190px;
+    color: #475569;
+    line-height: 1.4;
+}
+
+.bmk-money {
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.bmk-paid {
+    color: #198754 !important;
+}
+
+.bmk-outstanding-amount {
+    color: #c62839 !important;
+    font-size: 0.91rem !important;
+    font-weight: 900 !important;
+    white-space: nowrap;
+}
+
+.bmk-action-group {
+    display: flex;
+    gap: 7px;
+    white-space: nowrap;
+}
+
+.bmk-view-btn,
+.bmk-record-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 7px 10px;
+    border-radius: 9px;
+    font-size: 0.71rem;
+    font-weight: 800;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.bmk-view-btn {
+    border: 1px solid #d9e1eb;
+    color: #475569;
+    background: #ffffff;
+}
+
+.bmk-view-btn:hover {
+    color: #0f2747;
+    border-color: #bfcbd9;
+    background: #f7f9fc;
+}
+
+.bmk-record-btn {
+    border: 1px solid #cfe0ff;
+    color: #1d4ed8;
+    background: #f3f7ff;
+}
+
+.bmk-record-btn:hover {
+    color: #ffffff;
+    border-color: #1d4ed8;
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+.bmk-empty-state {
+    padding: 65px 25px;
+    text-align: center;
+}
+
+.bmk-empty-icon {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 17px;
+    border-radius: 21px;
+    color: #198754;
+    background: #e9f8f0;
+}
+
+.bmk-empty-icon i {
+    font-size: 1.8rem;
+}
+
+.bmk-empty-state h3 {
+    margin: 0 0 6px;
+    color: #0f2747;
+    font-size: 1.1rem;
+    font-weight: 800;
+}
+
+.bmk-empty-state p {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.84rem;
+}
+
+@media (max-width: 767.98px) {
+    .bmk-outstanding-page {
+        padding: 25px 0 55px;
+    }
+
+    .bmk-outstanding-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .bmk-report-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .bmk-outstanding-stat {
+        max-width: none;
+    }
+
+    .bmk-filter-card,
+    .bmk-outstanding-card {
+        border-radius: 19px;
+    }
+
+    .bmk-filter-header,
+    .bmk-outstanding-card-header {
+        padding: 17px 19px;
+    }
+
+    .bmk-filter-body {
+        padding: 20px 19px;
+    }
+
+    .bmk-filter-actions {
+        width: 100%;
+    }
+
+    .bmk-filter-btn,
+    .bmk-clear-btn {
+        flex: 1;
+    }
+
+    .bmk-empty-state {
+        padding: 55px 20px;
+    }
+}
+/*========================================================
+CLASS FEE SUMMARY
+=======================================================*/
+.bmk-class-fee-page {
+    min-height: 100vh;
+    padding: 34px 0 75px;
+    background:
+        radial-gradient(circle at 100% 0%, rgba(29, 78, 216, 0.07), transparent 28%),
+        linear-gradient(180deg, #f7f9fc 0%, #ffffff 70%);
+}
+
+.bmk-fee-page-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 28px;
+}
+
+.bmk-fee-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 9px;
+    color: #1d4ed8;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.bmk-fee-eyebrow::before {
+    content: "";
+    width: 28px;
+    height: 2px;
+    border-radius: 20px;
+    background: #e0a83e;
+}
+
+.bmk-fee-page-title {
+    margin: 0;
+    color: #0f2747;
+    font-size: clamp(1.8rem, 3vw, 2.35rem);
+    font-weight: 850;
+    letter-spacing: -0.035em;
+}
+
+.bmk-fee-page-subtitle {
+    margin: 7px 0 0;
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+.bmk-filter-card,
+.bmk-summary-card,
+.bmk-chart-card,
+.bmk-search-card,
+.bmk-students-card {
+    overflow: hidden;
+    border: 1px solid rgba(15, 39, 71, 0.08);
+    border-radius: 22px;
+    background: #ffffff;
+    box-shadow: 0 18px 48px rgba(15, 35, 55, 0.07);
+}
+
+.bmk-filter-card {
+    margin-bottom: 28px;
+}
+
+.bmk-card-header {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 18px 23px;
+    border-bottom: 1px solid #edf0f4;
+}
+
+.bmk-card-icon {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 12px;
+    color: #1d4ed8;
+    background: #eaf2ff;
+}
+
+.bmk-card-heading {
+    margin: 0;
+    color: #0f2747;
+    font-size: 0.96rem;
+    font-weight: 800;
+}
+
+.bmk-card-description {
+    margin: 3px 0 0;
+    color: #64748b;
+    font-size: 0.75rem;
+}
+
+.bmk-filter-body {
+    padding: 23px;
+}
+
+.bmk-field-label {
+    display: block;
+    margin-bottom: 7px;
+    color: #0f2747;
+    font-size: 0.75rem;
+    font-weight: 800;
+}
+
+.bmk-filter-select,
+.bmk-search-input {
+    width: 100%;
+    min-height: 45px;
+    padding: 9px 12px;
+    border: 1px solid #dbe3ed;
+    border-radius: 11px;
+    outline: none;
+    color: #334155;
+    background: #ffffff;
+    font-size: 0.83rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bmk-filter-select:focus,
+.bmk-search-input:focus {
+    border-color: #1d4ed8;
+    box-shadow: 0 0 0 4px rgba(29, 78, 216, 0.09);
+}
+
+.bmk-primary-btn,
+.bmk-outline-btn,
+.bmk-export-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 45px;
+    padding: 9px 15px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-decoration: none;
+    transition: all 0.22s ease;
+}
+
+.bmk-primary-btn {
+    border: 1px solid #1d4ed8;
+    color: #ffffff !important;
+    background: #1d4ed8;
+}
+
+.bmk-primary-btn:hover {
+    color: #ffffff !important;
+    background: #173fae;
+    transform: translateY(-1px);
+}
+
+.bmk-outline-btn {
+    border: 1px solid #d9e1eb;
+    color: #475569;
+    background: #ffffff;
+}
+
+.bmk-outline-btn:hover {
+    color: #0f2747;
+    border-color: #c5d0dd;
+    background: #f8fafc;
+}
+
+.bmk-summary-heading {
+    margin: 0 0 17px;
+    color: #0f2747;
+    font-size: 1.15rem;
+    font-weight: 850;
+}
+
+.bmk-summary-heading span {
+    color: #64748b;
+    font-weight: 600;
+}
+
+.bmk-stat-card {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    padding: 21px;
+    border: 1px solid rgba(15, 39, 71, 0.08);
+    border-radius: 19px;
+    background: #ffffff;
+    box-shadow: 0 12px 35px rgba(15, 35, 55, 0.06);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.bmk-stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 17px 40px rgba(15, 35, 55, 0.09);
+}
+
+.bmk-stat-card::after {
+    content: "";
+    position: absolute;
+    right: -35px;
+    bottom: -35px;
+    width: 95px;
+    height: 95px;
+    border-radius: 50%;
+    background: rgba(29, 78, 216, 0.035);
+}
+
+.bmk-stat-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.bmk-stat-label {
+    color: #64748b;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.bmk-stat-icon {
+    width: 37px;
+    height: 37px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+    color: #1d4ed8;
+    background: #edf4ff;
+}
+
+.bmk-stat-value {
+    color: #0f2747;
+    font-size: 1.35rem;
+    font-weight: 900;
+    letter-spacing: -0.025em;
+    white-space: nowrap;
+}
+
+.bmk-stat-students .bmk-stat-value {
+    font-size: 1.7rem;
+}
+
+.bmk-stat-paid {
+    border-color: rgba(25, 135, 84, 0.15);
+}
+
+.bmk-stat-paid .bmk-stat-icon {
+    color: #198754;
+    background: #eaf8f1;
+}
+
+.bmk-stat-paid .bmk-stat-value {
+    color: #16804d;
+}
+
+.bmk-stat-outstanding {
+    border-color: rgba(220, 53, 69, 0.15);
+}
+
+.bmk-stat-outstanding .bmk-stat-icon {
+    color: #dc3545;
+    background: #fdecef;
+}
+
+.bmk-stat-outstanding .bmk-stat-value {
+    color: #c62839;
+}
+
+.bmk-stat-rate {
+    border-color: rgba(29, 78, 216, 0.16);
+}
+
+.bmk-stat-rate .bmk-stat-icon {
+    color: #1d4ed8;
+    background: #eaf2ff;
+}
+
+.bmk-stat-rate .bmk-stat-value {
+    color: #1d4ed8;
+}
+
+.bmk-risk-section {
+    margin-top: 22px;
+}
+
+.bmk-risk-card {
+    display: block;
+    height: 100%;
+    padding: 19px;
+    border: 1px solid;
+    border-radius: 18px;
+    background: #ffffff;
+    text-decoration: none;
+    box-shadow: 0 10px 28px rgba(15, 35, 55, 0.045);
+    transition: transform 0.23s ease, box-shadow 0.23s ease;
+}
+
+.bmk-risk-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(15, 35, 55, 0.08);
+}
+
+.bmk-risk-card.active {
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.08),
+                0 15px 35px rgba(15, 35, 55, 0.08);
+}
+
+.bmk-risk-label {
+    display: block;
+    margin-bottom: 7px;
+    color: #64748b;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.bmk-risk-value {
+    font-size: 1.65rem;
+    font-weight: 900;
+}
+
+.bmk-risk-high {
+    border-color: #f0b9c0;
+}
+
+.bmk-risk-high .bmk-risk-value {
+    color: #c62839;
+}
+
+.bmk-risk-medium {
+    border-color: #f1d28c;
+}
+
+.bmk-risk-medium .bmk-risk-value {
+    color: #b77900;
+}
+
+.bmk-risk-low {
+    border-color: #b9dfe8;
+}
+
+.bmk-risk-low .bmk-risk-value {
+    color: #16748a;
+}
+
+.bmk-risk-paid {
+    border-color: #b8dfcb;
+}
+
+.bmk-risk-paid .bmk-risk-value {
+    color: #16804d;
+}
+
+.bmk-chart-card {
+    margin-top: 25px;
+}
+
+.bmk-chart-body {
+    padding: 23px;
+}
+
+.bmk-chart-wrapper {
+    position: relative;
+    height: 350px;
+}
+
+.bmk-filter-state {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin: 23px 0 0;
+    padding: 13px 16px;
+    border: 1px solid #e4eaf1;
+    border-radius: 12px;
+    background: #f8fafc;
+}
+
+.bmk-filter-state p {
+    margin: 0;
+    color: #475569;
+    font-size: 0.82rem;
+}
+
+.bmk-search-card {
+    margin-top: 22px;
+}
+
+.bmk-search-body {
+    padding: 21px 23px;
+}
+
+.bmk-students-card {
+    margin-top: 22px;
+}
+
+.bmk-students-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 19px 23px;
+    border-bottom: 1px solid #edf0f4;
+}
+
+.bmk-students-heading {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.bmk-students-count {
+    color: #64748b;
+    font-size: 0.78rem;
+}
+
+.bmk-students-range {
+    color: #64748b;
+    font-size: 0.76rem;
+    white-space: nowrap;
+}
+
+.bmk-export-btn {
+    min-height: 38px;
+    padding: 7px 12px;
+    color: #198754 !important;
+    border: 1px solid #b8dfcb;
+    background: #f0faf5;
+}
+
+.bmk-export-btn:hover {
+    color: #ffffff !important;
+    border-color: #198754;
+    background: #198754;
+    transform: translateY(-1px);
+}
+
+.bmk-table-wrapper {
+    overflow-x: auto;
+}
+
+.bmk-students-table {
+    width: 100%;
+    min-width: 1100px;
+    margin: 0;
+    border-collapse: collapse;
+}
+
+.bmk-students-table thead th {
+    padding: 13px 15px;
+    border-bottom: 1px solid #e5eaf0;
+    color: #64748b;
+    background: #f8fafc;
+    font-size: 0.66rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-align: left;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.bmk-students-table tbody td {
+    padding: 15px;
+    border-bottom: 1px solid #edf0f4;
+    color: #334155;
+    font-size: 0.8rem;
+    vertical-align: middle;
+}
+
+.bmk-students-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.bmk-students-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.bmk-students-table tbody tr:hover {
+    background: #fafcff;
+}
+
+.bmk-number {
+    color: #94a3b8;
+    font-size: 0.72rem;
+    font-weight: 800;
+}
+
+.bmk-student-name {
+    color: #0f2747;
+    font-weight: 800;
+}
+
+.bmk-money {
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.bmk-money-paid {
+    color: #198754 !important;
+}
+
+.bmk-money-outstanding {
+    color: #c62839 !important;
+}
+
+.bmk-status,
+.bmk-risk {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 9px;
+    border-radius: 999px;
+    font-size: 0.66rem;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.bmk-status-paid,
+.bmk-risk-paid-badge {
+    color: #16804d;
+    background: #e8f7ef;
+}
+
+.bmk-status-partial,
+.bmk-risk-medium-badge {
+    color: #9a6500;
+    background: #fff5d9;
+}
+
+.bmk-status-unpaid,
+.bmk-risk-high-badge {
+    color: #c62839;
+    background: #fdebed;
+}
+
+.bmk-risk-low-badge {
+    color: #16748a;
+    background: #e8f7fa;
+}
+
+.bmk-action-group {
+    display: flex;
+    gap: 7px;
+    white-space: nowrap;
+}
+
+.bmk-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 7px 10px;
+    border-radius: 9px;
+    font-size: 0.69rem;
+    font-weight: 800;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.bmk-view-fees {
+    color: #475569;
+    border: 1px solid #d9e1eb;
+    background: #ffffff;
+}
+
+.bmk-view-fees:hover {
+    color: #0f2747;
+    border-color: #bcc8d6;
+    background: #f7f9fc;
+}
+
+.bmk-collect-fees {
+    color: #1d4ed8;
+    border: 1px solid #c9dcff;
+    background: #f2f6ff;
+}
+
+.bmk-collect-fees:hover {
+    color: #ffffff;
+    border-color: #1d4ed8;
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+.bmk-no-data {
+    padding: 55px 20px;
+    text-align: center;
+    color: #64748b;
+    font-size: 0.86rem;
+}
+
+.bmk-pagination {
+    padding: 20px 23px 24px;
+    border-top: 1px solid #edf0f4;
+}
+
+.bmk-pagination .page-link {
+    min-width: 38px;
+    text-align: center;
+    color: #475569;
+    border-color: #dce4ed;
+    font-size: 0.76rem;
+    font-weight: 700;
+}
+
+.bmk-pagination .page-item.active .page-link {
+    color: #ffffff;
+    border-color: #1d4ed8;
+    background: #1d4ed8;
+}
+
+@media (max-width: 991.98px) {
+    .bmk-fee-page-header {
+        align-items: flex-start;
+    }
+
+    .bmk-chart-wrapper {
+        height: 300px;
+    }
+
+    .bmk-students-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .bmk-class-fee-page {
+        padding: 25px 0 55px;
+    }
+
+    .bmk-fee-page-header {
+        flex-direction: column;
+    }
+
+    .bmk-filter-body,
+    .bmk-chart-body,
+    .bmk-search-body {
+        padding: 19px;
+    }
+
+    .bmk-card-header,
+    .bmk-students-header {
+        padding: 17px 19px;
+    }
+
+    .bmk-filter-card,
+    .bmk-summary-card,
+    .bmk-chart-card,
+    .bmk-search-card,
+    .bmk-students-card {
+        border-radius: 19px;
+    }
+
+    .bmk-filter-state {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .bmk-filter-state .bmk-outline-btn {
+        width: 100%;
+    }
+
+    .bmk-chart-wrapper {
+        height: 270px;
+    }
+
+    .bmk-students-range {
+        white-space: normal;
+    }
+
+    .bmk-pagination {
+        padding: 17px 14px 20px;
+        overflow-x: auto;
+    }
+
+    .bmk-pagination .pagination {
+        flex-wrap: nowrap;
+        justify-content: flex-start !important;
+    }
+}
+/*=============================
+FEE COLLECTION REPORT
+=================================*/
+.bmk-fee-report {
+    padding: 10px 0 50px;
+}
+
+.bmk-report-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 30px;
+}
+
+.bmk-report-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    color: #1d4ed8;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.bmk-report-eyebrow i {
+    font-size: 0.95rem;
+}
+
+.bmk-report-title {
+    margin: 0 0 7px;
+    color: #0f2747;
+    font-size: clamp(1.8rem, 3vw, 2.35rem);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+}
+
+.bmk-report-subtitle {
+    max-width: 620px;
+    margin: 0;
+    color: #64748b;
+    font-size: 0.96rem;
+}
+
+.bmk-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    padding: 10px 17px;
+    border: 1px solid #dbe3ec;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #334155;
+    font-size: 0.86rem;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 5px 15px rgba(15, 35, 55, 0.05);
+    transition: all 0.25s ease;
+}
+
+.bmk-back-btn:hover {
+    color: #1d4ed8;
+    border-color: #bfdbfe;
+    background: #f8fbff;
+    transform: translateY(-2px);
+    box-shadow: 0 9px 22px rgba(15, 35, 55, 0.08);
+}
+
+/* Summary cards */
+
+.bmk-report-stat {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid #e6ebf1;
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 12px 35px rgba(15, 35, 55, 0.07);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.bmk-report-stat:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 18px 42px rgba(15, 35, 55, 0.11);
+}
+
+.bmk-report-stat::after {
+    position: absolute;
+    right: -35px;
+    bottom: -45px;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    content: "";
+    opacity: 0.45;
+}
+
+.bmk-stat-invoiced::after {
+    background: #dbeafe;
+}
+
+.bmk-stat-paid::after {
+    background: #dcfce7;
+}
+
+.bmk-stat-outstanding::after {
+    background: #fee2e2;
+}
+
+.bmk-stat-rate::after {
+    background: #fef3c7;
+}
+
+.bmk-report-stat-body {
+    position: relative;
+    z-index: 1;
+    padding: 22px;
+}
+
+.bmk-stat-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.bmk-stat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 43px;
+    height: 43px;
+    border-radius: 13px;
+    font-size: 1.05rem;
+}
+
+.bmk-stat-invoiced .bmk-stat-icon {
+    color: #1d4ed8;
+    background: #eff6ff;
+}
+
+.bmk-stat-paid .bmk-stat-icon {
+    color: #15803d;
+    background: #f0fdf4;
+}
+
+.bmk-stat-outstanding .bmk-stat-icon {
+    color: #dc2626;
+    background: #fef2f2;
+}
+
+.bmk-stat-rate .bmk-stat-icon {
+    color: #b45309;
+    background: #fffbeb;
+}
+
+.bmk-stat-label {
+    display: block;
+    margin-bottom: 6px;
+    color: #64748b;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.bmk-stat-value {
+    margin: 0;
+    color: #0f2747;
+    font-size: clamp(1.25rem, 2vw, 1.65rem);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+}
+
+.bmk-stat-paid .bmk-stat-value {
+    color: #15803d;
+}
+
+.bmk-stat-outstanding .bmk-stat-value {
+    color: #dc2626;
+}
+
+.bmk-stat-rate .bmk-stat-value {
+    color: #1d4ed8;
+}
+
+/* Status card */
+
+.bmk-status-card {
+    overflow: hidden;
+    border: 1px solid #e6ebf1;
+    border-radius: 22px;
+    background: #ffffff;
+    box-shadow: 0 15px 40px rgba(15, 35, 55, 0.08);
+}
+
+.bmk-section-header {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 20px 23px;
+    border-bottom: 1px solid #edf1f5;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
+}
+
+.bmk-section-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    color: #1d4ed8;
+    background: #eff6ff;
+}
+
+.bmk-section-title {
+    margin: 0;
+    color: #0f2747;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.bmk-section-subtitle {
+    margin: 2px 0 0;
+    color: #94a3b8;
+    font-size: 0.78rem;
+}
+
+.bmk-status-body {
+    padding: 0;
+}
+
+.bmk-status-table {
+    min-width: 620px;
+    margin: 0;
+}
+
+.bmk-status-table thead th {
+    padding: 15px 20px;
+    border-bottom: 1px solid #e8edf2;
+    background: #f8fafc;
+    color: #64748b;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.bmk-status-table tbody td {
+    padding: 17px 20px;
+    border-color: #eef2f6;
+    color: #334155;
+    font-size: 0.9rem;
+    vertical-align: middle;
+}
+
+.bmk-status-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.bmk-status-table tbody tr:hover {
+    background: #f8fbff;
+}
+
+.bmk-status-count {
+    color: #0f2747;
+    font-weight: 800;
+}
+
+.bmk-status-amount {
+    color: #0f2747;
+    font-weight: 750;
+}
+
+.bmk-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 11px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 800;
+}
+
+.bmk-status-paid {
+    color: #166534;
+    background: #dcfce7;
+}
+
+.bmk-status-partial {
+    color: #92400e;
+    background: #fef3c7;
+}
+
+.bmk-status-unpaid {
+    color: #991b1b;
+    background: #fee2e2;
+}
+
+.bmk-status-badge i {
+    font-size: 0.68rem;
+}
+
+/* Mobile */
+
+@media (max-width: 767.98px) {
+    .bmk-fee-report {
+        padding-top: 5px;
+    }
+
+    .bmk-report-header {
+        align-items: flex-start;
+        flex-direction: column;
+        margin-bottom: 24px;
+    }
+
+    .bmk-back-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .bmk-report-title {
+        font-size: 1.7rem;
+    }
+
+    .bmk-report-subtitle {
+        font-size: 0.9rem;
+    }
+
+    .bmk-report-stat-body {
+        padding: 19px;
+    }
+
+    .bmk-stat-top {
+        margin-bottom: 15px;
+    }
+
+    .bmk-stat-value {
+        font-size: 1.3rem;
+    }
+
+    .bmk-section-header {
+        padding: 17px;
+    }
+
+    .bmk-status-table thead th,
+    .bmk-status-table tbody td {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+}
+/*=============================================
+MONTHLY PAYMENT REPORT
+================================================*/
+.bmk-monthly-report {
+    padding-bottom: 40px;
+}
+
+.bmk-report-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 28px 30px;
+    margin-bottom: 24px;
+    border-radius: 22px;
+    background:
+        linear-gradient(135deg, #0f2747 0%, #173e6d 65%, #1d4ed8 100%);
+    color: #ffffff;
+    box-shadow: 0 18px 45px rgba(15, 35, 55, 0.14);
+}
+
+.bmk-report-hero::after {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    right: -55px;
+    top: -75px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.bmk-report-hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.bmk-report-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 8px;
+    color: #f3d58a;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.bmk-report-title {
+    margin: 0 0 7px;
+    font-size: clamp(1.7rem, 3vw, 2.25rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+}
+
+.bmk-report-description {
+    max-width: 650px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.78);
+}
+
+.bmk-report-back {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 9px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    border-radius: 10px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.08);
+    transition: all 0.2s ease;
+}
+
+.bmk-report-back:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.16);
+    transform: translateY(-2px);
+}
+
+.bmk-report-card {
+    overflow: hidden;
+    margin-bottom: 24px;
+    border: 1px solid #e5eaf0;
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 12px 35px rgba(15, 35, 55, 0.07);
+}
+
+.bmk-report-card-header {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 20px 24px;
+    border-bottom: 1px solid #edf0f4;
+}
+
+.bmk-report-card-icon {
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 42px;
+    border-radius: 12px;
+    color: #1d4ed8;
+    background: #eef5ff;
+}
+
+.bmk-report-card-icon i {
+    font-size: 1.15rem;
+}
+
+.bmk-report-card-title {
+    margin: 0;
+    color: #0f2747;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.bmk-report-card-subtitle {
+    margin: 3px 0 0;
+    color: #64748b;
+    font-size: 0.82rem;
+}
+
+.bmk-chart-body {
+    padding: 24px;
+}
+
+.bmk-chart-wrapper {
+    position: relative;
+    height: 350px;
+}
+
+.bmk-table-body {
+    padding: 0;
+}
+
+.bmk-monthly-table {
+    margin: 0;
+}
+
+.bmk-monthly-table thead th {
+    padding: 15px 20px;
+    border-bottom: 1px solid #e5eaf0;
+    color: #64748b;
+    background: #f8fafc;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.bmk-monthly-table tbody td {
+    padding: 17px 20px;
+    border-bottom: 1px solid #edf0f4;
+    color: #334155;
+    vertical-align: middle;
+}
+
+.bmk-monthly-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.bmk-monthly-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.bmk-monthly-table tbody tr:hover {
+    background: #f8fbff;
+}
+
+.bmk-year {
+    color: #64748b;
+    font-weight: 600;
+}
+
+.bmk-month {
+    color: #0f2747;
+    font-weight: 700;
+}
+
+.bmk-amount {
+    color: #16803c;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.bmk-amount-icon {
+    margin-right: 7px;
+    color: #3f7d58;
+}
+
+.bmk-empty-state {
+    padding: 55px 20px;
+    text-align: center;
+}
+
+.bmk-empty-icon {
+    width: 58px;
+    height: 58px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    border-radius: 16px;
+    color: #64748b;
+    background: #f1f5f9;
+}
+
+.bmk-empty-icon i {
+    font-size: 1.4rem;
+}
+
+.bmk-empty-state h5 {
+    margin-bottom: 6px;
+    color: #0f2747;
+    font-weight: 800;
+}
+
+.bmk-empty-state p {
+    margin: 0;
+    color: #64748b;
+}
+
+@media (max-width: 767.98px) {
+    .bmk-report-hero {
+        padding: 23px 20px;
+        border-radius: 18px;
+    }
+
+    .bmk-report-card-header {
+        padding: 17px 18px;
+    }
+
+    .bmk-chart-body {
+        padding: 18px;
+    }
+
+    .bmk-chart-wrapper {
+        height: 280px;
+    }
+
+    .bmk-monthly-table thead th,
+    .bmk-monthly-table tbody td {
+        padding: 14px 15px;
+    }
+}

@@ -1,253 +1,357 @@
 {% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'website/css/admissions.css' %}"
+>
+{% endblock %}
 
 {% block title %}
-    Admission Applications | BMK Academy
+Admission Applications | BMK Academy
 {% endblock %}
 
 {% block content %}
 
-<div class="container-fluid py-4">
+<div class="bmk-admissions-list-page">
 
-    <!-- Header -->
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+<!-- =====================================================
+     PAGE HEADER
+====================================================== -->
+
+<section class="bmk-admissions-list-header">
+
+    <div>
+
+        <span class="bmk-page-eyebrow">
+            ADMISSIONS
+        </span>
+
+        <h1>
+            Admission Applications
+        </h1>
+
+        <p>
+            Review and manage student admission applications.
+        </p>
+
+    </div>
+
+
+    <a
+        href="{% url 'admissions:admission_application' %}"
+        class="bmk-admissions-new-button"
+    >
+        <i class="bi bi-plus-lg"></i>
+
+        <span>
+            New Application
+        </span>
+    </a>
+
+</section>
+
+
+<!-- =====================================================
+     APPLICATIONS CARD
+====================================================== -->
+
+<section class="bmk-admissions-table-card">
+
+    <div class="bmk-admissions-table-header">
 
         <div>
 
-            <h2 class="fw-bold mb-1">
-                Admission Applications
-            </h2>
+            <span class="bmk-table-eyebrow">
+                APPLICATIONS
+            </span>
 
-            <p class="text-muted mb-0">
-                Review and manage student admission applications.
-            </p>
+            <h2>
+                Submitted Applications
+            </h2>
 
         </div>
 
 
-        <a
-            href="{% url 'admissions:admission_application' %}"
-            class="btn btn-primary"
-        >
-            <i class="bi bi-plus-lg me-2"></i>
-            New Application
-        </a>
+        {% if applications %}
+
+            <div class="bmk-application-count">
+
+                <i class="bi bi-people"></i>
+
+                <span>
+                    {{ applications|length }}
+                </span>
+
+                <small>
+                    Application{{ applications|length|pluralize }}
+                </small>
+
+            </div>
+
+        {% endif %}
 
     </div>
 
 
-    <!-- Applications -->
+    {% if applications %}
 
-    <div class="card border-0 shadow-sm">
+        <!-- =================================================
+             TABLE
+        ================================================== -->
 
-        <div class="card-body p-0">
+        <div class="bmk-admissions-table-wrapper">
 
-            {% if applications %}
+            <table class="bmk-admissions-table">
 
-                <div class="table-responsive">
+                <thead>
 
-                    <table class="table table-hover align-middle mb-0">
+                    <tr>
 
-                        <thead class="table-light">
+                        <th>
+                            Applicant
+                        </th>
 
-                            <tr>
+                        <th>
+                            Class
+                        </th>
 
-                                <th class="px-4">
-                                    Applicant
-                                </th>
+                        <th>
+                            Academic Year
+                        </th>
 
-                                <th>
-                                    Class
-                                </th>
+                        <th>
+                            Term
+                        </th>
 
-                                <th>
-                                    Academic Year
-                                </th>
+                        <th>
+                            Status
+                        </th>
 
-                                <th>
-                                    Term
-                                </th>
+                        <th>
+                            Email
+                        </th>
 
-                                <th>
-                                    Status
-                                </th>
+                        <th>
+                            Submitted
+                        </th>
 
-                                <th>
-                                    Email
-                                </th>
+                        <th class="text-end">
+                            Action
+                        </th>
 
-                                <th>
-                                    Submitted
-                                </th>
+                    </tr>
 
-                                <th class="text-end px-4">
-                                    Action
-                                </th>
-
-                            </tr>
-
-                        </thead>
+                </thead>
 
 
-                        <tbody>
+                <tbody>
 
-                            {% for application in applications %}
+                    {% for application in applications %}
 
-                                <tr>
+                        <tr>
 
-                                    <!-- Applicant -->
+                            <!-- Applicant -->
 
-                                    <td class="px-4">
+                            <td>
 
-                                        <div class="fw-semibold">
+                                <div class="bmk-applicant">
+
+                                    <div class="bmk-applicant-avatar">
+
+                                        {{ application.first_name|first|upper }}
+
+                                    </div>
+
+
+                                    <div>
+
+                                        <strong>
                                             {{ application.first_name }}
                                             {{ application.last_name }}
-                                        </div>
+                                        </strong>
 
-                                        <small class="text-muted">
+                                        <small>
                                             {{ application.parent_name }}
                                         </small>
 
-                                    </td>
+                                    </div>
+
+                                </div>
+
+                            </td>
 
 
-                                    <!-- Class -->
+                            <!-- Class -->
 
-                                    <td>
-                                        {{ application.desired_class }}
-                                    </td>
+                            <td>
 
+                                <span class="bmk-class-name">
+                                    {{ application.desired_class }}
+                                </span>
 
-                                    <!-- Academic Year -->
-
-                                    <td>
-                                        {{ application.academic_year }}
-                                    </td>
+                            </td>
 
 
-                                    <!-- Term -->
+                            <!-- Academic Year -->
 
-                                    <td>
-                                        {{ application.term }}
-                                    </td>
-
-
-                                    <!-- Application Status -->
-
-                                    <td>
-
-                                        {% if application.status == "pending" %}
-
-                                            <span class="badge text-bg-warning">
-                                                Pending
-                                            </span>
-
-                                        {% elif application.status == "approved" %}
-
-                                            <span class="badge text-bg-success">
-                                                Approved
-                                            </span>
-
-                                        {% elif application.status == "rejected" %}
-
-                                            <span class="badge text-bg-danger">
-                                                Rejected
-                                            </span>
-
-                                        {% endif %}
-
-                                    </td>
+                            <td>
+                                {{ application.academic_year }}
+                            </td>
 
 
-                                    <!-- Email Status -->
+                            <!-- Term -->
 
-                                    <td>
-
-                                        {% if application.status == "pending" %}
-
-                                            <span class="text-muted">
-                                                —
-                                            </span>
-
-                                        {% elif application.admission_email_sent %}
-
-                                            <span class="badge text-bg-success">
-                                                Sent
-                                            </span>
-
-                                        {% elif application.admission_email_last_error %}
-
-                                            <span class="badge text-bg-danger">
-                                                Failed
-                                            </span>
-
-                                        {% else %}
-
-                                            <span class="badge text-bg-warning">
-                                                Not Sent
-                                            </span>
-
-                                        {% endif %}
-
-                                    </td>
+                            <td>
+                                {{ application.term }}
+                            </td>
 
 
-                                    <!-- Submitted -->
+                            <!-- Application Status -->
 
-                                    <td>
-                                        {{ application.submitted_at|date:"M d, Y" }}
-                                    </td>
+                            <td>
+
+                                {% if application.status == "pending" %}
+
+                                    <span class="bmk-status bmk-status-pending">
+                                        <span class="bmk-status-dot"></span>
+                                        Pending
+                                    </span>
+
+                                {% elif application.status == "approved" %}
+
+                                    <span class="bmk-status bmk-status-approved">
+                                        <span class="bmk-status-dot"></span>
+                                        Approved
+                                    </span>
+
+                                {% elif application.status == "rejected" %}
+
+                                    <span class="bmk-status bmk-status-rejected">
+                                        <span class="bmk-status-dot"></span>
+                                        Rejected
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
 
 
-                                    <!-- Action -->
+                            <!-- Email Status -->
 
-                                    <td class="text-end px-4">
+                            <td>
 
-                                        <a
-                                            href="{% url 'admissions:admission_detail' application.id %}"
-                                            class="btn btn-sm btn-outline-primary"
-                                        >
-                                            <i class="bi bi-eye me-1"></i>
-                                            View
-                                        </a>
+                                {% if application.status == "pending" %}
 
-                                    </td>
+                                    <span class="bmk-email-status bmk-email-pending">
+                                        —
+                                    </span>
 
-                                </tr>
+                                {% elif application.admission_email_sent %}
 
-                            {% endfor %}
+                                    <span class="bmk-email-status bmk-email-sent">
+                                        <i class="bi bi-check-circle-fill"></i>
+                                        Sent
+                                    </span>
 
-                        </tbody>
+                                {% elif application.admission_email_last_error %}
 
-                    </table>
+                                    <span class="bmk-email-status bmk-email-failed">
+                                        <i class="bi bi-exclamation-circle-fill"></i>
+                                        Failed
+                                    </span>
 
-                </div>
+                                {% else %}
 
-            {% else %}
+                                    <span class="bmk-email-status bmk-email-not-sent">
+                                        <i class="bi bi-clock-fill"></i>
+                                        Not Sent
+                                    </span>
 
-                <div class="text-center py-5">
+                                {% endif %}
 
-                    <div class="mb-3">
+                            </td>
 
-                        <i class="bi bi-inbox fs-1 text-muted"></i>
 
-                    </div>
+                            <!-- Submitted -->
 
-                    <h5 class="fw-semibold">
-                        No admission applications
-                    </h5>
+                            <td>
 
-                    <p class="text-muted mb-0">
-                        There are currently no admission applications to review.
-                    </p>
+                                <span class="bmk-submitted-date">
+                                    {{ application.submitted_at|date:"M d, Y" }}
+                                </span>
 
-                </div>
+                            </td>
 
-            {% endif %}
+
+                            <!-- Action -->
+
+                            <td class="text-end">
+
+                                <a
+                                    href="{% url 'admissions:admission_detail' application.id %}"
+                                    class="bmk-view-button"
+                                >
+
+                                    <i class="bi bi-eye"></i>
+
+                                    <span>
+                                        View
+                                    </span>
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
 
         </div>
 
-    </div>
+
+    {% else %}
+
+        <!-- =================================================
+             EMPTY STATE
+        ================================================== -->
+
+        <div class="bmk-admissions-empty">
+
+            <div class="bmk-empty-icon">
+
+                <i class="bi bi-inbox"></i>
+
+            </div>
+
+            <h3>
+                No admission applications
+            </h3>
+
+            <p>
+                There are currently no admission applications
+                to review.
+            </p>
+
+            <a
+                href="{% url 'admissions:admission_application' %}"
+                class="bmk-empty-button"
+            >
+                <i class="bi bi-plus-lg"></i>
+                Create Application
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
 
 </div>
 

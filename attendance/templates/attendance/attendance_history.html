@@ -1,394 +1,485 @@
 {% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
 
-{% block title %}
-    Attendance History | BMK Academy
+<link rel="stylesheet" href="{% static 'website/css/classroom.css' %}">
 {% endblock %}
-
+{% block title %}
+Attendance History | BMK Academy
+{% endblock %}
 
 {% block content %}
 
-<div class="row">
+<div class="bmk-attendance-history">
 
-    <div class="col-lg-11 mx-auto">
+<div class="container-fluid">
 
-        <!-- Page Header -->
+<div class="col-lg-11 mx-auto">
 
-        <div class="mb-4">
+<!-- ================================================= -->
+<!-- PAGE HERO -->
+<!-- ================================================= -->
 
-            <h2 class="fw-bold mb-1">
-                Attendance History
-            </h2>
+<div class="bmk-history-hero">
 
-            <p class="text-muted mb-0">
-                View attendance records for a class over a selected period.
+    <div class="bmk-history-hero-content">
+
+        <div class="bmk-history-eyebrow">
+
+            <i class="bi bi-clock-history"></i>
+
+            Attendance Management
+
+        </div>
+
+        <h2>
+            Attendance History
+        </h2>
+
+        <p>
+            View attendance records for a class over a selected period.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- FILTERS -->
+<!-- ================================================= -->
+
+<div class="bmk-history-filter">
+
+    <div class="bmk-filter-heading">
+
+        <div class="bmk-filter-icon">
+
+            <i class="bi bi-funnel-fill"></i>
+
+        </div>
+
+        <div>
+
+            <h5>
+                Attendance Filters
+            </h5>
+
+            <p>
+                Choose a class and optional date range.
             </p>
 
         </div>
 
+    </div>
 
-        <!-- Filters -->
 
-        <div class="card border-0 shadow-sm mb-4">
+    <div class="bmk-filter-body">
 
-            <div class="card-body p-4">
+        <form method="get">
 
-                <form method="get">
+            <div class="row g-3">
 
-                    <div class="row g-3">
 
-                        <!-- Class -->
+                <!-- CLASS -->
 
-                        <div class="col-md-4">
+                <div class="col-md-4">
 
-                            <label class="form-label fw-semibold mb-2">
-                                Class
-                            </label>
+                    <label class="form-label mb-2">
+                        Class
+                    </label>
 
-                            <select
-                                name="school_class"
-                                class="form-select"
-                                required
+                    <select
+                        name="school_class"
+                        class="form-select"
+                        required
+                    >
+
+                        <option value="">
+                            Select class
+                        </option>
+
+                        {% for school_class in classes %}
+
+                            <option
+                                value="{{ school_class.id }}"
+                                {% if selected_class and selected_class.id == school_class.id %}
+                                    selected
+                                {% endif %}
                             >
+                                {{ school_class }}
+                            </option>
 
-                                <option value="">
-                                    Select class
-                                </option>
+                        {% endfor %}
 
-                                {% for school_class in classes %}
+                    </select>
 
-                                    <option
-                                        value="{{ school_class.id }}"
-                                        {% if selected_class and selected_class.id == school_class.id %}
-                                            selected
-                                        {% endif %}
-                                    >
-                                        {{ school_class }}
-                                    </option>
+                    <div class="form-text">
 
-                                {% endfor %}
+                        <i class="bi bi-info-circle me-1"></i>
 
-                            </select>
-
-                            <div class="form-text">
-                                Select the class whose attendance you want to view.
-                            </div>
-
-                        </div>
-
-
-                        <!-- Start Date -->
-
-                        <div class="col-md-3">
-
-                            <label class="form-label fw-semibold mb-2">
-                                Start Date
-                            </label>
-
-                            <input
-                                type="date"
-                                name="start_date"
-                                class="form-control"
-                                value="{{ start_date|default:'' }}"
-                            >
-
-                            <div class="form-text">
-                                Optional starting date.
-                            </div>
-
-                        </div>
-
-
-                        <!-- End Date -->
-
-                        <div class="col-md-3">
-
-                            <label class="form-label fw-semibold mb-2">
-                                End Date
-                            </label>
-
-                            <input
-                                type="date"
-                                name="end_date"
-                                class="form-control"
-                                value="{{ end_date|default:'' }}"
-                            >
-
-                            <div class="form-text">
-                                Optional ending date.
-                            </div>
-
-                        </div>
-
-
-                        <!-- Search Button -->
-
-                        <div class="col-md-2 d-flex align-items-start">
-
-                            <div class="w-100">
-
-                                <label class="form-label fw-semibold mb-2 invisible">
-                                    Search
-                                </label>
-
-                                <button
-                                    type="submit"
-                                    class="btn btn-primary w-100"
-                                >
-
-                                    <i class="bi bi-search me-1"></i>
-
-                                    Search
-
-                                </button>
-
-                            </div>
-
-                        </div>
+                        Select the class whose attendance you want to view.
 
                     </div>
 
-                </form>
+                </div>
+
+
+                <!-- START DATE -->
+
+                <div class="col-md-3">
+
+                    <label class="form-label mb-2">
+                        Start Date
+                    </label>
+
+                    <input
+                        type="date"
+                        name="start_date"
+                        class="form-control"
+                        value="{{ start_date|default:'' }}"
+                    >
+
+                    <div class="form-text">
+
+                        <i class="bi bi-calendar3 me-1"></i>
+
+                        Optional starting date.
+
+                    </div>
+
+                </div>
+
+
+                <!-- END DATE -->
+
+                <div class="col-md-3">
+
+                    <label class="form-label mb-2">
+                        End Date
+                    </label>
+
+                    <input
+                        type="date"
+                        name="end_date"
+                        class="form-control"
+                        value="{{ end_date|default:'' }}"
+                    >
+
+                    <div class="form-text">
+
+                        <i class="bi bi-calendar3 me-1"></i>
+
+                        Optional ending date.
+
+                    </div>
+
+                </div>
+
+
+                <!-- SEARCH -->
+
+                <div class="col-md-2 d-flex align-items-end">
+
+                    <button
+                        type="submit"
+                        class="btn bmk-search-btn w-100"
+                    >
+
+                        <i class="bi bi-search me-1"></i>
+
+                        Search
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+{% if selected_class %}
+
+
+    <!-- ================================================= -->
+    <!-- RESULTS -->
+    <!-- ================================================= -->
+
+    <div class="bmk-history-results">
+
+
+        <!-- RESULTS HEADER -->
+
+        <div class="bmk-results-header">
+
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+
+                <div class="bmk-results-title">
+
+                    <div class="bmk-results-icon">
+
+                        <i class="bi bi-list-check"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h5>
+                            {{ selected_class }}
+                        </h5>
+
+                        <small>
+                            Attendance Records
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <span class="bmk-record-count">
+
+                    <i class="bi bi-list-check"></i>
+
+                    {{ records|length }}
+                    record{{ records|length|pluralize }}
+
+                </span>
 
             </div>
 
         </div>
 
 
-        {% if selected_class %}
+        <!-- TABLE -->
 
-            <!-- Results -->
+        <div class="card-body p-0">
 
-            <div class="card border-0 shadow-sm">
+            <div class="table-responsive">
 
-                <!-- Card Header -->
+                <table class="table bmk-history-table table-hover align-middle mb-0">
 
-                <div class="card-header bg-white border-bottom py-3">
+                    <thead>
 
-                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                        <tr>
 
-                        <div>
+                            <th class="ps-4">
+                                Date
+                            </th>
 
-                            <h5 class="fw-bold mb-1">
-                                {{ selected_class }}
-                            </h5>
+                            <th>
+                                Student
+                            </th>
 
-                            <small class="text-muted">
-                                Attendance Records
-                            </small>
+                            <th>
+                                Admission Number
+                            </th>
 
-                        </div>
+                            <th>
+                                Status
+                            </th>
 
+                        </tr>
 
-                        <span class="badge bg-light text-dark border px-3 py-2">
+                    </thead>
 
-                            <i class="bi bi-list-check me-1"></i>
 
-                            {{ records|length }} record{{ records|length|pluralize }}
+                    <tbody>
 
-                        </span>
+                        {% for record in records %}
 
-                    </div>
+                            <tr>
 
-                </div>
 
+                                <!-- DATE -->
 
-                <!-- Table -->
+                                <td class="ps-4">
 
-                <div class="card-body p-0">
+                                    <div class="bmk-history-date">
 
-                    <div class="table-responsive">
+                                        <i class="bi bi-calendar3 me-1 text-primary"></i>
 
-                        <table class="table table-hover align-middle mb-0">
+                                        {{ record.attendance_date|date:"M d, Y" }}
 
-                            <thead class="table-light">
+                                    </div>
 
-                                <tr>
+                                </td>
 
-                                    <th class="px-4 py-3">
-                                        Date
-                                    </th>
 
-                                    <th class="py-3">
-                                        Student
-                                    </th>
+                                <!-- STUDENT -->
 
-                                    <th class="py-3">
-                                        Admission Number
-                                    </th>
+                                <td>
 
-                                    <th class="py-3">
-                                        Status
-                                    </th>
+                                    <div class="bmk-history-student">
 
-                                </tr>
+                                        {{ record.student.first_name }}
 
-                            </thead>
+                                        {% if record.student.middle_name %}
+                                            {{ record.student.middle_name }}
+                                        {% endif %}
 
+                                        {{ record.student.last_name }}
 
-                            <tbody>
+                                    </div>
 
-                                {% for record in records %}
+                                </td>
 
-                                    <tr>
 
-                                        <!-- Date -->
+                                <!-- ADMISSION NUMBER -->
 
-                                        <td class="px-4">
+                                <td>
 
-                                            <div class="fw-semibold">
-                                                {{ record.attendance_date|date:"M d, Y" }}
-                                            </div>
+                                    <span class="bmk-history-admission">
 
-                                        </td>
+                                        {{ record.student.admission_number }}
 
+                                    </span>
 
-                                        <!-- Student -->
+                                </td>
 
-                                        <td>
 
-                                            <div class="fw-semibold">
+                                <!-- STATUS -->
 
-                                                {{ record.student.first_name }}
+                                <td>
 
-                                                {% if record.student.middle_name %}
-                                                    {{ record.student.middle_name }}
-                                                {% endif %}
+                                    {% if record.status == "present" %}
 
-                                                {{ record.student.last_name }}
+                                        <span class="bmk-status-badge bmk-status-present">
 
-                                            </div>
+                                            <i class="bi bi-check-circle-fill"></i>
 
-                                        </td>
+                                            Present
 
+                                        </span>
 
-                                        <!-- Admission Number -->
+                                    {% elif record.status == "absent" %}
 
-                                        <td>
+                                        <span class="bmk-status-badge bmk-status-absent">
 
-                                            <span class="text-muted">
+                                            <i class="bi bi-x-circle-fill"></i>
 
-                                                {{ record.student.admission_number }}
+                                            Absent
 
-                                            </span>
+                                        </span>
 
-                                        </td>
+                                    {% elif record.status == "late" %}
 
+                                        <span class="bmk-status-badge bmk-status-late">
 
-                                        <!-- Status -->
+                                            <i class="bi bi-clock-fill"></i>
 
-                                        <td>
+                                            Late
 
-                                            {% if record.status == "present" %}
+                                        </span>
 
-                                                <span class="badge bg-success-subtle text-success px-3 py-2">
-                                                    <i class="bi bi-check-circle me-1"></i>
-                                                    Present
-                                                </span>
+                                    {% elif record.status == "excused" %}
 
-                                            {% elif record.status == "absent" %}
+                                        <span class="bmk-status-badge bmk-status-excused">
 
-                                                <span class="badge bg-danger-subtle text-danger px-3 py-2">
-                                                    <i class="bi bi-x-circle me-1"></i>
-                                                    Absent
-                                                </span>
+                                            <i class="bi bi-info-circle-fill"></i>
 
-                                            {% elif record.status == "late" %}
+                                            Excused
 
-                                                <span class="badge bg-warning-subtle text-warning-emphasis px-3 py-2">
-                                                    <i class="bi bi-clock me-1"></i>
-                                                    Late
-                                                </span>
+                                        </span>
 
-                                            {% elif record.status == "excused" %}
+                                    {% endif %}
 
-                                                <span class="badge bg-info-subtle text-info-emphasis px-3 py-2">
-                                                    <i class="bi bi-info-circle me-1"></i>
-                                                    Excused
-                                                </span>
+                                </td>
 
-                                            {% endif %}
+                            </tr>
 
-                                        </td>
+                        {% empty %}
 
-                                    </tr>
+                            <!-- EMPTY RESULTS -->
 
-                                {% empty %}
+                            <tr>
 
-                                    <!-- Empty State -->
+                                <td
+                                    colspan="4"
+                                    class="p-0"
+                                >
 
-                                    <tr>
+                                    <div class="bmk-history-empty">
 
-                                        <td
-                                            colspan="4"
-                                            class="text-center py-5"
-                                        >
+                                        <div class="bmk-history-empty-icon">
 
-                                            <div class="mb-3">
+                                            <i class="bi bi-calendar-x"></i>
 
-                                                <i
-                                                    class="bi bi-calendar-x text-muted"
-                                                    style="font-size: 2.5rem;"
-                                                ></i>
+                                        </div>
 
-                                            </div>
+                                        <h5>
+                                            No Attendance Records Found
+                                        </h5>
 
-                                            <h6 class="fw-semibold">
-                                                No attendance records found
-                                            </h6>
+                                        <p class="mb-0">
 
-                                            <p class="text-muted mb-0">
-                                                No attendance has been recorded for the selected class and period.
-                                            </p>
+                                            No attendance has been recorded
+                                            for the selected class and period.
 
-                                        </td>
+                                        </p>
 
-                                    </tr>
+                                    </div>
 
-                                {% endfor %}
+                                </td>
 
-                            </tbody>
+                            </tr>
 
-                        </table>
+                        {% endfor %}
 
-                    </div>
+                    </tbody>
 
-                </div>
+                </table>
 
             </div>
 
-        {% else %}
-
-            <!-- Initial Empty State -->
-
-            <div class="card border-0 shadow-sm">
-
-                <div class="card-body text-center py-5">
-
-                    <div class="mb-3">
-
-                        <i
-                            class="bi bi-calendar-check text-muted"
-                            style="font-size: 3rem;"
-                        ></i>
-
-                    </div>
-
-                    <h5 class="fw-bold">
-                        Select a Class
-                    </h5>
-
-                    <p class="text-muted mb-0">
-                        Select a class and optionally choose a date range
-                        to view attendance history.
-                    </p>
-
-                </div>
-
-            </div>
-
-        {% endif %}
+        </div>
 
     </div>
+
+
+{% else %}
+
+
+    <!-- ================================================= -->
+    <!-- INITIAL STATE -->
+    <!-- ================================================= -->
+
+    <div class="bmk-history-results">
+
+        <div class="bmk-history-empty">
+
+            <div class="bmk-history-empty-icon">
+
+                <i class="bi bi-calendar-check"></i>
+
+            </div>
+
+            <h5>
+                Select a Class
+            </h5>
+
+            <p class="mb-0">
+
+                Select a class and optionally choose a date range
+                to view attendance history.
+
+            </p>
+
+        </div>
+
+    </div>
+
+{% endif %}
+
+
+</div>
+
+</div>
 
 </div>
 

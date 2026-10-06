@@ -1,9 +1,13 @@
 {% extends "website/base.html" %}
+{% load static %}
 
-{% block title %}
-{{ photo.title }} | BMK Academy
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'website/css/gallery.css' %}">
 {% endblock %}
 
+{% block title %}
+    {{ photo.title }} | BMK Academy
+{% endblock %}
 
 
 {% block content %}
@@ -11,6 +15,8 @@
 <section class="bmk-photo-detail">
 
     <div class="container">
+
+        <!-- BACK TO GALLERY -->
 
         <a
             href="{% url 'gallery:gallery' %}"
@@ -21,9 +27,9 @@
         </a>
 
 
-        <article class="bmk-photo-card">
+        <!-- PHOTO -->
 
-            <!-- Photograph -->
+        <article class="bmk-photo-card">
 
             <div class="bmk-photo-image-container">
 
@@ -36,7 +42,7 @@
             </div>
 
 
-            <!-- Information -->
+            <!-- INFORMATION -->
 
             <div class="bmk-photo-information">
 
@@ -65,9 +71,11 @@
 
                 <div class="bmk-photo-meta">
 
-                    <i class="bi bi-calendar3 me-2"></i>
+                    <i class="bi bi-calendar3"></i>
 
-                    Added to the BMK Academy gallery
+                    <span>
+                        Added to the BMK Academy gallery
+                    </span>
 
                 </div>
 
@@ -80,3 +88,4 @@
 </section>
 
 {% endblock %}
+

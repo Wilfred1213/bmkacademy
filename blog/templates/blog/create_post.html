@@ -1,24 +1,48 @@
-{% extends "base.html" %}
-
+{% extends "website/base.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'website/css/blog.css' %}">
+{% endblock %}
 {% block title %}
-    Create Blog Post | BMK Academy
+Create Blog Post | BMK Academy
 {% endblock %}
 
 {% block content %}
 
-<div class="container py-5">
+<style>
+
+</style>
+
+<section class="bmk-blog-form-page">
+
+<div class="container">
 
     <div class="row justify-content-center">
 
-        <div class="col-lg-8">
+        <div class="col-xl-8 col-lg-9">
 
-            <div class="card border-0 shadow-sm">
+            <div class="bmk-form-card">
 
-                <div class="card-body p-4">
+                <div class="bmk-form-header">
 
-                    <h2 class="fw-bold mb-4">
+                    <div class="bmk-form-eyebrow">
+                        <i class="bi bi-pencil-square me-1"></i>
+                        Blog Management
+                    </div>
+
+                    <h1>
                         Create Blog Post
-                    </h2>
+                    </h1>
+
+                    <p>
+                        Share news, activities, achievements and stories
+                        from BMK Academy.
+                    </p>
+
+                </div>
+
+
+                <div class="bmk-form-body">
 
                     <form
                         method="post"
@@ -29,17 +53,19 @@
 
                         {{ form.as_p }}
 
-                        <div class="d-flex gap-2 mt-4">
+
+                        <div class="bmk-form-actions">
 
                             <button
                                 type="submit"
                                 class="btn btn-primary"
                             >
+                                <i class="bi bi-check2-circle me-1"></i>
                                 Save Post
                             </button>
 
                             <a
-                                href="{% url 'blog:post_list' %}"
+                                href="{% url 'blog:manage_posts' %}"
                                 class="btn btn-outline-secondary"
                             >
                                 Cancel
@@ -58,5 +84,7 @@
     </div>
 
 </div>
+
+</section>
 
 {% endblock %}

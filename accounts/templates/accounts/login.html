@@ -1,215 +1,207 @@
 {% extends "base.html" %}
 {% load static %}
+{% block extra_css %}
 
+<link rel="stylesheet" href="{% static 'website/css/password_profile.css' %}">
+{% endblock %}
+{% load static %}
 
 {% block title %}
     Login | BMK Academy
 {% endblock %}
 
-
 {% block content %}
 
-<div class="bmk-login-page">
+<style>
+    
+</style>
+
+
+<section class="bmk-login-page">
 
     <div class="container">
 
-        <div class="row justify-content-center align-items-center min-vh-75">
+        <div class="bmk-login-wrapper">
 
-            <div class="col-12 col-sm-10 col-md-7 col-lg-5">
+            <div class="bmk-login-card">
 
-                <div class="card bmk-login-card border-0 shadow-lg">
+                <!-- HEADER -->
+
+                <div class="bmk-login-header">
+
+                    <img
+                        src="{% static 'website/images/bmk-logo.png' %}"
+                        alt="BMK Academy Logo"
+                        class="bmk-login-logo"
+                    >
+
+                    <h2>
+                        BMK Academy
+                    </h2>
+
+                    <div class="bmk-login-motto">
+                        Education for Service
+                    </div>
+
+                    <p class="bmk-login-portal">
+                        School Portal
+                    </p>
+
+                </div>
 
 
-                    <!-- LOGO / HEADER -->
+                <!-- BODY -->
 
-                    <div class="card-body p-4 p-sm-5">
+                <div class="bmk-login-body">
 
 
-                        <div class="text-center mb-4">
+                    <!-- GENERAL ERRORS -->
 
-                            <img
-                                src="{% static 'website/images/bmk-logo.png' %}"
-                                alt="BMK Academy Logo"
-                                class="bmk-login-logo mb-3"
+                    {% if form.non_field_errors %}
+
+                        <div class="bmk-login-error">
+
+                            <i class="bi bi-exclamation-circle-fill"></i>
+
+                            <div>
+                                {{ form.non_field_errors }}
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- LOGIN FORM -->
+
+                    <form method="post">
+
+                        {% csrf_token %}
+
+
+                        <!-- USERNAME -->
+
+                        <div class="bmk-login-field">
+
+                            <label
+                                for="{{ form.username.id_for_label }}"
                             >
+                                Username
+                            </label>
 
-                            <h2 class="fw-bold mb-1">
-                                BMK Academy
-                            </h2>
+                            <div class="input-group">
 
-                            <p class="text-primary fw-semibold mb-1">
-                                Education for Service
-                            </p>
+                                <span class="input-group-text">
 
-                            <p class="text-muted mb-0">
-                                School Portal
-                            </p>
+                                    <i class="bi bi-person"></i>
+
+                                </span>
+
+                                {{ form.username }}
+
+                            </div>
+
+
+                            {% for error in form.username.errors %}
+
+                                <div class="bmk-login-field-error">
+                                    {{ error }}
+                                </div>
+
+                            {% endfor %}
 
                         </div>
 
 
-                        <hr class="mb-4">
+                        <!-- PASSWORD -->
 
+                        <div class="bmk-login-field mb-4">
 
-                        <!-- ERROR MESSAGE -->
+                            <label
+                                for="{{ form.password.id_for_label }}"
+                            >
+                                Password
+                            </label>
 
-                        {% if form.non_field_errors %}
+                            <div class="input-group">
 
-                            <div class="alert alert-danger">
+                                <span class="input-group-text">
 
-                                <i class="bi bi-exclamation-circle me-2"></i>
+                                    <i class="bi bi-lock"></i>
 
-                                {{ form.non_field_errors }}
+                                </span>
 
-                            </div>
-
-                        {% endif %}
-
-
-                        <!-- LOGIN FORM -->
-
-                        <form method="post">
-
-                            {% csrf_token %}
-
-
-                            <!-- USERNAME -->
-
-                            <div class="mb-3">
-
-                                <label
-                                    for="{{ form.username.id_for_label }}"
-                                    class="form-label fw-semibold"
-                                >
-                                    Username
-                                </label>
-
-                                <div class="input-group">
-
-                                    <span class="input-group-text bg-light">
-
-                                        <i class="bi bi-person"></i>
-
-                                    </span>
-
-                                    {{ form.username }}
-
-                                </div>
-
-
-                                {% if form.username.errors %}
-
-                                    <div class="text-danger small mt-1">
-
-                                        {{ form.username.errors }}
-
-                                    </div>
-
-                                {% endif %}
-
-                            </div>
-
-
-                            <!-- PASSWORD -->
-
-                            <div class="mb-4">
-
-                                <label
-                                    for="{{ form.password.id_for_label }}"
-                                    class="form-label fw-semibold"
-                                >
-                                    Password
-                                </label>
-
-                                <div class="input-group">
-
-                                    <span class="input-group-text bg-light">
-
-                                        <i class="bi bi-lock"></i>
-
-                                    </span>
-
-                                    {{ form.password }}
-
-                                    <button
-                                        type="button"
-                                        class="btn btn-outline-secondary"
-                                        id="togglePassword"
-                                        aria-label="Show password"
-                                    >
-                                        <i
-                                            class="bi bi-eye"
-                                            id="passwordIcon"
-                                        ></i>
-                                    </button>
-
-                                </div>
-
-
-                                {% if form.password.errors %}
-
-                                    <div class="text-danger small mt-1">
-
-                                        {{ form.password.errors }}
-
-                                    </div>
-
-                                {% endif %}
-
-                            </div>
-
-
-                            <!-- LOGIN BUTTON -->
-
-                            <div class="d-grid">
+                                {{ form.password }}
 
                                 <button
-                                    type="submit"
-                                    class="btn btn-primary btn-lg"
+                                    type="button"
+                                    class="btn bmk-password-toggle"
+                                    id="togglePassword"
+                                    aria-label="Show password"
                                 >
 
-                                    <i class="bi bi-box-arrow-in-right me-2"></i>
-
-                                    Login
+                                    <i
+                                        class="bi bi-eye"
+                                        id="passwordIcon"
+                                    ></i>
 
                                 </button>
 
                             </div>
 
 
-                        </form>
+                            {% for error in form.password.errors %}
 
+                                <div class="bmk-login-field-error">
+                                    {{ error }}
+                                </div>
 
-                        <!-- FOOTER -->
-
-                        <div class="text-center mt-4">
-
-                            <a
-                                href="{% url 'website:home' %}"
-                                class="text-decoration-none"
-                            >
-
-                                <i class="bi bi-arrow-left me-1"></i>
-
-                                Back to BMK Academy website
-
-                            </a>
+                            {% endfor %}
 
                         </div>
 
+
+                        <!-- LOGIN -->
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary w-100 bmk-login-button"
+                        >
+
+                            <i class="bi bi-box-arrow-in-right me-2"></i>
+
+                            Login
+
+                        </button>
+
+                    </form>
+
+
+                    <!-- BACK -->
+
+                    <div class="text-center">
+
+                        <a
+                            href="{% url 'website:home' %}"
+                            class="bmk-login-back"
+                        >
+
+                            <i class="bi bi-arrow-left"></i>
+
+                            Back to BMK Academy website
+
+                        </a>
 
                     </div>
 
                 </div>
 
+            </div>
 
-                <!-- SMALL COPYRIGHT -->
 
-                <p class="text-center text-muted small mt-3">
+            <div class="bmk-login-footer">
 
-                    © {% now "Y" %} BMK Academy
-
-                </p>
+                © {% now "Y" %} BMK Academy · Education for Service
 
             </div>
 
@@ -217,7 +209,7 @@
 
     </div>
 
-</div>
+</section>
 
 
 <!-- PASSWORD TOGGLE -->
@@ -227,7 +219,9 @@
     document.addEventListener("DOMContentLoaded", function () {
 
         const passwordInput =
-            document.getElementById("{{ form.password.id_for_label }}");
+            document.getElementById(
+                "{{ form.password.id_for_label }}"
+            );
 
         const toggleButton =
             document.getElementById("togglePassword");
@@ -236,7 +230,7 @@
             document.getElementById("passwordIcon");
 
 
-        if (passwordInput && toggleButton) {
+        if (passwordInput && toggleButton && passwordIcon) {
 
             toggleButton.addEventListener("click", function () {
 
@@ -245,7 +239,6 @@
                     passwordInput.type = "text";
 
                     passwordIcon.classList.remove("bi-eye");
-
                     passwordIcon.classList.add("bi-eye-slash");
 
                     toggleButton.setAttribute(
@@ -258,7 +251,6 @@
                     passwordInput.type = "password";
 
                     passwordIcon.classList.remove("bi-eye-slash");
-
                     passwordIcon.classList.add("bi-eye");
 
                     toggleButton.setAttribute(
@@ -276,83 +268,5 @@
 
 </script>
 
-
-<style>
-
-    .bmk-login-page {
-        background: #f8f9fa;
-        min-height: calc(100vh - 100px);
-        padding: 30px 0;
-    }
-
-
-    .min-vh-75 {
-        min-height: 75vh;
-    }
-
-
-    .bmk-login-card {
-        border-radius: 18px;
-        overflow: hidden;
-    }
-
-
-    .bmk-login-logo {
-        width: 90px;
-        height: 90px;
-        object-fit: contain;
-        border-radius: 12px;
-    }
-
-
-    .bmk-login-card .form-control {
-        min-height: 48px;
-        border-left: 0;
-    }
-
-
-    .bmk-login-card .input-group-text {
-        min-width: 48px;
-        justify-content: center;
-        border-right: 0;
-    }
-
-
-    .bmk-login-card .btn {
-        min-height: 48px;
-    }
-
-
-    .bmk-login-card .input-group:focus-within {
-        box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
-        border-radius: 0.375rem;
-    }
-
-
-    @media (max-width: 576px) {
-
-        .bmk-login-page {
-            padding: 20px 10px;
-        }
-
-
-        .min-vh-75 {
-            min-height: auto;
-        }
-
-
-        .bmk-login-card {
-            border-radius: 14px;
-        }
-
-
-        .bmk-login-logo {
-            width: 75px;
-            height: 75px;
-        }
-
-    }
-
-</style>
-
 {% endblock %}
+

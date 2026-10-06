@@ -1,268 +1,320 @@
 {% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
 
+<link rel="stylesheet" href="{% static 'website/css/password_profile.css' %}">
+{% endblock %}
 {% block title %}
     My Profile | BMK Academy
 {% endblock %}
 
 {% block content %}
 
-<div class="container py-4">
 
-    <!-- HEADER -->
+<section class="bmk-parent-profile-page">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="container">
 
-        <div>
+        <!-- =====================================================
+             HEADER
+             ===================================================== -->
 
-            <h2 class="fw-bold mb-1">
-                My Profile
-            </h2>
+        <div class="bmk-profile-header">
 
-            <p class="text-muted mb-0">
-                Your parent account information
-            </p>
+            <div class="bmk-profile-header-content">
 
-        </div>
+                <div class="bmk-profile-heading">
 
+                    <div class="bmk-profile-heading-icon">
+                        <i class="bi bi-person"></i>
+                    </div>
 
-        <div class="d-flex gap-2">
+                    <div>
 
-        <a
-            href="{% url 'accounts:parent_change_password' %}"
-            class="btn btn-outline-primary"
-        >
-            <i class="bi bi-key"></i>
-            Change Password
-        </a>
-
-        <a
-            href="{% url 'accounts:parent_home' %}"
-            class="btn btn-outline-secondary"
-        >
-            <i class="bi bi-arrow-left"></i>
-            Back to Dashboard
-        </a>
-
-    </div>
-    </div>
-
-
-    <!-- PROFILE -->
-
-    <div class="row g-4">
-
-
-        <!-- PERSONAL INFORMATION -->
-
-        <div class="col-lg-8">
-
-            <div class="card border-0 shadow-sm h-100">
-        
-                <div class="card-body p-4">
-        
-                    <h5 class="fw-bold mb-4">
-                        Personal Information
-                    </h5>
-        
-        
-                    <form method="post">
-        
-                        {% csrf_token %}
-        
-        
-                        <!-- PHONE -->
-        
-                        <div class="mb-3">
-        
-                            <label
-                                for="{{ form.phone.id_for_label }}"
-                                class="form-label fw-semibold"
-                            >
-                                Phone
-                            </label>
-        
-                            {{ form.phone }}
-        
-                            {% if form.phone.errors %}
-        
-                                <div class="text-danger small mt-1">
-                                    {{ form.phone.errors }}
-                                </div>
-        
-                            {% endif %}
-        
-                        </div>
-        
-        
-                        <!-- OCCUPATION -->
-        
-                        <div class="mb-3">
-        
-                            <label
-                                for="{{ form.occupation.id_for_label }}"
-                                class="form-label fw-semibold"
-                            >
-                                Occupation
-                            </label>
-        
-                            {{ form.occupation }}
-        
-                            {% if form.occupation.errors %}
-        
-                                <div class="text-danger small mt-1">
-                                    {{ form.occupation.errors }}
-                                </div>
-        
-                            {% endif %}
-        
-                        </div>
-        
-        
-                        <!-- ADDRESS -->
-        
-                        <div class="mb-3">
-        
-                            <label
-                                for="{{ form.address.id_for_label }}"
-                                class="form-label fw-semibold"
-                            >
-                                Address
-                            </label>
-        
-                            {{ form.address }}
-        
-                            {% if form.address.errors %}
-        
-                                <div class="text-danger small mt-1">
-                                    {{ form.address.errors }}
-                                </div>
-        
-                            {% endif %}
-        
-                        </div>
-        
-        
-                        <div class="d-flex justify-content-end">
-        
-                            <button
-                                type="submit"
-                                class="btn btn-primary"
-                            >
-                                <i class="bi bi-check-circle"></i>
-                                Save Changes
-                            </button>
-        
-                        </div>
-        
-                    </form>
-        
-                </div>
-        
-            </div>
-        
-        </div>
-        
-
-        <!-- ACCOUNT SUMMARY -->
-
-        <div class="col-lg-4">
-
-            <div class="card border-0 shadow-sm">
-
-                <div class="card-body p-4">
-
-                    <div class="text-center mb-4">
-
-                        <div
-                            class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center"
-                            style="width: 80px; height: 80px;"
-                        >
-
-                            <i class="bi bi-person fs-1"></i>
-
+                        <div class="bmk-profile-eyebrow">
+                            Parent Portal
                         </div>
 
-                        <h5 class="fw-bold mt-3 mb-1">
+                        <h2>
+                            My Profile
+                        </h2>
 
-                            {{ parent_profile.user.get_full_name|default:parent_profile.user.username }}
-
-                        </h5>
-
-                        <small class="text-muted">
-                            Parent Account
-                        </small>
+                        <p>
+                            Manage your parent account information.
+                        </p>
 
                     </div>
 
-                    <div class="mt-4">
+                </div>
 
-                        <h6 class="fw-bold mb-3">
-                            Account Information
-                        </h6>
-                    
-                        <div class="mb-3">
-                    
-                            <small class="text-muted">
-                                Username
-                            </small>
-                    
-                            <div class="fw-semibold">
-                                {{ parent_profile.user.username }}
-                            </div>
-                    
+
+                <div class="bmk-profile-header-actions">
+
+                    <a
+                        href="{% url 'accounts:parent_change_password' %}"
+                        class="btn bmk-change-password-btn"
+                    >
+                        <i class="bi bi-key me-1"></i>
+                        Change Password
+                    </a>
+
+
+                    <a
+                        href="{% url 'accounts:parent_home' %}"
+                        class="btn bmk-back-dashboard-btn"
+                    >
+                        <i class="bi bi-arrow-left me-1"></i>
+                        Back to Dashboard
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             PROFILE CONTENT
+             ===================================================== -->
+
+        <div class="row g-4">
+
+
+            <!-- =================================================
+                 PERSONAL INFORMATION
+                 ================================================= -->
+
+            <div class="col-lg-8">
+
+                <div class="bmk-profile-card">
+
+                    <div class="bmk-profile-card-header">
+
+                        <div class="bmk-card-header-icon">
+                            <i class="bi bi-person-vcard"></i>
                         </div>
-                    
-                    
+
                         <div>
-                    
-                            <small class="text-muted">
-                                Email
-                            </small>
-                    
-                            <div class="fw-semibold">
-                                {{ parent_profile.user.email|default:"-" }}
-                            </div>
-                    
+
+                            <h5>
+                                Personal Information
+                            </h5>
+
+                            <p>
+                                Keep your contact details up to date.
+                            </p>
+
                         </div>
-                    
-                    </div>
-
-
-                    <hr>
-
-
-                    <div class="d-flex justify-content-between mb-3">
-
-                        <span class="text-muted">
-                            Children
-                        </span>
-
-                        <strong>
-                            {{ children_count }}
-                        </strong>
 
                     </div>
 
 
-                    <div class="d-flex justify-content-between">
+                    <div class="bmk-profile-card-body">
 
-                        <span class="text-muted">
-                            Account Status
-                        </span>
+                        <form method="post">
 
-                        {% if parent_profile.user.is_active %}
+                            {% csrf_token %}
 
-                            <span class="badge bg-success">
-                                Active
+
+                            <!-- PHONE -->
+
+                            <div class="bmk-profile-field">
+
+                                <label for="{{ form.phone.id_for_label }}">
+                                    Phone
+                                </label>
+
+                                {{ form.phone }}
+
+                                {% if form.phone.errors %}
+
+                                    <div class="bmk-profile-field-error">
+                                        {{ form.phone.errors }}
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- OCCUPATION -->
+
+                            <div class="bmk-profile-field">
+
+                                <label for="{{ form.occupation.id_for_label }}">
+                                    Occupation
+                                </label>
+
+                                {{ form.occupation }}
+
+                                {% if form.occupation.errors %}
+
+                                    <div class="bmk-profile-field-error">
+                                        {{ form.occupation.errors }}
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- ADDRESS -->
+
+                            <div class="bmk-profile-field">
+
+                                <label for="{{ form.address.id_for_label }}">
+                                    Address
+                                </label>
+
+                                {{ form.address }}
+
+                                {% if form.address.errors %}
+
+                                    <div class="bmk-profile-field-error">
+                                        {{ form.address.errors }}
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="d-flex justify-content-end mt-4">
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary bmk-save-profile"
+                                >
+                                    <i class="bi bi-check-circle me-1"></i>
+                                    Save Changes
+                                </button>
+
+                            </div>
+
+
+                            <div class="bmk-form-note">
+
+                                <i class="bi bi-shield-check"></i>
+
+                                <span>
+                                    Your profile information helps the school
+                                    maintain accurate parent contact records.
+                                </span>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 ACCOUNT SUMMARY
+                 ================================================= -->
+
+            <div class="col-lg-4">
+
+                <div class="bmk-profile-card">
+
+                    <div class="bmk-profile-card-body">
+
+                        <div class="bmk-account-summary">
+
+                            <div class="bmk-account-avatar">
+                                <i class="bi bi-person"></i>
+                            </div>
+
+                            <h5 class="bmk-account-name">
+
+                                {{ parent_profile.user.get_full_name|default:parent_profile.user.username }}
+
+                            </h5>
+
+                            <div class="bmk-account-role">
+                                Parent Account
+                            </div>
+
+                        </div>
+
+
+                        <hr class="bmk-account-divider">
+
+
+                        <div class="bmk-account-section-title">
+                            Account Information
+                        </div>
+
+
+                        <div class="bmk-account-info">
+
+                            <span class="bmk-account-info-label">
+                                Username
                             </span>
 
-                        {% else %}
-
-                            <span class="badge bg-danger">
-                                Inactive
+                            <span class="bmk-account-info-value">
+                                {{ parent_profile.user.username }}
                             </span>
 
-                        {% endif %}
+                        </div>
+
+
+                        <div class="bmk-account-info">
+
+                            <span class="bmk-account-info-label">
+                                Email
+                            </span>
+
+                            <span class="bmk-account-info-value">
+                                {{ parent_profile.user.email|default:"-" }}
+                            </span>
+
+                        </div>
+
+
+                        <hr class="bmk-account-divider">
+
+
+                        <div class="bmk-account-stat">
+
+                            <span class="bmk-account-stat-label">
+                                <i class="bi bi-people me-1"></i>
+                                Children
+                            </span>
+
+                            <span class="bmk-account-stat-value">
+                                {{ children_count }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="bmk-account-stat">
+
+                            <span class="bmk-account-stat-label">
+                                <i class="bi bi-shield-check me-1"></i>
+                                Account Status
+                            </span>
+
+                            {% if parent_profile.user.is_active %}
+
+                                <span class="bmk-status-active">
+                                    Active
+                                </span>
+
+                            {% else %}
+
+                                <span class="bmk-status-inactive">
+                                    Inactive
+                                </span>
+
+                            {% endif %}
+
+                        </div>
 
                     </div>
 
@@ -272,9 +324,9 @@
 
         </div>
 
-
     </div>
 
-</div>
+</section>
 
 {% endblock %}
+

@@ -1,124 +1,69 @@
 {% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
 
+<link rel="stylesheet" href="{% static 'website/css/fees.css' %}">
+{% endblock %}
 
 {% block title %}
     Invoice | {{ student.first_name }} {{ student.last_name }}
 {% endblock %}
 
-
 {% block content %}
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-
-    <div>
-
-        <h2 class="fw-bold mb-1">
-            Fee Invoice
-        </h2>
-
-        <p class="text-muted mb-0">
-            {{ student.first_name }}
-            {% if student.middle_name %}
-                {{ student.middle_name }}
-            {% endif %}
-            {{ student.last_name }}
-
-            —
-            {{ student.admission_number }}
-        </p>
-
-    </div>
 
 
-    <a
-        href="{% url 'fees:student_fees' student.id %}"
-        class="btn btn-outline-secondary"
-    >
-        ← Student Fees
-    </a>
+<div class="container-fluid bmk-invoice-detail">
 
-</div>
+    <!-- =========================
+         PAGE HEADER
+    ========================== -->
 
+    <div class="bmk-invoice-detail-header">
 
-<!-- Invoice information -->
+        <div class="bmk-invoice-detail-content">
 
-<div class="card shadow-sm mb-4">
+            <div class="d-flex justify-content-between align-items-center">
 
-    <div class="card-header">
+                <div>
 
-        <strong>
-            {{ invoice.description }}
-        </strong>
+                    <div class="bmk-invoice-eyebrow">
+                        <i class="bi bi-file-earmark-text"></i>
+                        Fee Invoice
+                    </div>
 
-    </div>
+                    <h1 class="bmk-invoice-detail-title">
+                        Fee Invoice
+                    </h1>
 
+                    <p class="bmk-student-meta">
 
-    <div class="card-body">
+                        <i class="bi bi-person-badge me-1"></i>
 
-        <div class="row g-4">
+                        {{ student.first_name }}
 
-            <div class="col-md-6">
+                        {% if student.middle_name %}
+                            {{ student.middle_name }}
+                        {% endif %}
 
-                <p class="mb-2">
-                    <strong>Academic Year:</strong>
-                    {{ invoice.enrollment.academic_year }}
-                </p>
+                        {{ student.last_name }}
 
-                <p class="mb-2">
-                    <strong>Due Date:</strong>
-                    {{ invoice.due_date|date:"F d, Y" }}
-                </p>
+                        <span class="mx-1">•</span>
 
-                <p class="mb-0">
-                    <strong>Status:</strong>
+                        {{ student.admission_number }}
 
-                    {% if summary.status == "paid" %}
+                    </p>
 
-                        <span class="badge bg-success">
-                            Paid
-                        </span>
-
-                    {% elif summary.status == "partial" %}
-
-                        <span class="badge bg-warning text-dark">
-                            Partially Paid
-                        </span>
-
-                    {% elif summary.status == "cancelled" %}
-
-                        <span class="badge bg-secondary">
-                            Cancelled
-                        </span>
-
-                    {% else %}
-
-                        <span class="badge bg-danger">
-                            Unpaid
-                        </span>
-
-                    {% endif %}
-
-                </p>
-
-            </div>
+                </div>
 
 
-            <div class="col-md-6">
-
-                <p class="mb-2">
-                    <strong>Invoice Amount:</strong>
-                    ₦{{ summary.amount|floatformat:2 }}
-                </p>
-
-                <p class="mb-2 text-success">
-                    <strong>Total Paid:</strong>
-                    ₦{{ summary.paid|floatformat:2 }}
-                </p>
-
-                <p class="mb-0 text-danger">
-                    <strong>Outstanding:</strong>
-                    ₦{{ summary.balance|floatformat:2 }}
-                </p>
+                <a
+                    href="{% url 'fees:student_fees' student.id %}"
+                    class="bmk-back-fees"
+                >
+                    <i class="bi bi-arrow-left"></i>
+                    Student Fees
+                </a>
 
             </div>
 
@@ -126,127 +71,308 @@
 
     </div>
 
-</div>
+
+    <!-- =========================
+         INVOICE INFORMATION
+    ========================== -->
+
+    <div class="bmk-invoice-card">
+
+        <div class="bmk-invoice-card-header">
+
+            <span class="bmk-invoice-card-icon">
+                <i class="bi bi-receipt"></i>
+            </span>
+
+            <div>
+
+                <h2 class="bmk-invoice-card-title">
+                    {{ invoice.description }}
+                </h2>
+
+                <p class="bmk-invoice-description">
+                    Invoice information and payment summary
+                </p>
+
+            </div>
+
+        </div>
 
 
-<!-- Payments -->
+        <div class="bmk-invoice-card-body">
 
-<div class="card shadow-sm">
+            <div class="row g-4">
 
-    <div class="card-header d-flex justify-content-between align-items-center">
+                <!-- Invoice Details -->
 
-        <strong>
-            Payments
-        </strong>
+                <div class="col-lg-6">
+
+                    <div class="bmk-invoice-info-group">
+
+                        <div class="bmk-invoice-info-item">
+
+                            <span class="bmk-info-label">
+                                Academic Year
+                            </span>
+
+                            <span class="bmk-info-value">
+                                {{ invoice.enrollment.academic_year }}
+                            </span>
+
+                        </div>
 
 
-        {% if summary.status != "cancelled" and summary.balance > 0 %}
+                        <div class="bmk-invoice-info-item">
 
-            <a
-                href="{% url 'fees:record_payment' invoice.id %}"
-                class="btn btn-sm btn-primary"
-            >
-                Record Payment
-            </a>
+                            <span class="bmk-info-label">
+                                Due Date
+                            </span>
 
-        {% endif %}
-        
+                            <span class="bmk-info-value bmk-due-date">
+                                <i class="bi bi-calendar3 me-1"></i>
+                                {{ invoice.due_date|date:"F d, Y" }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="bmk-invoice-info-item">
+
+                            <span class="bmk-info-label">
+                                Status
+                            </span>
+
+                            {% if summary.status == "paid" %}
+
+                                <span class="bmk-invoice-status bmk-status-paid">
+                                    <i class="bi bi-check-circle-fill"></i>
+                                    Paid
+                                </span>
+
+                            {% elif summary.status == "partial" %}
+
+                                <span class="bmk-invoice-status bmk-status-partial">
+                                    <i class="bi bi-hourglass-split"></i>
+                                    Partially Paid
+                                </span>
+
+                            {% elif summary.status == "cancelled" %}
+
+                                <span class="bmk-invoice-status bmk-status-cancelled">
+                                    <i class="bi bi-x-circle-fill"></i>
+                                    Cancelled
+                                </span>
+
+                            {% else %}
+
+                                <span class="bmk-invoice-status bmk-status-unpaid">
+                                    <i class="bi bi-exclamation-circle-fill"></i>
+                                    Unpaid
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Financial Summary -->
+
+                <div class="col-lg-6">
+
+                    <div class="bmk-invoice-info-group">
+
+                        <div class="bmk-financial-item">
+
+                            <div class="bmk-financial-row">
+
+                                <span class="bmk-financial-label">
+                                    Invoice Amount
+                                </span>
+
+                                <span class="bmk-financial-value">
+                                    ₦{{ summary.amount|floatformat:2 }}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="bmk-financial-item">
+
+                            <div class="bmk-financial-row">
+
+                                <span class="bmk-financial-label">
+                                    Total Paid
+                                </span>
+
+                                <span class="bmk-financial-value bmk-financial-paid">
+                                    ₦{{ summary.paid|floatformat:2 }}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="bmk-financial-item">
+
+                            <div class="bmk-financial-row">
+
+                                <span class="bmk-financial-label">
+                                    Outstanding
+                                </span>
+
+                                <span class="bmk-financial-value bmk-financial-outstanding">
+                                    ₦{{ summary.balance|floatformat:2 }}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 
 
-    <div class="card-body">
+    <!-- =========================
+         PAYMENTS
+    ========================== -->
 
-        {% if payments %}
+    <div class="bmk-payments-card">
 
-            <div class="table-responsive">
+        <div class="bmk-payments-header">
 
-                <table class="table table-hover align-middle">
+            <h2 class="bmk-payments-title">
 
-                    <thead>
+                <span class="bmk-payments-icon">
+                    <i class="bi bi-cash-stack"></i>
+                </span>
 
-                        <tr>
+                Payments
 
-                            <th>
-                                Date
-                            </th>
-
-                            <th>
-                                Amount
-                            </th>
-
-                            <th>
-                                Method
-                            </th>
-
-                            <th>
-                                Reference
-                            </th>
-
-                            <th>
-                                Action
-                            </th>
-
-                        </tr>
-
-                    </thead>
+            </h2>
 
 
-                    <tbody>
+            {% if summary.status != "cancelled" and summary.balance > 0 %}
 
-                        {% for payment in payments %}
+                <a
+                    href="{% url 'fees:record_payment' invoice.id %}"
+                    class="bmk-record-payment"
+                >
+                    <i class="bi bi-plus-circle"></i>
+                    Record Payment
+                </a>
+
+            {% endif %}
+
+        </div>
+
+
+        <div class="bmk-payments-body">
+
+            {% if payments %}
+
+                <div class="bmk-payments-table-wrapper">
+
+                    <table class="table bmk-payments-table align-middle">
+
+                        <thead>
 
                             <tr>
 
-                                <td>
-                                    {{ payment.payment_date|date:"F d, Y" }}
-                                </td>
-
-                                <td class="fw-semibold">
-                                    ₦{{ payment.amount|floatformat:2 }}
-                                </td>
-
-                                <td>
-                                    {{ payment.get_payment_method_display }}
-                                </td>
-
-                                <td>
-                                    {{ payment.reference|default:"—" }}
-                                </td>
-
-                                <td>
-
-                                    <a
-                                        href="{% url 'fees:payment_receipt' payment.id %}"
-                                        class="btn btn-sm btn-outline-secondary"
-                                    >
-                                        Receipt
-                                    </a>
-
-                                </td>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Method</th>
+                                <th>Reference</th>
+                                <th>Action</th>
 
                             </tr>
 
-                        {% endfor %}
+                        </thead>
 
-                    </tbody>
 
-                </table>
+                        <tbody>
 
-            </div>
+                            {% for payment in payments %}
 
-        {% else %}
+                                <tr>
 
-            <div class="text-center text-muted py-4">
+                                    <td class="bmk-payment-date">
+                                        <i class="bi bi-calendar3 me-1"></i>
+                                        {{ payment.payment_date|date:"F d, Y" }}
+                                    </td>
 
-                No payments have been recorded for this invoice.
+                                    <td class="bmk-payment-amount">
+                                        ₦{{ payment.amount|floatformat:2 }}
+                                    </td>
 
-            </div>
+                                    <td class="bmk-payment-method">
+                                        {{ payment.get_payment_method_display }}
+                                    </td>
 
-        {% endif %}
+                                    <td class="bmk-payment-reference">
+                                        {{ payment.reference|default:"—" }}
+                                    </td>
+
+                                    <td>
+
+                                        <a
+                                            href="{% url 'fees:payment_receipt' payment.id %}"
+                                            class="bmk-receipt-btn"
+                                        >
+                                            <i class="bi bi-receipt"></i>
+                                            Receipt
+                                        </a>
+
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            {% else %}
+
+                <div class="bmk-payments-empty">
+
+                    <div class="bmk-payments-empty-icon">
+                        <i class="bi bi-cash-stack"></i>
+                    </div>
+
+                    <h5>
+                        No Payments Recorded
+                    </h5>
+
+                    <p>
+                        No payments have been recorded for this invoice yet.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
 
     </div>
 
 </div>
 
 {% endblock %}
+

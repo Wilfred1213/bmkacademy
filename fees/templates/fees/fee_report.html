@@ -1,23 +1,37 @@
 {% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
 
-
-{% block title %}
-    Fee Collection Report | BMK Academy
+<link rel="stylesheet" href="{% static 'website/css/fees.css' %}">
 {% endblock %}
 
+{% block title %}
+Fee Collection Report | BMK Academy
+{% endblock %}
 
 {% block content %}
 
-<div class="d-flex justify-content-between align-items-center mb-4">
+
+<div class="container-fluid bmk-fee-report">
+
+<!-- Header -->
+
+<div class="bmk-report-header">
 
     <div>
 
-        <h2 class="fw-bold mb-1">
-            Fee Collection Report
-        </h2>
+        <div class="bmk-report-eyebrow">
+            <i class="bi bi-bar-chart-fill"></i>
+            Finance Overview
+        </div>
 
-        <p class="text-muted mb-0">
-            School-wide fee collection overview.
+        <h1 class="bmk-report-title">
+            Fee Collection Report
+        </h1>
+
+        <p class="bmk-report-subtitle">
+            School-wide overview of invoiced fees, payments received,
+            outstanding balances, and collection performance.
         </p>
 
     </div>
@@ -25,61 +39,42 @@
 
     <a
         href="{% url 'fees:invoice_list' %}"
-        class="btn btn-outline-secondary"
+        class="bmk-back-btn"
     >
-        ← Back to Fees
+        <i class="bi bi-arrow-left"></i>
+        Back to Fees
     </a>
 
 </div>
 
 
-<!-- Summary -->
+<!-- Summary Cards -->
 
 <div class="row g-3 mb-4">
 
+    <div class="col-xl-3 col-md-6">
 
-    <!-- Total Invoiced -->
+        <div class="bmk-report-stat bmk-stat-invoiced">
 
-    <div class="col-md-3">
+            <div class="bmk-report-stat-body">
 
-        <div class="card shadow-sm h-100">
+                <div class="bmk-stat-top">
 
-            <div class="card-body">
+                    <div>
+                        <span class="bmk-stat-label">
+                            Total Invoiced
+                        </span>
 
-                <small class="text-muted">
-                    Total Invoiced
-                </small>
+                        <p class="bmk-stat-value">
+                            ₦{{ report.total_invoiced|floatformat:2 }}
+                        </p>
+                    </div>
 
-                <h4 class="fw-bold mb-0">
+                    <div class="bmk-stat-icon">
+                        <i class="bi bi-receipt-cutoff"></i>
+                    </div>
 
-                    ₦{{ report.total_invoiced|floatformat:2 }}
-
-                </h4>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- Total Paid -->
-
-    <div class="col-md-3">
-
-        <div class="card shadow-sm h-100">
-
-            <div class="card-body">
-
-                <small class="text-muted">
-                    Total Paid
-                </small>
-
-                <h4 class="fw-bold text-success mb-0">
-
-                    ₦{{ report.total_paid|floatformat:2 }}
-
-                </h4>
+                </div>
 
             </div>
 
@@ -88,23 +83,29 @@
     </div>
 
 
-    <!-- Outstanding -->
+    <div class="col-xl-3 col-md-6">
 
-    <div class="col-md-3">
+        <div class="bmk-report-stat bmk-stat-paid">
 
-        <div class="card shadow-sm h-100">
+            <div class="bmk-report-stat-body">
 
-            <div class="card-body">
+                <div class="bmk-stat-top">
 
-                <small class="text-muted">
-                    Outstanding
-                </small>
+                    <div>
+                        <span class="bmk-stat-label">
+                            Total Paid
+                        </span>
 
-                <h4 class="fw-bold text-danger mb-0">
+                        <p class="bmk-stat-value">
+                            ₦{{ report.total_paid|floatformat:2 }}
+                        </p>
+                    </div>
 
-                    ₦{{ report.outstanding|floatformat:2 }}
+                    <div class="bmk-stat-icon">
+                        <i class="bi bi-check-circle-fill"></i>
+                    </div>
 
-                </h4>
+                </div>
 
             </div>
 
@@ -113,23 +114,60 @@
     </div>
 
 
-    <!-- Collection Rate -->
+    <div class="col-xl-3 col-md-6">
 
-    <div class="col-md-3">
+        <div class="bmk-report-stat bmk-stat-outstanding">
 
-        <div class="card shadow-sm h-100">
+            <div class="bmk-report-stat-body">
 
-            <div class="card-body">
+                <div class="bmk-stat-top">
 
-                <small class="text-muted">
-                    Collection Rate
-                </small>
+                    <div>
+                        <span class="bmk-stat-label">
+                            Outstanding
+                        </span>
 
-                <h4 class="fw-bold text-primary mb-0">
+                        <p class="bmk-stat-value">
+                            ₦{{ report.outstanding|floatformat:2 }}
+                        </p>
+                    </div>
 
-                    {{ report.collection_rate|floatformat:2 }}%
+                    <div class="bmk-stat-icon">
+                        <i class="bi bi-exclamation-circle-fill"></i>
+                    </div>
 
-                </h4>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="bmk-report-stat bmk-stat-rate">
+
+            <div class="bmk-report-stat-body">
+
+                <div class="bmk-stat-top">
+
+                    <div>
+                        <span class="bmk-stat-label">
+                            Collection Rate
+                        </span>
+
+                        <p class="bmk-stat-value">
+                            {{ report.collection_rate|floatformat:2 }}%
+                        </p>
+                    </div>
+
+                    <div class="bmk-stat-icon">
+                        <i class="bi bi-graph-up-arrow"></i>
+                    </div>
+
+                </div>
 
             </div>
 
@@ -142,22 +180,34 @@
 
 <!-- Status Breakdown -->
 
-<div class="card shadow-sm">
+<div class="bmk-status-card">
 
-    <div class="card-header">
+    <div class="bmk-section-header">
 
-        <strong>
-            Invoice Status Breakdown
-        </strong>
+        <div class="bmk-section-icon">
+            <i class="bi bi-pie-chart-fill"></i>
+        </div>
+
+        <div>
+
+            <h2 class="bmk-section-title">
+                Invoice Status Breakdown
+            </h2>
+
+            <p class="bmk-section-subtitle">
+                Current distribution of school fee invoices by payment status.
+            </p>
+
+        </div>
 
     </div>
 
 
-    <div class="card-body">
+    <div class="bmk-status-body">
 
         <div class="table-responsive">
 
-            <table class="table table-hover align-middle">
+            <table class="table bmk-status-table align-middle">
 
                 <thead>
 
@@ -190,19 +240,22 @@
 
                                 {% if status_code == "paid" %}
 
-                                    <span class="badge bg-success">
+                                    <span class="bmk-status-badge bmk-status-paid">
+                                        <i class="bi bi-check-circle-fill"></i>
                                         {{ data.label }}
                                     </span>
 
                                 {% elif status_code == "partial" %}
 
-                                    <span class="badge bg-warning text-dark">
+                                    <span class="bmk-status-badge bmk-status-partial">
+                                        <i class="bi bi-hourglass-split"></i>
                                         {{ data.label }}
                                     </span>
 
                                 {% else %}
 
-                                    <span class="badge bg-danger">
+                                    <span class="bmk-status-badge bmk-status-unpaid">
+                                        <i class="bi bi-exclamation-circle-fill"></i>
                                         {{ data.label }}
                                     </span>
 
@@ -211,12 +264,12 @@
                             </td>
 
 
-                            <td>
+                            <td class="bmk-status-count">
                                 {{ data.count }}
                             </td>
 
 
-                            <td>
+                            <td class="bmk-status-amount">
                                 ₦{{ data.amount|floatformat:2 }}
                             </td>
 
@@ -234,5 +287,6 @@
 
 </div>
 
+</div>
 
 {% endblock %}

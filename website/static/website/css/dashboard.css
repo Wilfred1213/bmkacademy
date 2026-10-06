@@ -1,0 +1,2290 @@
+/* =========================================================
+       BMK ADMIN DASHBOARD
+    ========================================================= */
+
+    .bmk-admin-dashboard {
+        --admin-navy: #0f2747;
+        --admin-navy-dark: #0a1b30;
+        --admin-blue: #1d4ed8;
+        --admin-gold: #e0a83e;
+        --admin-green: #3f7d58;
+        --admin-red: #dc3545;
+        --admin-orange: #d97706;
+        --admin-soft: #f5f7fa;
+        --admin-border: #e6ebf1;
+        --admin-text: #243447;
+        --admin-muted: #718096;
+    }
+
+    .bmk-dashboard-header {
+        position: relative;
+        overflow: hidden;
+        padding: 32px;
+        margin-bottom: 28px;
+        border-radius: 24px;
+        color: #ffffff;
+        background:
+            radial-gradient(
+                circle at 90% 10%,
+                rgba(224, 168, 62, 0.24),
+                transparent 32%
+            ),
+            linear-gradient(
+                135deg,
+                var(--admin-navy-dark),
+                var(--admin-navy) 58%,
+                #173d6b
+            );
+        box-shadow: 0 20px 45px rgba(15, 39, 71, 0.16);
+    }
+
+    .bmk-dashboard-header::before {
+        content: "";
+        position: absolute;
+        width: 180px;
+        height: 180px;
+        right: -70px;
+        bottom: -90px;
+        border-radius: 50%;
+        background: rgba(224, 168, 62, 0.10);
+    }
+
+    .bmk-dashboard-header::after {
+        content: "";
+        position: absolute;
+        width: 90px;
+        height: 90px;
+        right: 120px;
+        top: -45px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.04);
+    }
+
+    .bmk-dashboard-header-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .bmk-dashboard-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 10px;
+        padding: 7px 12px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.08);
+        color: #f3d58a;
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+    }
+
+    .bmk-dashboard-title {
+        margin: 0;
+        font-size: clamp(1.7rem, 3vw, 2.4rem);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+    }
+
+    .bmk-dashboard-subtitle {
+        max-width: 700px;
+        margin: 8px 0 0;
+        color: rgba(255, 255, 255, 0.76);
+        font-size: 0.98rem;
+    }
+
+    .bmk-dashboard-logo-mark {
+        position: relative;
+        z-index: 1;
+        width: 76px;
+        height: 76px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.10);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        backdrop-filter: blur(8px);
+    }
+
+    .bmk-dashboard-logo-mark img {
+        width: 58px;
+        height: 58px;
+        object-fit: contain;
+    }
+
+
+    /* =========================================================
+       KPI CARDS
+    ========================================================= */
+
+    .bmk-kpi-card {
+        position: relative;
+        height: 100%;
+        overflow: hidden;
+        padding: 22px;
+        border: 1px solid var(--admin-border);
+        border-radius: 20px;
+        background: #ffffff;
+        box-shadow: 0 10px 30px rgba(15, 35, 55, 0.07);
+        transition:
+            transform 0.25s ease,
+            box-shadow 0.25s ease,
+            border-color 0.25s ease;
+    }
+
+    .bmk-kpi-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 18px 38px rgba(15, 35, 55, 0.11);
+        border-color: rgba(29, 78, 216, 0.16);
+    }
+
+    .bmk-kpi-card::after {
+        content: "";
+        position: absolute;
+        width: 90px;
+        height: 90px;
+        right: -35px;
+        bottom: -45px;
+        border-radius: 50%;
+        background: rgba(29, 78, 216, 0.035);
+    }
+
+    .bmk-kpi-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 15px;
+    }
+
+    .bmk-kpi-label {
+        margin-bottom: 5px;
+        color: var(--admin-muted);
+        font-size: 0.82rem;
+        font-weight: 600;
+    }
+
+    .bmk-kpi-value {
+        margin: 0;
+        color: var(--admin-navy);
+        font-size: 1.55rem;
+        font-weight: 800;
+        line-height: 1.2;
+    }
+
+    .bmk-kpi-icon {
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        border-radius: 15px;
+        font-size: 1.25rem;
+    }
+
+    .bmk-kpi-blue .bmk-kpi-icon {
+        color: var(--admin-blue);
+        background: rgba(29, 78, 216, 0.10);
+    }
+
+    .bmk-kpi-green .bmk-kpi-icon {
+        color: var(--admin-green);
+        background: rgba(63, 125, 88, 0.11);
+    }
+
+    .bmk-kpi-gold .bmk-kpi-icon {
+        color: #a66b00;
+        background: rgba(224, 168, 62, 0.15);
+    }
+
+    .bmk-kpi-red .bmk-kpi-icon {
+        color: var(--admin-red);
+        background: rgba(220, 53, 69, 0.10);
+    }
+
+    .bmk-kpi-footer {
+        margin-top: 16px;
+        padding-top: 12px;
+        border-top: 1px solid #eef1f4;
+        color: var(--admin-muted);
+        font-size: 0.76rem;
+    }
+
+
+    /* =========================================================
+       SECTION CARDS
+    ========================================================= */
+
+    .bmk-admin-card {
+        height: 100%;
+        overflow: hidden;
+        border: 1px solid var(--admin-border);
+        border-radius: 20px;
+        background: #ffffff;
+        box-shadow: 0 10px 30px rgba(15, 35, 55, 0.06);
+    }
+
+    .bmk-admin-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
+        padding: 22px 24px;
+        border-bottom: 1px solid #eef1f4;
+    }
+
+    .bmk-admin-card-title {
+        margin: 0;
+        color: var(--admin-navy);
+        font-size: 1rem;
+        font-weight: 800;
+    }
+
+    .bmk-admin-card-subtitle {
+        margin: 4px 0 0;
+        color: var(--admin-muted);
+        font-size: 0.8rem;
+    }
+
+    .bmk-admin-card-body {
+        padding: 24px;
+    }
+
+
+    /* =========================================================
+       ATTENDANCE
+    ========================================================= */
+
+    .bmk-attendance-card {
+        padding: 20px;
+        border: 1px solid var(--admin-border);
+        border-radius: 18px;
+        background: #ffffff;
+        box-shadow: 0 8px 24px rgba(15, 35, 55, 0.05);
+    }
+
+    .bmk-attendance-label {
+        color: var(--admin-muted);
+        font-size: 0.78rem;
+        font-weight: 600;
+    }
+
+    .bmk-attendance-number {
+        margin: 5px 0 2px;
+        font-size: 1.6rem;
+        font-weight: 800;
+    }
+
+    .bmk-attendance-description {
+        color: var(--admin-muted);
+        font-size: 0.72rem;
+    }
+
+    .bmk-attendance-present .bmk-attendance-number {
+        color: var(--admin-green);
+    }
+
+    .bmk-attendance-absent .bmk-attendance-number {
+        color: var(--admin-red);
+    }
+
+    .bmk-attendance-late .bmk-attendance-number {
+        color: var(--admin-orange);
+    }
+
+    .bmk-attendance-excused .bmk-attendance-number {
+        color: #0f766e;
+    }
+
+    .bmk-attendance-unmarked .bmk-attendance-number {
+        color: #64748b;
+    }
+
+    .bmk-progress {
+        height: 10px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: #edf1f5;
+    }
+
+    .bmk-progress .progress-bar {
+        border-radius: 999px;
+        background: linear-gradient(
+            90deg,
+            var(--admin-green),
+            #65a30d
+        );
+    }
+
+
+    /* =========================================================
+       QUICK ACTIONS
+    ========================================================= */
+
+    .bmk-quick-action {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid var(--admin-border);
+        border-radius: 14px;
+        color: var(--admin-text);
+        background: #ffffff;
+        text-decoration: none;
+        transition:
+            transform 0.2s ease,
+            background-color 0.2s ease,
+            border-color 0.2s ease,
+            color 0.2s ease;
+    }
+
+    .bmk-quick-action:hover {
+        transform: translateX(3px);
+        color: var(--admin-blue);
+        border-color: rgba(29, 78, 216, 0.20);
+        background: #f8fbff;
+    }
+
+    .bmk-quick-action-icon {
+        width: 38px;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        border-radius: 11px;
+        color: var(--admin-blue);
+        background: rgba(29, 78, 216, 0.09);
+    }
+
+    .bmk-quick-action-text {
+        font-size: 0.84rem;
+        font-weight: 700;
+    }
+
+
+    /* =========================================================
+       MINI STAT BOXES
+    ========================================================= */
+
+    .bmk-mini-stat {
+        height: 100%;
+        padding: 17px;
+        border: 1px solid var(--admin-border);
+        border-radius: 15px;
+        background: #fafbfd;
+    }
+
+    .bmk-mini-stat-label {
+        margin-bottom: 5px;
+        color: var(--admin-muted);
+        font-size: 0.75rem;
+    }
+
+    .bmk-mini-stat-value {
+        margin: 0;
+        color: var(--admin-navy);
+        font-size: 1.05rem;
+        font-weight: 800;
+    }
+
+
+    /* =========================================================
+       TABLE
+    ========================================================= */
+
+    .bmk-admin-table {
+        margin-bottom: 0;
+    }
+
+    .bmk-admin-table thead th {
+        padding: 13px 16px;
+        border-bottom: 1px solid var(--admin-border);
+        color: #64748b;
+        background: #f8fafc;
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    .bmk-admin-table tbody td {
+        padding: 15px 16px;
+        border-color: #eef1f4;
+        color: var(--admin-text);
+        font-size: 0.82rem;
+        vertical-align: middle;
+    }
+
+    .bmk-admin-table tbody tr {
+        transition: background-color 0.2s ease;
+    }
+
+    .bmk-admin-table tbody tr:hover {
+        background: #f8fbff;
+    }
+
+    .bmk-student-name {
+        font-weight: 750;
+        color: var(--admin-navy);
+    }
+
+
+    /* =========================================================
+       NOTIFICATIONS
+    ========================================================= */
+
+    .bmk-notification-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        padding: 16px 0;
+        border-bottom: 1px solid #eef1f4;
+    }
+
+    .bmk-notification-item:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    .bmk-notification-icon {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        border-radius: 12px;
+        color: var(--admin-blue);
+        background: rgba(29, 78, 216, 0.09);
+    }
+
+    .bmk-notification-title {
+        margin: 0 0 4px;
+        color: var(--admin-navy);
+        font-size: 0.85rem;
+        font-weight: 750;
+    }
+
+    .bmk-notification-message {
+        margin: 0 0 4px;
+        color: var(--admin-muted);
+        font-size: 0.78rem;
+        line-height: 1.55;
+    }
+
+    .bmk-notification-date {
+        color: #94a3b8;
+        font-size: 0.7rem;
+    }
+
+
+    /* =========================================================
+       EMPTY STATE
+    ========================================================= */
+
+    .bmk-empty-state {
+        padding: 45px 20px;
+        text-align: center;
+        color: var(--admin-muted);
+    }
+
+    .bmk-empty-state-icon {
+        width: 62px;
+        height: 62px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 14px;
+        border-radius: 18px;
+        color: #94a3b8;
+        background: #f1f5f9;
+        font-size: 1.5rem;
+    }
+
+
+    /* =========================================================
+       BUTTONS
+    ========================================================= */
+
+    .bmk-admin-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        border-radius: 10px;
+        font-size: 0.78rem;
+        font-weight: 700;
+    }
+
+
+    /* =========================================================
+       RESPONSIVE
+    ========================================================= */
+
+    @media (max-width: 767.98px) {
+
+        .bmk-dashboard-header {
+            padding: 24px 20px;
+            border-radius: 20px;
+        }
+
+        .bmk-dashboard-logo-mark {
+            width: 58px;
+            height: 58px;
+            border-radius: 17px;
+        }
+
+        .bmk-dashboard-logo-mark img {
+            width: 45px;
+            height: 45px;
+        }
+
+        .bmk-dashboard-title {
+            font-size: 1.55rem;
+        }
+
+        .bmk-dashboard-subtitle {
+            font-size: 0.86rem;
+        }
+
+        .bmk-admin-card-header,
+        .bmk-admin-card-body {
+            padding: 18px;
+        }
+
+        .bmk-kpi-card {
+            padding: 18px;
+        }
+
+        .bmk-kpi-value {
+            font-size: 1.35rem;
+        }
+
+        .bmk-admin-table thead th,
+        .bmk-admin-table tbody td {
+            padding: 12px;
+        }
+    }
+
+/* =========================================================
+       BMK PARENT DASHBOARD
+       Frontend only — backend logic preserved
+       ========================================================= */
+
+       .bmk-parent-dashboard {
+        position: relative;
+        overflow: hidden;
+        min-height: 100vh;
+        padding: 45px 0 80px;
+        background:
+            radial-gradient(circle at 5% 8%, rgba(29, 78, 216, 0.07), transparent 25%),
+            radial-gradient(circle at 95% 20%, rgba(224, 168, 62, 0.08), transparent 23%),
+            linear-gradient(180deg, #f7f9fc 0%, #ffffff 65%);
+    }
+
+    .bmk-parent-dashboard::before {
+        content: "";
+        position: absolute;
+        width: 260px;
+        height: 260px;
+        right: -120px;
+        top: 430px;
+        border-radius: 50%;
+        background: rgba(63, 125, 88, 0.05);
+        pointer-events: none;
+    }
+
+    .bmk-parent-dashboard .container {
+        position: relative;
+        z-index: 1;
+    }
+
+
+    /* =========================================================
+       HEADER
+       ========================================================= */
+
+    .bmk-parent-header {
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 28px;
+        padding: 30px 32px;
+        border-radius: 25px;
+        color: #ffffff;
+        background:
+            linear-gradient(
+                135deg,
+                #0b1f33 0%,
+                #0f2747 48%,
+                #1d4ed8 100%
+            );
+        box-shadow: 0 22px 55px rgba(15, 35, 55, 0.17);
+    }
+
+    .bmk-parent-header::before {
+        content: "";
+        position: absolute;
+        width: 230px;
+        height: 230px;
+        right: -75px;
+        top: -105px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.06);
+    }
+
+    .bmk-parent-header::after {
+        content: "";
+        position: absolute;
+        width: 150px;
+        height: 150px;
+        right: 120px;
+        bottom: -100px;
+        border-radius: 50%;
+        background: rgba(224, 168, 62, 0.10);
+    }
+
+    .bmk-parent-header-content {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 25px;
+    }
+
+    .bmk-parent-welcome {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+    }
+
+    .bmk-parent-avatar {
+        width: 68px;
+        height: 68px;
+        flex: 0 0 68px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 19px;
+        color: #0f2747;
+        background: #ffffff;
+        font-size: 1.65rem;
+        font-weight: 800;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.17);
+    }
+
+    .bmk-parent-eyebrow {
+        margin-bottom: 4px;
+        color: #f3d58a;
+        font-size: 0.76rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .bmk-parent-header h2 {
+        margin-bottom: 4px;
+        font-size: 1.75rem;
+        font-weight: 800;
+        letter-spacing: -0.025em;
+    }
+
+    .bmk-parent-header p {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.72);
+        font-size: 0.9rem;
+    }
+
+    .bmk-parent-header-actions {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .bmk-parent-header-actions .btn {
+        min-height: 43px;
+        padding: 9px 16px;
+        border-radius: 11px;
+        font-size: 0.84rem;
+        font-weight: 700;
+    }
+
+    .bmk-parent-profile-btn {
+        color: #ffffff;
+        border-color: rgba(255, 255, 255, 0.35);
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(8px);
+    }
+
+    .bmk-parent-profile-btn:hover {
+        color: #ffffff;
+        border-color: rgba(255, 255, 255, 0.55);
+        background: rgba(255, 255, 255, 0.16);
+        transform: translateY(-2px);
+    }
+
+    .bmk-parent-apply-btn {
+        color: #0f2747;
+        border: 0;
+        background: #f3d58a;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    .bmk-parent-apply-btn:hover {
+        color: #0f2747;
+        background: #ffffff;
+        transform: translateY(-2px);
+    }
+
+
+    /* =========================================================
+       NOTIFICATIONS
+       ========================================================= */
+
+    .bmk-parent-panel {
+        margin-bottom: 28px;
+        overflow: hidden;
+        border: 1px solid rgba(15, 39, 71, 0.07);
+        border-radius: 21px;
+        background: #ffffff;
+        box-shadow: 0 15px 42px rgba(15, 35, 55, 0.08);
+    }
+
+    .bmk-parent-panel-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
+        padding: 22px 25px;
+        border-bottom: 1px solid #edf0f4;
+    }
+
+    .bmk-panel-heading {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+    }
+
+    .bmk-panel-icon {
+        width: 43px;
+        height: 43px;
+        flex: 0 0 43px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 13px;
+        color: #1d4ed8;
+        background: #eef5ff;
+        font-size: 1.1rem;
+    }
+
+    .bmk-panel-heading h5 {
+        margin-bottom: 2px;
+        color: #0f2747;
+        font-weight: 800;
+    }
+
+    .bmk-panel-heading p {
+        margin: 0;
+        color: #64748b;
+        font-size: 0.8rem;
+    }
+
+    .bmk-view-all {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border-radius: 9px;
+        font-size: 0.78rem;
+        font-weight: 700;
+    }
+
+    .bmk-notification-list {
+        padding: 4px 25px 20px;
+    }
+
+    .bmk-notification-item {
+        padding: 17px 0;
+        border-bottom: 1px solid #eef1f5;
+        transition: padding-left 0.25s ease;
+    }
+
+    .bmk-notification-item:last-child {
+        border-bottom: 0;
+    }
+
+    .bmk-notification-item:hover {
+        padding-left: 5px;
+    }
+
+    .bmk-notification-item.is-unread {
+        padding-left: 12px;
+        border-left: 3px solid #1d4ed8;
+        background: linear-gradient(
+            90deg,
+            rgba(29, 78, 216, 0.045),
+            transparent
+        );
+    }
+
+    .bmk-notification-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .bmk-notification-title h6 {
+        margin: 0;
+        color: #1e293b;
+        font-weight: 800;
+    }
+
+    .bmk-new-badge {
+        padding: 4px 8px;
+        border-radius: 20px;
+        color: #ffffff;
+        background: #1d4ed8;
+        font-size: 0.65rem;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+
+    .bmk-notification-message {
+        margin: 5px 0 4px;
+        color: #475569;
+        font-size: 0.88rem;
+        line-height: 1.55;
+    }
+
+    .bmk-notification-date {
+        color: #94a3b8;
+        font-size: 0.74rem;
+    }
+
+    .bmk-read-btn {
+        border-radius: 8px;
+        font-size: 0.74rem;
+        font-weight: 700;
+    }
+
+    .bmk-unread-summary {
+        margin: 0 25px 20px;
+        padding: 10px 13px;
+        border-radius: 10px;
+        color: #1d4ed8;
+        background: #eef5ff;
+        font-size: 0.78rem;
+        font-weight: 600;
+    }
+
+    .bmk-empty-notifications {
+        padding: 38px 20px;
+        text-align: center;
+    }
+
+    .bmk-empty-notifications-icon {
+        width: 62px;
+        height: 62px;
+        margin: 0 auto 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 18px;
+        color: #64748b;
+        background: #f3f5f8;
+        font-size: 1.55rem;
+    }
+
+    .bmk-empty-notifications p {
+        margin: 0;
+        color: #64748b;
+        font-size: 0.88rem;
+    }
+
+
+    /* =========================================================
+       CHILD CARD
+       ========================================================= */
+
+    .bmk-child-card {
+        overflow: hidden;
+        margin-bottom: 28px;
+        border: 1px solid rgba(15, 39, 71, 0.07);
+        border-radius: 23px;
+        background: #ffffff;
+        box-shadow: 0 18px 48px rgba(15, 35, 55, 0.09);
+        transition:
+            transform 0.3s ease,
+            box-shadow 0.3s ease;
+    }
+
+    .bmk-child-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 24px 58px rgba(15, 35, 55, 0.13);
+    }
+
+    .bmk-child-header {
+        position: relative;
+        overflow: hidden;
+        padding: 25px 27px;
+        color: #ffffff;
+        background:
+            linear-gradient(
+                135deg,
+                #0f2747 0%,
+                #173e6d 72%,
+                #1d4ed8 100%
+            );
+    }
+
+    .bmk-child-header::after {
+        content: "";
+        position: absolute;
+        width: 170px;
+        height: 170px;
+        right: -80px;
+        top: -85px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.06);
+    }
+
+    .bmk-child-header-content {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .bmk-child-identity {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .bmk-child-avatar {
+        width: 54px;
+        height: 54px;
+        flex: 0 0 54px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 16px;
+        color: #0f2747;
+        background: #ffffff;
+        font-size: 1.25rem;
+        font-weight: 800;
+    }
+
+    .bmk-child-header h4 {
+        margin-bottom: 2px;
+        font-size: 1.25rem;
+        font-weight: 800;
+    }
+
+    .bmk-child-admission {
+        color: rgba(255, 255, 255, 0.68);
+        font-size: 0.75rem;
+    }
+
+    .bmk-child-status {
+        padding: 7px 12px;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 20px;
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.10);
+        font-size: 0.72rem;
+        font-weight: 800;
+    }
+
+
+    /* =========================================================
+       ACADEMIC INFORMATION
+       ========================================================= */
+
+    .bmk-child-body {
+        padding: 27px;
+    }
+
+    .bmk-section-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 14px;
+        color: #0f2747;
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+    }
+
+    .bmk-section-label i {
+        color: #1d4ed8;
+    }
+
+    .bmk-academic-card {
+        height: 100%;
+        padding: 17px;
+        border: 1px solid #e7ebf0;
+        border-radius: 15px;
+        background: #fafbfd;
+        transition:
+            border-color 0.25s ease,
+            transform 0.25s ease,
+            background-color 0.25s ease;
+    }
+
+    .bmk-academic-card:hover {
+        transform: translateY(-2px);
+        border-color: #cbd9ef;
+        background: #f7faff;
+    }
+
+    .bmk-academic-icon {
+        width: 34px;
+        height: 34px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        color: #1d4ed8;
+        background: #eef5ff;
+        font-size: 0.9rem;
+    }
+
+    .bmk-academic-label {
+        display: block;
+        margin-bottom: 4px;
+        color: #94a3b8;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .bmk-academic-value {
+        margin: 0;
+        color: #1e293b;
+        font-size: 0.9rem;
+        font-weight: 800;
+    }
+
+
+    /* =========================================================
+       SUMMARY CARDS
+       ========================================================= */
+
+    .bmk-summary-card {
+        position: relative;
+        overflow: hidden;
+        height: 100%;
+        padding: 19px;
+        border: 1px solid #e7ebf0;
+        border-radius: 17px;
+        background: #ffffff;
+        transition:
+            transform 0.25s ease,
+            box-shadow 0.25s ease;
+    }
+
+    .bmk-summary-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 13px 30px rgba(15, 35, 55, 0.09);
+    }
+
+    .bmk-summary-card::after {
+        content: "";
+        position: absolute;
+        width: 75px;
+        height: 75px;
+        right: -30px;
+        bottom: -32px;
+        border-radius: 50%;
+        background: rgba(29, 78, 216, 0.045);
+    }
+
+    .bmk-summary-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 13px;
+    }
+
+    .bmk-summary-icon {
+        width: 39px;
+        height: 39px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 11px;
+        font-size: 0.95rem;
+    }
+
+    .bmk-summary-icon.blue {
+        color: #1d4ed8;
+        background: #eef5ff;
+    }
+
+    .bmk-summary-icon.green {
+        color: #3f7d58;
+        background: #edf7f0;
+    }
+
+    .bmk-summary-icon.gold {
+        color: #a16207;
+        background: #fff8e7;
+    }
+
+    .bmk-summary-icon.red {
+        color: #dc2626;
+        background: #fef2f2;
+    }
+
+    .bmk-summary-label {
+        margin: 0;
+        color: #64748b;
+        font-size: 0.72rem;
+        font-weight: 700;
+    }
+
+    .bmk-summary-value {
+        position: relative;
+        z-index: 1;
+        margin: 0 0 3px;
+        color: #0f2747;
+        font-size: 1.45rem;
+        font-weight: 800;
+    }
+
+    .bmk-summary-description {
+        position: relative;
+        z-index: 1;
+        color: #94a3b8;
+        font-size: 0.72rem;
+    }
+
+    .bmk-balance {
+        color: #dc2626;
+        font-size: 0.72rem;
+        font-weight: 700;
+    }
+
+    .bmk-paid {
+        color: #3f7d58;
+        font-size: 0.72rem;
+        font-weight: 700;
+    }
+
+
+    /* =========================================================
+       QUICK ACTIONS
+       ========================================================= */
+
+    .bmk-actions-section {
+        margin-top: 28px;
+        padding-top: 24px;
+        border-top: 1px solid #edf0f4;
+    }
+
+    .bmk-actions-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 13px;
+        color: #0f2747;
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+    }
+
+    .bmk-actions-title i {
+        color: #e0a83e;
+    }
+
+    .bmk-quick-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 9px;
+    }
+
+    .bmk-quick-action {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        min-height: 40px;
+        padding: 8px 14px;
+        border-radius: 10px;
+        font-size: 0.78rem;
+        font-weight: 700;
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .bmk-quick-action:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 18px rgba(15, 35, 55, 0.09);
+    }
+
+
+    /* =========================================================
+       NO ENROLLMENT / NO CHILDREN
+       ========================================================= */
+
+    .bmk-no-enrollment {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        margin: 0;
+        padding: 15px 17px;
+        border: 1px solid #f5df9e;
+        border-radius: 13px;
+        color: #795b05;
+        background: #fffaf0;
+        font-size: 0.84rem;
+    }
+
+    .bmk-no-enrollment i {
+        margin-top: 2px;
+        color: #d49b19;
+    }
+
+    .bmk-no-children {
+        padding: 55px 25px;
+        border: 1px solid rgba(15, 39, 71, 0.07);
+        border-radius: 23px;
+        text-align: center;
+        background: #ffffff;
+        box-shadow: 0 18px 48px rgba(15, 35, 55, 0.08);
+    }
+
+    .bmk-no-children-icon {
+        width: 72px;
+        height: 72px;
+        margin: 0 auto 17px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 20px;
+        color: #1d4ed8;
+        background: #eef5ff;
+        font-size: 1.8rem;
+    }
+
+    .bmk-no-children h5 {
+        margin-bottom: 7px;
+        color: #0f2747;
+        font-weight: 800;
+    }
+
+    .bmk-no-children p {
+        max-width: 470px;
+        margin: 0 auto;
+        color: #64748b;
+        font-size: 0.86rem;
+    }
+
+
+    /* =========================================================
+       RESPONSIVE
+       ========================================================= */
+
+    @media (max-width: 991.98px) {
+        .bmk-parent-header-content {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .bmk-parent-header-actions {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 767.98px) {
+        .bmk-parent-dashboard {
+            padding: 28px 0 60px;
+        }
+
+        .bmk-parent-header {
+            padding: 23px 20px;
+            border-radius: 20px;
+        }
+
+        .bmk-parent-welcome {
+            align-items: flex-start;
+        }
+
+        .bmk-parent-avatar {
+            width: 55px;
+            height: 55px;
+            flex-basis: 55px;
+            border-radius: 15px;
+            font-size: 1.3rem;
+        }
+
+        .bmk-parent-header h2 {
+            font-size: 1.4rem;
+        }
+
+        .bmk-parent-header-actions {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .bmk-parent-header-actions .btn {
+            width: 100%;
+        }
+
+        .bmk-parent-panel-header {
+            align-items: flex-start;
+            padding: 18px;
+        }
+
+        .bmk-notification-list {
+            padding-left: 18px;
+            padding-right: 18px;
+        }
+
+        .bmk-unread-summary {
+            margin-left: 18px;
+            margin-right: 18px;
+        }
+
+        .bmk-child-header {
+            padding: 20px;
+        }
+
+        .bmk-child-header-content {
+            align-items: flex-start;
+        }
+
+        .bmk-child-body {
+            padding: 20px;
+        }
+
+        .bmk-child-header h4 {
+            font-size: 1.05rem;
+        }
+
+        .bmk-child-status {
+            font-size: 0.65rem;
+        }
+
+        .bmk-summary-card {
+            padding: 16px;
+        }
+    }
+
+    @media (max-width: 575.98px) {
+        .bmk-parent-welcome {
+            gap: 12px;
+        }
+
+        .bmk-parent-avatar {
+            width: 48px;
+            height: 48px;
+            flex-basis: 48px;
+            border-radius: 13px;
+            font-size: 1.1rem;
+        }
+
+        .bmk-parent-header h2 {
+            font-size: 1.2rem;
+        }
+
+        .bmk-parent-header p {
+            font-size: 0.8rem;
+        }
+
+        .bmk-child-header-content {
+            flex-direction: column;
+            gap: 13px;
+        }
+
+        .bmk-child-status {
+            align-self: flex-start;
+        }
+
+        .bmk-child-identity {
+            align-items: flex-start;
+        }
+
+        .bmk-notification-item {
+            padding-top: 14px;
+            padding-bottom: 14px;
+        }
+
+        .bmk-notification-item .d-flex {
+            flex-direction: column;
+        }
+
+        .bmk-read-btn {
+            align-self: flex-start;
+        }
+
+        .bmk-quick-actions {
+            flex-direction: column;
+        }
+
+        .bmk-quick-action {
+            justify-content: center;
+            width: 100%;
+        }
+    }
+/* =========================================================
+   TEACHER DASHBOARD
+   ========================================================= */
+
+   .bmk-teacher-dashboard {
+    background:
+        radial-gradient(circle at top right, rgba(29, 78, 216, 0.05), transparent 30%),
+        #f6f8fb;
+    min-height: calc(100vh - 70px);
+    padding: 32px 0 60px;
+}
+
+/* HERO */
+
+.bmk-teacher-hero {
+    position: relative;
+    overflow: hidden;
+    border-radius: 24px;
+    padding: 32px;
+    margin-bottom: 28px;
+    color: #ffffff;
+    background:
+        radial-gradient(circle at 90% 15%, rgba(224, 168, 62, 0.30), transparent 24%),
+        radial-gradient(circle at 10% 100%, rgba(63, 125, 88, 0.20), transparent 30%),
+        linear-gradient(135deg, #0b1f33 0%, #0f2747 55%, #173e6d 100%);
+    box-shadow: 0 20px 50px rgba(15, 35, 55, 0.16);
+}
+
+.bmk-teacher-hero::before {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    right: -70px;
+    top: -80px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.bmk-teacher-hero::after {
+    content: "";
+    position: absolute;
+    width: 110px;
+    height: 110px;
+    left: 42%;
+    bottom: -70px;
+    border-radius: 50%;
+    background: rgba(224, 168, 62, 0.08);
+}
+
+.bmk-teacher-hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.bmk-teacher-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 11px;
+    margin-bottom: 13px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 999px;
+    color: #f3d58a;
+    background: rgba(255, 255, 255, 0.07);
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.bmk-teacher-hero h1 {
+    margin-bottom: 8px;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+}
+
+.bmk-teacher-hero p {
+    margin-bottom: 0;
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.bmk-teacher-role {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 12px;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.09);
+    font-size: 0.88rem;
+    font-weight: 700;
+}
+
+/* SUMMARY CARDS */
+
+.bmk-teacher-summary {
+    height: 100%;
+    padding: 24px;
+    border: 1px solid rgba(15, 39, 71, 0.06);
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 12px 35px rgba(15, 35, 55, 0.08);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.bmk-teacher-summary:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 42px rgba(15, 35, 55, 0.12);
+}
+
+.bmk-summary-icon {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 15px;
+    font-size: 1.25rem;
+}
+
+.bmk-icon-blue {
+    color: #1d4ed8;
+    background: #eef5ff;
+}
+
+.bmk-icon-green {
+    color: #3f7d58;
+    background: #edf8f1;
+}
+
+.bmk-icon-gold {
+    color: #a46f0c;
+    background: #fff6df;
+}
+
+.bmk-summary-label {
+    margin-bottom: 4px;
+    color: #64748b;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.bmk-summary-value {
+    margin: 0;
+    color: #0f2747;
+    font-size: 1.45rem;
+    font-weight: 800;
+}
+
+/* SECTION CARDS */
+
+.bmk-dashboard-card {
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid rgba(15, 39, 71, 0.06);
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 12px 35px rgba(15, 35, 55, 0.08);
+}
+
+.bmk-dashboard-card-header {
+    padding: 22px 24px;
+    border-bottom: 1px solid #edf0f4;
+}
+
+.bmk-section-heading {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.bmk-section-heading-icon {
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 13px;
+    color: #1d4ed8;
+    background: #eef5ff;
+}
+
+.bmk-section-heading h5 {
+    margin: 0 0 3px;
+    color: #0f2747;
+    font-weight: 800;
+}
+
+.bmk-section-heading p {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.84rem;
+}
+
+/* CLASS TEACHER */
+
+.bmk-class-teacher-item {
+    height: 100%;
+    padding: 19px;
+    border: 1px solid #e8edf3;
+    border-radius: 16px;
+    background: #ffffff;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.bmk-class-teacher-item:hover {
+    transform: translateY(-3px);
+    border-color: rgba(224, 168, 62, 0.45);
+    box-shadow: 0 12px 28px rgba(15, 35, 55, 0.08);
+}
+
+.bmk-class-icon {
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 13px;
+    color: #ffffff;
+    background: linear-gradient(135deg, #d79a27, #e8b54c);
+}
+
+.bmk-class-label {
+    color: #64748b;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.bmk-class-name {
+    color: #0f2747;
+    font-weight: 800;
+}
+
+/* EMPTY STATE */
+
+.bmk-empty-state {
+    padding: 42px 20px;
+    text-align: center;
+}
+
+.bmk-empty-icon {
+    width: 68px;
+    height: 68px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    color: #94a3b8;
+    background: #f1f5f9;
+    font-size: 1.7rem;
+}
+
+.bmk-empty-state h6 {
+    margin-top: 15px;
+    color: #334155;
+    font-weight: 800;
+}
+
+/* QUICK ACTIONS */
+
+.bmk-action-link {
+    display: block;
+    height: 100%;
+    padding: 20px;
+    border: 1px solid #e6ebf1;
+    border-radius: 17px;
+    color: inherit;
+    background: #ffffff;
+    text-decoration: none;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.bmk-action-link:hover {
+    color: inherit;
+    transform: translateY(-4px);
+    border-color: rgba(29, 78, 216, 0.25);
+    box-shadow: 0 15px 32px rgba(15, 35, 55, 0.09);
+}
+
+.bmk-action-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 13px;
+    color: #ffffff;
+    font-size: 1.15rem;
+}
+
+.bmk-action-blue {
+    background: linear-gradient(135deg, #1d4ed8, #2563eb);
+}
+
+.bmk-action-green {
+    background: linear-gradient(135deg, #3f7d58, #55936c);
+}
+
+.bmk-action-info {
+    color: #0b7285;
+    background: #e8f8fb;
+}
+
+.bmk-action-link h6 {
+    color: #0f2747;
+    font-weight: 800;
+}
+
+.bmk-action-link small {
+    line-height: 1.45;
+}
+
+/* TABLE */
+
+.bmk-assignment-table {
+    min-width: 700px;
+}
+
+.bmk-assignment-table thead th {
+    padding: 15px 18px;
+    border-bottom: 1px solid #e5eaf0;
+    color: #64748b;
+    background: #f8fafc;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.bmk-assignment-table tbody td {
+    padding: 17px 18px;
+    border-color: #edf0f4;
+    color: #475569;
+}
+
+.bmk-assignment-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.bmk-assignment-table tbody tr:hover {
+    background: #f8fbff;
+}
+
+.bmk-assignment-number {
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    color: #1d4ed8;
+    background: #eef5ff;
+    font-size: 0.8rem;
+    font-weight: 800;
+}
+
+.bmk-subject-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 8px;
+    color: #3f7d58;
+    background: #edf8f1;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 767.98px) {
+
+    .bmk-teacher-dashboard {
+        padding: 22px 0 45px;
+    }
+
+    .bmk-teacher-hero {
+        padding: 25px 20px;
+        border-radius: 20px;
+    }
+
+    .bmk-teacher-role {
+        margin-top: 20px;
+    }
+
+    .bmk-dashboard-card-header {
+        padding: 19px;
+    }
+
+    .bmk-teacher-summary {
+        padding: 20px;
+    }
+
+    .bmk-action-link {
+        padding: 17px;
+    }
+}
+
+.bmk-accounts-page {
+    padding: 32px 0 65px;
+    background:
+        radial-gradient(circle at 92% 8%, rgba(29, 78, 216, 0.06), transparent 27%),
+        linear-gradient(180deg, #f7f9fc 0%, #ffffff 72%);
+    min-height: 100vh;
+}
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.bmk-accounts-header {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 25px;
+    padding: 29px 31px;
+    border-radius: 24px;
+    color: #ffffff;
+    background: linear-gradient(135deg, #0f2747 0%, #163d6b 62%, #1d4ed8 100%);
+    box-shadow: 0 18px 45px rgba(15, 39, 71, 0.15);
+}
+
+.bmk-accounts-header::before {
+    content: "";
+    position: absolute;
+    width: 210px;
+    height: 210px;
+    top: -120px;
+    right: -55px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.bmk-accounts-header::after {
+    content: "";
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    bottom: -75px;
+    left: 34%;
+    border-radius: 50%;
+    background: rgba(224, 168, 62, 0.12);
+}
+
+.bmk-header-content {
+    position: relative;
+    z-index: 1;
+}
+
+.bmk-accounts-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 7px;
+    color: #f3d58a;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.bmk-accounts-title {
+    margin: 0 0 5px;
+    color: #ffffff;
+    font-size: clamp(1.55rem, 3vw, 2rem);
+    font-weight: 800;
+}
+
+.bmk-accounts-subtitle {
+    margin: 0;
+    max-width: 620px;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.88rem;
+}
+
+/* =========================================================
+   SUMMARY CARDS
+========================================================= */
+
+.bmk-account-stat {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    padding: 21px;
+    border: 1px solid #e5eaf0;
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 10px 30px rgba(15, 35, 55, 0.06);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.bmk-account-stat:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 17px 38px rgba(15, 35, 55, 0.10);
+}
+
+.bmk-account-stat-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.bmk-account-stat-label {
+    color: #64748b;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.bmk-account-stat-icon {
+    width: 39px;
+    height: 39px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+    font-size: 1rem;
+}
+
+.bmk-account-stat-value {
+    margin: 0;
+    color: #0f2747;
+    font-size: 1.7rem;
+    font-weight: 850;
+    line-height: 1;
+}
+
+.bmk-stat-users .bmk-account-stat-icon {
+    color: #1d4ed8;
+    background: #eef5ff;
+}
+
+.bmk-stat-admins .bmk-account-stat-icon {
+    color: #7c3aed;
+    background: #f5f3ff;
+}
+
+.bmk-stat-teachers .bmk-account-stat-icon {
+    color: #15803d;
+    background: #ecfdf3;
+}
+
+.bmk-stat-parents .bmk-account-stat-icon {
+    color: #b45309;
+    background: #fff7ed;
+}
+
+/* =========================================================
+   USERS CARD
+========================================================= */
+
+.bmk-users-card {
+    overflow: hidden;
+    border: 1px solid #e5eaf0;
+    border-radius: 22px;
+    background: #ffffff;
+    box-shadow: 0 15px 40px rgba(15, 35, 55, 0.07);
+}
+
+.bmk-users-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 21px 24px;
+    border-bottom: 1px solid #edf0f4;
+    background: #fbfcfe;
+}
+
+.bmk-users-heading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.bmk-users-icon {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 42px;
+    border-radius: 12px;
+    color: #1d4ed8;
+    background: #eef5ff;
+}
+
+.bmk-users-title {
+    margin: 0;
+    color: #0f2747;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.bmk-users-description {
+    margin: 2px 0 0;
+    color: #64748b;
+    font-size: 0.77rem;
+}
+
+.bmk-manage-users-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 42px;
+    padding: 0 17px;
+    border: 0;
+    border-radius: 11px;
+    color: #ffffff !important;
+    background: linear-gradient(135deg, #1d4ed8, #2563eb);
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgba(29, 78, 216, 0.20);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bmk-manage-users-btn:hover {
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 27px rgba(29, 78, 216, 0.27);
+}
+
+.bmk-users-body {
+    padding: 0;
+}
+
+.bmk-users-table {
+    margin: 0;
+    min-width: 760px;
+}
+
+.bmk-users-table thead th {
+    padding: 14px 20px;
+    border-bottom: 1px solid #e5eaf0;
+    color: #64748b;
+    background: #f8fafc;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.bmk-users-table tbody td {
+    padding: 15px 20px;
+    border-bottom: 1px solid #edf0f4;
+    color: #334155;
+    font-size: 0.84rem;
+}
+
+.bmk-users-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.bmk-users-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.bmk-users-table tbody tr:hover {
+    background: #fafcff;
+}
+
+.bmk-user-number {
+    color: #94a3b8;
+    font-weight: 700;
+}
+
+.bmk-user-name {
+    color: #0f2747;
+    font-weight: 750;
+}
+
+.bmk-username {
+    color: #64748b;
+    font-size: 0.8rem;
+}
+
+.bmk-role-badge,
+.bmk-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 0.69rem;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.bmk-role-badge {
+    color: #1d4ed8;
+    background: #eef5ff;
+}
+
+.bmk-status-active {
+    color: #15803d;
+    background: #ecfdf3;
+}
+
+.bmk-status-inactive {
+    color: #64748b;
+    background: #f1f5f9;
+}
+
+.bmk-users-empty {
+    padding: 55px 20px;
+    text-align: center;
+}
+
+.bmk-empty-icon {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    color: #64748b;
+    background: #f1f5f9;
+    font-size: 1.25rem;
+}
+
+.bmk-users-empty h4 {
+    margin-bottom: 5px;
+    color: #0f2747;
+    font-size: 0.98rem;
+    font-weight: 800;
+}
+
+.bmk-users-empty p {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.82rem;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .bmk-accounts-page {
+        padding: 23px 0 50px;
+    }
+
+    .bmk-accounts-header {
+        padding: 25px 20px;
+        border-radius: 20px;
+    }
+
+    .bmk-users-header {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 18px;
+    }
+
+    .bmk-manage-users-btn {
+        width: 100%;
+    }
+
+    .bmk-users-table thead th,
+    .bmk-users-table tbody td {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+/* =========================================================
+   QUICK ACTION GROUPS
+========================================================= */
+
+.bmk-quick-action-group {
+    margin-bottom: 24px;
+}
+
+.bmk-quick-action-group:last-child {
+    margin-bottom: 0;
+}
+
+.bmk-quick-action-group-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    padding-bottom: 7px;
+    border-bottom: 1px solid var(--bmk-border);
+    color: var(--bmk-navy);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.bmk-quick-action-group-title i {
+    color: var(--bmk-blue);
+    font-size: 0.8rem;
+}
+
+
+/* =========================================================
+   COMMUNICATION ACTIONS
+========================================================= */
+
+.bmk-quick-action-notification {
+    background: rgba(29, 78, 216, 0.035);
+}
+
+.bmk-quick-action-announcement {
+    background: rgba(224, 168, 62, 0.07);
+    border-color: rgba(224, 168, 62, 0.25);
+}
+
+.bmk-quick-action-announcement
+.bmk-quick-action-icon {
+    background: rgba(224, 168, 62, 0.16);
+    color: #a27418;
+}
+
+.bmk-quick-action-arrow {
+    margin-left: auto;
+    color: var(--bmk-muted);
+    font-size: 0.75rem;
+    transition: transform 0.2s ease;
+}
+
+.bmk-quick-action:hover .bmk-quick-action-arrow {
+    transform: translateX(3px);
+}

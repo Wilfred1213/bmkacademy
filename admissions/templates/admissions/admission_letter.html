@@ -1,237 +1,750 @@
 {% load static %}
 
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
 
-    <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<meta charset="UTF-8">
 
-    <title>
-        Admission Letter | BMK Academy
-    </title>
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    >
+<title>
+    Admission Letter | BMK Academy
+</title>
 
-    <style>
+<link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+>
 
-        body {
-            background: #f1f3f5;
-            font-family: Georgia, "Times New Roman", serif;
-            font-size: 14px;
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+>
+
+<style>
+
+    :root {
+        --bmk-navy: #0f2747;
+        --bmk-navy-dark: #0b1f33;
+        --bmk-blue: #1d4ed8;
+        --bmk-gold: #e0a83e;
+        --bmk-gold-light: #f3d58a;
+        --bmk-green: #3f7d58;
+        --bmk-cream: #fffaf0;
+        --bmk-text: #334155;
+        --bmk-muted: #64748b;
+        --bmk-border: #dfe5ec;
+    }
+
+
+    * {
+        box-sizing: border-box;
+    }
+
+
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+
+    body {
+        background: #eef1f5;
+        color: var(--bmk-text);
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 14px;
+    }
+
+
+    /* =====================================================
+       SCREEN CONTROLS
+       ===================================================== */
+
+    .letter-controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        padding: 22px 15px;
+        background: #eef1f5;
+    }
+
+
+    .letter-control-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 44px;
+        padding: 10px 20px;
+        border-radius: 10px;
+        border: 1px solid transparent;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-size: 0.9rem;
+        font-weight: 700;
+        text-decoration: none;
+        cursor: pointer;
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease,
+            background-color 0.2s ease;
+    }
+
+
+    .letter-control-button:hover {
+        transform: translateY(-2px);
+    }
+
+
+    .letter-control-primary {
+        background: var(--bmk-navy);
+        color: #ffffff;
+        box-shadow: 0 8px 20px rgba(15, 39, 71, 0.18);
+    }
+
+
+    .letter-control-primary:hover {
+        background: var(--bmk-navy-dark);
+        color: #ffffff;
+        box-shadow: 0 12px 25px rgba(15, 39, 71, 0.24);
+    }
+
+
+    .letter-control-secondary {
+        background: #ffffff;
+        color: var(--bmk-navy);
+        border-color: #d7dee7;
+    }
+
+
+    .letter-control-secondary:hover {
+        background: #f8fafc;
+        color: var(--bmk-navy);
+    }
+
+
+    /* =====================================================
+       LETTER PAGE
+       ===================================================== */
+
+    .letter-container {
+        position: relative;
+        width: min(850px, calc(100% - 30px));
+        margin: 5px auto 40px;
+        padding: 48px 58px 55px;
+        background: #ffffff;
+        border: 1px solid #e1e6ec;
+        box-shadow:
+            0 20px 55px rgba(15, 35, 55, 0.12);
+        overflow: hidden;
+    }
+
+
+    .letter-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 7px;
+        background:
+            linear-gradient(
+                90deg,
+                var(--bmk-navy) 0%,
+                var(--bmk-navy) 42%,
+                var(--bmk-gold) 42%,
+                var(--bmk-gold) 58%,
+                var(--bmk-navy) 58%,
+                var(--bmk-navy) 100%
+            );
+    }
+
+
+    /* =====================================================
+       SCHOOL HEADER
+       ===================================================== */
+
+    .school-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        text-align: left;
+    }
+
+
+    .school-logo {
+        width: 82px;
+        height: 82px;
+        object-fit: contain;
+        flex-shrink: 0;
+    }
+
+
+    .school-header-content {
+        text-align: center;
+    }
+
+
+    .school-name {
+        margin-bottom: 4px;
+        color: var(--bmk-navy);
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 27px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+    }
+
+
+    .school-subtitle {
+        margin-bottom: 4px;
+        color: #475569;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+
+    .school-motto {
+        color: var(--bmk-green);
+        font-size: 13px;
+        font-style: italic;
+        font-weight: 600;
+    }
+
+
+    .school-divider {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 24px 0 18px;
+    }
+
+
+    .school-divider::before,
+    .school-divider::after {
+        content: "";
+        height: 1px;
+        flex: 1;
+        background: #dfe5ec;
+    }
+
+
+    .school-divider-mark {
+        color: var(--bmk-gold);
+        font-size: 14px;
+    }
+
+
+    /* =====================================================
+       DATE
+       ===================================================== */
+
+    .letter-date {
+        margin-bottom: 18px;
+        color: #475569;
+        text-align: right;
+        font-size: 13px;
+    }
+
+
+    /* =====================================================
+       TITLE
+       ===================================================== */
+
+    .letter-title {
+        position: relative;
+        margin: 8px 0 27px;
+        color: var(--bmk-navy);
+        text-align: center;
+        font-size: 21px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+    }
+
+
+    .letter-title::after {
+        content: "";
+        display: block;
+        width: 70px;
+        height: 3px;
+        margin: 9px auto 0;
+        background: var(--bmk-gold);
+        border-radius: 5px;
+    }
+
+
+    /* =====================================================
+       LETTER BODY
+       ===================================================== */
+
+    .letter-body {
+        color: #334155;
+    }
+
+
+    .letter-body p {
+        margin-bottom: 12px;
+        line-height: 1.6;
+    }
+
+
+    .letter-body strong {
+        color: var(--bmk-navy);
+    }
+
+
+    .letter-greeting {
+        margin-bottom: 16px !important;
+    }
+
+
+    /* =====================================================
+       STUDENT INFORMATION
+       ===================================================== */
+
+    .student-details {
+        position: relative;
+        margin: 23px 0;
+        padding: 20px 23px;
+        background: #fbfcfe;
+        border: 1px solid var(--bmk-border);
+        border-radius: 10px;
+    }
+
+
+    .student-details::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background: var(--bmk-gold);
+        border-radius: 10px 0 0 10px;
+    }
+
+
+    .student-details-heading {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e5eaf0;
+    }
+
+
+    .student-details-heading-icon {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        background: #fff5d9;
+        color: #9a6a15;
+        font-size: 0.9rem;
+    }
+
+
+    .student-details-heading h6 {
+        margin: 0;
+        color: var(--bmk-navy);
+        font-size: 0.92rem;
+        font-weight: 800;
+    }
+
+
+    .student-details p {
+        display: flex;
+        margin-bottom: 7px !important;
+        color: #475569;
+        line-height: 1.5;
+    }
+
+
+    .student-details p:last-child {
+        margin-bottom: 0 !important;
+    }
+
+
+    .student-details p strong {
+        flex: 0 0 155px;
+        color: var(--bmk-navy);
+        font-weight: 700;
+    }
+
+
+    /* =====================================================
+       WELCOME NOTE
+       ===================================================== */
+
+    .welcome-note {
+        margin: 24px 0;
+        padding: 17px 20px;
+        background: #f1f8f4;
+        border-left: 4px solid var(--bmk-green);
+        color: #405c4a;
+        border-radius: 0 8px 8px 0;
+    }
+
+
+    .welcome-note p {
+        margin: 0;
+        line-height: 1.6;
+    }
+
+
+    /* =====================================================
+       SIGNATURE
+       ===================================================== */
+
+    .signature-section {
+        margin-top: 38px;
+        padding-top: 4px;
+    }
+
+
+    .signature-section p {
+        margin-bottom: 4px;
+    }
+
+
+    .signature-line {
+        width: 215px;
+        margin-top: 32px;
+        margin-bottom: 7px;
+        border-top: 1px solid #475569;
+    }
+
+
+    .signature-name {
+        color: var(--bmk-navy);
+        font-weight: 700;
+    }
+
+
+    .signature-role {
+        color: #64748b;
+    }
+
+
+    /* =====================================================
+       LETTER FOOTER
+       ===================================================== */
+
+    .letter-footer {
+        margin-top: 32px;
+        padding-top: 13px;
+        border-top: 1px solid #e5eaf0;
+        color: #94a3b8;
+        text-align: center;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-size: 0.7rem;
+    }
+
+
+    /* =====================================================
+       MOBILE
+       ===================================================== */
+
+    @media (max-width: 767px) {
+
+        .letter-controls {
+            flex-direction: column;
+            padding: 18px 15px;
         }
+
+
+        .letter-control-button {
+            width: min(100%, 320px);
+        }
+
 
         .letter-container {
-            max-width: 850px;
-            margin: 25px auto;
-            background: white;
-            padding: 38px 55px;
-            box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+            width: calc(100% - 20px);
+            margin-bottom: 25px;
+            padding: 38px 25px 42px;
         }
+
+
+        .school-header {
+            flex-direction: column;
+            gap: 12px;
+        }
+
+
+        .school-header-content {
+            width: 100%;
+        }
+
 
         .school-logo {
-            width: 78px;
-            height: 78px;
-            object-fit: contain;
+            width: 72px;
+            height: 72px;
         }
 
+
         .school-name {
-            font-size: 24px;
-            font-weight: bold;
+            font-size: 23px;
+        }
+
+
+        .school-subtitle {
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+
+        .letter-title {
+            font-size: 18px;
+        }
+
+
+        .student-details {
+            padding: 17px 17px 17px 20px;
+        }
+
+
+        .student-details p {
+            display: block;
+        }
+
+
+        .student-details p strong {
+            display: block;
             margin-bottom: 2px;
         }
 
-        .school-subtitle {
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .school-motto {
-            font-style: italic;
-            font-size: 13px;
-        }
-
-        .letter-title {
-            text-align: center;
-            font-size: 19px;
-            font-weight: bold;
-            text-decoration: underline;
-            margin: 22px 0 18px;
-        }
-
-        .student-details {
-            border: 1px solid #dee2e6;
-            padding: 12px 16px;
-            margin: 17px 0;
-        }
-
-        .student-details h6 {
-            margin-bottom: 10px !important;
-        }
-
-        .student-details p {
-            margin-bottom: 5px !important;
-        }
-
-        .student-details strong {
-            display: inline-block;
-            min-width: 145px;
-        }
-
-        p {
-            margin-bottom: 10px;
-            line-height: 1.45;
-        }
 
         .signature-section {
-            margin-top: 32px;
+            margin-top: 30px;
         }
+    }
+
+
+    /* =====================================================
+       PRINT
+       ===================================================== */
+
+    @page {
+        size: A4;
+        margin: 15mm;
+    }
+
+
+    @media print {
+
+        html,
+        body {
+            background: #ffffff !important;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+            font-size: 11.5px;
+        }
+
+
+        .letter-controls {
+            display: none !important;
+        }
+
+
+        .letter-container {
+            width: 100%;
+            max-width: none;
+            min-height: auto;
+            margin: 0;
+            padding: 8mm 9mm 6mm;
+            border: none;
+            box-shadow: none;
+        }
+
+
+        .letter-container::before {
+            height: 4px;
+        }
+
+
+        .school-header {
+            gap: 15px;
+        }
+
+
+        .school-logo {
+            width: 65px;
+            height: 65px;
+        }
+
+
+        .school-name {
+            font-size: 21px;
+        }
+
+
+        .school-subtitle {
+            font-size: 10.5px;
+        }
+
+
+        .school-motto {
+            font-size: 10px;
+        }
+
+
+        .school-divider {
+            margin: 14px 0 10px;
+        }
+
+
+        .letter-date {
+            margin-bottom: 10px;
+            font-size: 10.5px;
+        }
+
+
+        .letter-title {
+            margin: 8px 0 15px;
+            font-size: 16px;
+        }
+
+
+        .letter-title::after {
+            width: 55px;
+            height: 2px;
+            margin-top: 6px;
+        }
+
+
+        .letter-body p {
+            margin-bottom: 7px;
+            line-height: 1.42;
+        }
+
+
+        .student-details {
+            margin: 12px 0;
+            padding: 10px 13px 10px 16px;
+            border-radius: 6px;
+        }
+
+
+        .student-details-heading {
+            margin-bottom: 8px;
+            padding-bottom: 6px;
+        }
+
+
+        .student-details-heading-icon {
+            width: 25px;
+            height: 25px;
+            font-size: 0.72rem;
+        }
+
+
+        .student-details-heading h6 {
+            font-size: 0.78rem;
+        }
+
+
+        .student-details p {
+            margin-bottom: 3px !important;
+            line-height: 1.35;
+        }
+
+
+        .student-details p strong {
+            flex-basis: 135px;
+        }
+
+
+        .welcome-note {
+            margin: 11px 0;
+            padding: 9px 12px;
+        }
+
+
+        .signature-section {
+            margin-top: 18px;
+        }
+
 
         .signature-line {
-            width: 210px;
-            border-top: 1px solid #000;
-            margin-top: 28px;
-        }
-
-        .no-print {
-            text-align: center;
-            margin: 20px auto;
-            max-width: 850px;
+            margin-top: 17px;
+            margin-bottom: 5px;
         }
 
 
-        /* ------------------------------------
-           PRINT
-        ------------------------------------ */
-
-        @page {
-            size: A4;
-            margin: 20mm;
+        .letter-footer {
+            display: none;
         }
+    }
 
-        @media print {
+</style>
 
-            html,
-            body {
-                background: white;
-                margin: 0;
-                padding: 0;
-            }
-
-            body {
-                font-size: 12px;
-            }
-
-            .no-print {
-                display: none !important;
-            }
-
-            .letter-container {
-                width: 100%;
-                max-width: none;
-                margin: 0;
-                padding: 10mm 12mm;
-                box-shadow: none;
-            }
-
-            .school-logo {
-                width: 65px;
-                height: 65px;
-            }
-
-            .school-name {
-                font-size: 21px;
-            }
-
-            .school-subtitle {
-                font-size: 12px;
-            }
-
-            .school-motto {
-                font-size: 11px;
-            }
-
-            .letter-title {
-                font-size: 17px;
-                margin: 15px 0 12px;
-            }
-
-            .student-details {
-                padding: 9px 13px;
-                margin: 12px 0;
-            }
-
-            .student-details p {
-                margin-bottom: 3px !important;
-            }
-
-            p {
-                margin-bottom: 7px;
-                line-height: 1.35;
-            }
-
-            .signature-section {
-                margin-top: 22px;
-            }
-
-            .signature-line {
-                margin-top: 20px;
-            }
-
-        }
-
-    </style>
 
 </head>
-
 
 <body>
 
 
-    <!-- Print Controls -->
+<!-- =====================================================
+     SCREEN CONTROLS
+     ===================================================== -->
 
-    <div class="no-print">
+<div class="letter-controls">
 
-        <button
-            onclick="window.print()"
-            class="btn btn-primary"
+    <button
+        type="button"
+        onclick="window.print()"
+        class="letter-control-button letter-control-primary"
+    >
+        <i class="bi bi-printer-fill"></i>
+        Print Admission Letter
+    </button>
+
+
+    <a
+        href="{% url 'admissions:parent_admission_detail' application.id %}"
+        class="letter-control-button letter-control-secondary"
+    >
+        <i class="bi bi-arrow-left"></i>
+        Back to Admission Status
+    </a>
+
+</div>
+
+
+<!-- =====================================================
+     ADMISSION LETTER
+     ===================================================== -->
+
+<main class="letter-container">
+
+
+    <!-- SCHOOL HEADER -->
+
+    <header class="school-header">
+
+        <img
+            src="{% static 'website/images/bmk-logo.png' %}"
+            alt="BMK Academy Logo"
+            class="school-logo"
         >
-            <i class="bi bi-printer"></i>
-            Print Admission Letter
-        </button>
-
-        <a
-            href="{% url 'admissions:parent_admission_detail' application.id %}"
-            class="btn btn-secondary ms-2"
-        >
-            Back
-        </a>
-
-    </div>
 
 
-    <!-- Admission Letter -->
-
-    <div class="letter-container">
-
-
-        <!-- School Header -->
-
-        <div class="text-center">
-
-            <img
-                src="{% static 'website/images/bmk-logo.jpg' %}"
-                alt="BMK Academy Logo"
-                class="school-logo mb-2"
-            >
+        <div class="school-header-content">
 
             <div class="school-name">
                 BMK ACADEMY
@@ -247,29 +760,36 @@
 
         </div>
 
-
-        <hr class="my-3">
-
-
-        <!-- Approval Date -->
-
-        <div class="text-end">
-
-            {{ application.reviewed_at|date:"F d, Y" }}
-
-        </div>
+    </header>
 
 
-        <!-- Title -->
+    <div class="school-divider">
+        <span class="school-divider-mark">
+            ◆
+        </span>
+    </div>
 
-        <div class="letter-title">
-            ADMISSION LETTER
-        </div>
+
+    <!-- DATE -->
+
+    <div class="letter-date">
+        {{ application.reviewed_at|date:"F d, Y" }}
+    </div>
 
 
-        <!-- Greeting -->
+    <!-- TITLE -->
 
-        <p>
+    <div class="letter-title">
+        ADMISSION LETTER
+    </div>
+
+
+    <div class="letter-body">
+
+
+        <!-- GREETING -->
+
+        <p class="letter-greeting">
             Dear
             <strong>
                 {{ application.parent_name }}
@@ -277,7 +797,7 @@
         </p>
 
 
-        <!-- Main Message -->
+        <!-- MAIN MESSAGE -->
 
         <p>
             We are pleased to inform you that your child,
@@ -296,13 +816,21 @@
         </p>
 
 
-        <!-- Student Information -->
+        <!-- STUDENT INFORMATION -->
 
-        <div class="student-details">
+        <section class="student-details">
 
-            <h6 class="fw-bold">
-                Student Information
-            </h6>
+            <div class="student-details-heading">
+
+                <div class="student-details-heading-icon">
+                    <i class="bi bi-person-vcard-fill"></i>
+                </div>
+
+                <h6>
+                    STUDENT INFORMATION
+                </h6>
+
+            </div>
 
 
             <p>
@@ -311,13 +839,15 @@
                     Student Name:
                 </strong>
 
-                {{ application.first_name }}
+                <span>
+                    {{ application.first_name }}
 
-                {% if application.middle_name %}
-                    {{ application.middle_name }}
-                {% endif %}
+                    {% if application.middle_name %}
+                        {{ application.middle_name }}
+                    {% endif %}
 
-                {{ application.last_name }}
+                    {{ application.last_name }}
+                </span>
 
             </p>
 
@@ -330,7 +860,9 @@
                         Admission Number:
                     </strong>
 
-                    {{ application.student.admission_number }}
+                    <span>
+                        {{ application.student.admission_number }}
+                    </span>
 
                 </p>
 
@@ -343,7 +875,9 @@
                     Date of Birth:
                 </strong>
 
-                {{ application.date_of_birth|date:"F d, Y" }}
+                <span>
+                    {{ application.date_of_birth|date:"F d, Y" }}
+                </span>
 
             </p>
 
@@ -354,7 +888,9 @@
                     Gender:
                 </strong>
 
-                {{ application.get_gender_display }}
+                <span>
+                    {{ application.get_gender_display }}
+                </span>
 
             </p>
 
@@ -365,7 +901,9 @@
                     Class:
                 </strong>
 
-                {{ application.desired_class }}
+                <span>
+                    {{ application.desired_class }}
+                </span>
 
             </p>
 
@@ -376,7 +914,9 @@
                     Academic Year:
                 </strong>
 
-                {{ application.academic_year }}
+                <span>
+                    {{ application.academic_year }}
+                </span>
 
             </p>
 
@@ -387,32 +927,40 @@
                     Term:
                 </strong>
 
-                {{ application.term }}
+                <span>
+                    {{ application.term }}
+                </span>
 
+            </p>
+
+        </section>
+
+
+        <!-- WELCOME -->
+
+        <div class="welcome-note">
+
+            <p>
+                We welcome your child to BMK Academy and look forward
+                to working together with you in supporting their
+                educational development.
             </p>
 
         </div>
 
-
-        <!-- Closing Message -->
-
-        <p>
-            We welcome your child to BMK Academy and look forward
-            to working together with you in supporting their
-            educational development.
-        </p>
 
         <p>
             Please keep this letter for your records and present
             it when required by the school.
         </p>
 
+
         <p>
             Congratulations once again.
         </p>
 
 
-        <!-- Signature -->
+        <!-- SIGNATURE -->
 
         <div class="signature-section">
 
@@ -420,20 +968,29 @@
                 Yours faithfully,
             </p>
 
+
             <div class="signature-line"></div>
 
-            <p class="fw-bold mb-0">
+
+            <p class="signature-name mb-0">
                 Head Teacher
             </p>
 
-            <p class="mb-0">
+
+            <p class="signature-role mb-0">
                 BMK Academy
             </p>
 
         </div>
 
 
+        <div class="letter-footer">
+            BMK Academy • Education for Service
+        </div>
+
     </div>
+
+</main>
 
 
 </body>

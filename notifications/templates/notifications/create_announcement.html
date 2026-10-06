@@ -1,144 +1,252 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block title %}
-Create Announcement - BMK Academy
+    Create Announcement - BMK Academy
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'website/css/notification.css' %}">
 {% endblock %}
 
 {% block content %}
 
-<div class="container py-5">
+<div class="notification-page">
 
-    <div class="mb-4">
+    <div class="container py-4 py-lg-5">
 
-        <a
-            href="{% url 'notifications:notification_list' %}"
-            class="text-decoration-none"
-        >
-            <i class="bi bi-arrow-left me-1"></i>
-            Back to Notifications
-        </a>
+        <!-- Page Header -->
+        <div class="notification-page-header mb-4">
 
-        <h2 class="fw-bold mt-3 mb-1">
-            Create Announcement
-        </h2>
+            <a
+                href="{% url 'notifications:notification_list' %}"
+                class="notification-back-link"
+            >
+                <i class="bi bi-arrow-left"></i>
+                Back to Notifications
+            </a>
 
-        <p class="text-muted mb-0">
-            Send an important announcement to members of the school community.
-        </p>
+            <div class="notification-heading mt-3">
 
-    </div>
+                <div class="notification-heading-icon">
+                    <i class="bi bi-megaphone-fill"></i>
+                </div>
+
+                <div>
+                    <span class="notification-eyebrow">
+                        School Communication
+                    </span>
+
+                    <h1 class="notification-page-title">
+                        Create Announcement
+                    </h1>
+
+                    <p class="notification-page-subtitle mb-0">
+                        Send an important message to members of the BMK school community.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
 
 
-    <div class="row justify-content-center">
+        <div class="row justify-content-center">
 
-        <div class="col-lg-8">
+            <div class="col-xl-8 col-lg-9">
 
-            <div class="card border-0 shadow-sm">
+                <!-- Announcement Card -->
+                <div class="announcement-form-card">
 
-                <div class="card-body p-4">
+                    <div class="announcement-form-header">
 
-                    <form method="post">
+                        <div>
+                            <h2>
+                                <i class="bi bi-pencil-square me-2"></i>
+                                Announcement Details
+                            </h2>
 
-                        {% csrf_token %}
+                            <p class="mb-0">
+                                Write your message and select who should receive it.
+                            </p>
+                        </div>
+
+                        <div class="announcement-form-badge">
+                            <i class="bi bi-broadcast"></i>
+                            Admin
+                        </div>
+
+                    </div>
 
 
-                        {% if form.non_field_errors %}
+                    <div class="announcement-form-body">
 
-                            <div class="alert alert-danger">
+                        <form method="post">
 
-                                {% for error in form.non_field_errors %}
-                                    <div>{{ error }}</div>
+                            {% csrf_token %}
+
+
+                            <!-- General Errors -->
+                            {% if form.non_field_errors %}
+
+                                <div class="notification-form-alert">
+
+                                    <div class="notification-alert-icon">
+                                        <i class="bi bi-exclamation-triangle-fill"></i>
+                                    </div>
+
+                                    <div>
+                                        {% for error in form.non_field_errors %}
+                                            <div>{{ error }}</div>
+                                        {% endfor %}
+                                    </div>
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <!-- Title -->
+                            <div class="announcement-field">
+
+                                <label
+                                    for="{{ form.title.id_for_label }}"
+                                    class="announcement-label"
+                                >
+                                    Announcement Title
+                                    <span>*</span>
+                                </label>
+
+                                {{ form.title }}
+
+                                {% for error in form.title.errors %}
+                                    <div class="announcement-error">
+                                        <i class="bi bi-exclamation-circle"></i>
+                                        {{ error }}
+                                    </div>
                                 {% endfor %}
 
                             </div>
 
-                        {% endif %}
 
+                            <!-- Message -->
+                            <div class="announcement-field">
 
-                        <div class="mb-4">
+                                <label
+                                    for="{{ form.message.id_for_label }}"
+                                    class="announcement-label"
+                                >
+                                    Message
+                                    <span>*</span>
+                                </label>
 
-                            <label
-                                for="{{ form.title.id_for_label }}"
-                                class="form-label fw-semibold"
-                            >
-                                Announcement Title
-                            </label>
+                                {{ form.message }}
 
-                            {{ form.title }}
-
-                            {% for error in form.title.errors %}
-                                <div class="text-danger small mt-1">
-                                    {{ error }}
+                                <div class="announcement-help">
+                                    <i class="bi bi-info-circle"></i>
+                                    Keep the message clear and easy for recipients to understand.
                                 </div>
-                            {% endfor %}
 
-                        </div>
+                                {% for error in form.message.errors %}
+                                    <div class="announcement-error">
+                                        <i class="bi bi-exclamation-circle"></i>
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
 
-
-                        <div class="mb-4">
-
-                            <label
-                                for="{{ form.message.id_for_label }}"
-                                class="form-label fw-semibold"
-                            >
-                                Message
-                            </label>
-
-                            {{ form.message }}
-
-                            {% for error in form.message.errors %}
-                                <div class="text-danger small mt-1">
-                                    {{ error }}
-                                </div>
-                            {% endfor %}
-
-                        </div>
-
-
-                        <div class="mb-4">
-
-                            <label
-                                for="{{ form.recipient_group.id_for_label }}"
-                                class="form-label fw-semibold"
-                            >
-                                Send To
-                            </label>
-
-                            {{ form.recipient_group }}
-
-                            <div class="form-text">
-                                Choose which group should receive this announcement.
                             </div>
 
-                            {% for error in form.recipient_group.errors %}
-                                <div class="text-danger small mt-1">
-                                    {{ error }}
+
+                            <!-- Recipient -->
+                            <div class="announcement-field">
+
+                                <label
+                                    for="{{ form.recipient_group.id_for_label }}"
+                                    class="announcement-label"
+                                >
+                                    Send To
+                                    <span>*</span>
+                                </label>
+
+                                {{ form.recipient_group }}
+
+                                <div class="announcement-help">
+                                    <i class="bi bi-people"></i>
+                                    Choose the group that should receive this announcement.
                                 </div>
-                            {% endfor %}
 
-                        </div>
+                                {% for error in form.recipient_group.errors %}
+                                    <div class="announcement-error">
+                                        <i class="bi bi-exclamation-circle"></i>
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+
+                            </div>
 
 
-                        <div class="d-flex justify-content-end gap-2">
+                            <!-- Notice -->
+                            <div class="announcement-notice">
 
-                            <a
-                                href="{% url 'notifications:notification_list' %}"
-                                class="btn btn-outline-secondary"
-                            >
-                                Cancel
-                            </a>
+                                <div class="announcement-notice-icon">
+                                    <i class="bi bi-lightbulb-fill"></i>
+                                </div>
 
-                            <button
-                                type="submit"
-                                class="btn btn-primary"
-                            >
-                                <i class="bi bi-send me-2"></i>
-                                Send Announcement
-                            </button>
+                                <div>
+                                    <strong>Before sending</strong>
 
-                        </div>
+                                    <p class="mb-0">
+                                        Please review the title, message, and recipient group carefully.
+                                        The announcement will be delivered to all active users in the selected group.
+                                    </p>
+                                </div>
 
-                    </form>
+                            </div>
+
+
+                            <!-- Actions -->
+                            <div class="announcement-form-actions">
+
+                                <a
+                                    href="{% url 'notifications:notification_list' %}"
+                                    class="btn announcement-cancel-btn"
+                                >
+                                    <i class="bi bi-x-lg me-2"></i>
+                                    Cancel
+                                </a>
+
+                                <button
+                                    type="submit"
+                                    class="btn announcement-send-btn"
+                                >
+                                    <i class="bi bi-send-fill me-2"></i>
+                                    Send Announcement
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Small Guidance -->
+                <div class="announcement-guidance">
+
+                    <div class="announcement-guidance-icon">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+
+                    <div>
+                        <strong>Admin communication</strong>
+                        <p class="mb-0">
+                            Use announcements for important school-wide information,
+                            reminders, and official communications.
+                        </p>
+                    </div>
 
                 </div>
 
@@ -150,4 +258,4 @@ Create Announcement - BMK Academy
 
 </div>
 
-{% endblock %}
+{% endblock %}21

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 
 {% block title %}
@@ -8,120 +9,209 @@
 {% endblock %}
 
 
-{% block content %}
+{% block extra_css %}
 
-
-<!-- ========================= -->
-<!-- Page Header -->
-<!-- ========================= -->
-
-<div
-    class="d-flex justify-content-between align-items-center mb-4"
+<link
+    rel="stylesheet"
+    href="{% static 'website/css/teacher.css' %}"
 >
 
-    <div>
-
-        <h2 class="mb-1">
-
-            Teachers
-
-        </h2>
-
-        <p class="text-muted mb-0">
-
-            Manage teachers and staff members.
-
-        </p>
-
-    </div>
+{% endblock %}
 
 
-    <a
-        href="{% url 'teachers:create_teacher' %}"
-        class="btn btn-primary"
-    >
+{% block content %}
 
-        Add Teacher
-
-    </a>
-
-</div>
+<div class="teacher-page">
 
 
+    <!-- =================================================
+         TEACHER HERO
+    ================================================== -->
 
-<!-- ========================= -->
-<!-- Teachers Table -->
-<!-- ========================= -->
+    <section class="teacher-hero">
 
-<div class="card shadow-sm">
+        <div class="teacher-hero-content">
 
-    <div class="card-body">
+            <div class="teacher-hero-icon">
+
+                <i class="bi bi-person-workspace"></i>
+
+            </div>
+
+            <div>
+
+                <span class="teacher-hero-eyebrow">
+                    STAFF MANAGEMENT
+                </span>
+
+                <h2>
+                    Teachers
+                </h2>
+
+                <p>
+                    Manage BMK Academy teachers, staff information,
+                    and teaching responsibilities.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <a
+            href="{% url 'teachers:create_teacher' %}"
+            class="teacher-add-btn"
+        >
+
+            <i class="bi bi-person-plus"></i>
+
+            <span>
+                Add Teacher
+            </span>
+
+        </a>
+
+    </section>
+
+
+
+    <!-- =================================================
+         SUMMARY BAR
+    ================================================== -->
+
+    <section class="teacher-summary">
+
+        <div class="teacher-summary-item">
+
+            <div class="teacher-summary-icon">
+
+                <i class="bi bi-people"></i>
+
+            </div>
+
+            <div>
+
+                <span class="teacher-summary-label">
+                    Total Teachers
+                </span>
+
+                <strong class="teacher-summary-value">
+                    {{ teachers|length }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="teacher-summary-divider"></div>
+
+
+        <div class="teacher-summary-note">
+
+            <i class="bi bi-info-circle"></i>
+
+            <span>
+                Select a teacher to view their complete profile,
+                assignments, and class responsibilities.
+            </span>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         TEACHER TABLE CARD
+    ================================================== -->
+
+    <section class="teacher-table-card">
+
+
+        <div class="teacher-table-header">
+
+            <div>
+
+                <h5>
+
+                    <i class="bi bi-person-lines-fill"></i>
+
+                    Teacher Directory
+
+                </h5>
+
+                <p>
+                    All registered teachers at BMK Academy.
+                </p>
+
+            </div>
+
+
+            {% if teachers %}
+
+                <span class="teacher-count-badge">
+
+                    <i class="bi bi-people-fill"></i>
+
+                    {{ teachers|length }}
+
+                    {% if teachers|length == 1 %}
+                        Teacher
+                    {% else %}
+                        Teachers
+                    {% endif %}
+
+                </span>
+
+            {% endif %}
+
+        </div>
+
 
 
         {% if teachers %}
 
-            <div class="table-responsive">
 
-                <table class="table table-hover align-middle mb-0">
+            <!-- =================================================
+                 TABLE
+            ================================================== -->
+
+            <div class="teacher-table-wrapper">
+
+                <table class="teacher-table">
 
 
-                    <thead class="table-light">
+                    <thead>
 
                         <tr>
 
                             <th>
-
-                                Employee ID
-
+                                Employee
                             </th>
 
-
                             <th>
-
-                                Name
-
+                                Teacher
                             </th>
 
-
                             <th>
-
-                                Email
-
+                                Contact
                             </th>
 
-
                             <th>
-
-                                Phone
-
-                            </th>
-
-
-                            <th>
-
                                 Qualification
-
                             </th>
 
-
                             <th>
-
                                 Date Joined
-
                             </th>
 
-
                             <th>
-
                                 Status
-
                             </th>
 
-
-                            <th>
-
+                            <th class="teacher-action-column">
                                 Action
-
                             </th>
 
                         </tr>
@@ -137,57 +227,157 @@
                             <tr>
 
 
+                                <!-- =================================
+                                     EMPLOYEE
+                                ================================== -->
+
                                 <td>
 
-                                    <strong>
+                                    <div class="teacher-employee">
 
-                                        {{ teacher.employee_id }}
+                                        <span class="teacher-employee-icon">
 
-                                    </strong>
+                                            <i class="bi bi-person-badge"></i>
+
+                                        </span>
+
+                                        <div>
+
+                                            <strong>
+                                                {{ teacher.employee_id }}
+                                            </strong>
+
+                                            <span>
+                                                Employee ID
+                                            </span>
+
+                                        </div>
+
+                                    </div>
 
                                 </td>
 
 
+
+                                <!-- =================================
+                                     TEACHER
+                                ================================== -->
+
                                 <td>
 
-                                    {{ teacher.user.get_full_name }}
+                                    <div class="teacher-person">
+
+                                        <div class="teacher-avatar">
+
+                                            {{ teacher.user.first_name|first|upper }}
+
+                                            {% if teacher.user.last_name %}
+                                                {{ teacher.user.last_name|first|upper }}
+                                            {% endif %}
+
+                                        </div>
+
+
+                                        <div class="teacher-person-info">
+
+                                            <strong>
+                                                {{ teacher.user.get_full_name }}
+                                            </strong>
+
+                                            <span>
+                                                {{ teacher.user.email|default:"No email provided" }}
+                                            </span>
+
+                                        </div>
+
+                                    </div>
 
                                 </td>
 
 
+
+                                <!-- =================================
+                                     CONTACT
+                                ================================== -->
+
                                 <td>
 
-                                    {{ teacher.user.email|default:"-" }}
+                                    <div class="teacher-contact">
+
+                                        <div>
+
+                                            <i class="bi bi-envelope"></i>
+
+                                            <span>
+                                                {{ teacher.user.email|default:"-" }}
+                                            </span>
+
+                                        </div>
+
+
+                                        <div>
+
+                                            <i class="bi bi-telephone"></i>
+
+                                            <span>
+                                                {{ teacher.phone|default:"-" }}
+                                            </span>
+
+                                        </div>
+
+                                    </div>
 
                                 </td>
 
 
+
+                                <!-- =================================
+                                     QUALIFICATION
+                                ================================== -->
+
                                 <td>
 
-                                    {{ teacher.phone|default:"-" }}
+                                    <span class="teacher-qualification">
+
+                                        {{ teacher.qualification|default:"Not provided" }}
+
+                                    </span>
 
                                 </td>
 
 
+
+                                <!-- =================================
+                                     DATE JOINED
+                                ================================== -->
+
                                 <td>
 
-                                    {{ teacher.qualification|default:"-" }}
+                                    <div class="teacher-date">
+
+                                        <i class="bi bi-calendar3"></i>
+
+                                        <span>
+                                            {{ teacher.date_joined }}
+                                        </span>
+
+                                    </div>
 
                                 </td>
 
 
-                                <td>
 
-                                    {{ teacher.date_joined }}
-
-                                </td>
-
+                                <!-- =================================
+                                     STATUS
+                                ================================== -->
 
                                 <td>
 
                                     {% if teacher.is_active %}
 
-                                        <span class="badge text-bg-success">
+                                        <span class="teacher-status teacher-status-active">
+
+                                            <span class="teacher-status-dot"></span>
 
                                             Active
 
@@ -195,7 +385,9 @@
 
                                     {% else %}
 
-                                        <span class="badge text-bg-secondary">
+                                        <span class="teacher-status teacher-status-inactive">
+
+                                            <span class="teacher-status-dot"></span>
 
                                             Inactive
 
@@ -206,14 +398,23 @@
                                 </td>
 
 
-                                <td>
+
+                                <!-- =================================
+                                     ACTION
+                                ================================== -->
+
+                                <td class="teacher-action-column">
 
                                     <a
                                         href="{% url 'teachers:teacher_detail' teacher.id %}"
-                                        class="btn btn-sm btn-outline-primary"
+                                        class="teacher-view-btn"
                                     >
 
-                                        View
+                                        <span>
+                                            View Profile
+                                        </span>
+
+                                        <i class="bi bi-arrow-right"></i>
 
                                     </a>
 
@@ -235,34 +436,41 @@
         {% else %}
 
 
-            <!-- Empty State -->
+            <!-- =================================================
+                 EMPTY STATE
+            ================================================== -->
 
-            <div class="text-center py-5">
+            <div class="teacher-empty-state">
 
 
-                <h5>
+                <div class="teacher-empty-icon">
 
+                    <i class="bi bi-people"></i>
+
+                </div>
+
+
+                <h4>
                     No Teachers Found
+                </h4>
 
-                </h5>
 
-
-                <p class="text-muted">
-
-                    Start by adding the first teacher to BMK Academy.
-
+                <p>
+                    There are currently no teachers registered
+                    in BMK Academy.
                 </p>
 
 
                 <a
                     href="{% url 'teachers:create_teacher' %}"
-                    class="btn btn-primary"
+                    class="teacher-empty-btn"
                 >
 
-                    Add Teacher
+                    <i class="bi bi-person-plus"></i>
+
+                    Add First Teacher
 
                 </a>
-
 
             </div>
 
@@ -270,7 +478,8 @@
         {% endif %}
 
 
-    </div>
+    </section>
+
 
 </div>
 

@@ -1,0 +1,4934 @@
+/* =========================================================
+BMK ADMISSIONS — FOUNDATION
+========================================================= */
+
+.bmk-admission-page {
+    background: #ffffff;
+    }
+    
+    /* =========================================================
+    ADMISSION HERO
+    ========================================================= */
+    
+    .bmk-admission-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 90px 0 82px;
+    background:
+    radial-gradient(
+    circle at 85% 15%,
+    rgba(37, 99, 235, 0.24),
+    transparent 31%
+    ),
+    radial-gradient(
+    circle at 12% 90%,
+    rgba(224, 168, 62, 0.15),
+    transparent 30%
+    ),
+    linear-gradient(
+    135deg,
+    #081a2e 0%,
+    #0f2747 55%,
+    #173e6d 100%
+    );
+    }
+    
+    .bmk-admission-hero::before {
+    content: "";
+    position: absolute;
+    width: 430px;
+    height: 430px;
+    top: -220px;
+    right: -130px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    }
+    
+    .bmk-admission-hero::after {
+    content: "";
+    position: absolute;
+    width: 460px;
+    height: 460px;
+    bottom: -285px;
+    left: -190px;
+    border: 1px solid rgba(224, 168, 62, 0.12);
+    border-radius: 50%;
+    }
+    
+    .bmk-admission-hero .container {
+    position: relative;
+    z-index: 1;
+    }
+    
+    .bmk-admission-hero-content {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    }
+    
+    .bmk-admission-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 18px;
+    color: var(--bmk-gold-light);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.17em;
+    text-transform: uppercase;
+    }
+    
+    .bmk-admission-label i {
+    font-size: 0.95rem;
+    }
+    
+    .bmk-admission-hero h1 {
+    max-width: 850px;
+    margin: 0 auto 18px;
+    color: #ffffff;
+    font-size: clamp(2.45rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+    }
+    
+    .bmk-admission-hero h1 span {
+    color: var(--bmk-gold-light);
+    }
+    
+    .bmk-admission-school-name {
+    margin: 0 auto 10px;
+    color: var(--bmk-gold-light);
+    font-size: 1rem;
+    font-weight: 700;
+    }
+    
+    .bmk-admission-hero-text {
+    max-width: 680px;
+    margin: 0 auto;
+    color: rgba(255, 255, 255, 0.74);
+    font-size: 1rem;
+    line-height: 1.8;
+    }
+    
+    .bmk-admission-hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 27px;
+    }
+    
+    .bmk-admission-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 13px;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 999px;
+    color: rgba(255, 255, 255, 0.84);
+    background: rgba(255, 255, 255, 0.07);
+    font-size: 0.76rem;
+    font-weight: 650;
+    backdrop-filter: blur(8px);
+    }
+    
+    .bmk-admission-hero-badge i {
+    color: var(--bmk-gold-light);
+    }
+    
+    /* =========================================================
+    FORM SECTION
+    ========================================================= */
+    
+    .bmk-admission-form-section {
+    position: relative;
+    overflow: hidden;
+    padding: 78px 0 105px;
+    background:
+    radial-gradient(
+    circle at 100% 0%,
+    rgba(29, 78, 216, 0.035),
+    transparent 25%
+    ),
+    linear-gradient(
+    180deg,
+    #f6f8fb 0%,
+    #ffffff 100%
+    );
+    }
+    
+    .bmk-admission-form-section::before {
+    content: "";
+    position: absolute;
+    width: 360px;
+    height: 360px;
+    top: -160px;
+    right: -130px;
+    border-radius: 50%;
+    background: rgba(29, 78, 216, 0.035);
+    pointer-events: none;
+    }
+    
+    .bmk-admission-form-section .container {
+    position: relative;
+    z-index: 1;
+    }
+    
+    .bmk-admission-layout {
+    display: grid;
+    grid-template-columns: 285px minmax(0, 1fr);
+    gap: 28px;
+    align-items: start;
+    }
+    
+    /* =========================================================
+    SIDEBAR
+    ========================================================= */
+    
+    .bmk-admission-sidebar {
+    position: sticky;
+    top: 90px;
+    }
+    
+    .bmk-admission-sidebar-card {
+    padding: 25px;
+    margin-bottom: 18px;
+    border: 1px solid rgba(15, 39, 71, 0.07);
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 15px 40px rgba(15, 35, 55, 0.07);
+    }
+    
+    .bmk-admission-sidebar-icon {
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 17px;
+    border-radius: 13px;
+    color: var(--bmk-blue);
+    background: var(--bmk-light-blue);
+    }
+    
+    .bmk-admission-sidebar-icon i {
+    font-size: 1.15rem;
+    }
+    
+    .bmk-admission-sidebar-card h2 {
+    margin: 0 0 9px;
+    color: var(--bmk-navy);
+    font-size: 1.05rem;
+    font-weight: 800;
+    }
+    
+    .bmk-admission-sidebar-card p {
+    margin: 0;
+    color: var(--bmk-muted);
+    font-size: 0.83rem;
+    line-height: 1.7;
+    }
+    
+    .bmk-admission-check-list {
+    display: grid;
+    gap: 13px;
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid #edf0f4;
+    }
+    
+    .bmk-admission-check-list div {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    color: var(--bmk-text);
+    font-size: 0.79rem;
+    line-height: 1.45;
+    }
+    
+    .bmk-admission-check-list i {
+    flex: 0 0 auto;
+    margin-top: 2px;
+    color: var(--bmk-green);
+    }
+    
+    .bmk-admission-motto-card {
+    text-align: center;
+    background:
+    linear-gradient(
+    145deg,
+    #fffaf0,
+    #ffffff
+    );
+    }
+    
+    .bmk-admission-motto-card > i {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--bmk-gold);
+    font-size: 1.35rem;
+    }
+    
+    .bmk-admission-motto-card span {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--bmk-muted);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    }
+    
+    .bmk-admission-motto-card strong {
+    color: var(--bmk-navy);
+    font-size: 0.94rem;
+    }
+    
+    /* =========================================================
+    FORM CONTAINER
+    ========================================================= */
+    
+    .bmk-admission-form-container {
+    min-width: 0;
+    }
+    
+    .bmk-admission-form-card {
+    overflow: hidden;
+    border: 1px solid rgba(15, 39, 71, 0.07);
+    border-radius: 24px;
+    background: #ffffff;
+    box-shadow: 0 20px 60px rgba(15, 35, 55, 0.10);
+    }
+    
+    /* =========================================================
+    FORM HEADER
+    ========================================================= */
+    
+    .bmk-admission-form-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 28px 34px;
+    border-bottom: 1px solid #edf0f4;
+    background:
+    linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #f8fbff 100%
+    );
+    }
+    
+    .bmk-admission-form-header-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 48px;
+    border-radius: 14px;
+    color: var(--bmk-blue);
+    background: var(--bmk-light-blue);
+    }
+    
+    .bmk-admission-form-header-icon i {
+    font-size: 1.2rem;
+    }
+    
+    .bmk-form-step-label {
+    display: block;
+    margin-bottom: 3px;
+    color: var(--bmk-blue);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    }
+    
+    .bmk-admission-form-header h2 {
+    margin: 0 0 3px;
+    color: var(--bmk-navy);
+    font-size: 1.3rem;
+    font-weight: 800;
+    }
+    
+    .bmk-admission-form-header p {
+    margin: 0;
+    color: var(--bmk-muted);
+    font-size: 0.82rem;
+    }
+    
+    /* =========================================================
+    FORM BODY
+    ========================================================= */
+    
+    .bmk-admission-form-body {
+    padding: 38px 34px 40px;
+    }
+    
+    /* =========================================================
+    FORM ERRORS
+    ========================================================= */
+    
+    .bmk-admission-error {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 15px 17px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(220, 53, 69, 0.16);
+    border-radius: 13px;
+    color: #842029;
+    background: #fff5f5;
+    font-size: 0.84rem;
+    line-height: 1.55;
+    }
+    
+    .bmk-admission-error-icon {
+    flex: 0 0 auto;
+    color: #dc3545;
+    }
+    
+    .bmk-field-error {
+    margin-top: 6px;
+    color: #dc3545;
+    font-size: 0.76rem;
+    line-height: 1.45;
+    }
+    
+    .bmk-field-error ul {
+    padding-left: 18px;
+    margin: 0;
+    }
+    
+    /* =========================================================
+    FORM SECTIONS
+    ========================================================= */
+    
+    .bmk-form-section {
+    padding: 8px 0 39px;
+    margin-bottom: 36px;
+    border-bottom: 1px solid #edf0f4;
+    }
+    
+    .bmk-form-section:last-of-type {
+    margin-bottom: 0;
+    }
+    
+    .bmk-form-section-heading {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+    margin-bottom: 25px;
+    }
+    
+    .bmk-form-section-number {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 34px;
+    border-radius: 10px;
+    color: #ffffff;
+    background: linear-gradient(
+    135deg,
+    var(--bmk-blue),
+    #2563eb
+    );
+    font-size: 0.72rem;
+    font-weight: 800;
+    box-shadow: 0 7px 17px rgba(29, 78, 216, 0.17);
+    }
+    
+    .bmk-form-section-heading h3 {
+    margin: 2px 0 4px;
+    color: var(--bmk-navy);
+    font-size: 1.12rem;
+    font-weight: 800;
+    }
+    
+    .bmk-form-section-heading p {
+    margin: 0;
+    color: var(--bmk-muted);
+    font-size: 0.81rem;
+    line-height: 1.55;
+    }
+    
+    /* =========================================================
+    LABELS
+    ========================================================= */
+    
+    .bmk-form-label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--bmk-navy);
+    font-size: 0.83rem;
+    font-weight: 750;
+    }
+    
+    .bmk-form-label span {
+    color: #dc3545;
+    }
+    
+    /* =========================================================
+    INPUTS
+    ========================================================= */
+    
+    .bmk-admission-form-container .form-control,
+    .bmk-admission-form-container .form-select {
+    min-height: 49px;
+    padding: 10px 14px;
+    border: 1px solid #dce3eb;
+    border-radius: 11px;
+    color: var(--bmk-text);
+    background: #ffffff;
+    font-size: 0.88rem;
+    box-shadow: none;
+    transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease,
+    transform 0.2s ease;
+    }
+    
+    .bmk-admission-form-container .form-control:hover,
+    .bmk-admission-form-container .form-select:hover {
+    border-color: #c7d2df;
+    }
+    
+    .bmk-admission-form-container .form-control:focus,
+    .bmk-admission-form-container .form-select:focus {
+    border-color: var(--bmk-blue);
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(29, 78, 216, 0.09);
+    }
+    
+    .bmk-admission-form-container textarea.form-control {
+    min-height: 115px;
+    resize: vertical;
+    }
+    
+    /* =========================================================
+    EXISTING PARENT INFORMATION
+    ========================================================= */
+    
+    .bmk-existing-parent {
+    padding: 22px;
+    margin-bottom: 23px;
+    border: 1px solid rgba(15, 39, 71, 0.07);
+    border-radius: 17px;
+    background: #f7f9fc;
+    }
+    
+    .bmk-existing-parent-heading {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin-bottom: 21px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e7ebf0;
+    }
+    
+    .bmk-existing-parent-icon {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 38px;
+    border-radius: 10px;
+    color: var(--bmk-green);
+    background: #e9f5ee;
+    }
+    
+    .bmk-existing-parent-heading strong {
+    display: block;
+    color: var(--bmk-navy);
+    font-size: 0.84rem;
+    }
+    
+    .bmk-existing-parent-heading span {
+    display: block;
+    margin-top: 2px;
+    color: var(--bmk-muted);
+    font-size: 0.72rem;
+    }
+    
+    .bmk-information-label {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--bmk-muted);
+    font-size: 0.72rem;
+    }
+    
+    .bmk-information-value {
+    display: block;
+    color: var(--bmk-navy);
+    font-size: 0.86rem;
+    line-height: 1.45;
+    }
+    
+    /* =========================================================
+    AGREEMENT
+    ========================================================= */
+    
+    .bmk-agreement {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+    padding: 18px;
+    margin-top: 27px;
+    margin-bottom: 23px;
+    border: 1px solid rgba(15, 39, 71, 0.08);
+    border-radius: 15px;
+    background: #f8fafc;
+    }
+    
+    .bmk-agreement-icon {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 34px;
+    border-radius: 9px;
+    color: var(--bmk-blue);
+    background: var(--bmk-light-blue);
+    }
+    
+    .bmk-agreement .form-check {
+    min-height: auto;
+    padding-left: 0;
+    }
+    
+    .bmk-agreement .form-check-input {
+    float: none;
+    width: 18px;
+    height: 18px;
+    margin: 2px 8px 0 0;
+    vertical-align: top;
+    }
+    
+    .bmk-agreement .form-check-input:focus {
+    border-color: var(--bmk-blue);
+    box-shadow: 0 0 0 4px rgba(29, 78, 216, 0.09);
+    }
+    
+    .bmk-agreement .form-check-label {
+    color: var(--bmk-muted);
+    font-size: 0.79rem;
+    line-height: 1.65;
+    }
+    
+    /* =========================================================
+    SUBMIT AREA
+    ========================================================= */
+    
+    .bmk-submit-area {
+    text-align: center;
+    }
+    
+    .bmk-submit-button {
+    width: 100%;
+    min-height: 54px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    border: 0;
+    border-radius: 12px;
+    color: #ffffff;
+    background: linear-gradient(
+    135deg,
+    var(--bmk-blue),
+    #2563eb
+    );
+    font-size: 0.91rem;
+    font-weight: 800;
+    box-shadow: 0 10px 25px rgba(29, 78, 216, 0.18);
+    transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    opacity 0.25s ease;
+    }
+    
+    .bmk-submit-button:hover {
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 15px 32px rgba(29, 78, 216, 0.25);
+    }
+    
+    .bmk-submit-button:active {
+    transform: translateY(0);
+    }
+    
+    .bmk-submit-area > p {
+    margin: 11px 0 0;
+    color: var(--bmk-muted);
+    font-size: 0.72rem;
+    }
+    
+    .bmk-submit-area > p i {
+    margin-right: 4px;
+    }
+    
+    /* =========================================================
+    HTMX LOADING
+    ========================================================= */
+    
+    #admission-loading {
+    display: none;
+    }
+    
+    #admission-loading.htmx-request {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    }
+    
+    #submit-application.htmx-request {
+    cursor: wait;
+    opacity: 0.9;
+    }
+    
+    #submit-application.htmx-request .normal-text {
+    display: none;
+    }
+    
+    /* =========================================================
+    MOBILE
+    ========================================================= */
+    
+    @media (max-width: 991.98px) {
+    
+    
+    .bmk-admission-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .bmk-admission-sidebar {
+        position: static;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+    }
+    
+    .bmk-admission-sidebar-card {
+        margin-bottom: 0;
+    }
+    
+    
+    }
+    
+    @media (max-width: 767.98px) {
+    
+    
+    .bmk-admission-hero {
+        padding: 68px 0 65px;
+    }
+    
+    .bmk-admission-hero h1 {
+        font-size: 2.25rem;
+        line-height: 1.12;
+    }
+    
+    .bmk-admission-hero-text {
+        font-size: 0.9rem;
+        line-height: 1.7;
+    }
+    
+    .bmk-admission-school-name {
+        font-size: 0.9rem;
+    }
+    
+    .bmk-admission-hero-badges {
+        display: grid;
+        grid-template-columns: 1fr;
+        max-width: 280px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+    
+    .bmk-admission-hero-badge {
+        justify-content: center;
+    }
+    
+    .bmk-admission-form-section {
+        padding: 50px 0 70px;
+    }
+    
+    .bmk-admission-sidebar {
+        grid-template-columns: 1fr;
+    }
+    
+    .bmk-admission-sidebar-card {
+        padding: 21px;
+    }
+    
+    .bmk-admission-form-card {
+        border-radius: 19px;
+    }
+    
+    .bmk-admission-form-header {
+        align-items: flex-start;
+        padding: 23px 20px;
+    }
+    
+    .bmk-admission-form-header-icon {
+        width: 42px;
+        height: 42px;
+        flex-basis: 42px;
+    }
+    
+    .bmk-admission-form-header h2 {
+        font-size: 1.12rem;
+    }
+    
+    .bmk-admission-form-body {
+        padding: 27px 20px 30px;
+    }
+    
+    .bmk-form-section {
+        padding-bottom: 31px;
+        margin-bottom: 29px;
+    }
+    
+    .bmk-form-section-heading {
+        gap: 10px;
+        margin-bottom: 21px;
+    }
+    
+    .bmk-form-section-number {
+        width: 31px;
+        height: 31px;
+        flex-basis: 31px;
+        font-size: 0.67rem;
+    }
+    
+    .bmk-form-section-heading h3 {
+        font-size: 1rem;
+    }
+    
+    .bmk-form-section-heading p {
+        font-size: 0.76rem;
+    }
+    
+    .bmk-existing-parent {
+        padding: 17px;
+    }
+    
+    .bmk-agreement {
+        padding: 15px;
+        gap: 9px;
+    }
+    
+    .bmk-agreement .form-check-label {
+        font-size: 0.75rem;
+    }
+    
+    .bmk-submit-button {
+        min-height: 52px;
+    }
+    
+    
+    }
+    
+    @media (max-width: 420px) {
+    
+    
+    .bmk-admission-hero h1 {
+        font-size: 2rem;
+    }
+    
+    .bmk-admission-form-header {
+        gap: 11px;
+    }
+    
+    .bmk-admission-form-header-icon {
+        display: none;
+    }
+    
+    .bmk-admission-form-body {
+        padding-right: 16px;
+        padding-left: 16px;
+    }
+    
+    .bmk-existing-parent {
+        padding: 15px;
+    }
+    
+    
+    }
+    
+/* =========================================================
+VISIBILITY FIXES
+========================================================= */
+
+/* ---------------------------------------------------------
+HERO SCHOOL NAME
+--------------------------------------------------------- */
+
+.bmk-admission-school-name {
+    color: #f3d58a !important;
+    font-weight: 700;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+    }
+    
+    /* ---------------------------------------------------------
+    APPLICATION SUBMIT BUTTON
+    --------------------------------------------------------- */
+    
+    .bmk-submit-button {
+    background: #e0a83e !important;
+    color: #0f2747 !important;
+    border: 2px solid #e0a83e !important;
+    font-weight: 800 !important;
+    box-shadow: 0 10px 25px rgba(224, 168, 62, 0.25);
+    }
+    
+    .bmk-submit-button:hover {
+    background: #f3d58a !important;
+    color: #0b1f33 !important;
+    border-color: #f3d58a !important;
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px rgba(224, 168, 62, 0.35);
+    }
+    
+    .bmk-submit-button:focus,
+    .bmk-submit-button:active {
+    background: #e0a83e !important;
+    color: #0f2747 !important;
+    border-color: #e0a83e !important;
+    box-shadow: 0 0 0 4px rgba(224, 168, 62, 0.25) !important;
+    }
+    
+    /* ---------------------------------------------------------
+    BUTTON TEXT AND ICON
+    --------------------------------------------------------- */
+    
+    .bmk-submit-button span,
+    .bmk-submit-button i,
+    .bmk-submit-button svg {
+    color: #0f2747 !important;
+    }
+    
+    /* ---------------------------------------------------------
+    HTMX LOADING STATE
+    --------------------------------------------------------- */
+    
+    .bmk-submit-button.htmx-request {
+    color: #0f2747 !important;
+    }
+    
+    .bmk-submit-button.htmx-request span,
+    .bmk-submit-button.htmx-request i {
+    color: #0f2747 !important;
+    }
+    
+/* =========================================================
+ADMISSION APPLICATION SUCCESS PAGE
+========================================================= */
+
+/* =========================================================
+ADMISSION SUCCESS PARTIAL
+========================================================= */
+
+.bmk-success-card {
+    max-width: 900px;
+    margin: 0 auto;
+    
+    
+    padding: 50px;
+    
+    background: #ffffff;
+    
+    border: 1px solid #e5eaf0;
+    border-radius: 24px;
+    
+    text-align: center;
+    
+    box-shadow: 0 20px 55px rgba(15, 35, 55, 0.10);
+    
+    
+    }
+    
+    /* ---------------------------------------------------------
+    SUCCESS ICON
+    --------------------------------------------------------- */
+    
+    .bmk-success-icon {
+    width: 82px;
+    height: 82px;
+    
+    
+    margin: 0 auto 22px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    border-radius: 50%;
+    
+    background: #e0a83e;
+    
+    color: #0f2747;
+    
+    font-size: 38px;
+    font-weight: 900;
+    
+    box-shadow:
+        0 10px 25px rgba(224, 168, 62, 0.25),
+        0 0 0 9px rgba(224, 168, 62, 0.10);
+    
+    
+    }
+    
+    .bmk-success-label {
+    display: inline-block;
+    
+    
+    margin-bottom: 10px;
+    
+    color: #1d4ed8;
+    
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    
+    
+    }
+    
+    /* ---------------------------------------------------------
+    TITLE
+    --------------------------------------------------------- */
+    
+    .bmk-success-title {
+    margin: 0 0 15px;
+    
+    
+    color: #0f2747;
+    
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    
+    font-weight: 800;
+    
+    
+    }
+    
+    .bmk-success-message {
+    max-width: 650px;
+    
+    
+    margin: 0 auto 35px;
+    
+    color: #64748b;
+    
+    font-size: 1rem;
+    
+    line-height: 1.8;
+    
+    
+    }
+    
+    .bmk-success-message strong {
+    color: #0f2747;
+    }
+    
+    /* ---------------------------------------------------------
+    APPLICATION DETAILS
+    --------------------------------------------------------- */
+    
+    .bmk-success-details {
+    padding: 30px;
+    
+    
+    margin-bottom: 25px;
+    
+    border-radius: 18px;
+    
+    background: #f8fafc;
+    
+    border: 1px solid #e5eaf0;
+    
+    text-align: left;
+    
+    
+    }
+    
+    .bmk-success-details-heading {
+    display: flex;
+    align-items: center;
+    
+    
+    gap: 14px;
+    
+    margin-bottom: 22px;
+    
+    
+    }
+    
+    .bmk-success-number {
+    width: 42px;
+    height: 42px;
+    
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    flex-shrink: 0;
+    
+    border-radius: 12px;
+    
+    background: #eef5ff;
+    
+    color: #1d4ed8;
+    
+    font-size: 0.75rem;
+    font-weight: 800;
+    
+    
+    }
+    
+    .bmk-success-details-heading > div > span {
+    display: block;
+    
+    
+    margin-bottom: 3px;
+    
+    color: #64748b;
+    
+    font-size: 0.68rem;
+    
+    font-weight: 800;
+    
+    letter-spacing: 0.1em;
+    
+    
+    }
+    
+    .bmk-success-details-heading h3 {
+    margin: 0;
+    
+    
+    color: #0f2747;
+    
+    font-size: 1.1rem;
+    
+    font-weight: 800;
+    
+    
+    }
+    
+    /* ---------------------------------------------------------
+    DETAILS GRID
+    --------------------------------------------------------- */
+    
+    .bmk-success-details-grid {
+    display: grid;
+    
+    
+    grid-template-columns: repeat(2, 1fr);
+    
+    gap: 14px;
+    
+    
+    }
+    
+    .bmk-success-detail {
+    padding: 18px;
+    
+    
+    background: #ffffff;
+    
+    border: 1px solid #e5eaf0;
+    
+    border-radius: 14px;
+    
+    
+    }
+    
+    .bmk-success-detail small {
+    display: block;
+    
+    
+    margin-bottom: 5px;
+    
+    color: #64748b;
+    
+    font-size: 0.75rem;
+    
+    font-weight: 700;
+    
+    
+    }
+    
+    .bmk-success-detail strong {
+    display: block;
+    
+    
+    color: #0f2747;
+    
+    font-size: 0.98rem;
+    
+    font-weight: 750;
+    
+    
+    }
+    
+    /* ---------------------------------------------------------
+    WHAT HAPPENS NEXT
+    --------------------------------------------------------- */
+    
+    .bmk-success-next {
+    display: flex;
+    
+    
+    align-items: flex-start;
+    
+    gap: 16px;
+    
+    padding: 25px;
+    
+    margin-bottom: 30px;
+    
+    border-radius: 18px;
+    
+    background: #eef5ff;
+    
+    border: 1px solid #d9e7f8;
+    
+    text-align: left;
+    
+    
+    }
+    
+    .bmk-success-next-icon {
+    width: 46px;
+    height: 46px;
+    
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    flex-shrink: 0;
+    
+    border-radius: 13px;
+    
+    background: #1d4ed8;
+    
+    color: #ffffff;
+    
+    font-size: 1.2rem;
+    
+    font-weight: 800;
+    
+    
+    }
+    
+    .bmk-success-next-label {
+    display: block;
+    
+    
+    margin-bottom: 4px;
+    
+    color: #1d4ed8;
+    
+    font-size: 0.7rem;
+    
+    font-weight: 800;
+    
+    letter-spacing: 0.1em;
+    
+    
+    }
+    
+    .bmk-success-next h3 {
+    margin: 0 0 6px;
+    
+    
+    color: #0f2747;
+    
+    font-size: 1.05rem;
+    
+    font-weight: 800;
+    
+    
+    }
+    
+    .bmk-success-next p {
+    margin: 0;
+    
+    
+    color: #52647a;
+    
+    font-size: 0.92rem;
+    
+    line-height: 1.7;
+    
+    
+    }
+    
+    /* ---------------------------------------------------------
+    BUTTON
+    --------------------------------------------------------- */
+    
+    .bmk-success-action {
+    display: flex;
+    
+    
+    justify-content: center;
+    
+    
+    }
+    
+    .bmk-success-button {
+    display: inline-flex;
+    
+    
+    align-items: center;
+    
+    justify-content: center;
+    
+    gap: 12px;
+    
+    padding: 14px 24px;
+    
+    border-radius: 12px;
+    
+    background: #e0a83e;
+    
+    color: #0f2747 !important;
+    
+    border: 2px solid #e0a83e;
+    
+    font-weight: 800;
+    
+    text-decoration: none;
+    
+    box-shadow: 0 8px 20px rgba(224, 168, 62, 0.22);
+    
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+    
+    
+    }
+    
+    .bmk-success-button:hover {
+    background: #f3d58a;
+    
+    
+    color: #0b1f33 !important;
+    
+    transform: translateY(-2px);
+    
+    box-shadow: 0 12px 25px rgba(224, 168, 62, 0.30);
+    
+    
+    }
+    
+    .bmk-success-button span {
+    color: #0f2747;
+    }
+    
+    /* ---------------------------------------------------------
+    MOBILE
+    --------------------------------------------------------- */
+    
+    @media (max-width: 767px) {
+    
+    
+    .bmk-success-card {
+        padding: 32px 20px;
+    
+        border-radius: 20px;
+    }
+    
+    
+    .bmk-success-title {
+        font-size: 1.8rem;
+    }
+    
+    
+    .bmk-success-details {
+        padding: 22px 18px;
+    }
+    
+    
+    .bmk-success-details-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    
+    .bmk-success-next {
+        flex-direction: column;
+    
+        padding: 20px;
+    }
+    
+    
+    .bmk-success-button {
+        width: 100%;
+    }
+    
+    
+    }
+    
+    @media (max-width: 420px) {
+    
+    
+    .bmk-success-card {
+        padding: 28px 16px;
+    }
+    
+    
+    .bmk-success-icon {
+        width: 70px;
+        height: 70px;
+    
+        font-size: 32px;
+    }
+    
+    
+    .bmk-success-title {
+        font-size: 1.6rem;
+    }
+    
+    
+    }
+/* =========================================================
+ADMIN ADMISSION APPLICATION LIST
+========================================================= */
+
+.bmk-admissions-list-page {
+    padding: 30px 0 60px;
+    }
+    
+    /* ---------------------------------------------------------
+    PAGE HEADER
+    --------------------------------------------------------- */
+    
+    .bmk-admissions-list-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    
+    
+    margin-bottom: 30px;
+    
+    
+    }
+    
+    .bmk-page-eyebrow {
+    display: block;
+    
+    
+    margin-bottom: 7px;
+    
+    color: #1d4ed8;
+    
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    
+    
+    }
+    
+    .bmk-admissions-list-header h1 {
+    margin: 0 0 7px;
+    
+    
+    color: #0f2747;
+    
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    
+    font-weight: 800;
+    
+    
+    }
+    
+    .bmk-admissions-list-header p {
+    margin: 0;
+    
+    
+    color: #64748b;
+    
+    font-size: 0.95rem;
+    
+    
+    }
+    
+    /* ---------------------------------------------------------
+    NEW APPLICATION BUTTON
+    --------------------------------------------------------- */
+    
+    .bmk-admissions-new-button {
+    display: inline-flex;
+    
+    
+    align-items: center;
+    justify-content: center;
+    
+    gap: 9px;
+    
+    padding: 13px 20px;
+    
+    border-radius: 12px;
+    
+    background: #e0a83e;
+    
+    color: #0f2747 !important;
+    
+    font-weight: 800;
+    
+    text-decoration: none;
+    
+    box-shadow: 0 8px 20px rgba(224, 168, 62, 0.20);
+    
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+    
+    
+    }
+    
+    .bmk-admissions-new-button:hover {
+    background: #f3d58a;
+    
+    
+    transform: translateY(-2px);
+    
+    box-shadow: 0 12px 25px rgba(224, 168, 62, 0.28);
+    
+    
+    }
+    
+    /* ---------------------------------------------------------
+    TABLE CARD
+    --------------------------------------------------------- */
+    
+    .bmk-admissions-table-card {
+    overflow: hidden;
+    
+    
+    background: #ffffff;
+    
+    border: 1px solid #e5eaf0;
+    
+    border-radius: 20px;
+    
+    box-shadow: 0 15px 45px rgba(15, 35, 55, 0.08);
+    
+    
+    }
+    
+    /* ---------------------------------------------------------
+    TABLE HEADER
+    --------------------------------------------------------- */
+    
+    .bmk-admissions-table-header {
+    display: flex;
+    
+    
+    align-items: center;
+    justify-content: space-between;
+    
+    gap: 20px;
+    
+    padding: 25px 28px;
+    
+    border-bottom: 1px solid #e8edf3;
+    
+    
+    }
+    
+    .bmk-table-eyebrow {
+    display: block;
+    
+    
+    margin-bottom: 5px;
+    
+    color: #64748b;
+    
+    font-size: 0.68rem;
+    font-weight: 800;
+    
+    letter-spacing: 0.1em;
+    
+    
+    }
+    
+    .bmk-admissions-table-header h2 {
+    margin: 0;
+    
+    
+    color: #0f2747;
+    
+    font-size: 1.2rem;
+    
+    font-weight: 800;
+    
+    
+    }
+    
+    /* ---------------------------------------------------------
+    APPLICATION COUNT
+    --------------------------------------------------------- */
+    
+    .bmk-application-count {
+    display: flex;
+    
+    
+    align-items: center;
+    
+    gap: 7px;
+    
+    padding: 9px 13px;
+    
+    border-radius: 10px;
+    
+    background: #eef5ff;
+    
+    color: #1d4ed8;
+    
+    
+    }
+    
+    .bmk-application-count i {
+    font-size: 0.9rem;
+    }
+    
+    .bmk-application-count span {
+    font-weight: 800;
+    }
+    
+    .bmk-application-count small {
+    color: #52647a;
+    
+    
+    font-size: 0.76rem;
+    
+    
+    }
+    
+    /* ---------------------------------------------------------
+    TABLE
+    --------------------------------------------------------- */
+    
+    .bmk-admissions-table-wrapper {
+    overflow-x: auto;
+    }
+    
+    .bmk-admissions-table {
+    width: 100%;
+    
+    
+    min-width: 1050px;
+    
+    border-collapse: collapse;
+    
+    
+    }
+    
+    .bmk-admissions-table thead {
+    background: #f8fafc;
+    }
+    
+    .bmk-admissions-table th {
+    padding: 15px 18px;
+    
+    
+    border-bottom: 1px solid #e5eaf0;
+    
+    color: #64748b;
+    
+    font-size: 0.68rem;
+    
+    font-weight: 800;
+    
+    letter-spacing: 0.06em;
+    
+    text-transform: uppercase;
+    
+    white-space: nowrap;
+    
+    
+    }
+    
+    .bmk-admissions-table th:first-child,
+    .bmk-admissions-table td:first-child {
+    padding-left: 28px;
+    }
+    
+    .bmk-admissions-table th:last-child,
+    .bmk-admissions-table td:last-child {
+    padding-right: 28px;
+    }
+    
+    .bmk-admissions-table tbody tr {
+    border-bottom: 1px solid #edf0f4;
+    
+    
+    transition:
+        background-color 0.2s ease;
+    
+    
+    }
+    
+    .bmk-admissions-table tbody tr:last-child {
+    border-bottom: none;
+    }
+    
+    .bmk-admissions-table tbody tr:hover {
+    background: #fbfcfe;
+    }
+    
+    .bmk-admissions-table td {
+    padding: 18px;
+    
+    
+    color: #334155;
+    
+    font-size: 0.88rem;
+    
+    white-space: nowrap;
+    
+    
+    }
+    
+    /* ---------------------------------------------------------
+    APPLICANT
+    --------------------------------------------------------- */
+    
+    .bmk-applicant {
+    display: flex;
+    
+    
+    align-items: center;
+    
+    gap: 12px;
+    
+    
+    }
+    
+    .bmk-applicant-avatar {
+    width: 40px;
+    height: 40px;
+    
+    
+    display: flex;
+    
+    align-items: center;
+    justify-content: center;
+    
+    flex-shrink: 0;
+    
+    border-radius: 12px;
+    
+    background: #eef5ff;
+    
+    color: #1d4ed8;
+    
+    font-size: 0.85rem;
+    
+    font-weight: 800;
+    
+    
+    }
+    
+    .bmk-applicant strong {
+    display: block;
+    
+    
+    margin-bottom: 2px;
+    
+    color: #0f2747;
+    
+    font-size: 0.88rem;
+    
+    font-weight: 750;
+    
+    
+    }
+    
+    .bmk-applicant small {
+    display: block;
+    
+    
+    color: #64748b;
+    
+    font-size: 0.75rem;
+    
+    
+    }
+    
+    /* ---------------------------------------------------------
+    CLASS
+    --------------------------------------------------------- */
+    
+    .bmk-class-name {
+    color: #0f2747;
+    
+    
+    font-weight: 700;
+    
+    
+    }
+    
+    /* ---------------------------------------------------------
+    APPLICATION STATUS
+    --------------------------------------------------------- */
+    
+    .bmk-status {
+    display: inline-flex;
+    
+    
+    align-items: center;
+    
+    gap: 7px;
+    
+    padding: 6px 10px;
+    
+    border-radius: 999px;
+    
+    font-size: 0.72rem;
+    
+    font-weight: 800;
+    
+    
+    }
+    
+    .bmk-status-dot {
+    width: 6px;
+    height: 6px;
+    
+    
+    border-radius: 50%;
+    
+    background: currentColor;
+    
+    
+    }
+    
+    .bmk-status-pending {
+    background: #fff6db;
+    color: #9a6700;
+    }
+    
+    .bmk-status-approved {
+    background: #e8f7ee;
+    color: #18794e;
+    }
+    
+    .bmk-status-rejected {
+    background: #fdecec;
+    color: #b42318;
+    }
+    
+    /* ---------------------------------------------------------
+    EMAIL STATUS
+    --------------------------------------------------------- */
+    
+    .bmk-email-status {
+    display: inline-flex;
+    
+    
+    align-items: center;
+    
+    gap: 5px;
+    
+    font-size: 0.75rem;
+    
+    font-weight: 700;
+    
+    
+    }
+    
+    .bmk-email-pending {
+    color: #94a3b8;
+    }
+    
+    .bmk-email-sent {
+    color: #18794e;
+    }
+    
+    .bmk-email-failed {
+    color: #b42318;
+    }
+    
+    .bmk-email-not-sent {
+    color: #9a6700;
+    }
+    
+    /* ---------------------------------------------------------
+    SUBMITTED DATE
+    --------------------------------------------------------- */
+    
+    .bmk-submitted-date {
+    color: #64748b;
+    
+    
+    font-size: 0.8rem;
+    
+    
+    }
+    
+    /* ---------------------------------------------------------
+    VIEW BUTTON
+    --------------------------------------------------------- */
+    
+    .bmk-view-button {
+    display: inline-flex;
+    
+    
+    align-items: center;
+    
+    justify-content: center;
+    
+    gap: 7px;
+    
+    padding: 8px 13px;
+    
+    border-radius: 9px;
+    
+    background: #eef5ff;
+    
+    color: #1d4ed8 !important;
+    
+    border: 1px solid #dbe8f8;
+    
+    font-size: 0.78rem;
+    
+    font-weight: 800;
+    
+    text-decoration: none;
+    
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+    
+    
+    }
+    
+    .bmk-view-button:hover {
+    background: #1d4ed8;
+    
+    
+    color: #ffffff !important;
+    
+    border-color: #1d4ed8;
+    
+    transform: translateY(-1px);
+    
+    box-shadow: 0 6px 15px rgba(29, 78, 216, 0.18);
+    
+    
+    }
+    
+    /* ---------------------------------------------------------
+    EMPTY STATE
+    --------------------------------------------------------- */
+    
+    .bmk-admissions-empty {
+    padding: 75px 30px;
+    
+    
+    text-align: center;
+    
+    
+    }
+    
+    .bmk-empty-icon {
+    width: 76px;
+    height: 76px;
+    
+    
+    margin: 0 auto 20px;
+    
+    display: flex;
+    
+    align-items: center;
+    justify-content: center;
+    
+    border-radius: 20px;
+    
+    background: #eef5ff;
+    
+    color: #1d4ed8;
+    
+    font-size: 2rem;
+    
+    
+    }
+    
+    .bmk-admissions-empty h3 {
+    margin: 0 0 8px;
+    
+    
+    color: #0f2747;
+    
+    font-size: 1.2rem;
+    
+    font-weight: 800;
+    
+    
+    }
+    
+    .bmk-admissions-empty p {
+    margin: 0 0 25px;
+    
+    
+    color: #64748b;
+    
+    
+    }
+    
+    .bmk-empty-button {
+    display: inline-flex;
+    
+    
+    align-items: center;
+    
+    gap: 8px;
+    
+    padding: 11px 18px;
+    
+    border-radius: 10px;
+    
+    background: #e0a83e;
+    
+    color: #0f2747 !important;
+    
+    font-size: 0.85rem;
+    
+    font-weight: 800;
+    
+    text-decoration: none;
+    
+    
+    }
+    
+    .bmk-empty-button:hover {
+    background: #f3d58a;
+    }
+    
+    /* ---------------------------------------------------------
+    RESPONSIVE
+    --------------------------------------------------------- */
+    
+    @media (max-width: 767px) {
+    
+    
+    .bmk-admissions-list-page {
+        padding: 22px 0 45px;
+    }
+    
+    
+    .bmk-admissions-list-header {
+        align-items: flex-start;
+    
+        flex-direction: column;
+    }
+    
+    
+    .bmk-admissions-new-button {
+        width: 100%;
+    }
+    
+    
+    .bmk-admissions-table-header {
+        align-items: flex-start;
+    
+        flex-direction: column;
+    
+        padding: 22px;
+    }
+    
+    
+    .bmk-application-count {
+        width: 100%;
+    }
+    
+    
+    .bmk-admissions-table th:first-child,
+    .bmk-admissions-table td:first-child {
+        padding-left: 20px;
+    }
+    
+    
+    .bmk-admissions-table th:last-child,
+    .bmk-admissions-table td:last-child {
+        padding-right: 20px;
+    }
+    
+    
+    }
+
+/* =========================================================
+ADMIN ADMISSION APPLICATION DETAIL
+========================================================= */
+
+.bmk-admission-detail-page {
+    padding: 30px 0 60px;
+    }
+    
+    /* ---------------------------------------------------------
+    HEADER
+    --------------------------------------------------------- */
+    
+    .bmk-admission-detail-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    
+    
+    gap: 25px;
+    
+    margin-bottom: 30px;
+    
+    
+    }
+    
+    .bmk-admission-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    
+    
+    margin-bottom: 16px;
+    
+    color: #1d4ed8 !important;
+    
+    font-size: 0.85rem;
+    font-weight: 700;
+    
+    text-decoration: none;
+    
+    
+    }
+    
+    .bmk-admission-back:hover {
+    color: #0f2747 !important;
+    }
+    
+    .bmk-admission-detail-header h1 {
+    margin: 5px 0 7px;
+    
+    
+    color: #0f2747;
+    
+    font-size: clamp(1.8rem, 4vw, 2.35rem);
+    
+    font-weight: 800;
+    
+    
+    }
+    
+    .bmk-admission-detail-header p {
+    margin: 0;
+    
+    
+    color: #64748b;
+    
+    font-size: 0.95rem;
+    
+    
+    }
+    
+    .bmk-detail-status {
+    flex-shrink: 0;
+    }
+    
+    /* ---------------------------------------------------------
+    MAIN GRID
+    --------------------------------------------------------- */
+    
+    .bmk-admission-detail-grid {
+    display: grid;
+    
+    
+    grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.85fr);
+    
+    gap: 24px;
+    
+    align-items: start;
+    
+    
+    }
+    
+    .bmk-detail-main,
+    .bmk-detail-sidebar {
+    display: flex;
+    
+    
+    flex-direction: column;
+    
+    gap: 24px;
+    
+    
+    }
+    
+    /* ---------------------------------------------------------
+    CARD
+    --------------------------------------------------------- */
+    
+    .bmk-detail-card {
+    padding: 28px;
+    
+    
+    background: #ffffff;
+    
+    border: 1px solid #e5eaf0;
+    
+    border-radius: 20px;
+    
+    box-shadow: 0 12px 35px rgba(15, 35, 55, 0.07);
+    
+    
+    }
+    
+    .bmk-detail-card-header {
+    display: flex;
+    
+    
+    align-items: center;
+    
+    gap: 14px;
+    
+    margin-bottom: 28px;
+    
+    
+    }
+    
+    .bmk-detail-card-icon {
+    width: 46px;
+    height: 46px;
+    
+    
+    display: flex;
+    
+    align-items: center;
+    justify-content: center;
+    
+    flex-shrink: 0;
+    
+    border-radius: 13px;
+    
+    font-size: 1.1rem;
+    
+    
+    }
+    
+    .bmk-icon-blue {
+    background: #eef5ff;
+    color: #1d4ed8;
+    }
+    
+    .bmk-icon-gold {
+    background: #fff6df;
+    color: #a66b00;
+    }
+    
+    .bmk-icon-green {
+    background: #e9f7ef;
+    color: #18794e;
+    }
+    
+    .bmk-icon-red {
+    background: #fdecec;
+    color: #b42318;
+    }
+    
+    .bmk-icon-purple {
+    background: #f2edff;
+    color: #6d45b8;
+    }
+    
+    .bmk-detail-card-header > div:last-child > span {
+    display: block;
+    
+    
+    margin-bottom: 3px;
+    
+    color: #64748b;
+    
+    font-size: 0.68rem;
+    
+    font-weight: 800;
+    
+    letter-spacing: 0.1em;
+    
+    
+    }
+    
+    .bmk-detail-card-header h2 {
+    margin: 0;
+    
+    
+    color: #0f2747;
+    
+    font-size: 1.15rem;
+    
+    font-weight: 800;
+    
+    
+    }
+    
+    /* ---------------------------------------------------------
+    DETAIL FIELDS
+    --------------------------------------------------------- */
+    
+    .bmk-detail-fields {
+    display: grid;
+    
+    
+    grid-template-columns: repeat(2, 1fr);
+    
+    gap: 18px;
+    
+    
+    }
+    
+    .bmk-detail-field {
+    padding: 17px;
+    
+    
+    border-radius: 13px;
+    
+    background: #f8fafc;
+    
+    border: 1px solid #e7ebf0;
+    
+    
+    }
+    
+    .bmk-detail-field-full {
+    grid-column: 1 / -1;
+    }
+    
+    .bmk-detail-field small {
+    display: block;
+    
+    
+    margin-bottom: 6px;
+    
+    color: #64748b;
+    
+    font-size: 0.72rem;
+    
+    font-weight: 700;
+    
+    
+    }
+    
+    .bmk-detail-field strong {
+    display: block;
+    
+    
+    color: #0f2747;
+    
+    font-size: 0.9rem;
+    
+    font-weight: 750;
+    
+    line-height: 1.5;
+    
+    word-break: break-word;
+    
+    
+    }
+    
+    /* ---------------------------------------------------------
+    SUMMARY
+    --------------------------------------------------------- */
+    
+    .bmk-summary-list {
+    display: flex;
+    
+    
+    flex-direction: column;
+    
+    
+    }
+    
+    .bmk-summary-item {
+    display: flex;
+    
+    
+    align-items: center;
+    
+    justify-content: space-between;
+    
+    gap: 15px;
+    
+    padding: 15px 0;
+    
+    border-bottom: 1px solid #edf0f4;
+    
+    
+    }
+    
+    .bmk-summary-item:first-child {
+    padding-top: 0;
+    }
+    
+    .bmk-summary-item:last-child {
+    padding-bottom: 0;
+    
+    
+    border-bottom: none;
+    
+    
+    }
+    
+    .bmk-summary-item span {
+    color: #64748b;
+    
+    
+    font-size: 0.78rem;
+    
+    
+    }
+    
+    .bmk-summary-item strong {
+    color: #0f2747;
+    
+    
+    font-size: 0.84rem;
+    
+    font-weight: 750;
+    
+    text-align: right;
+    
+    
+    }
+    
+    /* ---------------------------------------------------------
+    REMARKS
+    --------------------------------------------------------- */
+    
+    .bmk-detail-remarks {
+    margin-top: 24px;
+    
+    
+    padding: 18px;
+    
+    border-radius: 14px;
+    
+    background: #f8fafc;
+    
+    border: 1px solid #e5eaf0;
+    
+    
+    }
+    
+    .bmk-detail-remarks small {
+    display: block;
+    
+    
+    margin-bottom: 8px;
+    
+    color: #64748b;
+    
+    font-size: 0.68rem;
+    
+    font-weight: 800;
+    
+    letter-spacing: 0.1em;
+    
+    
+    }
+    
+    .bmk-detail-remarks p {
+    margin: 0;
+    
+    
+    color: #334155;
+    
+    font-size: 0.88rem;
+    
+    line-height: 1.7;
+    
+    
+    }
+    
+    /* ---------------------------------------------------------
+    ACTION CARD
+    --------------------------------------------------------- */
+    
+    .bmk-action-card {
+    position: relative;
+    }
+    
+    .bmk-action-description {
+    margin: -8px 0 22px;
+    
+    
+    color: #64748b;
+    
+    font-size: 0.85rem;
+    
+    line-height: 1.65;
+    
+    
+    }
+    
+    .bmk-action-buttons {
+    display: flex;
+    
+    
+    flex-direction: column;
+    
+    gap: 10px;
+    
+    
+    }
+    
+    .bmk-action-buttons form {
+    width: 100%;
+    }
+    
+    .bmk-action-button {
+    width: 100%;
+    
+    
+    display: flex;
+    
+    align-items: center;
+    
+    justify-content: center;
+    
+    gap: 9px;
+    
+    padding: 12px 16px;
+    
+    border-radius: 11px;
+    
+    font-size: 0.84rem;
+    
+    font-weight: 800;
+    
+    cursor: pointer;
+    
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+    
+    
+    }
+    
+    /* APPROVE */
+    
+    .bmk-approve-button {
+    background: #18794e;
+    
+    
+    color: #ffffff;
+    
+    border: 2px solid #18794e;
+    
+    
+    }
+    
+    .bmk-approve-button:hover {
+    background: #12633f;
+    
+    
+    border-color: #12633f;
+    
+    color: #ffffff;
+    
+    transform: translateY(-1px);
+    
+    box-shadow: 0 8px 18px rgba(24, 121, 78, 0.2);
+    
+    
+    }
+    
+    /* REJECT */
+    
+    .bmk-reject-button {
+    background: #ffffff;
+    
+    
+    color: #b42318;
+    
+    border: 2px solid #f0b5b0;
+    
+    
+    }
+    
+    .bmk-reject-button:hover {
+    background: #fdecec;
+    
+    
+    border-color: #b42318;
+    
+    transform: translateY(-1px);
+    
+    
+    }
+    
+    /* EMAIL */
+    
+    .bmk-email-button {
+    background: #eef5ff;
+    
+    
+    color: #1d4ed8;
+    
+    border: 2px solid #dbe8f8;
+    
+    
+    }
+    
+    .bmk-email-button:hover {
+    background: #1d4ed8;
+    
+    
+    color: #ffffff;
+    
+    border-color: #1d4ed8;
+    
+    
+    }
+    
+    /* REGENERATE */
+    
+    .bmk-regenerate-button {
+    background: #fff8e7;
+    
+    
+    color: #946200;
+    
+    border: 2px solid #f1d58a;
+    
+    
+    }
+    
+    .bmk-regenerate-button:hover {
+    background: #e0a83e;
+    
+    
+    color: #0f2747;
+    
+    border-color: #e0a83e;
+    
+    
+    }
+    
+    /* ---------------------------------------------------------
+    ACTION SUCCESS / DANGER
+    --------------------------------------------------------- */
+    
+    .bmk-action-success,
+    .bmk-action-danger {
+    display: flex;
+    
+    
+    align-items: flex-start;
+    
+    gap: 12px;
+    
+    padding: 17px;
+    
+    border-radius: 14px;
+    
+    
+    }
+    
+    .bmk-action-success {
+    background: #e9f7ef;
+    
+    
+    color: #18794e;
+    
+    border: 1px solid #ccebd9;
+    
+    
+    }
+    
+    .bmk-action-danger {
+    background: #fdecec;
+    
+    
+    color: #b42318;
+    
+    border: 1px solid #f2caca;
+    
+    
+    }
+    
+    .bmk-action-success > i,
+    .bmk-action-danger > i {
+    margin-top: 2px;
+    
+    
+    font-size: 1rem;
+    
+    
+    }
+    
+    .bmk-action-success strong {
+    display: block;
+    
+    
+    margin-bottom: 4px;
+    
+    color: #146c45;
+    
+    font-size: 0.85rem;
+    
+    
+    }
+    
+    .bmk-action-success p {
+    margin: 0;
+    
+    
+    color: #47745f;
+    
+    font-size: 0.78rem;
+    
+    line-height: 1.6;
+    
+    
+    }
+    
+    .bmk-action-danger span {
+    color: #8f2119;
+    
+    
+    font-size: 0.84rem;
+    
+    font-weight: 700;
+    
+    line-height: 1.5;
+    
+    
+    }
+    
+    /* ---------------------------------------------------------
+    ACTION NOTE
+    --------------------------------------------------------- */
+    
+    .bmk-action-note {
+    display: flex;
+    
+    
+    align-items: flex-start;
+    
+    gap: 8px;
+    
+    margin-top: 15px;
+    
+    padding: 12px;
+    
+    border-radius: 10px;
+    
+    background: #f8fafc;
+    
+    color: #64748b;
+    
+    font-size: 0.73rem;
+    
+    line-height: 1.55;
+    
+    
+    }
+    
+    .bmk-action-note i {
+    color: #1d4ed8;
+    
+    
+    margin-top: 2px;
+    
+    
+    }
+    
+    /* ---------------------------------------------------------
+    EMAIL DETAILS
+    --------------------------------------------------------- */
+    
+    .bmk-email-details {
+    display: flex;
+    
+    
+    flex-direction: column;
+    
+    gap: 0;
+    
+    
+    }
+    
+    .bmk-email-status-row {
+    display: flex;
+    
+    
+    align-items: center;
+    
+    justify-content: space-between;
+    
+    gap: 15px;
+    
+    padding: 13px 0;
+    
+    border-bottom: 1px solid #edf0f4;
+    
+    
+    }
+    
+    .bmk-email-status-row:first-child {
+    padding-top: 0;
+    }
+    
+    .bmk-email-status-row:last-child {
+    padding-bottom: 0;
+    
+    
+    border-bottom: none;
+    
+    
+    }
+    
+    .bmk-email-status-row > span:first-child {
+    color: #64748b;
+    
+    
+    font-size: 0.76rem;
+    
+    font-weight: 600;
+    
+    
+    }
+    
+    .bmk-email-status-row strong {
+    color: #0f2747;
+    
+    
+    font-size: 0.78rem;
+    
+    text-align: right;
+    
+    
+    }
+    
+    /* ---------------------------------------------------------
+    EMAIL ERROR
+    --------------------------------------------------------- */
+    
+    .bmk-email-error {
+    margin-top: 22px;
+    
+    
+    padding: 17px;
+    
+    border-radius: 14px;
+    
+    background: #fdecec;
+    
+    border: 1px solid #f2caca;
+    
+    
+    }
+    
+    .bmk-email-error-title {
+    display: flex;
+    
+    
+    align-items: flex-start;
+    
+    gap: 8px;
+    
+    color: #b42318;
+    
+    font-size: 0.8rem;
+    
+    
+    }
+    
+    .bmk-email-error-title i {
+    margin-top: 2px;
+    }
+    
+    .bmk-email-error > p {
+    margin: 10px 0 15px;
+    
+    
+    color: #8f2119;
+    
+    font-size: 0.76rem;
+    
+    line-height: 1.65;
+    
+    
+    }
+    
+    .bmk-email-error-technical {
+    padding-top: 13px;
+    
+    
+    border-top: 1px solid #efc7c3;
+    
+    
+    }
+    
+    .bmk-email-error-technical > span {
+    display: block;
+    
+    
+    margin-bottom: 5px;
+    
+    color: #8f2119;
+    
+    font-size: 0.68rem;
+    
+    font-weight: 800;
+    
+    text-transform: uppercase;
+    
+    letter-spacing: 0.06em;
+    
+    
+    }
+    
+    .bmk-email-error-technical p {
+    margin: 0;
+    
+    
+    color: #8f2119;
+    
+    font-size: 0.73rem;
+    
+    line-height: 1.6;
+    
+    word-break: break-word;
+    
+    
+    }
+    
+    /* ---------------------------------------------------------
+    RESPONSIVE
+    --------------------------------------------------------- */
+    
+    @media (max-width: 991px) {
+    
+    
+    .bmk-admission-detail-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    
+    .bmk-detail-sidebar {
+        display: grid;
+    
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    
+        align-items: start;
+    }
+    
+    
+    }
+    
+    @media (max-width: 767px) {
+    
+    
+    .bmk-admission-detail-page {
+        padding: 22px 0 45px;
+    }
+    
+    
+    .bmk-admission-detail-header {
+        align-items: flex-start;
+    
+        flex-direction: column;
+    }
+    
+    
+    .bmk-detail-status {
+        align-self: flex-start;
+    }
+    
+    
+    .bmk-detail-sidebar {
+        display: flex;
+    }
+    
+    
+    .bmk-detail-card {
+        padding: 22px 18px;
+    
+        border-radius: 17px;
+    }
+    
+    
+    .bmk-detail-fields {
+        grid-template-columns: 1fr;
+    }
+    
+    
+    .bmk-detail-field-full {
+        grid-column: auto;
+    }
+    
+    
+    .bmk-summary-item {
+        align-items: flex-start;
+    
+        flex-direction: column;
+    
+        gap: 4px;
+    }
+    
+    
+    .bmk-summary-item strong {
+        text-align: left;
+    }
+    
+    
+    }
+    
+/* =========================================================
+PARENT ADMISSION STATUS
+========================================================= */
+
+.bmk-parent-admission-page {
+    min-height: 100vh;
+    background: #f6f8fb;
+    }
+    
+    /* =========================================================
+    HEADER
+    ========================================================= */
+    
+    .bmk-parent-admission-header {
+    position: relative;
+    overflow: hidden;
+    background:
+    linear-gradient(
+    135deg,
+    #0f2747 0%,
+    #12345b 55%,
+    #174b70 100%
+    );
+    color: #ffffff;
+    padding: 42px 24px 48px;
+    }
+    
+    .bmk-parent-admission-header::after {
+    content: "";
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    right: -110px;
+    top: -170px;
+    border-radius: 50%;
+    background: rgba(224, 168, 62, 0.13);
+    }
+    
+    .bmk-parent-admission-header-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 1180px;
+    margin: 0 auto;
+    }
+    
+    .bmk-parent-admission-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255, 255, 255, 0.78);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 30px;
+    transition: color 0.2s ease, transform 0.2s ease;
+    }
+    
+    .bmk-parent-admission-back:hover {
+    color: #f3d58a;
+    transform: translateX(-3px);
+    }
+    
+    .bmk-parent-admission-heading {
+    max-width: 760px;
+    }
+    
+    .bmk-parent-admission-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #f3d58a;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    margin-bottom: 10px;
+    }
+    
+    .bmk-parent-admission-heading h1 {
+    margin: 0;
+    color: #ffffff;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.1;
+    font-weight: 800;
+    }
+    
+    .bmk-parent-admission-heading p {
+    margin: 14px 0 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 1rem;
+    }
+    
+    /* =========================================================
+    CONTENT
+    ========================================================= */
+    
+    .bmk-parent-admission-content {
+    padding: 42px 24px 70px;
+    }
+    
+    .bmk-parent-admission-grid {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(320px, 0.9fr);
+    gap: 28px;
+    align-items: start;
+    }
+    
+    .bmk-parent-admission-main,
+    .bmk-parent-admission-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    }
+    
+    /* =========================================================
+    CARDS
+    ========================================================= */
+    
+    .bmk-parent-admission-card {
+    background: #ffffff;
+    border: 1px solid #e5eaf0;
+    border-radius: 22px;
+    box-shadow: 0 15px 45px rgba(15, 35, 55, 0.07);
+    padding: 28px;
+    }
+    
+    .bmk-parent-admission-card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+    }
+    
+    .bmk-parent-admission-card-icon {
+    width: 46px;
+    height: 46px;
+    flex: 0 0 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    font-size: 1.15rem;
+    }
+    
+    .bmk-parent-admission-card-icon.blue {
+    background: #eef5ff;
+    color: #1d4ed8;
+    }
+    
+    .bmk-parent-admission-card-icon.gold {
+    background: #fff7e6;
+    color: #b7791f;
+    }
+    
+    .bmk-parent-admission-card-icon.green {
+    background: #eaf7f0;
+    color: #18794e;
+    }
+    
+    .bmk-parent-admission-section-label {
+    display: block;
+    color: #64748b;
+    font-size: 0.67rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    margin-bottom: 3px;
+    }
+    
+    .bmk-parent-admission-card-header h2 {
+    margin: 0;
+    color: #0f2747;
+    font-size: 1.15rem;
+    font-weight: 800;
+    }
+    
+    /* =========================================================
+    STUDENT FIELDS
+    ========================================================= */
+    
+    .bmk-parent-admission-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+    border-top: 1px solid #edf0f4;
+    }
+    
+    .bmk-parent-admission-field {
+    padding: 20px 18px 20px 0;
+    border-bottom: 1px solid #edf0f4;
+    }
+    
+    .bmk-parent-admission-field:nth-child(even) {
+    padding-left: 18px;
+    padding-right: 0;
+    border-left: 1px solid #edf0f4;
+    }
+    
+    .bmk-parent-admission-field.full {
+    grid-column: 1 / -1;
+    padding-right: 0;
+    border-left: 0;
+    }
+    
+    .bmk-parent-admission-field small {
+    display: block;
+    color: #64748b;
+    font-size: 0.76rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    }
+    
+    .bmk-parent-admission-field strong {
+    display: block;
+    color: #1e293b;
+    font-size: 0.96rem;
+    font-weight: 700;
+    }
+    
+    /* =========================================================
+    REMARKS
+    ========================================================= */
+    
+    .bmk-parent-admission-remarks-box {
+    position: relative;
+    background: #fffaf0;
+    border: 1px solid #f3dfb0;
+    border-radius: 16px;
+    padding: 22px 22px 22px 54px;
+    }
+    
+    .bmk-parent-admission-remarks-box > i {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    color: #d59a2d;
+    font-size: 1.35rem;
+    }
+    
+    .bmk-parent-admission-remarks-box p {
+    margin: 0;
+    color: #475569;
+    line-height: 1.7;
+    }
+    
+    /* =========================================================
+    STATUS CARD
+    ========================================================= */
+    
+    .bmk-parent-admission-status-card {
+    padding: 0;
+    overflow: hidden;
+    }
+    
+    .bmk-parent-admission-status-top {
+    text-align: center;
+    padding: 34px 28px 30px;
+    }
+    
+    .bmk-parent-admission-status-icon {
+    width: 76px;
+    height: 76px;
+    margin: 0 auto 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 1.8rem;
+    }
+    
+    .bmk-parent-admission-status-icon.pending {
+    background: #fff6dc;
+    color: #c58a17;
+    }
+    
+    .bmk-parent-admission-status-icon.approved {
+    background: #e8f7ef;
+    color: #18794e;
+    }
+    
+    .bmk-parent-admission-status-icon.rejected {
+    background: #fff0f0;
+    color: #c0392b;
+    }
+    
+    .bmk-parent-admission-status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    }
+    
+    .bmk-parent-admission-status-badge.pending {
+    background: #fff4cf;
+    color: #946c12;
+    }
+    
+    .bmk-parent-admission-status-badge.approved {
+    background: #dff4e8;
+    color: #146c43;
+    }
+    
+    .bmk-parent-admission-status-badge.rejected {
+    background: #fde4e2;
+    color: #b42318;
+    }
+    
+    .bmk-parent-admission-status-top h2 {
+    margin: 0;
+    color: #0f2747;
+    font-size: 1.35rem;
+    font-weight: 800;
+    }
+    
+    .bmk-parent-admission-status-top p {
+    max-width: 330px;
+    margin: 10px auto 0;
+    color: #64748b;
+    font-size: 0.9rem;
+    line-height: 1.65;
+    }
+    
+    .bmk-parent-admission-reviewed {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 17px 24px;
+    background: #f8fafc;
+    border-top: 1px solid #e5eaf0;
+    }
+    
+    .bmk-parent-admission-reviewed small {
+    color: #64748b;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    }
+    
+    .bmk-parent-admission-reviewed strong {
+    color: #334155;
+    font-size: 0.8rem;
+    }
+    
+    /* =========================================================
+    APPROVED / COMPLETION CARD
+    ========================================================= */
+    
+    .bmk-parent-admission-completion {
+    border-top: 4px solid #18794e;
+    }
+    
+    .bmk-parent-admission-student-summary {
+    background: #f5faf7;
+    border: 1px solid #dcefe4;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 18px;
+    }
+    
+    .bmk-parent-admission-summary-item {
+    padding: 14px 17px;
+    border-bottom: 1px solid #dcefe4;
+    }
+    
+    .bmk-parent-admission-summary-item:last-child {
+    border-bottom: 0;
+    }
+    
+    .bmk-parent-admission-summary-item small {
+    display: block;
+    color: #64748b;
+    font-size: 0.7rem;
+    font-weight: 600;
+    margin-bottom: 3px;
+    }
+    
+    .bmk-parent-admission-summary-item strong {
+    color: #0f2747;
+    font-size: 0.92rem;
+    }
+    
+    .bmk-parent-admission-completion-text {
+    color: #64748b;
+    font-size: 0.88rem;
+    line-height: 1.65;
+    margin-bottom: 22px;
+    }
+    
+    /* =========================================================
+    ACTION BUTTONS
+    ========================================================= */
+    
+    .bmk-parent-admission-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    }
+    
+    .bmk-parent-admission-action {
+    min-height: 50px;
+    padding: 12px 15px;
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 700;
+    transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+    }
+    
+    .bmk-parent-admission-action span {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    }
+    
+    .bmk-parent-admission-action.primary {
+    background: #e0a83e;
+    color: #0f2747;
+    box-shadow: 0 8px 20px rgba(224, 168, 62, 0.2);
+    }
+    
+    .bmk-parent-admission-action.primary:hover {
+    background: #f3d58a;
+    color: #0b1f33;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(224, 168, 62, 0.3);
+    }
+    
+    .bmk-parent-admission-action.secondary {
+    background: #0f2747;
+    color: #ffffff;
+    }
+    
+    .bmk-parent-admission-action.secondary:hover {
+    background: #16375f;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(15, 39, 71, 0.2);
+    }
+    
+    /* =========================================================
+    MOTTO
+    ========================================================= */
+    
+    .bmk-parent-admission-motto {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 22px;
+    border-radius: 20px;
+    background:
+    linear-gradient(
+    135deg,
+    #0f2747,
+    #17456b
+    );
+    color: #ffffff;
+    box-shadow: 0 15px 40px rgba(15, 39, 71, 0.13);
+    }
+    
+    .bmk-parent-admission-motto-icon {
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 13px;
+    background: rgba(224, 168, 62, 0.16);
+    color: #f3d58a;
+    }
+    
+    .bmk-parent-admission-motto span {
+    display: block;
+    color: #f3d58a;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    margin-bottom: 3px;
+    }
+    
+    .bmk-parent-admission-motto h3 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 1.05rem;
+    font-weight: 800;
+    }
+    
+    .bmk-parent-admission-motto p {
+    margin: 5px 0 0;
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 0.78rem;
+    line-height: 1.5;
+    }
+    
+    /* =========================================================
+    RESPONSIVE
+    ========================================================= */
+    
+    @media (max-width: 991px) {
+    
+    
+    .bmk-parent-admission-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .bmk-parent-admission-sidebar {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: start;
+    }
+    
+    .bmk-parent-admission-status-card {
+        grid-column: 1 / -1;
+    }
+    
+    .bmk-parent-admission-motto {
+        height: 100%;
+    }
+    
+    
+    }
+    
+    @media (max-width: 767px) {
+    
+    
+    .bmk-parent-admission-header {
+        padding: 32px 18px 38px;
+    }
+    
+    .bmk-parent-admission-content {
+        padding: 28px 16px 50px;
+    }
+    
+    .bmk-parent-admission-card {
+        padding: 22px;
+        border-radius: 18px;
+    }
+    
+    .bmk-parent-admission-grid {
+        gap: 20px;
+    }
+    
+    .bmk-parent-admission-sidebar {
+        display: flex;
+    }
+    
+    .bmk-parent-admission-fields {
+        display: block;
+    }
+    
+    .bmk-parent-admission-field,
+    .bmk-parent-admission-field:nth-child(even),
+    .bmk-parent-admission-field.full {
+        padding: 16px 0;
+        border-left: 0;
+    }
+    
+    .bmk-parent-admission-field:first-child {
+        padding-top: 18px;
+    }
+    
+    .bmk-parent-admission-status-top {
+        padding: 30px 20px 26px;
+    }
+    
+    .bmk-parent-admission-reviewed {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+    
+    
+    }
+    
+    @media (max-width: 420px) {
+    
+    
+    .bmk-parent-admission-heading h1 {
+        font-size: 1.8rem;
+    }
+    
+    .bmk-parent-admission-card {
+        padding: 19px;
+    }
+    
+    .bmk-parent-admission-card-header {
+        align-items: flex-start;
+    }
+    
+    .bmk-parent-admission-card-icon {
+        width: 42px;
+        height: 42px;
+        flex-basis: 42px;
+    }
+    
+    .bmk-parent-admission-status-icon {
+        width: 68px;
+        height: 68px;
+    }
+    
+    .bmk-parent-admission-motto {
+        padding: 18px;
+    }
+    
+    
+    }
+    
+/* =========================================================
+CLAIM APPLICATION / CREATE PARENT ACCOUNT
+========================================================= */
+
+.bmk-claim-page {
+    min-height: 100vh;
+    background: #f6f8fb;
+    }
+    
+    /* =========================================================
+    HEADER
+    ========================================================= */
+    
+    .bmk-claim-header {
+    position: relative;
+    overflow: hidden;
+    padding: 55px 24px 62px;
+    background:
+    linear-gradient(
+    135deg,
+    #0b1f33 0%,
+    #0f2747 55%,
+    #17486c 100%
+    );
+    color: #ffffff;
+    }
+    
+    .bmk-claim-header::before {
+    content: "";
+    position: absolute;
+    width: 360px;
+    height: 360px;
+    right: -130px;
+    top: -190px;
+    border-radius: 50%;
+    background: rgba(224, 168, 62, 0.12);
+    }
+    
+    .bmk-claim-header::after {
+    content: "";
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    left: -100px;
+    bottom: -150px;
+    border-radius: 50%;
+    background: rgba(29, 78, 216, 0.12);
+    }
+    
+    .bmk-claim-header-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 780px;
+    margin: 0 auto;
+    text-align: center;
+    }
+    
+    .bmk-claim-brand-mark {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    background: rgba(224, 168, 62, 0.14);
+    border: 1px solid rgba(243, 213, 138, 0.35);
+    color: #f3d58a;
+    font-size: 1.7rem;
+    }
+    
+    .bmk-claim-eyebrow {
+    display: block;
+    color: #f3d58a;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    margin-bottom: 10px;
+    }
+    
+    .bmk-claim-header h1 {
+    margin: 0;
+    color: #ffffff;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    line-height: 1.1;
+    }
+    
+    .bmk-claim-header p {
+    max-width: 600px;
+    margin: 15px auto 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 1rem;
+    }
+    
+    /* =========================================================
+    CONTENT
+    ========================================================= */
+    
+    .bmk-claim-content {
+    padding: 45px 24px 75px;
+    }
+    
+    .bmk-claim-layout {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+    gap: 28px;
+    align-items: start;
+    }
+    
+    /* =========================================================
+    FORM CARD
+    ========================================================= */
+    
+    .bmk-claim-form-card {
+    background: #ffffff;
+    border: 1px solid #e5eaf0;
+    border-radius: 24px;
+    padding: 32px;
+    box-shadow: 0 20px 55px rgba(15, 35, 55, 0.08);
+    }
+    
+    .bmk-claim-form-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 26px;
+    }
+    
+    .bmk-claim-form-icon {
+    width: 50px;
+    height: 50px;
+    flex: 0 0 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    background: #eef5ff;
+    color: #1d4ed8;
+    font-size: 1.25rem;
+    }
+    
+    .bmk-claim-section-label {
+    display: block;
+    color: #64748b;
+    font-size: 0.66rem;
+    font-weight: 800;
+    letter-spacing: 0.13em;
+    margin-bottom: 3px;
+    }
+    
+    .bmk-claim-section-label.light {
+    color: #f3d58a;
+    }
+    
+    .bmk-claim-form-header h2 {
+    margin: 0;
+    color: #0f2747;
+    font-size: 1.3rem;
+    font-weight: 800;
+    }
+    
+    /* =========================================================
+    APPROVED NOTICE
+    ========================================================= */
+    
+    .bmk-claim-approved {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+    padding: 18px;
+    margin-bottom: 22px;
+    border-radius: 16px;
+    background: #edf9f2;
+    border: 1px solid #d3eddd;
+    }
+    
+    .bmk-claim-approved-icon {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #18794e;
+    color: #ffffff;
+    font-size: 0.95rem;
+    }
+    
+    .bmk-claim-approved-label {
+    display: block;
+    color: #18794e;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+    }
+    
+    .bmk-claim-approved p {
+    margin: 0;
+    color: #426152;
+    font-size: 0.87rem;
+    line-height: 1.6;
+    }
+    
+    .bmk-claim-approved p strong {
+    color: #164b32;
+    }
+    
+    /* =========================================================
+    INTRO
+    ========================================================= */
+    
+    .bmk-claim-intro p {
+    margin: 0 0 24px;
+    color: #64748b;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    }
+    
+    /* =========================================================
+    FORM ERRORS
+    ========================================================= */
+    
+    .bmk-claim-error {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 13px 15px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    background: #fff1f0;
+    border: 1px solid #f4ceca;
+    color: #a52820;
+    font-size: 0.84rem;
+    }
+    
+    .bmk-claim-error-icon {
+    flex: 0 0 auto;
+    padding-top: 1px;
+    }
+    
+    .bmk-claim-error ul {
+    margin: 0;
+    padding-left: 18px;
+    }
+    
+    /* =========================================================
+    FORM FIELDS
+    ========================================================= */
+    
+    .bmk-claim-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    }
+    
+    .bmk-claim-field label {
+    display: block;
+    margin-bottom: 8px;
+    color: #334155;
+    font-size: 0.82rem;
+    font-weight: 700;
+    }
+    
+    .bmk-claim-input-wrap {
+    position: relative;
+    }
+    
+    .bmk-claim-input-wrap > i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    color: #94a3b8;
+    pointer-events: none;
+    }
+    
+    .bmk-claim-input-wrap input {
+    width: 100%;
+    min-height: 50px;
+    padding: 11px 14px 11px 44px;
+    border: 1px solid #dce2e9;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #1e293b;
+    font-size: 0.9rem;
+    outline: none;
+    transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+    }
+    
+    .bmk-claim-input-wrap input:focus {
+    border-color: #1d4ed8;
+    box-shadow: 0 0 0 4px rgba(29, 78, 216, 0.10);
+    }
+    
+    .bmk-claim-field-error {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 6px;
+    color: #c0392b;
+    font-size: 0.76rem;
+    }
+    
+    /* =========================================================
+    SUBMIT
+    ========================================================= */
+    
+    .bmk-claim-submit {
+    width: 100%;
+    min-height: 52px;
+    margin-top: 4px;
+    padding: 12px 17px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    border: 0;
+    border-radius: 13px;
+    background: #e0a83e;
+    color: #0f2747;
+    font-size: 0.88rem;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(224, 168, 62, 0.22);
+    transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+    }
+    
+    .bmk-claim-submit span {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    }
+    
+    .bmk-claim-submit:hover {
+    background: #f3d58a;
+    color: #0b1f33;
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px rgba(224, 168, 62, 0.3);
+    }
+    
+    /* =========================================================
+    SECURITY
+    ========================================================= */
+    
+    .bmk-claim-security {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    margin-top: 20px;
+    color: #64748b;
+    font-size: 0.73rem;
+    }
+    
+    .bmk-claim-security i {
+    color: #18794e;
+    }
+    
+    /* =========================================================
+    SIDEBAR
+    ========================================================= */
+    
+    .bmk-claim-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    }
+    
+    /* =========================================================
+    CHILD CARD
+    ========================================================= */
+    
+    .bmk-claim-child-card {
+    position: relative;
+    overflow: hidden;
+    padding: 28px;
+    border-radius: 23px;
+    background:
+    linear-gradient(
+    145deg,
+    #0f2747,
+    #174a70
+    );
+    color: #ffffff;
+    box-shadow: 0 20px 50px rgba(15, 39, 71, 0.15);
+    }
+    
+    .bmk-claim-child-card::after {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    right: -90px;
+    bottom: -100px;
+    border-radius: 50%;
+    background: rgba(224, 168, 62, 0.12);
+    }
+    
+    .bmk-claim-child-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #f3d58a;
+    font-size: 1.25rem;
+    }
+    
+    .bmk-claim-child-card h2 {
+    position: relative;
+    z-index: 2;
+    margin: 6px 0 0;
+    color: #ffffff;
+    font-size: 1.45rem;
+    font-weight: 800;
+    line-height: 1.25;
+    }
+    
+    .bmk-claim-child-line {
+    width: 45px;
+    height: 3px;
+    margin: 18px 0;
+    border-radius: 5px;
+    background: #e0a83e;
+    }
+    
+    .bmk-claim-child-card p {
+    position: relative;
+    z-index: 2;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.82rem;
+    line-height: 1.65;
+    }
+    
+    /* =========================================================
+    BENEFITS
+    ========================================================= */
+    
+    .bmk-claim-benefits {
+    padding: 26px;
+    border: 1px solid #e5eaf0;
+    border-radius: 22px;
+    background: #ffffff;
+    box-shadow: 0 15px 40px rgba(15, 35, 55, 0.06);
+    }
+    
+    .bmk-claim-benefits h3 {
+    margin: 5px 0 20px;
+    color: #0f2747;
+    font-size: 1.15rem;
+    font-weight: 800;
+    }
+    
+    .bmk-claim-benefit {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid #edf0f4;
+    }
+    
+    .bmk-claim-benefit:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+    }
+    
+    .bmk-claim-benefit-icon {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+    background: #eef5ff;
+    color: #1d4ed8;
+    font-size: 0.9rem;
+    }
+    
+    .bmk-claim-benefit strong {
+    display: block;
+    color: #334155;
+    font-size: 0.82rem;
+    margin-bottom: 2px;
+    }
+    
+    .bmk-claim-benefit span {
+    display: block;
+    color: #64748b;
+    font-size: 0.73rem;
+    line-height: 1.45;
+    }
+    
+    /* =========================================================
+    MOTTO
+    ========================================================= */
+    
+    .bmk-claim-motto {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 20px;
+    border-radius: 19px;
+    background: #fffaf0;
+    border: 1px solid #f0dfb8;
+    }
+    
+    .bmk-claim-motto-icon {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: #f8e9bf;
+    color: #a87518;
+    }
+    
+    .bmk-claim-motto span {
+    display: block;
+    color: #a87518;
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    }
+    
+    .bmk-claim-motto h3 {
+    margin: 3px 0 0;
+    color: #0f2747;
+    font-size: 0.95rem;
+    font-weight: 800;
+    }
+    
+    /* =========================================================
+    RESPONSIVE
+    ========================================================= */
+    
+    @media (max-width: 991px) {
+    
+    
+    .bmk-claim-layout {
+        grid-template-columns: 1fr;
+        max-width: 760px;
+    }
+    
+    .bmk-claim-sidebar {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    
+    .bmk-claim-child-card {
+        grid-column: 1 / -1;
+    }
+    
+    .bmk-claim-motto {
+        grid-column: 1 / -1;
+    }
+    
+    
+    }
+    
+    @media (max-width: 767px) {
+    
+    
+    .bmk-claim-header {
+        padding: 42px 18px 48px;
+    }
+    
+    .bmk-claim-content {
+        padding: 30px 16px 55px;
+    }
+    
+    .bmk-claim-form-card {
+        padding: 23px;
+        border-radius: 19px;
+    }
+    
+    .bmk-claim-sidebar {
+        display: flex;
+    }
+    
+    .bmk-claim-child-card,
+    .bmk-claim-benefits {
+        padding: 23px;
+    }
+    
+    
+    }
+    
+    @media (max-width: 420px) {
+    
+    
+    .bmk-claim-header h1 {
+        font-size: 1.85rem;
+    }
+    
+    .bmk-claim-form-card {
+        padding: 19px;
+    }
+    
+    .bmk-claim-approved {
+        padding: 14px;
+    }
+    
+    .bmk-claim-approved-icon {
+        width: 34px;
+        height: 34px;
+        flex-basis: 34px;
+    }
+    
+    .bmk-claim-security {
+        align-items: flex-start;
+        text-align: center;
+    }
+    
+    
+    }
+
+/* =========================================================
+INVALID ADMISSION CLAIM LINK
+========================================================= */
+
+.bmk-claim-invalid-page {
+    min-height: 100vh;
+    background: #f6f8fb;
+    }
+    
+    /* =========================================================
+    HEADER
+    ========================================================= */
+    
+    .bmk-claim-invalid-header {
+    position: relative;
+    overflow: hidden;
+    padding: 48px 24px 58px;
+    background:
+    linear-gradient(
+    135deg,
+    #0b1f33 0%,
+    #0f2747 55%,
+    #17486c 100%
+    );
+    color: #ffffff;
+    }
+    
+    .bmk-claim-invalid-header::before {
+    content: "";
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    right: -130px;
+    top: -190px;
+    border-radius: 50%;
+    background: rgba(224, 168, 62, 0.12);
+    }
+    
+    .bmk-claim-invalid-header-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+    }
+    
+    .bmk-claim-invalid-brand {
+    width: 66px;
+    height: 66px;
+    margin: 0 auto 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 19px;
+    background: rgba(224, 168, 62, 0.14);
+    border: 1px solid rgba(243, 213, 138, 0.3);
+    color: #f3d58a;
+    font-size: 1.55rem;
+    }
+    
+    .bmk-claim-invalid-eyebrow {
+    display: block;
+    color: #f3d58a;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    margin-bottom: 9px;
+    }
+    
+    .bmk-claim-invalid-header h1 {
+    margin: 0;
+    color: #ffffff;
+    font-size: clamp(1.9rem, 4vw, 2.7rem);
+    line-height: 1.1;
+    font-weight: 800;
+    }
+    
+    .bmk-claim-invalid-header p {
+    margin: 13px auto 0;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    }
+    
+    /* =========================================================
+    CONTENT
+    ========================================================= */
+    
+    .bmk-claim-invalid-content {
+    padding: 45px 24px 75px;
+    }
+    
+    .bmk-claim-invalid-card {
+    max-width: 650px;
+    margin: 0 auto;
+    padding: 38px;
+    text-align: center;
+    background: #ffffff;
+    border: 1px solid #e5eaf0;
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(15, 35, 55, 0.09);
+    }
+    
+    /* =========================================================
+    ICON / TITLE
+    ========================================================= */
+    
+    .bmk-claim-invalid-icon {
+    width: 86px;
+    height: 86px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #fff6df;
+    border: 8px solid #fffaf0;
+    color: #c58a17;
+    font-size: 2.1rem;
+    }
+    
+    .bmk-claim-invalid-label {
+    display: inline-block;
+    color: #a87518;
+    font-size: 0.67rem;
+    font-weight: 800;
+    letter-spacing: 0.13em;
+    margin-bottom: 9px;
+    }
+    
+    .bmk-claim-invalid-card h2 {
+    margin: 0;
+    color: #0f2747;
+    font-size: clamp(1.45rem, 3vw, 1.9rem);
+    line-height: 1.25;
+    font-weight: 800;
+    }
+    
+    .bmk-claim-invalid-card h2 span {
+    color: #b7791f;
+    }
+    
+    .bmk-claim-invalid-message {
+    max-width: 510px;
+    margin: 15px auto 25px;
+    color: #64748b;
+    font-size: 0.91rem;
+    line-height: 1.7;
+    }
+    
+    /* =========================================================
+    INFORMATION BOX
+    ========================================================= */
+    
+    .bmk-claim-invalid-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+    padding: 17px;
+    text-align: left;
+    background: #eef5ff;
+    border: 1px solid #d9e7fb;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    }
+    
+    .bmk-claim-invalid-info-icon {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+    background: #ffffff;
+    color: #1d4ed8;
+    font-size: 0.9rem;
+    }
+    
+    .bmk-claim-invalid-info strong {
+    display: block;
+    color: #0f2747;
+    font-size: 0.82rem;
+    margin-bottom: 4px;
+    }
+    
+    .bmk-claim-invalid-info p {
+    margin: 0;
+    color: #52657a;
+    font-size: 0.78rem;
+    line-height: 1.6;
+    }
+    
+    /* =========================================================
+    ACTIONS
+    ========================================================= */
+    
+    .bmk-claim-invalid-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    }
+    
+    .bmk-claim-invalid-button {
+    min-height: 51px;
+    padding: 12px 16px;
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    text-decoration: none;
+    font-size: 0.87rem;
+    font-weight: 800;
+    transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+    }
+    
+    .bmk-claim-invalid-button span {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    }
+    
+    .bmk-claim-invalid-button.primary {
+    background: #e0a83e;
+    color: #0f2747;
+    box-shadow: 0 9px 23px rgba(224, 168, 62, 0.2);
+    }
+    
+    .bmk-claim-invalid-button.primary:hover {
+    background: #f3d58a;
+    color: #0b1f33;
+    transform: translateY(-2px);
+    box-shadow: 0 13px 28px rgba(224, 168, 62, 0.3);
+    }
+    
+    .bmk-claim-invalid-button.secondary {
+    background: #0f2747;
+    color: #ffffff;
+    }
+    
+    .bmk-claim-invalid-button.secondary:hover {
+    background: #16375f;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(15, 39, 71, 0.2);
+    }
+    
+    /* =========================================================
+    FOOTER
+    ========================================================= */
+    
+    .bmk-claim-invalid-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #edf0f4;
+    color: #64748b;
+    font-size: 0.72rem;
+    }
+    
+    .bmk-claim-invalid-footer i {
+    color: #18794e;
+    }
+    
+    /* =========================================================
+    RESPONSIVE
+    ========================================================= */
+    
+    @media (max-width: 767px) {
+    
+    
+    .bmk-claim-invalid-header {
+        padding: 38px 18px 45px;
+    }
+    
+    .bmk-claim-invalid-content {
+        padding: 30px 16px 55px;
+    }
+    
+    .bmk-claim-invalid-card {
+        padding: 27px 20px;
+        border-radius: 20px;
+    }
+    
+    .bmk-claim-invalid-icon {
+        width: 76px;
+        height: 76px;
+        font-size: 1.8rem;
+    }
+    
+    
+    }
+    
+    @media (max-width: 420px) {
+    
+    
+    .bmk-claim-invalid-card h2 {
+        font-size: 1.4rem;
+    }
+    
+    .bmk-claim-invalid-info {
+        padding: 14px;
+    }
+    
+    .bmk-claim-invalid-footer {
+        align-items: flex-start;
+        text-align: center;
+    }
+    
+    
+    }
+    
+/* =========================================================
+CLAIM EXPIRED PAGE
+========================================================= */
+
+.bmk-claim-expired-page {
+    min-height: 100vh;
+    background: #f6f8fb;
+    }
+    
+    /* =========================================================
+    HEADER
+    ========================================================= */
+    
+    .bmk-claim-expired-header {
+    position: relative;
+    overflow: hidden;
+    padding: 72px 20px 95px;
+    background:
+    radial-gradient(
+    circle at 15% 20%,
+    rgba(224, 168, 62, 0.18),
+    transparent 30%
+    ),
+    radial-gradient(
+    circle at 85% 80%,
+    rgba(29, 78, 216, 0.18),
+    transparent 35%
+    ),
+    linear-gradient(
+    135deg,
+    #0b1f33,
+    #0f2747 60%,
+    #163c69
+    );
+    color: #ffffff;
+    }
+    
+    .bmk-claim-expired-header::after {
+    content: "";
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    right: -120px;
+    top: -140px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    }
+    
+    .bmk-claim-expired-header-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 850px;
+    margin: 0 auto;
+    text-align: center;
+    }
+    
+    .bmk-claim-expired-brand {
+    width: 68px;
+    height: 68px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    background: rgba(224, 168, 62, 0.15);
+    border: 1px solid rgba(243, 213, 138, 0.35);
+    color: #f3d58a;
+    font-size: 1.8rem;
+    }
+    
+    .bmk-claim-expired-eyebrow {
+    display: block;
+    margin-bottom: 12px;
+    color: #f3d58a;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    }
+    
+    .bmk-claim-expired-header h1 {
+    margin: 0 0 12px;
+    color: #ffffff;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    }
+    
+    .bmk-claim-expired-header p {
+    max-width: 620px;
+    margin: 0 auto;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 1.05rem;
+    }
+    
+    /* =========================================================
+    CONTENT
+    ========================================================= */
+    
+    .bmk-claim-expired-content {
+    padding: 0 20px 80px;
+    margin-top: -48px;
+    position: relative;
+    z-index: 2;
+    }
+    
+    .bmk-claim-expired-card {
+    width: min(680px, 100%);
+    margin: 0 auto;
+    padding: 48px;
+    background: #ffffff;
+    border: 1px solid #e5eaf0;
+    border-radius: 24px;
+    box-shadow: 0 25px 65px rgba(15, 35, 55, 0.14);
+    text-align: center;
+    }
+    
+    /* =========================================================
+    MAIN ICON
+    ========================================================= */
+    
+    .bmk-claim-expired-icon {
+    width: 88px;
+    height: 88px;
+    margin: 0 auto 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #fff7df;
+    border: 8px solid #fffaf0;
+    color: #b7791f;
+    font-size: 2.1rem;
+    }
+    
+    .bmk-claim-expired-label {
+    display: inline-block;
+    margin-bottom: 12px;
+    color: #b7791f;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    }
+    
+    .bmk-claim-expired-card h2 {
+    margin: 0 0 18px;
+    color: #0f2747;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    }
+    
+    .bmk-claim-expired-card h2 span {
+    display: block;
+    color: #b7791f;
+    }
+    
+    .bmk-claim-expired-message {
+    max-width: 560px;
+    margin: 0 auto 30px;
+    color: #64748b;
+    font-size: 1rem;
+    line-height: 1.75;
+    }
+    
+    /* =========================================================
+    INFORMATION BOX
+    ========================================================= */
+    
+    .bmk-claim-expired-info {
+    display: flex;
+    gap: 16px;
+    padding: 22px;
+    margin-bottom: 18px;
+    text-align: left;
+    background: #fffaf0;
+    border: 1px solid #f3d58a;
+    border-radius: 17px;
+    }
+    
+    .bmk-claim-expired-info-icon {
+    flex: 0 0 42px;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: #e0a83e;
+    color: #0f2747;
+    font-size: 1rem;
+    }
+    
+    .bmk-claim-expired-info strong {
+    display: block;
+    margin-bottom: 6px;
+    color: #0f2747;
+    font-size: 0.98rem;
+    font-weight: 800;
+    }
+    
+    .bmk-claim-expired-info p {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.92rem;
+    line-height: 1.65;
+    }
+    
+    /* =========================================================
+    CONTACT CARD
+    ========================================================= */
+    
+    .bmk-claim-expired-contact {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-top: 22px;
+    padding: 22px;
+    text-align: left;
+    background: #eef5ff;
+    border: 1px solid #dbe8fb;
+    border-radius: 17px;
+    }
+    
+    .bmk-claim-expired-contact-icon {
+    flex: 0 0 50px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: #1d4ed8;
+    color: #ffffff;
+    font-size: 1.2rem;
+    }
+    
+    .bmk-claim-expired-contact span {
+    display: block;
+    margin-bottom: 4px;
+    color: #1d4ed8;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    }
+    
+    .bmk-claim-expired-contact h3 {
+    margin: 0 0 4px;
+    color: #0f2747;
+    font-size: 1.05rem;
+    font-weight: 800;
+    }
+    
+    .bmk-claim-expired-contact p {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    }
+    
+    /* =========================================================
+    FOOTER
+    ========================================================= */
+    
+    .bmk-claim-expired-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 30px;
+    padding-top: 24px;
+    border-top: 1px solid #e5eaf0;
+    color: #64748b;
+    font-size: 0.82rem;
+    }
+    
+    .bmk-claim-expired-footer i {
+    color: #3f7d58;
+    font-size: 1rem;
+    }
+    
+    /* =========================================================
+    RESPONSIVE
+    ========================================================= */
+    
+    @media (max-width: 767px) {
+    
+    
+    .bmk-claim-expired-header {
+        padding: 55px 18px 85px;
+    }
+    
+    .bmk-claim-expired-content {
+        padding: 0 16px 55px;
+        margin-top: -40px;
+    }
+    
+    .bmk-claim-expired-card {
+        padding: 36px 24px;
+        border-radius: 20px;
+    }
+    
+    .bmk-claim-expired-header h1 {
+        font-size: 2rem;
+    }
+    
+    .bmk-claim-expired-card h2 {
+        font-size: 1.85rem;
+    }
+    
+    .bmk-claim-expired-info,
+    .bmk-claim-expired-contact {
+        padding: 18px;
+    }
+    
+    
+    }
+    
+    @media (max-width: 420px) {
+    
+    
+    .bmk-claim-expired-header {
+        padding: 45px 15px 75px;
+    }
+    
+    .bmk-claim-expired-content {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+    
+    .bmk-claim-expired-card {
+        padding: 30px 18px;
+    }
+    
+    .bmk-claim-expired-brand {
+        width: 58px;
+        height: 58px;
+        border-radius: 17px;
+    }
+    
+    .bmk-claim-expired-icon {
+        width: 76px;
+        height: 76px;
+        font-size: 1.8rem;
+    }
+    
+    .bmk-claim-expired-info,
+    .bmk-claim-expired-contact {
+        gap: 12px;
+    }
+    
+    .bmk-claim-expired-info-icon,
+    .bmk-claim-expired-contact-icon {
+        flex-basis: 42px;
+        width: 42px;
+        height: 42px;
+    }
+    
+    .bmk-claim-expired-footer {
+        font-size: 0.76rem;
+    }
+    
+    
+    }
+    

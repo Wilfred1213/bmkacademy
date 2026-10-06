@@ -1,5 +1,8 @@
 {% extends "website/base.html" %}
 {% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'website/css/gallery.css' %}">
+{% endblock %}
 
 {% block title %}Gallery | BMK Academy{% endblock %}
 

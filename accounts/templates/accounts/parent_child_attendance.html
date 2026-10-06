@@ -1,142 +1,191 @@
 {% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+
+<link rel="stylesheet" href="{% static 'website/css/reports.css' %}">
+{% endblock %}
 
 {% block title %}
-    Attendance - {{ child.get_full_name }}
+Attendance - {{ child.get_full_name }}
 {% endblock %}
 
 {% block content %}
 
-<div class="container py-4">
+<style>
+    
+</style>
 
-    <!-- HEADER -->
+<section class="bmk-child-attendance">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+<div class="container">
 
-        <div>
+    <!-- =========================
+         PAGE HEADER
+         ========================= -->
 
-            <h2 class="fw-bold mb-1">
-                {{ child.get_full_name }}
-            </h2>
+    <div class="bmk-attendance-header">
 
-            {% if enrollment %}
+        <div class="bmk-attendance-header-content">
 
-                <p class="text-muted mb-0">
+            <div class="bmk-attendance-header-left">
 
-                    {{ enrollment.school_class.name }}
+                <div class="bmk-attendance-avatar">
+                    <i class="bi bi-calendar2-check"></i>
+                </div>
 
-                    —
-                    {{ enrollment.academic_year.name }}
+                <div>
 
-                    —
-                    {{ enrollment.term.name }}
+                    <p class="bmk-attendance-eyebrow">
+                        Attendance Record
+                    </p>
 
-                </p>
+                    <h2>
+                        {{ child.get_full_name }}
+                    </h2>
 
-            {% else %}
+                    {% if enrollment %}
 
-                <p class="text-muted mb-0">
-                    Attendance information
-                </p>
+                        <p class="bmk-attendance-subtitle">
 
-            {% endif %}
+                            {{ enrollment.school_class.name }}
+
+                            <span class="mx-1">•</span>
+
+                            {{ enrollment.academic_year.name }}
+
+                            <span class="mx-1">•</span>
+
+                            {{ enrollment.term.name }}
+
+                        </p>
+
+                    {% else %}
+
+                        <p class="bmk-attendance-subtitle">
+                            Attendance information
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            <a
+                href="{% url 'accounts:parent_home' %}"
+                class="bmk-attendance-back-btn"
+            >
+                <i class="bi bi-arrow-left"></i>
+                Back to Dashboard
+            </a>
 
         </div>
-
-        <a
-            href="{% url 'accounts:parent_home' %}"
-            class="btn btn-outline-secondary"
-        >
-            <i class="bi bi-arrow-left"></i>
-            Back to Dashboard
-        </a>
 
     </div>
 
 
     {% if enrollment %}
 
-        <!-- ATTENDANCE SUMMARY -->
+        <!-- =========================
+             ATTENDANCE SUMMARY
+             ========================= -->
 
-        <div class="row g-3 mb-4">
+        <div class="row g-3 bmk-attendance-summary">
 
-            <div class="col-md-3">
+            <div class="col-6 col-lg-3">
 
-                <div class="card border-0 shadow-sm h-100">
+                <div class="bmk-attendance-stat bmk-stat-present">
 
-                    <div class="card-body">
+                    <div class="bmk-stat-top">
 
-                        <p class="text-muted mb-1">
-                            Present
-                        </p>
-
-                        <h3 class="fw-bold text-success mb-0">
-                            {{ statistics.present }}
-                        </h3>
+                        <div class="bmk-stat-icon">
+                            <i class="bi bi-check-circle"></i>
+                        </div>
 
                     </div>
+
+                    <p class="bmk-stat-label">
+                        Present
+                    </p>
+
+                    <h3 class="bmk-stat-value">
+                        {{ statistics.present }}
+                    </h3>
 
                 </div>
 
             </div>
 
 
-            <div class="col-md-3">
+            <div class="col-6 col-lg-3">
 
-                <div class="card border-0 shadow-sm h-100">
+                <div class="bmk-attendance-stat bmk-stat-absent">
 
-                    <div class="card-body">
+                    <div class="bmk-stat-top">
 
-                        <p class="text-muted mb-1">
-                            Absent
-                        </p>
-
-                        <h3 class="fw-bold text-danger mb-0">
-                            {{ statistics.absent }}
-                        </h3>
+                        <div class="bmk-stat-icon">
+                            <i class="bi bi-x-circle"></i>
+                        </div>
 
                     </div>
+
+                    <p class="bmk-stat-label">
+                        Absent
+                    </p>
+
+                    <h3 class="bmk-stat-value">
+                        {{ statistics.absent }}
+                    </h3>
 
                 </div>
 
             </div>
 
 
-            <div class="col-md-3">
+            <div class="col-6 col-lg-3">
 
-                <div class="card border-0 shadow-sm h-100">
+                <div class="bmk-attendance-stat bmk-stat-late">
 
-                    <div class="card-body">
+                    <div class="bmk-stat-top">
 
-                        <p class="text-muted mb-1">
-                            Late
-                        </p>
-
-                        <h3 class="fw-bold text-warning mb-0">
-                            {{ statistics.late }}
-                        </h3>
+                        <div class="bmk-stat-icon">
+                            <i class="bi bi-clock"></i>
+                        </div>
 
                     </div>
+
+                    <p class="bmk-stat-label">
+                        Late
+                    </p>
+
+                    <h3 class="bmk-stat-value">
+                        {{ statistics.late }}
+                    </h3>
 
                 </div>
 
             </div>
 
 
-            <div class="col-md-3">
+            <div class="col-6 col-lg-3">
 
-                <div class="card border-0 shadow-sm h-100">
+                <div class="bmk-attendance-stat bmk-stat-rate">
 
-                    <div class="card-body">
+                    <div class="bmk-stat-top">
 
-                        <p class="text-muted mb-1">
-                            Attendance Rate
-                        </p>
-
-                        <h3 class="fw-bold text-primary mb-0">
-                            {{ statistics.attendance_rate }}%
-                        </h3>
+                        <div class="bmk-stat-icon">
+                            <i class="bi bi-graph-up-arrow"></i>
+                        </div>
 
                     </div>
+
+                    <p class="bmk-stat-label">
+                        Attendance Rate
+                    </p>
+
+                    <h3 class="bmk-stat-value">
+                        {{ statistics.attendance_rate }}%
+                    </h3>
 
                 </div>
 
@@ -145,148 +194,184 @@
         </div>
 
 
-        <!-- ATTENDANCE RECORDS -->
+        <!-- =========================
+             ATTENDANCE RECORDS
+             ========================= -->
 
-        <div class="card border-0 shadow-sm">
+        <div class="bmk-attendance-records">
 
-            <div class="card-body">
+            <div class="bmk-records-header">
 
-                <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="bmk-records-title">
+
+                    <div class="bmk-records-icon">
+                        <i class="bi bi-list-check"></i>
+                    </div>
 
                     <div>
 
-                        <h5 class="fw-bold mb-1">
+                        <h5>
                             Attendance Records
                         </h5>
 
-                        <p class="text-muted mb-0">
-                            {{ enrollment.term.name }}
-                            attendance
+                        <p>
+                            Daily attendance for {{ enrollment.term.name }}.
                         </p>
 
                     </div>
 
                 </div>
 
+                <span class="bmk-term-badge">
+                    <i class="bi bi-calendar3"></i>
+                    {{ enrollment.term.name }}
+                </span>
 
-                {% if records %}
+            </div>
 
-                    <div class="table-responsive">
 
-                        <table class="table table-hover align-middle">
+            {% if records %}
 
-                            <thead class="table-light">
+                <div class="bmk-records-table-wrapper">
+
+                    <table class="table bmk-attendance-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Date
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    Remarks
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for record in records %}
 
                                 <tr>
 
-                                    <th>
-                                        Date
-                                    </th>
+                                    <td>
 
-                                    <th>
-                                        Status
-                                    </th>
+                                        <span class="bmk-attendance-date">
 
-                                    <th>
-                                        Remarks
-                                    </th>
+                                            <i class="bi bi-calendar3"></i>
+
+                                            {{ record.attendance_date|date:"M d, Y" }}
+
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+
+                                        {% if record.status == "present" %}
+
+                                            <span class="bmk-status bmk-status-present">
+                                                Present
+                                            </span>
+
+                                        {% elif record.status == "absent" %}
+
+                                            <span class="bmk-status bmk-status-absent">
+                                                Absent
+                                            </span>
+
+                                        {% elif record.status == "late" %}
+
+                                            <span class="bmk-status bmk-status-late">
+                                                Late
+                                            </span>
+
+                                        {% elif record.status == "excused" %}
+
+                                            <span class="bmk-status bmk-status-excused">
+                                                Excused
+                                            </span>
+
+                                        {% endif %}
+
+                                    </td>
+
+                                    <td>
+
+                                        <span class="bmk-remarks">
+                                            {{ record.remarks|default:"-" }}
+                                        </span>
+
+                                    </td>
 
                                 </tr>
 
-                            </thead>
+                            {% endfor %}
 
-                            <tbody>
+                        </tbody>
 
-                                {% for record in records %}
+                    </table>
 
-                                    <tr>
+                </div>
 
-                                        <td>
-                                            {{ record.attendance_date|date:"M d, Y" }}
-                                        </td>
+            {% else %}
 
-                                        <td>
+                <div class="bmk-no-records">
 
-                                            {% if record.status == "present" %}
-
-                                                <span class="badge bg-success">
-                                                    Present
-                                                </span>
-
-                                            {% elif record.status == "absent" %}
-
-                                                <span class="badge bg-danger">
-                                                    Absent
-                                                </span>
-
-                                            {% elif record.status == "late" %}
-
-                                                <span class="badge bg-warning text-dark">
-                                                    Late
-                                                </span>
-
-                                            {% elif record.status == "excused" %}
-
-                                                <span class="badge bg-secondary">
-                                                    Excused
-                                                </span>
-
-                                            {% endif %}
-
-                                        </td>
-
-                                        <td>
-                                            {{ record.remarks|default:"-" }}
-                                        </td>
-
-                                    </tr>
-
-                                {% endfor %}
-
-                            </tbody>
-
-                        </table>
-
+                    <div class="bmk-no-records-icon">
+                        <i class="bi bi-calendar-x"></i>
                     </div>
 
-                {% else %}
+                    <h6>
+                        No Attendance Records
+                    </h6>
 
-                    <div class="text-center py-4">
+                    <p>
+                        No attendance records are available
+                        for this term.
+                    </p>
 
-                        <p class="text-muted mb-0">
-                            No attendance records are available
-                            for this term.
-                        </p>
+                </div>
 
-                    </div>
-
-                {% endif %}
-
-            </div>
+            {% endif %}
 
         </div>
 
     {% else %}
 
-        <div class="card border-0 shadow-sm">
+        <!-- =========================
+             NO CURRENT ENROLLMENT
+             ========================= -->
 
-            <div class="card-body text-center py-5">
+        <div class="bmk-no-enrollment">
 
-                <h5 class="fw-bold">
-                    No Current Enrollment
-                </h5>
-
-                <p class="text-muted mb-0">
-                    There is no current enrollment information
-                    available for this child.
-                </p>
-
+            <div class="bmk-no-enrollment-icon">
+                <i class="bi bi-person-exclamation"></i>
             </div>
+
+            <h5>
+                No Current Enrollment
+            </h5>
+
+            <p>
+                There is no current enrollment information
+                available for this child.
+            </p>
 
         </div>
 
     {% endif %}
 
 </div>
+
+</section>
 
 {% endblock %}

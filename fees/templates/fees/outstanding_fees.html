@@ -1,107 +1,120 @@
 {% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
 
-
-{% block title %}
-    Outstanding Fees | BMK Academy
+<link rel="stylesheet" href="{% static 'website/css/fees.css' %}">
 {% endblock %}
-
+{% block title %}
+Outstanding Fees | BMK Academy
+{% endblock %}
 
 {% block content %}
 
-<div class="d-flex justify-content-between align-items-center mb-4">
 
-    <div>
+<div class="bmk-outstanding-page">
 
-        <h2 class="fw-bold mb-1">
-            Outstanding Fees
-        </h2>
+<div class="container">
 
-        <p class="text-muted mb-0">
-            Students with unpaid or partially paid invoices.
-        </p>
+    <div class="bmk-outstanding-header">
+
+        <div>
+
+            <div class="bmk-outstanding-eyebrow">
+                Fee Management
+            </div>
+
+            <h1 class="bmk-outstanding-title">
+                Outstanding Fees
+            </h1>
+
+            <p class="bmk-outstanding-subtitle">
+                Students with unpaid or partially paid invoices.
+            </p>
+
+        </div>
+
+        <a
+            href="{% url 'fees:fee_report' %}"
+            class="bmk-report-btn"
+        >
+            <i class="bi bi-bar-chart-line"></i>
+            Collection Report
+        </a>
 
     </div>
 
 
-    <a
-        href="{% url 'fees:fee_report' %}"
-        class="btn btn-outline-secondary"
-    >
-        ← Collection Report
-    </a>
+    <!-- Total Outstanding -->
 
-</div>
+    <div class="bmk-outstanding-stat">
 
+        <div class="bmk-stat-top">
 
-<!-- Total Outstanding -->
-
-<div class="row mb-4">
-
-    <div class="col-md-4">
-
-        <div class="card shadow-sm">
-
-            <div class="card-body">
-
-                <small class="text-muted">
-                    Total Outstanding
-                </small>
-
-                <h3 class="fw-bold text-danger mb-0">
-
-                    ₦{{ total_outstanding|floatformat:2 }}
-
-                </h3>
-
+            <div class="bmk-stat-icon">
+                <i class="bi bi-exclamation-triangle-fill"></i>
             </div>
 
+            <span class="bmk-stat-label">
+                Total Outstanding
+            </span>
+
+        </div>
+
+        <div class="bmk-stat-value">
+            ₦{{ total_outstanding|floatformat:2 }}
         </div>
 
     </div>
 
-</div>
+
+    <!-- Filters -->
+
+    <div class="bmk-filter-card">
+
+        <div class="bmk-filter-header">
+
+            <div class="bmk-filter-icon">
+                <i class="bi bi-funnel-fill"></i>
+            </div>
+
+            <div>
+                <h2 class="bmk-filter-title">
+                    Find Outstanding Fees
+                </h2>
+
+                <p class="bmk-filter-subtitle">
+                    Filter outstanding balances by class, academic year, or student.
+                </p>
+            </div>
+
+        </div>
 
 
-<!-- Outstanding Table -->
+        <div class="bmk-filter-body">
 
-<div class="card shadow-sm">
-
-
-    <div class="card-header">
-
-        <strong>
-            Outstanding Student Fees
-        </strong>
-
-    </div>
-
-    <div class="card shadow-sm mb-4">
-
-        <div class="card-body">
-    
             <form method="get" class="row g-3 align-items-end">
-    
-                <div class="col-md-4">
-    
+
+                <div class="col-lg-4 col-md-6">
+
                     <label
                         for="class_id"
-                        class="form-label"
+                        class="bmk-filter-label"
                     >
                         Filter by Class
                     </label>
-    
+
                     <select
                         name="class_id"
                         id="class_id"
-                        class="form-select"
+                        class="bmk-filter-select"
                     >
-    
+
                         <option value="">
                             All Classes
                         </option>
-    
+
                         {% for school_class in school_classes %}
-    
+
                             <option
                                 value="{{ school_class.id }}"
                                 {% if selected_class == school_class.id|stringformat:"s" %}
@@ -110,33 +123,35 @@
                             >
                                 {{ school_class.name }}
                             </option>
-    
+
                         {% endfor %}
-    
+
                     </select>
-    
+
                 </div>
-                <div class="col-md-4">
+
+
+                <div class="col-lg-3 col-md-6">
 
                     <label
                         for="academic_year"
-                        class="form-label"
+                        class="bmk-filter-label"
                     >
                         Academic Year
                     </label>
-                
+
                     <select
                         name="academic_year"
                         id="academic_year"
-                        class="form-select"
+                        class="bmk-filter-select"
                     >
-                
+
                         <option value="">
                             All Academic Years
                         </option>
-                
+
                         {% for year in academic_years %}
-                
+
                             <option
                                 value="{{ year }}"
                                 {% if selected_academic_year == year %}
@@ -145,217 +160,240 @@
                             >
                                 {{ year }}
                             </option>
-                
+
                         {% endfor %}
-                
+
                     </select>
-                
+
                 </div>
-                <div class="col-md-4">
+
+
+                <div class="col-lg-3 col-md-6">
 
                     <label
                         for="search"
-                        class="form-label"
+                        class="bmk-filter-label"
                     >
                         Search Student
                     </label>
-                
+
                     <input
                         type="text"
                         name="search"
                         id="search"
-                        class="form-control"
+                        class="bmk-filter-input"
                         placeholder="Name or admission number"
                         value="{{ search }}"
                     >
-                
+
                 </div>
-    
-    
-                <div class="col-md-auto">
-    
-                    <button
-                        type="submit"
-                        class="btn btn-primary"
-                    >
-                        Filter
-                    </button>
-    
+
+
+                <div class="col-lg-2 col-md-6">
+
+                    <div class="bmk-filter-actions">
+
+                        <button
+                            type="submit"
+                            class="bmk-filter-btn"
+                        >
+                            <i class="bi bi-search"></i>
+                            Filter
+                        </button>
+
+                        <a
+                            href="{% url 'fees:outstanding_fees' %}"
+                            class="bmk-clear-btn"
+                        >
+                            Clear
+                        </a>
+
+                    </div>
+
                 </div>
-    
-    
-                <div class="col-md-auto">
-    
-                    <a
-                        href="{% url 'fees:outstanding_fees' %}"
-                        class="btn btn-outline-secondary"
-                    >
-                        Clear
-                    </a>
-    
-                </div>
-    
+
             </form>
-    
+
         </div>
-        
-    
+
     </div>
-    <div class="card-body">
-
-        {% if outstanding %}
-
-            <div class="table-responsive">
-
-                <table class="table table-hover align-middle">
-
-                    <thead>
-
-                        <tr>
-
-                            <th>
-                                Student
-                            </th>
-
-                            <th>
-                                Admission Number
-                            </th>
-
-                            <th>
-                                Class
-                            </th>
-
-                            <th>
-                                Invoice
-                            </th>
-
-                            <th>
-                                Invoiced
-                            </th>
-
-                            <th>
-                                Paid
-                            </th>
-
-                            <th>
-                                Outstanding
-                            </th>
-
-                            <th>
-                                Action
-                            </th>
-
-                        </tr>
-
-                    </thead>
 
 
-                    <tbody>
+    <!-- Outstanding Table -->
 
-                        {% for item in outstanding %}
+    <div class="bmk-outstanding-card">
+
+        <div class="bmk-outstanding-card-header">
+
+            <div class="bmk-table-heading">
+
+                <div class="bmk-table-icon">
+                    <i class="bi bi-wallet2"></i>
+                </div>
+
+                <div>
+
+                    <h2 class="bmk-table-title">
+                        Outstanding Student Fees
+                    </h2>
+
+                    <p class="bmk-table-subtitle">
+                        Review balances and record payments.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="bmk-table-body">
+
+            {% if outstanding %}
+
+                <div class="bmk-table-wrapper">
+
+                    <table class="bmk-outstanding-table">
+
+                        <thead>
 
                             <tr>
-
-                                <td class="fw-semibold">
-
-                                    {{ item.student.first_name }}
-
-                                    {% if item.student.middle_name %}
-                                        {{ item.student.middle_name }}
-                                    {% endif %}
-
-                                    {{ item.student.last_name }}
-
-                                </td>
-
-
-                                <td>
-                                    {{ item.student.admission_number }}
-                                </td>
-
-
-                                <td>
-                                    {{ item.enrollment.school_class }}
-                                </td>
-
-
-                                <td>
-                                    {{ item.invoice.description }}
-                                </td>
-
-
-                                <td>
-                                    ₦{{ item.amount|floatformat:2 }}
-                                </td>
-
-
-                                <td class="text-success">
-
-                                    ₦{{ item.paid|floatformat:2 }}
-
-                                </td>
-
-
-                                <td class="text-danger fw-bold">
-
-                                    ₦{{ item.balance|floatformat:2 }}
-
-                                </td>
-
-
-                                <td>
-
-                                    <div class="d-flex gap-2">
-                                
-                                        <a
-                                            href="{% url 'fees:student_fees' item.student.id %}"
-                                            class="btn btn-sm btn-outline-secondary"
-                                        >
-                                            View Fees
-                                        </a>
-                                
-                                
-                                        <a
-                                            href="{% url 'fees:record_payment' item.invoice.id %}"
-                                            class="btn btn-sm btn-outline-primary"
-                                        >
-                                            Record Payment
-                                        </a>
-                                
-                                    </div>
-                                
-                                </td>
-
+                                <th>Student</th>
+                                <th>Admission Number</th>
+                                <th>Class</th>
+                                <th>Invoice</th>
+                                <th>Invoiced</th>
+                                <th>Paid</th>
+                                <th>Outstanding</th>
+                                <th>Action</th>
                             </tr>
 
-                        {% endfor %}
+                        </thead>
 
-                    </tbody>
 
-                </table>
+                        <tbody>
 
-            </div>
+                            {% for item in outstanding %}
 
-        {% else %}
+                                <tr>
 
-            <div class="text-center py-5">
+                                    <td>
 
-                <h5 class="text-success">
-                    No Outstanding Fees
-                </h5>
+                                        <div class="bmk-student-name">
 
-                <p class="text-muted mb-0">
-                    All student fee invoices have been fully paid.
-                </p>
+                                            {{ item.student.first_name }}
 
-            </div>
+                                            {% if item.student.middle_name %}
+                                                {{ item.student.middle_name }}
+                                            {% endif %}
 
-        {% endif %}
+                                            {{ item.student.last_name }}
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <td>
+
+                                        <span class="bmk-admission">
+                                            {{ item.student.admission_number }}
+                                        </span>
+
+                                    </td>
+
+
+                                    <td>
+                                        {{ item.enrollment.school_class }}
+                                    </td>
+
+
+                                    <td>
+
+                                        <div class="bmk-invoice-description">
+                                            {{ item.invoice.description }}
+                                        </div>
+
+                                    </td>
+
+
+                                    <td class="bmk-money">
+                                        ₦{{ item.amount|floatformat:2 }}
+                                    </td>
+
+
+                                    <td class="bmk-money bmk-paid">
+                                        ₦{{ item.paid|floatformat:2 }}
+                                    </td>
+
+
+                                    <td class="bmk-money bmk-outstanding-amount">
+                                        ₦{{ item.balance|floatformat:2 }}
+                                    </td>
+
+
+                                    <td>
+
+                                        <div class="bmk-action-group">
+
+                                            <a
+                                                href="{% url 'fees:student_fees' item.student.id %}"
+                                                class="bmk-view-btn"
+                                            >
+                                                <i class="bi bi-eye"></i>
+                                                View Fees
+                                            </a>
+
+                                            <a
+                                                href="{% url 'fees:record_payment' item.invoice.id %}"
+                                                class="bmk-record-btn"
+                                            >
+                                                <i class="bi bi-cash-coin"></i>
+                                                Record Payment
+                                            </a>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            {% else %}
+
+                <div class="bmk-empty-state">
+
+                    <div class="bmk-empty-icon">
+                        <i class="bi bi-check-circle-fill"></i>
+                    </div>
+
+                    <h3>
+                        No Outstanding Fees
+                    </h3>
+
+                    <p>
+                        All student fee invoices have been fully paid.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
 
     </div>
-    
 
 </div>
 
+
+</div>
 
 {% endblock %}

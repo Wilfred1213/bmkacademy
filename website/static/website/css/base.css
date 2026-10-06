@@ -1,0 +1,224 @@
+/* =========================================================
+   BMK ACADEMY
+   GLOBAL / BASE STYLES
+========================================================= */
+
+:root {
+    --bmk-navy: #0f2747;
+    --bmk-navy-dark: #0b1f33;
+    --bmk-blue: #1d4ed8;
+    --bmk-gold: #e0a83e;
+    --bmk-gold-light: #f3d58a;
+    --bmk-green: #3f7d58;
+    --bmk-cream: #fffaf0;
+    --bmk-light-blue: #eef5ff;
+    --bmk-soft: #f6f8fb;
+    --bmk-white: #ffffff;
+    --bmk-text: #334155;
+    --bmk-muted: #64748b;
+    --bmk-border: #e5eaf0;
+
+    --bmk-radius: 20px;
+
+    --bmk-shadow:
+        0 15px 45px rgba(15, 35, 55, 0.10);
+
+    --bmk-shadow-lg:
+        0 25px 65px rgba(15, 35, 55, 0.16);
+}
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+body {
+    margin: 0;
+    padding: 0;
+
+    font-family:
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    color: var(--bmk-text);
+    background: var(--bmk-white);
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   IMAGES
+========================================================= */
+
+img {
+    max-width: 100%;
+}
+
+
+/* =========================================================
+   LINKS
+========================================================= */
+
+a {
+    color: inherit;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+button,
+.btn {
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+
+/* =========================================================
+   COMMON SECTION LABEL
+========================================================= */
+
+.bmk-section-label {
+    display: inline-block;
+
+    margin-bottom: 10px;
+
+    font-size: 0.8rem;
+    font-weight: 700;
+
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+
+    color: var(--bmk-gold);
+}
+
+
+/* =========================================================
+   COMMON SECTION TITLE
+========================================================= */
+
+.bmk-section-title {
+    margin-bottom: 20px;
+
+    color: var(--bmk-navy);
+
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+/* =========================================
+   BMK SCROLL PROGRESS
+   ========================================= */
+
+   .bmk-scroll-progress {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 0;
+    height: 3px;
+
+    z-index: 2000;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--bmk-blue),
+            var(--bmk-gold)
+        );
+
+    transition: width 0.08s linear;
+}
+
+
+/* =========================================
+   BMK BACK TO TOP
+   ========================================= */
+
+.bmk-back-to-top {
+    position: fixed;
+
+    right: 24px;
+    bottom: 24px;
+
+    width: 48px;
+    height: 48px;
+
+    z-index: 1050;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 0;
+    border-radius: 14px;
+
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--bmk-blue),
+            #2563eb
+        );
+
+    box-shadow:
+        0 12px 28px rgba(15, 35, 55, 0.20);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateY(15px);
+
+    transition:
+        opacity 0.3s ease,
+        visibility 0.3s ease,
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+.bmk-back-to-top.bmk-back-to-top-visible {
+    opacity: 1;
+    visibility: visible;
+
+    transform: translateY(0);
+}
+
+
+.bmk-back-to-top:hover {
+    color: #ffffff;
+
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 17px 35px rgba(15, 35, 55, 0.27);
+}
+
+
+.bmk-back-to-top i {
+    font-size: 1.15rem;
+}
+
+
+@media (max-width: 767.98px) {
+
+    .bmk-back-to-top {
+        right: 16px;
+        bottom: 18px;
+
+        width: 44px;
+        height: 44px;
+
+        border-radius: 12px;
+    }
+
+}

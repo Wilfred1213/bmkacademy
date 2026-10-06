@@ -1,74 +1,76 @@
 {% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
 
-
-{% block title %}
-    Students | BMK Academy
+<link rel="stylesheet" href="{% static 'website/css/students.css' %}">
 {% endblock %}
 
+{% block title %}
+Students | BMK Academy
+{% endblock %}
 
 {% block content %}
 
-<div class="d-flex justify-content-between align-items-center mb-4">
 
-    <div>
+<div class="container bmk-students-page">
 
-        <h2 class="fw-bold mb-1">
+
+<div class="bmk-page-header">
+    <div class="bmk-page-header-content">
+
+        <div class="bmk-eyebrow">
+            <i class="bi bi-mortarboard-fill"></i>
+            Student Management
+        </div>
+
+        <h1 class="bmk-page-title">
             Students
+        </h1>
+
+        <p class="bmk-page-subtitle">
+            Manage and view students enrolled at BMK Academy.
+        </p>
+
+        <a href="#" class="bmk-add-student-btn">
+            <i class="bi bi-person-plus-fill"></i>
+            Add Student
+        </a>
+
+    </div>
+</div>
+
+<div class="bmk-students-card">
+
+    <div class="bmk-students-card-header">
+
+        <h2 class="bmk-section-heading">
+            <span class="bmk-section-icon">
+                <i class="bi bi-people-fill"></i>
+            </span>
+            Student Directory
         </h2>
 
-        <p class="text-muted mb-0">
-            Manage students enrolled at BMK Academy.
-        </p>
+        <span class="bmk-student-count">
+            {{ students|length }} student{{ students|length|pluralize }}
+        </span>
 
     </div>
 
+    <div class="bmk-students-card-body">
 
-    <a
-        href="#"
-        class="btn btn-primary"
-    >
-        Add Student
-    </a>
+        <div class="bmk-students-table-wrapper">
 
-</div>
-
-
-<div class="card shadow-sm">
-
-    <div class="card-body">
-
-        <div class="table-responsive">
-
-            <table class="table table-hover align-middle">
+            <table class="table align-middle bmk-students-table">
 
                 <thead>
-
                     <tr>
-
-                        <th>
-                            Student
-                        </th>
-
-                        <th>
-                            Admission Number
-                        </th>
-
-                        <th>
-                            Gender
-                        </th>
-
-                        <th>
-                            Status
-                        </th>
-
-                        <th>
-                            Action
-                        </th>
-
+                        <th>Student</th>
+                        <th>Admission Number</th>
+                        <th>Gender</th>
+                        <th>Status</th>
+                        <th>Action</th>
                     </tr>
-
                 </thead>
-
 
                 <tbody>
 
@@ -77,55 +79,68 @@
                         <tr>
 
                             <td>
+                                <div class="bmk-student-identity">
 
-                                <strong>
+                                    <div class="bmk-student-avatar">
+                                        {{ student.first_name|first|upper }}
+                                    </div>
 
-                                    {{ student.first_name }}
+                                    <div>
+                                        <p class="bmk-student-name">
+                                            {{ student.first_name }}
 
-                                    {% if student.middle_name %}
-                                        {{ student.middle_name }}
-                                    {% endif %}
+                                            {% if student.middle_name %}
+                                                {{ student.middle_name }}
+                                            {% endif %}
 
-                                    {{ student.last_name }}
+                                            {{ student.last_name }}
+                                        </p>
 
-                                </strong>
+                                        <div class="bmk-admission-number">
+                                            BMK Student
+                                        </div>
+                                    </div>
 
+                                </div>
                             </td>
-
 
                             <td>
-                                {{ student.admission_number }}
+                                <span class="bmk-admission-value">
+                                    {{ student.admission_number }}
+                                </span>
                             </td>
-
 
                             <td>
                                 {{ student.get_gender_display }}
                             </td>
 
-
                             <td>
 
                                 {% if student.status == "active" %}
 
-                                    <span class="badge bg-success">
+                                    <span class="bmk-status-badge bmk-status-active">
+                                        <i class="bi bi-check-circle-fill"></i>
                                         Active
                                     </span>
 
                                 {% elif student.status == "withdrawn" %}
 
-                                    <span class="badge bg-danger">
+                                    <span class="bmk-status-badge bmk-status-withdrawn">
+                                        <i class="bi bi-x-circle-fill"></i>
                                         Withdrawn
                                     </span>
 
                                 {% elif student.status == "graduated" %}
 
-                                    <span class="badge bg-primary">
+                                    <span class="bmk-status-badge bmk-status-graduated">
+                                        <i class="bi bi-mortarboard-fill"></i>
                                         Graduated
                                     </span>
 
                                 {% elif student.status == "transferred" %}
 
-                                    <span class="badge bg-warning text-dark">
+                                    <span class="bmk-status-badge bmk-status-transferred">
+                                        <i class="bi bi-arrow-left-right"></i>
                                         Transferred
                                     </span>
 
@@ -133,13 +148,13 @@
 
                             </td>
 
-
                             <td>
 
                                 <a
                                     href="{% url 'students:student_detail' student.id %}"
-                                    class="btn btn-sm btn-outline-primary"
+                                    class="bmk-view-btn"
                                 >
+                                    <i class="bi bi-eye-fill"></i>
                                     View
                                 </a>
 
@@ -147,20 +162,28 @@
 
                         </tr>
 
-
                     {% empty %}
 
                         <tr>
+                            <td colspan="5">
 
-                            <td
-                                colspan="5"
-                                class="text-center text-muted py-5"
-                            >
+                                <div class="bmk-empty-state">
 
-                                No students found.
+                                    <div class="bmk-empty-icon">
+                                        <i class="bi bi-people"></i>
+                                    </div>
+
+                                    <h4>
+                                        No students found
+                                    </h4>
+
+                                    <p>
+                                        There are currently no students available in the system.
+                                    </p>
+
+                                </div>
 
                             </td>
-
                         </tr>
 
                     {% endfor %}
@@ -172,6 +195,9 @@
         </div>
 
     </div>
+
+</div>
+
 
 </div>
 

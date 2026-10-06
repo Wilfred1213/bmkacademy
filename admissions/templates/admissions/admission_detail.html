@@ -1,652 +1,826 @@
 {% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'website/css/admissions.css' %}"
+>
+{% endblock %}
 
 {% block title %}
-    Admission Details | BMK Academy
+Admission Details | BMK Academy
 {% endblock %}
 
 {% block content %}
 
-<div class="container-fluid py-4">
-
-    <!-- Header -->
-
-    <div class="d-flex justify-content-between align-items-center mb-4">
-
-        <div>
-
-            <a
-                href="{% url 'admissions:admission_list' %}"
-                class="text-decoration-none"
-            >
-                <i class="bi bi-arrow-left me-1"></i>
-                Back to Applications
-            </a>
-
-            <h2 class="fw-bold mt-2 mb-1">
-                Admission Application
-            </h2>
-
-            <p class="text-muted mb-0">
-                Review the applicant's information before making a decision.
-            </p>
-
-        </div>
+<div class="bmk-admission-detail-page">
 
 
-        <div>
+<!-- =====================================================
+     PAGE HEADER
+====================================================== -->
 
-            {% if application.status == "pending" %}
+<section class="bmk-admission-detail-header">
 
-                <span class="badge text-bg-warning fs-6 px-3 py-2">
-                    Pending
-                </span>
+    <div>
 
-            {% elif application.status == "approved" %}
+        <a
+            href="{% url 'admissions:admission_list' %}"
+            class="bmk-admission-back"
+        >
+            <i class="bi bi-arrow-left"></i>
+            Back to Applications
+        </a>
 
-                <span class="badge text-bg-success fs-6 px-3 py-2">
-                    Approved
-                </span>
 
-            {% elif application.status == "rejected" %}
+        <span class="bmk-page-eyebrow">
+            ADMISSION REVIEW
+        </span>
 
-                <span class="badge text-bg-danger fs-6 px-3 py-2">
-                    Rejected
-                </span>
 
-            {% endif %}
+        <h1>
+            Admission Application
+        </h1>
 
-        </div>
+
+        <p>
+            Review the applicant's information before making a decision.
+        </p>
 
     </div>
 
 
-    <div class="row g-4">
+    <div class="bmk-detail-status">
+
+        {% if application.status == "pending" %}
+
+            <span class="bmk-status bmk-status-pending">
+                <span class="bmk-status-dot"></span>
+                Pending
+            </span>
+
+        {% elif application.status == "approved" %}
+
+            <span class="bmk-status bmk-status-approved">
+                <span class="bmk-status-dot"></span>
+                Approved
+            </span>
+
+        {% elif application.status == "rejected" %}
+
+            <span class="bmk-status bmk-status-rejected">
+                <span class="bmk-status-dot"></span>
+                Rejected
+            </span>
+
+        {% endif %}
+
+    </div>
+
+</section>
 
 
-        <!-- Student Information -->
+<!-- =====================================================
+     MAIN CONTENT
+====================================================== -->
 
-        <div class="col-lg-7">
+<div class="bmk-admission-detail-grid">
 
-            <div class="card border-0 shadow-sm">
 
-                <div class="card-body p-4">
+    <!-- =================================================
+         LEFT COLUMN
+    ================================================== -->
 
-                    <h5 class="fw-bold mb-4">
+    <div class="bmk-detail-main">
+
+
+        <!-- STUDENT INFORMATION -->
+
+        <section class="bmk-detail-card">
+
+            <div class="bmk-detail-card-header">
+
+                <div class="bmk-detail-card-icon bmk-icon-blue">
+                    <i class="bi bi-person"></i>
+                </div>
+
+                <div>
+
+                    <span>
+                        APPLICANT
+                    </span>
+
+                    <h2>
                         Student Information
-                    </h5>
-
-
-                    <div class="row g-4">
-
-                        <div class="col-md-6">
-
-                            <small class="text-muted d-block">
-                                First Name
-                            </small>
-
-                            <span class="fw-semibold">
-                                {{ application.first_name }}
-                            </span>
-
-                        </div>
-
-
-                        <div class="col-md-6">
-
-                            <small class="text-muted d-block">
-                                Last Name
-                            </small>
-
-                            <span class="fw-semibold">
-                                {{ application.last_name }}
-                            </span>
-
-                        </div>
-
-
-                        <div class="col-md-6">
-
-                            <small class="text-muted d-block">
-                                Date of Birth
-                            </small>
-
-                            <span class="fw-semibold">
-                                {{ application.date_of_birth|date:"M d, Y" }}
-                            </span>
-
-                        </div>
-
-
-                        <div class="col-md-6">
-
-                            <small class="text-muted d-block">
-                                Gender
-                            </small>
-
-                            <span class="fw-semibold">
-                                {{ application.gender|title }}
-                            </span>
-
-                        </div>
-
-
-                        <div class="col-md-6">
-
-                            <small class="text-muted d-block">
-                                Desired Class
-                            </small>
-
-                            <span class="fw-semibold">
-                                {{ application.desired_class }}
-                            </span>
-
-                        </div>
-
-
-                        <div class="col-md-6">
-
-                            <small class="text-muted d-block">
-                                Date Submitted
-                            </small>
-
-                            <span class="fw-semibold">
-                                {{ application.submitted_at|date:"M d, Y H:i" }}
-                            </span>
-
-                        </div>
-
-                    </div>
+                    </h2>
 
                 </div>
 
             </div>
 
 
-            <!-- Parent Information -->
+            <div class="bmk-detail-fields">
 
-            <div class="card border-0 shadow-sm mt-4">
+                <div class="bmk-detail-field">
 
-                <div class="card-body p-4">
-
-                    <h5 class="fw-bold mb-4">
-                        Parent / Guardian Information
-                    </h5>
-
-
-                    <div class="row g-4">
-
-                        <div class="col-md-6">
-
-                            <small class="text-muted d-block">
-                                Parent Name
-                            </small>
-
-                            <span class="fw-semibold">
-                                {{ application.parent_name }}
-                            </span>
-
-                        </div>
-
-
-                        <div class="col-md-6">
-
-                            <small class="text-muted d-block">
-                                Phone
-                            </small>
-
-                            <span class="fw-semibold">
-                                {{ application.parent_phone }}
-                            </span>
-
-                        </div>
-
-
-                        <div class="col-md-6">
-
-                            <small class="text-muted d-block">
-                                Email
-                            </small>
-
-                            <span class="fw-semibold">
-                                {{ application.parent_email }}
-                            </span>
-
-                        </div>
-
-
-                        <div class="col-md-6">
-
-                            <small class="text-muted d-block">
-                                Occupation
-                            </small>
-
-                            <span class="fw-semibold">
-                                {{ application.parent_occupation|default:"Not provided" }}
-                            </span>
-
-                        </div>
-
-
-                        <div class="col-12">
-
-                            <small class="text-muted d-block">
-                                Address
-                            </small>
-
-                            <span class="fw-semibold">
-                                {{ application.parent_address|default:"Not provided" }}
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- Application Summary -->
-
-        <div class="col-lg-5">
-
-            <div class="card border-0 shadow-sm">
-
-                <div class="card-body p-4">
-
-                    <h5 class="fw-bold mb-4">
-                        Application Summary
-                    </h5>
-
-
-                    <div class="mb-3">
-
-                        <small class="text-muted d-block">
-                            Academic Year
-                        </small>
-
-                        <span class="fw-semibold">
-                            {{ application.academic_year }}
-                        </span>
-
-                    </div>
-
-
-                    <div class="mb-3">
-
-                        <small class="text-muted d-block">
-                            Term
-                        </small>
-
-                        <span class="fw-semibold">
-                            {{ application.term }}
-                        </span>
-
-                    </div>
-
-
-                    <div class="mb-3">
-
-                        <small class="text-muted d-block">
-                            Desired Class
-                        </small>
-
-                        <span class="fw-semibold">
-                            {{ application.desired_class }}
-                        </span>
-
-                    </div>
-
-
-                    <div class="mb-3">
-
-                        <small class="text-muted d-block">
-                            Application Status
-                        </small>
-
-                        <span class="fw-semibold">
-                            {{ application.get_status_display }}
-                        </span>
-
-                    </div>
-
-
-                    {% if application.reviewed_at %}
-
-                        <div class="mb-3">
-
-                            <small class="text-muted d-block">
-                                Reviewed
-                            </small>
-
-                            <span class="fw-semibold">
-                                {{ application.reviewed_at|date:"M d, Y H:i" }}
-                            </span>
-
-                        </div>
-
-                    {% endif %}
-
-
-                    {% if application.remarks %}
-
-                        <div class="mt-4">
-
-                            <small class="text-muted d-block mb-1">
-                                Remarks
-                            </small>
-
-                            <div class="bg-light rounded p-3">
-                                {{ application.remarks }}
-                            </div>
-
-                        </div>
-
-                    {% endif %}
-
-                </div>
-
-            </div>
-
-
-            <!-- Actions -->
-
-            <div class="card border-0 shadow-sm mt-4">
-
-                <div class="card-body p-4">
-
-                    {% if application.status == "pending" %}
-
-                        <!-- Pending Application -->
-
-                        <h5 class="fw-bold mb-3">
-                            Application Decision
-                        </h5>
-
-                        <p class="text-muted small">
-                            Review all information carefully before
-                            approving or rejecting this application.
-                        </p>
-
-                        <div class="d-grid gap-2">
-
-                            <!-- Approve -->
-
-                            <form
-                                method="post"
-                                action="{% url 'admissions:approve_application' application.id %}"
-                                onsubmit="return confirm('Are you sure you want to approve this admission application?');"
-                            >
-                                {% csrf_token %}
-
-                                <button
-                                    type="submit"
-                                    class="btn btn-success w-100"
-                                >
-                                    <i class="bi bi-check-circle me-2"></i>
-                                    Approve Application
-                                </button>
-
-                            </form>
-
-
-                            <!-- Reject -->
-
-                            <form
-                                method="post"
-                                action="{% url 'admissions:reject_application' application.id %}"
-                                onsubmit="return confirm('Are you sure you want to reject this application?');"
-                            >
-                                {% csrf_token %}
-
-                                <button
-                                    type="submit"
-                                    class="btn btn-outline-danger w-100"
-                                >
-                                    <i class="bi bi-x-circle me-2"></i>
-                                    Reject Application
-                                </button>
-
-                            </form>
-
-                        </div>
-
-
-                    {% elif application.status == "approved" %}
-
-                        <!-- Approved Application -->
-
-                        <h5 class="fw-bold mb-3">
-                            Admission Approved
-                        </h5>
-
-
-                        {% if application.claimed_at %}
-
-                            <!-- Parent Already Claimed -->
-
-                            <div class="alert alert-success mb-0">
-
-                                <i class="bi bi-check-circle me-2"></i>
-
-                                The parent has already claimed this
-                                admission and created their account.
-
-                            </div>
-
-
-                        {% else %}
-
-                            <!-- Parent Has Not Claimed -->
-
-                            <p class="text-muted small">
-                                The admission has been approved. The parent
-                                can create their account using the secure
-                                claim link sent by email.
-                            </p>
-
-
-                            <div class="d-grid gap-2">
-
-
-                                <!-- Resend Existing Claim Link -->
-
-                                <form
-                                    method="post"
-                                    action="{% url 'admissions:resend_admission_email' application.id %}"
-                                    onsubmit="return confirm('Resend the existing admission claim link to the parent?');"
-                                >
-                                    {% csrf_token %}
-
-                                    <button
-                                        type="submit"
-                                        class="btn btn-outline-primary w-100"
-                                    >
-                                        <i class="bi bi-envelope me-2"></i>
-                                        Resend Admission Email
-                                    </button>
-
-                                </form>
-
-
-                                <!-- Generate New Claim Link -->
-
-                                <form
-                                    method="post"
-                                    action="{% url 'admissions:regenerate_claim_token' application.id %}"
-                                    onsubmit="return confirm('Generate a new claim link? The previous claim link will no longer be valid.');"
-                                >
-                                    {% csrf_token %}
-
-                                    <button
-                                        type="submit"
-                                        class="btn btn-outline-warning w-100"
-                                    >
-                                        <i class="bi bi-arrow-repeat me-2"></i>
-                                        Generate New Claim Link
-                                    </button>
-
-                                </form>
-                                <div class="text-muted small mb-2">
-                                    <i class="bi bi-info-circle me-1"></i>
-                                    Resends the existing admission email and claim link to the
-                                    parent's email address. The current claim link remains valid.
-                                </div>
-
-                            </div>
-
-                        {% endif %}
-
-
-                    {% elif application.status == "rejected" %}
-
-                        <!-- Rejected Application -->
-
-                        <h5 class="fw-bold mb-3">
-                            Application Rejected
-                        </h5>
-
-                        <div class="alert alert-danger mb-0">
-
-                            <i class="bi bi-x-circle me-2"></i>
-
-                            This admission application has been rejected.
-
-                        </div>
-
-                    {% endif %}
-
-                </div>
-
-            </div>
-
-
-            <!-- Admission Email Status -->
-
-            <div class="card border-0 shadow-sm mt-4">
-
-                <div class="card-header bg-white">
+                    <small>
+                        First Name
+                    </small>
 
                     <strong>
-                        <i class="bi bi-envelope me-2"></i>
-                        Admission Email Status
+                        {{ application.first_name }}
                     </strong>
 
                 </div>
 
 
-                <div class="card-body">
+                <div class="bmk-detail-field">
 
-                    <!-- Email Status -->
+                    <small>
+                        Last Name
+                    </small>
 
-                    <p class="mb-3">
+                    <strong>
+                        {{ application.last_name }}
+                    </strong>
 
-                        <strong>
-                            Status:
-                        </strong>
-                    
-                        {% if application.admission_email_sent %}
-                    
-                            <span class="badge bg-success">
-                                <i class="bi bi-check-circle me-1"></i>
-                                Sent Successfully
-                            </span>
-                    
-                        {% elif application.admission_email_last_error %}
-                    
-                            <span class="badge bg-danger">
-                                <i class="bi bi-exclamation-triangle me-1"></i>
-                                Delivery Failed
-                            </span>
-                    
-                        {% else %}
-                    
-                            <span class="badge bg-warning text-dark">
-                                <i class="bi bi-clock me-1"></i>
-                                Not Sent
-                            </span>
-                    
-                        {% endif %}
-                    
-                    </p>
+                </div>
 
 
-                    <!-- Attempts -->
+                <div class="bmk-detail-field">
 
-                    <p class="mb-3">
+                    <small>
+                        Date of Birth
+                    </small>
 
-                        <strong>
-                            Attempts:
-                        </strong>
+                    <strong>
+                        {{ application.date_of_birth|date:"M d, Y" }}
+                    </strong>
 
-                        {{ application.admission_email_attempts }}
-
-                    </p>
-
-
-                    <!-- Last Successful Send -->
-
-                    {% if application.admission_email_sent_at %}
-
-                        <p class="mb-3">
-
-                            <strong>
-                                Last Successful Send:
-                            </strong>
-
-                            {{ application.admission_email_sent_at|date:"M d, Y H:i" }}
-
-                        </p>
-
-                    {% endif %}
+                </div>
 
 
-                    <!-- Last Error -->
+                <div class="bmk-detail-field">
 
-                    {% if application.admission_email_last_error %}
+                    <small>
+                        Gender
+                    </small>
 
-                        <div class="alert alert-danger">
+                    <strong>
+                        {{ application.gender|title }}
+                    </strong>
 
-                            <div class="fw-semibold mb-2">
+                </div>
 
-                                <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                                The admission email could not be delivered.
 
-                            </div>
+                <div class="bmk-detail-field">
 
-                            <div class="small mb-3">
+                    <small>
+                        Desired Class
+                    </small>
 
-                                The admission itself is still valid. You can use
-                                <strong>Resend Admission Email</strong> to try sending
-                                the existing claim link again.
+                    <strong>
+                        {{ application.desired_class }}
+                    </strong>
 
-                            </div>
+                </div>
 
-                            <hr>
 
-                            <div class="small">
+                <div class="bmk-detail-field">
 
-                                <strong>Technical Error:</strong>
+                    <small>
+                        Date Submitted
+                    </small>
 
-                                <div class="mt-1">
-                                    {{ application.admission_email_last_error }}
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    {% endif %}
+                    <strong>
+                        {{ application.submitted_at|date:"M d, Y H:i" }}
+                    </strong>
 
                 </div>
 
             </div>
 
-        </div>
+        </section>
+
+
+        <!-- PARENT INFORMATION -->
+
+        <section class="bmk-detail-card">
+
+            <div class="bmk-detail-card-header">
+
+                <div class="bmk-detail-card-icon bmk-icon-gold">
+                    <i class="bi bi-people"></i>
+                </div>
+
+                <div>
+
+                    <span>
+                        PARENT / GUARDIAN
+                    </span>
+
+                    <h2>
+                        Parent Information
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="bmk-detail-fields">
+
+                <div class="bmk-detail-field">
+
+                    <small>
+                        Parent Name
+                    </small>
+
+                    <strong>
+                        {{ application.parent_name }}
+                    </strong>
+
+                </div>
+
+
+                <div class="bmk-detail-field">
+
+                    <small>
+                        Phone
+                    </small>
+
+                    <strong>
+                        {{ application.parent_phone }}
+                    </strong>
+
+                </div>
+
+
+                <div class="bmk-detail-field">
+
+                    <small>
+                        Email
+                    </small>
+
+                    <strong>
+                        {{ application.parent_email }}
+                    </strong>
+
+                </div>
+
+
+                <div class="bmk-detail-field">
+
+                    <small>
+                        Occupation
+                    </small>
+
+                    <strong>
+                        {{ application.parent_occupation|default:"Not provided" }}
+                    </strong>
+
+                </div>
+
+
+                <div class="bmk-detail-field bmk-detail-field-full">
+
+                    <small>
+                        Address
+                    </small>
+
+                    <strong>
+                        {{ application.parent_address|default:"Not provided" }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
 
     </div>
+
+
+    <!-- =================================================
+         RIGHT COLUMN
+    ================================================== -->
+
+    <div class="bmk-detail-sidebar">
+
+
+        <!-- APPLICATION SUMMARY -->
+
+        <section class="bmk-detail-card">
+
+            <div class="bmk-detail-card-header">
+
+                <div class="bmk-detail-card-icon bmk-icon-green">
+                    <i class="bi bi-file-earmark-text"></i>
+                </div>
+
+                <div>
+
+                    <span>
+                        APPLICATION
+                    </span>
+
+                    <h2>
+                        Summary
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="bmk-summary-list">
+
+                <div class="bmk-summary-item">
+
+                    <span>
+                        Academic Year
+                    </span>
+
+                    <strong>
+                        {{ application.academic_year }}
+                    </strong>
+
+                </div>
+
+
+                <div class="bmk-summary-item">
+
+                    <span>
+                        Term
+                    </span>
+
+                    <strong>
+                        {{ application.term }}
+                    </strong>
+
+                </div>
+
+
+                <div class="bmk-summary-item">
+
+                    <span>
+                        Desired Class
+                    </span>
+
+                    <strong>
+                        {{ application.desired_class }}
+                    </strong>
+
+                </div>
+
+
+                <div class="bmk-summary-item">
+
+                    <span>
+                        Application Status
+                    </span>
+
+                    <strong>
+                        {{ application.get_status_display }}
+                    </strong>
+
+                </div>
+
+
+                {% if application.reviewed_at %}
+
+                    <div class="bmk-summary-item">
+
+                        <span>
+                            Reviewed
+                        </span>
+
+                        <strong>
+                            {{ application.reviewed_at|date:"M d, Y H:i" }}
+                        </strong>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            {% if application.remarks %}
+
+                <div class="bmk-detail-remarks">
+
+                    <small>
+                        REMARKS
+                    </small>
+
+                    <p>
+                        {{ application.remarks }}
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+
+        <!-- =================================================
+             ACTIONS
+        ================================================== -->
+
+        <section class="bmk-detail-card bmk-action-card">
+
+            {% if application.status == "pending" %}
+
+                <div class="bmk-detail-card-header">
+
+                    <div class="bmk-detail-card-icon bmk-icon-blue">
+                        <i class="bi bi-clipboard-check"></i>
+                    </div>
+
+                    <div>
+
+                        <span>
+                            DECISION
+                        </span>
+
+                        <h2>
+                            Application Decision
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <p class="bmk-action-description">
+
+                    Review all information carefully before
+                    approving or rejecting this application.
+
+                </p>
+
+
+                <div class="bmk-action-buttons">
+
+                    <!-- APPROVE -->
+
+                    <form
+                        method="post"
+                        action="{% url 'admissions:approve_application' application.id %}"
+                        onsubmit="return confirm('Are you sure you want to approve this admission application?');"
+                    >
+
+                        {% csrf_token %}
+
+                        <button
+                            type="submit"
+                            class="bmk-action-button bmk-approve-button"
+                        >
+
+                            <i class="bi bi-check-circle"></i>
+
+                            <span>
+                                Approve Application
+                            </span>
+
+                        </button>
+
+                    </form>
+
+
+                    <!-- REJECT -->
+
+                    <form
+                        method="post"
+                        action="{% url 'admissions:reject_application' application.id %}"
+                        onsubmit="return confirm('Are you sure you want to reject this application?');"
+                    >
+
+                        {% csrf_token %}
+
+                        <button
+                            type="submit"
+                            class="bmk-action-button bmk-reject-button"
+                        >
+
+                            <i class="bi bi-x-circle"></i>
+
+                            <span>
+                                Reject Application
+                            </span>
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+            {% elif application.status == "approved" %}
+
+                <div class="bmk-detail-card-header">
+
+                    <div class="bmk-detail-card-icon bmk-icon-green">
+                        <i class="bi bi-check-circle"></i>
+                    </div>
+
+                    <div>
+
+                        <span>
+                            APPROVED
+                        </span>
+
+                        <h2>
+                            Admission Approved
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                {% if application.claimed_at %}
+
+                    <div class="bmk-action-success">
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                        <div>
+
+                            <strong>
+                                Parent Account Claimed
+                            </strong>
+
+                            <p>
+                                The parent has already claimed this
+                                admission and created their account.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                {% else %}
+
+                    <p class="bmk-action-description">
+
+                        The admission has been approved. The parent
+                        can create their account using the secure
+                        claim link sent by email.
+
+                    </p>
+
+
+                    <div class="bmk-action-buttons">
+
+                        <!-- RESEND -->
+
+                        <form
+                            method="post"
+                            action="{% url 'admissions:resend_admission_email' application.id %}"
+                            onsubmit="return confirm('Resend the existing admission claim link to the parent?');"
+                        >
+
+                            {% csrf_token %}
+
+                            <button
+                                type="submit"
+                                class="bmk-action-button bmk-email-button"
+                            >
+
+                                <i class="bi bi-envelope"></i>
+
+                                <span>
+                                    Resend Admission Email
+                                </span>
+
+                            </button>
+
+                        </form>
+
+
+                        <!-- REGENERATE -->
+
+                        <form
+                            method="post"
+                            action="{% url 'admissions:regenerate_claim_token' application.id %}"
+                            onsubmit="return confirm('Generate a new claim link? The previous claim link will no longer be valid.');"
+                        >
+
+                            {% csrf_token %}
+
+                            <button
+                                type="submit"
+                                class="bmk-action-button bmk-regenerate-button"
+                            >
+
+                                <i class="bi bi-arrow-repeat"></i>
+
+                                <span>
+                                    Generate New Claim Link
+                                </span>
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+
+                    <div class="bmk-action-note">
+
+                        <i class="bi bi-info-circle"></i>
+
+                        <span>
+                            Resends the existing admission email and
+                            claim link. The current claim link remains valid.
+                        </span>
+
+                    </div>
+
+                {% endif %}
+
+
+            {% elif application.status == "rejected" %}
+
+                <div class="bmk-detail-card-header">
+
+                    <div class="bmk-detail-card-icon bmk-icon-red">
+                        <i class="bi bi-x-circle"></i>
+                    </div>
+
+                    <div>
+
+                        <span>
+                            REJECTED
+                        </span>
+
+                        <h2>
+                            Application Rejected
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="bmk-action-danger">
+
+                    <i class="bi bi-x-circle-fill"></i>
+
+                    <span>
+                        This admission application has been rejected.
+                    </span>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+
+        <!-- =================================================
+             EMAIL STATUS
+        ================================================== -->
+
+        <section class="bmk-detail-card">
+
+            <div class="bmk-detail-card-header">
+
+                <div class="bmk-detail-card-icon bmk-icon-purple">
+                    <i class="bi bi-envelope"></i>
+                </div>
+
+                <div>
+
+                    <span>
+                        COMMUNICATION
+                    </span>
+
+                    <h2>
+                        Admission Email
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="bmk-email-details">
+
+                <div class="bmk-email-status-row">
+
+                    <span>
+                        Status
+                    </span>
+
+                    {% if application.admission_email_sent %}
+
+                        <span class="bmk-email-status bmk-email-sent">
+                            <i class="bi bi-check-circle-fill"></i>
+                            Sent Successfully
+                        </span>
+
+                    {% elif application.admission_email_last_error %}
+
+                        <span class="bmk-email-status bmk-email-failed">
+                            <i class="bi bi-exclamation-circle-fill"></i>
+                            Delivery Failed
+                        </span>
+
+                    {% else %}
+
+                        <span class="bmk-email-status bmk-email-not-sent">
+                            <i class="bi bi-clock-fill"></i>
+                            Not Sent
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="bmk-email-status-row">
+
+                    <span>
+                        Attempts
+                    </span>
+
+                    <strong>
+                        {{ application.admission_email_attempts }}
+                    </strong>
+
+                </div>
+
+
+                {% if application.admission_email_sent_at %}
+
+                    <div class="bmk-email-status-row">
+
+                        <span>
+                            Last Successful Send
+                        </span>
+
+                        <strong>
+                            {{ application.admission_email_sent_at|date:"M d, Y H:i" }}
+                        </strong>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            {% if application.admission_email_last_error %}
+
+                <div class="bmk-email-error">
+
+                    <div class="bmk-email-error-title">
+
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+
+                        <strong>
+                            Admission email could not be delivered
+                        </strong>
+
+                    </div>
+
+
+                    <p>
+
+                        The admission itself is still valid.
+                        You can use <strong>Resend Admission Email</strong>
+                        to try sending the existing claim link again.
+
+                    </p>
+
+
+                    <div class="bmk-email-error-technical">
+
+                        <span>
+                            Technical Error
+                        </span>
+
+                        <p>
+                            {{ application.admission_email_last_error }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+    </div>
+
+</div>
+
 
 </div>
 

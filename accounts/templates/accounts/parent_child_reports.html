@@ -1,79 +1,147 @@
 {% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+
+<link rel="stylesheet" href="{% static 'website/css/reports.css' %}">
+{% endblock %}
 
 {% block title %}
-    {{ child.first_name }}'s Reports | BMK Academy
+{{ child.first_name }}'s Reports | BMK Academy
 {% endblock %}
 
 {% block content %}
 
-<div class="container py-4">
+<section class="bmk-child-reports">
 
-    <!-- HEADER -->
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+<div class="container">
 
-        <div>
+    <!-- =========================
+         PAGE HEADER
+         ========================= -->
 
-            <h2 class="fw-bold mb-1">
-                {{ child.first_name }}'s Reports
-            </h2>
+    <div class="bmk-report-page-header">
 
-            <p class="text-muted mb-0">
-                Academic reports available for viewing.
-            </p>
+        <div class="bmk-report-header-content">
+
+            <div class="bmk-report-header-left">
+
+                <div class="bmk-report-avatar">
+                    <i class="bi bi-file-earmark-bar-graph"></i>
+                </div>
+
+                <div>
+
+                    <p class="bmk-report-eyebrow">
+                        Academic Records
+                    </p>
+
+                    <h2>
+                        {{ child.first_name }}'s Reports
+                    </h2>
+
+                    <p>
+                        Academic reports available for viewing.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <a
+                href="{% url 'accounts:parent_home' %}"
+                class="bmk-report-back-btn"
+            >
+                <i class="bi bi-arrow-left"></i>
+                Back to Children
+            </a>
 
         </div>
-
-        <a
-            href="{% url 'accounts:parent_home' %}"
-            class="btn btn-outline-secondary"
-        >
-            <i class="bi bi-arrow-left"></i>
-            Back to Children
-        </a>
 
     </div>
 
 
-    <!-- CHILD INFORMATION -->
+    <!-- =========================
+         STUDENT INFORMATION
+         ========================= -->
 
-    <div class="card shadow-sm border-0 mb-4">
+    <div class="bmk-student-info-card">
 
-        <div class="card-body">
+        <div class="bmk-card-heading">
 
-            <h5 class="fw-bold mb-3">
+            <div class="bmk-card-heading-icon">
+                <i class="bi bi-person-vcard"></i>
+            </div>
+
+            <h5>
                 Student Information
             </h5>
 
-            <div class="row">
+        </div>
+
+        <div class="bmk-student-info-body">
+
+            <div class="row g-3">
 
                 <div class="col-md-4">
 
-                    <strong>Name:</strong>
+                    <div class="bmk-student-detail">
 
-                    {{ child.first_name }}
+                        <span class="bmk-student-detail-label">
+                            Student Name
+                        </span>
 
-                    {% if child.middle_name %}
-                        {{ child.middle_name }}
-                    {% endif %}
+                        <span class="bmk-student-detail-value">
 
-                    {{ child.last_name }}
+                            {{ child.first_name }}
+
+                            {% if child.middle_name %}
+                                {{ child.middle_name }}
+                            {% endif %}
+
+                            {{ child.last_name }}
+
+                        </span>
+
+                    </div>
 
                 </div>
 
+
                 <div class="col-md-4">
 
-                    <strong>Admission No:</strong>
+                    <div class="bmk-student-detail">
 
-                    {{ child.admission_number }}
+                        <span class="bmk-student-detail-label">
+                            Admission Number
+                        </span>
+
+                        <span class="bmk-student-detail-value">
+                            {{ child.admission_number }}
+                        </span>
+
+                    </div>
 
                 </div>
 
+
                 <div class="col-md-4">
 
-                    <strong>Status:</strong>
+                    <div class="bmk-student-detail">
 
-                    {{ child.get_status_display }}
+                        <span class="bmk-student-detail-label">
+                            Student Status
+                        </span>
+
+                        <span class="bmk-student-detail-value">
+
+                            <span class="bmk-status-badge">
+                                {{ child.get_status_display }}
+                            </span>
+
+                        </span>
+
+                    </div>
 
                 </div>
 
@@ -84,120 +152,158 @@
     </div>
 
 
-    <!-- REPORTS -->
+    <!-- =========================
+         PUBLISHED REPORTS
+         ========================= -->
 
-    <div class="card shadow-sm border-0">
+    <div class="bmk-reports-card">
 
-        <div class="card-body p-4">
+        <div class="bmk-reports-card-header">
 
-            <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="bmk-reports-title">
+
+                <div class="bmk-reports-title-icon">
+                    <i class="bi bi-journal-check"></i>
+                </div>
 
                 <div>
 
-                    <h5 class="fw-bold mb-1">
+                    <h5>
                         Published Reports
                     </h5>
 
-                    <p class="text-muted mb-0">
+                    <p>
                         Reports released by the school.
                     </p>
 
                 </div>
 
-                <span class="badge bg-primary">
-                    {{ reports|length }}
-                    Report{{ reports|length|pluralize }}
-                </span>
-
             </div>
 
+            <span class="bmk-report-count">
 
-            {% if reports %}
+                <i class="bi bi-file-earmark-text"></i>
 
-                <div class="table-responsive">
+                {{ reports|length }}
+                Report{{ reports|length|pluralize }}
 
-                    <table class="table table-hover align-middle">
+            </span>
 
-                        <thead class="table-light">
+        </div>
+
+
+        {% if reports %}
+
+            <div class="bmk-reports-table-wrapper">
+
+                <table class="table bmk-reports-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Academic Year
+                            </th>
+
+                            <th>
+                                Term
+                            </th>
+
+                            <th>
+                                Class
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for report in reports %}
 
                             <tr>
 
-                                <th>
-                                    Academic Year
-                                </th>
+                                <td>
+                                    {{ report.enrollment.academic_year }}
+                                </td>
 
-                                <th>
-                                    Term
-                                </th>
+                                <td>
 
-                                <th>
-                                    Class
-                                </th>
+                                    <span class="bmk-term-badge">
 
-                                <th>
-                                    Action
-                                </th>
+                                        <i class="bi bi-calendar3"></i>
+
+                                        {{ report.enrollment.term }}
+
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <span class="bmk-class-name">
+
+                                        <i class="bi bi-mortarboard"></i>
+
+                                        {{ report.enrollment.school_class }}
+
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <a
+                                        href="{% url 'accounts:parent_view_report' report.enrollment.id %}"
+                                        class="bmk-view-report-btn"
+                                    >
+                                        <i class="bi bi-file-earmark-text"></i>
+                                        View Report
+                                    </a>
+
+                                </td>
 
                             </tr>
 
-                        </thead>
+                        {% endfor %}
 
+                    </tbody>
 
-                        <tbody>
+                </table>
 
-                            {% for report in reports %}
+            </div>
 
-                                <tr>
+        {% else %}
 
-                                    <td>
-                                        {{ report.enrollment.academic_year }}
-                                    </td>
+            <div class="bmk-no-reports">
 
-                                    <td>
-                                        {{ report.enrollment.term }}
-                                    </td>
-
-                                    <td>
-                                        {{ report.enrollment.school_class }}
-                                    </td>
-
-                                    <td>
-
-                                        <a
-                                            href="{% url 'accounts:parent_view_report' report.enrollment.id %}"
-                                            class="btn btn-sm btn-primary"
-                                        >
-                                            <i class="bi bi-file-earmark-text"></i>
-                                            View Report
-                                        </a>
-
-                                    </td>
-
-                                </tr>
-
-                            {% endfor %}
-
-                        </tbody>
-
-                    </table>
-
+                <div class="bmk-no-reports-icon">
+                    <i class="bi bi-file-earmark-x"></i>
                 </div>
 
-            {% else %}
+                <h6>
+                    No Published Reports Yet
+                </h6>
 
-                <div class="alert alert-info mb-0">
-
+                <p>
                     No published reports are currently available
                     for this student.
+                </p>
 
-                </div>
+            </div>
 
-            {% endif %}
-
-        </div>
+        {% endif %}
 
     </div>
 
 </div>
+
+
+</section>
 
 {% endblock %}

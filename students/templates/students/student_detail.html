@@ -1,76 +1,102 @@
 {% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
 
-
-{% block title %}
-    {{ student.first_name }} {{ student.last_name }} | BMK Academy
+<link rel="stylesheet" href="{% static 'website/css/students.css' %}">
 {% endblock %}
 
+{% block title %}
+{{ student.first_name }} {{ student.last_name }} | BMK Academy
+{% endblock %}
 
 {% block content %}
 
-<div class="d-flex justify-content-between align-items-center mb-4">
 
-    <div>
+<div class="container bmk-student-detail">
 
-        <h2 class="fw-bold mb-1">
+<!-- Student Header -->
 
-            {{ student.first_name }}
+<div class="bmk-student-hero">
 
-            {% if student.middle_name %}
-                {{ student.middle_name }}
-            {% endif %}
+    <div class="bmk-student-hero-content">
 
-            {{ student.last_name }}
+        <a
+            href="{% url 'students:student_list' %}"
+            class="bmk-back-link"
+        >
+            <i class="bi bi-arrow-left"></i>
+            Back to Students
+        </a>
 
-        </h2>
+        <div class="bmk-student-hero-main">
 
-        <p class="text-muted mb-0">
-            {{ student.admission_number }}
-        </p>
+            <div class="bmk-student-large-avatar">
+                {{ student.first_name|first|upper }}
+            </div>
 
-    </div>
+            <div>
 
+                <div class="bmk-student-eyebrow">
+                    Student Profile
+                </div>
 
-    <a
-        href="{% url 'students:student_list' %}"
-        class="btn btn-outline-secondary"
-    >
-        ← Back to Students
-    </a>
+                <h1 class="bmk-student-title">
 
-</div>
+                    {{ student.first_name }}
 
+                    {% if student.middle_name %}
+                        {{ student.middle_name }}
+                    {% endif %}
 
-<div class="row g-4">
+                    {{ student.last_name }}
 
+                </h1>
 
-    <!-- Student Information -->
-
-    <div class="col-lg-8">
-
-        <div class="card shadow-sm h-100">
-
-            <div class="card-header">
-
-                <strong>
-                    Student Information
-                </strong>
+                <p class="bmk-student-admission">
+                    Admission Number: {{ student.admission_number }}
+                </p>
 
             </div>
 
+        </div>
 
-            <div class="card-body">
+    </div>
+
+</div>
+
+<div class="row g-4">
+
+    <!-- Main Content -->
+
+    <div class="col-lg-8">
+
+        <!-- Student Information -->
+
+        <div class="bmk-content-card">
+
+            <div class="bmk-card-header">
+
+                <span class="bmk-card-icon">
+                    <i class="bi bi-person-vcard-fill"></i>
+                </span>
+
+                <h2 class="bmk-card-title">
+                    Student Information
+                </h2>
+
+            </div>
+
+            <div class="bmk-card-body">
 
                 <div class="row g-4">
 
-
                     <div class="col-md-6">
 
-                        <small class="text-muted">
+                        <span class="bmk-info-label">
                             Full Name
-                        </small>
+                        </span>
 
-                        <div class="fw-semibold">
+                        <div class="bmk-info-value">
 
                             {{ student.first_name }}
 
@@ -84,88 +110,87 @@
 
                     </div>
 
-
                     <div class="col-md-6">
 
-                        <small class="text-muted">
+                        <span class="bmk-info-label">
                             Admission Number
-                        </small>
+                        </span>
 
-                        <div class="fw-semibold">
+                        <div class="bmk-info-value">
                             {{ student.admission_number }}
                         </div>
 
                     </div>
 
-
                     <div class="col-md-6">
 
-                        <small class="text-muted">
+                        <span class="bmk-info-label">
                             Date of Birth
-                        </small>
+                        </span>
 
-                        <div class="fw-semibold">
+                        <div class="bmk-info-value">
                             {{ student.date_of_birth }}
                         </div>
 
                     </div>
 
-
                     <div class="col-md-6">
 
-                        <small class="text-muted">
+                        <span class="bmk-info-label">
                             Gender
-                        </small>
+                        </span>
 
-                        <div class="fw-semibold">
+                        <div class="bmk-info-value">
                             {{ student.get_gender_display }}
                         </div>
 
                     </div>
 
-
                     <div class="col-md-6">
 
-                        <small class="text-muted">
+                        <span class="bmk-info-label">
                             Date Admitted
-                        </small>
+                        </span>
 
-                        <div class="fw-semibold">
+                        <div class="bmk-info-value">
                             {{ student.date_admitted }}
                         </div>
 
                     </div>
 
-
                     <div class="col-md-6">
 
-                        <small class="text-muted">
+                        <span class="bmk-info-label">
                             Current Status
-                        </small>
+                        </span>
 
                         <div>
 
                             {% if student.status == "active" %}
 
-                                <span class="badge bg-success">
+                                <span class="bmk-status-badge bmk-status-active">
+                                    <i class="bi bi-check-circle-fill"></i>
                                     Active
                                 </span>
 
                             {% elif student.status == "withdrawn" %}
 
-                                <span class="badge bg-danger">
+                                <span class="bmk-status-badge bmk-status-withdrawn">
+                                    <i class="bi bi-x-circle-fill"></i>
                                     Withdrawn
                                 </span>
 
                             {% elif student.status == "graduated" %}
 
-                                <span class="badge bg-primary">
+                                <span class="bmk-status-badge bmk-status-graduated">
+                                    <i class="bi bi-mortarboard-fill"></i>
                                     Graduated
                                 </span>
 
                             {% elif student.status == "transferred" %}
 
-                                <span class="badge bg-warning text-dark">
+                                <span class="bmk-status-badge bmk-status-transferred">
+                                    <i class="bi bi-arrow-left-right"></i>
                                     Transferred
                                 </span>
 
@@ -175,678 +200,744 @@
 
                     </div>
 
-
                 </div>
 
-            </div>
-
-            <div class="card shadow-sm mt-4">
-
-                <div class="card-header">
-            
-                    <strong>
-                        Current Enrollment
-                    </strong>
-            
-                </div>
-            
-            
-                <div class="card-body">
-            
-                    {% if current_enrollment %}
-            
-                        <div class="row g-4">
-            
-                            <div class="col-md-6">
-            
-                                <small class="text-muted">
-                                    Current Class
-                                </small>
-            
-                                <div class="fw-semibold">
-                                    {{ current_enrollment.school_class }}
-                                </div>
-            
-                            </div>
-            
-            
-                            <div class="col-md-6">
-            
-                                <small class="text-muted">
-                                    Enrollment Date
-                                </small>
-            
-                                <div class="fw-semibold">
-                                    {{ current_enrollment.enrolled_on }}
-                                </div>
-            
-                            </div>
-            
-                        </div>
-            
-                    {% else %}
-            
-                        <p class="text-muted mb-0">
-                            This student does not currently have an active enrollment.
-                        </p>
-            
-                    {% endif %}
-            
-                </div>
-            
-            </div>
-            <div class="card shadow-sm mt-4">
-
-                <div class="card-header">
-            
-                    <strong>
-                        Enrollment History
-                    </strong>
-            
-                </div>
-            
-            
-                <div class="card-body">
-            
-                    {% if enrollment_history %}
-            
-                        <div class="table-responsive">
-            
-                            <table class="table table-hover align-middle mb-0">
-            
-                                <thead>
-            
-                                    <tr>
-            
-                                        <th>
-                                            Class
-                                        </th>
-            
-                                        <th>
-                                            Enrollment Date
-                                        </th>
-            
-                                        <th>
-                                            Status
-                                        </th>
-            
-                                    </tr>
-            
-                                </thead>
-            
-            
-                                <tbody>
-            
-                                    {% for enrollment in enrollment_history %}
-            
-                                        <tr>
-            
-                                            <td>
-            
-                                                <strong>
-                                                    {{ enrollment.school_class }}
-                                                </strong>
-            
-                                            </td>
-            
-            
-                                            <td>
-            
-                                                {{ enrollment.enrolled_on }}
-            
-                                            </td>
-            
-            
-                                            <td>
-            
-                                                {% if enrollment.is_current %}
-            
-                                                    <span class="badge bg-success">
-                                                        Current
-                                                    </span>
-            
-                                                {% else %}
-            
-                                                    <span class="badge bg-secondary">
-                                                        Previous
-                                                    </span>
-            
-                                                {% endif %}
-            
-                                            </td>
-            
-                                        </tr>
-            
-                                    {% endfor %}
-            
-                                </tbody>
-            
-                            </table>
-            
-                        </div>
-            
-                    {% else %}
-            
-                        <p class="text-muted mb-0">
-                            No enrollment history found for this student.
-                        </p>
-            
-                    {% endif %}
-            
-                </div>
-            
-            </div>
-
-            <div class="card shadow-sm mt-4">
-
-                <div class="card-header">
-                    <strong>
-                        Attendance Summary
-                    </strong>
-                </div>
-            
-                <div class="card-body">
-            
-                    <div class="row g-3">
-            
-                        <div class="col-md-3">
-            
-                            <div class="border rounded p-3 text-center">
-            
-                                <small class="text-muted">
-                                    Total Records
-                                </small>
-            
-                                <h4 class="fw-bold mb-0">
-                                    {{ statistics.total }}
-                                </h4>
-            
-                            </div>
-            
-                        </div>
-            
-            
-                        <div class="col-md-3">
-            
-                            <div class="border rounded p-3 text-center">
-            
-                                <small class="text-muted">
-                                    Present
-                                </small>
-            
-                                <h4 class="fw-bold text-success mb-0">
-                                    {{ statistics.present }}
-                                </h4>
-            
-                            </div>
-            
-                        </div>
-            
-            
-                        <div class="col-md-3">
-            
-                            <div class="border rounded p-3 text-center">
-            
-                                <small class="text-muted">
-                                    Absent
-                                </small>
-            
-                                <h4 class="fw-bold text-danger mb-0">
-                                    {{ statistics.absent }}
-                                </h4>
-            
-                            </div>
-            
-                        </div>
-            
-            
-                        <div class="col-md-3">
-            
-                            <div class="border rounded p-3 text-center">
-            
-                                <small class="text-muted">
-                                    Late
-                                </small>
-            
-                                <h4 class="fw-bold text-warning mb-0">
-                                    {{ statistics.late }}
-                                </h4>
-            
-                            </div>
-            
-                        </div>
-            
-                    </div>
-            
-            
-                    <!-- Attendance Rate -->
-            
-                    <div class="mt-4">
-            
-                        <div class="d-flex justify-content-between mb-2">
-            
-                            <span class="text-muted">
-                                Attendance Rate
-                            </span>
-            
-                            <strong>
-                                {{ statistics.attendance_rate }}%
-                            </strong>
-            
-                        </div>
-            
-            
-                        <div
-                            class="progress"
-                            style="height: 10px;"
-                        >
-            
-                            <div
-                                class="progress-bar bg-success"
-                                role="progressbar"
-                                style="width: {{ statistics.attendance_rate }}%;"
-                                aria-valuenow="{{ statistics.attendance_rate }}"
-                                aria-valuemin="0"
-                                aria-valuemax="100"
-                            >
-                            </div>
-            
-                        </div>
-            
-                    </div>
-            
-            
-                    <div class="mt-4">
-            
-                        <a
-                            href="{% url 'attendance:student_attendance' student.id %}"
-                            class="btn btn-outline-primary"
-                        >
-                            View Full Attendance
-                        </a>
-            
-                    </div>
-            
-                </div>
-            
             </div>
 
         </div>
 
-    </div>
-    
+        <!-- Current Enrollment -->
 
-    <!-- Quick Actions -->
+        <div class="bmk-content-card mt-4">
 
-    <div class="col-lg-4">
+            <div class="bmk-card-header">
 
-        <div class="card shadow-sm">
+                <span class="bmk-card-icon">
+                    <i class="bi bi-bookmark-star-fill"></i>
+                </span>
 
-            <div class="card-header">
-
-                <strong>
-                    Quick Actions
-                </strong>
+                <h2 class="bmk-card-title">
+                    Current Enrollment
+                </h2>
 
             </div>
 
-
-            <div class="card-body d-grid gap-2">
-
-
-                <!-- Attendance -->
-
-                <a
-                    href="{% url 'attendance:student_attendance' student.id %}"
-                    class="btn btn-outline-primary"
-                >
-                    View Attendance
-                </a>
-
-
-                <!-- Fees -->
-
-                <a
-                    href="{% url 'fees:student_fees' student.id %}"
-                    class="btn btn-outline-success"
-                >
-                    View School Fees
-                </a>
-
-
-                <!-- Results -->
+            <div class="bmk-card-body">
 
                 {% if current_enrollment %}
 
-                    
+                    <div class="bmk-enrollment-highlight">
 
-                    <a
-                        href="{% url 'results:student_result' current_enrollment.id %}"
-                        class="btn btn-outline-success"
-                    >
-                        View Results
-                    </a>
+                        <div class="row g-4">
 
+                            <div class="col-md-6">
 
-                    {% if request.user.role == "admin" %}
+                                <span class="bmk-info-label">
+                                    Current Class
+                                </span>
 
-                        <div class="dropdown">
+                                <div class="bmk-enrollment-class">
+                                    {{ current_enrollment.school_class }}
+                                </div>
 
-                            <button
-                                class="btn btn-outline-success dropdown-toggle w-100"
-                                type="button"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                            >
-                                View Report Card
-                            </button>
+                            </div>
 
-                            <ul class="dropdown-menu w-100">
+                            <div class="col-md-6">
 
-                                <li>
-                                    <a
-                                        href="{% url 'results:student_report_card' current_enrollment.id %}?show_position=0"
-                                        class="dropdown-item"
-                                    >
-                                        Report Without Position
-                                    </a>
-                                </li>
+                                <span class="bmk-info-label">
+                                    Enrollment Date
+                                </span>
 
-                                <li>
-                                    <a
-                                        href="{% url 'results:student_report_card' current_enrollment.id %}?show_position=1"
-                                        class="dropdown-item"
-                                    >
-                                        Report With Position
-                                    </a>
-                                </li>
+                                <div class="bmk-info-value">
+                                    {{ current_enrollment.enrolled_on }}
+                                </div>
 
-                            </ul>
+                            </div>
 
                         </div>
 
-                    {% else %}
+                    </div>
 
-                        <a
-                            href="{% url 'results:student_report_card' current_enrollment.id %}?show_position=0"
-                            class="btn btn-outline-success"
-                        >
-                            View Report Card
-                        </a>
+                {% else %}
 
-                    {% endif %}
-
-                    
+                    <p class="bmk-empty-message">
+                        <i class="bi bi-info-circle me-1"></i>
+                        This student does not currently have an active enrollment.
+                    </p>
 
                 {% endif %}
 
-                <!-- Behaviour rating -->
+            </div>
 
-                <a
-                    href="{% url 'results:enter_behaviour_ratings' %}?academic_year={{ current_enrollment.academic_year.id }}&term={{ current_enrollment.term.id }}&school_class={{ current_enrollment.school_class.id }}&enrollment={{ current_enrollment.id }}"
-                    class="btn btn-outline-success"
-                >
-                    Behaviour Ratings
-                </a>
+        </div>
 
-                <!--report remark  -->
+        <!-- Enrollment History -->
 
-                <a
-                    href="{% url 'results:enter_report_remarks' %}?academic_year={{ current_enrollment.academic_year.id }}&term={{ current_enrollment.term.id }}&school_class={{ current_enrollment.school_class.id }}&enrollment={{ current_enrollment.id }}"
-                    class="btn btn-outline-success"
-                >
-                    Report Remarks
-                </a>
+        <div class="bmk-content-card mt-4">
 
-                
+            <div class="bmk-card-header">
+
+                <span class="bmk-card-icon">
+                    <i class="bi bi-clock-history"></i>
+                </span>
+
+                <h2 class="bmk-card-title">
+                    Enrollment History
+                </h2>
+
+            </div>
+
+            <div class="bmk-card-body p-0">
+
+                {% if enrollment_history %}
+
+                    <div class="table-responsive">
+
+                        <table class="table align-middle bmk-history-table">
+
+                            <thead>
+                                <tr>
+                                    <th>Academic Year</th>
+                                    <th>Term</th>
+                                    <th>Class</th>
+                                    <th>Enrollment Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                {% for enrollment in enrollment_history %}
+
+                                    <tr>
+
+                                        <td>
+                                            <strong>
+                                                {{ enrollment.academic_year }}
+                                            </strong>
+                                        </td>
+
+                                        <td>
+                                            {{ enrollment.term }}
+                                        </td>
+
+                                        <td>
+                                            {{ enrollment.school_class }}
+                                        </td>
+
+                                        <td>
+                                            {{ enrollment.enrolled_on }}
+                                        </td>
+
+                                        <td>
+
+                                            {% if enrollment.is_current %}
+
+                                                <span class="bmk-current-badge">
+                                                    <i class="bi bi-check-circle-fill me-1"></i>
+                                                    Current
+                                                </span>
+
+                                            {% else %}
+
+                                                <span class="bmk-previous-badge">
+                                                    Previous
+                                                </span>
+
+                                            {% endif %}
+
+                                        </td>
+
+                                    </tr>
+
+                                {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                {% else %}
+
+                    <div class="p-4">
+                        <p class="bmk-empty-message">
+                            No enrollment history found for this student.
+                        </p>
+                    </div>
+
+                {% endif %}
 
             </div>
 
         </div>
 
-    </div>
-    <!-- ========================= -->
-    <!-- STUDENT RESULTS -->
-    <!-- ========================= -->
+        <!-- Attendance Summary -->
 
-    <div class="card mt-4">
+        <div class="bmk-content-card mt-4">
 
-        <div class="card-header d-flex justify-content-between">
+            <div class="bmk-card-header">
 
-            <strong>
-                Results
-            </strong>
+                <span class="bmk-card-icon">
+                    <i class="bi bi-calendar-check-fill"></i>
+                </span>
 
-            <a
-                href="{% url 'results:enter_results' %}"
-                class="btn btn-sm btn-primary"
-            >
-                Enter Academic Result
-            </a>
+                <h2 class="bmk-card-title">
+                    Attendance Summary
+                </h2>
 
-        </div>
-
-
-        <div class="card-body">
-
-            <p class="mb-3">
-
-                Manage academic results and
-                behavioural development ratings
-                for {{ student.first_name }}.
-
-            </p>
-
-
-            <a
-                href="{% url 'results:enter_behaviour_ratings' %}"
-                class="btn btn-outline-success"
-            >
-                Enter Behaviour Ratings
-            </a>
-
-        </div>
-
-    </div>
-
-    <div class="card mt-4">
-
-        <div class="card-header">
-    
-            <strong>
-                Report History
-            </strong>
-    
-        </div>
-    
-        <div class="card-body p-0">
-    
-            <div class="table-responsive">
-    
-                <table class="table table-bordered mb-0">
-    
-                    <thead>
-    
-                        <tr>
-    
-                            <th>
-                                Academic Year
-                            </th>
-    
-                            <th>
-                                Term
-                            </th>
-    
-                            <th>
-                                Class
-                            </th>
-    
-                            <th>
-                                Actions
-                            </th>
-    
-                        </tr>
-    
-                    </thead>
-    
-                    <tbody>
-    
-                        {% for enrollment in enrollment_history %}
-    
-                            <tr>
-    
-                                <td>
-    
-                                    {{ enrollment.academic_year }}
-    
-                                </td>
-    
-                                <td>
-    
-                                    {{ enrollment.term }}
-    
-                                </td>
-    
-                                <td>
-    
-                                    {{ enrollment.school_class }}
-    
-                                </td>
-    
-                                <td>
-    
-                                    <div class="d-flex gap-2">
-    
-                                        <a
-                                            href="{% url 'results:student_result' enrollment.id %}"
-                                            class="btn btn-sm btn-primary"
-                                        >
-    
-                                            Results
-    
-                                        </a>
-    
-    
-                                        {% if request.user.role == "admin" %}
-
-                                            <div class="dropdown">
-
-                                                <button
-                                                    class="btn btn-sm btn-success dropdown-toggle"
-                                                    type="button"
-                                                    data-bs-toggle="dropdown"
-                                                    aria-expanded="false"
-                                                >
-                                                    Report Card
-                                                </button>
-
-                                                <ul class="dropdown-menu">
-
-                                                    <li>
-                                                        <a
-                                                            href="{% url 'results:student_report_card' enrollment.id %}?show_position=0"
-                                                            class="dropdown-item"
-                                                        >
-                                                            Without Position
-                                                        </a>
-                                                    </li>
-
-                                                    <li>
-                                                        <a
-                                                            href="{% url 'results:student_report_card' enrollment.id %}?show_position=1"
-                                                            class="dropdown-item"
-                                                        >
-                                                            With Position
-                                                        </a>
-                                                    </li>
-
-                                                </ul>
-
-                                            </div>
-
-                                        {% else %}
-
-                                            <a
-                                                href="{% url 'results:student_report_card' enrollment.id %}?show_position=0"
-                                                class="btn btn-sm btn-success"
-                                            >
-                                                Report Card
-                                            </a>
-
-                                        {% endif %}
-    
-                                    </div>
-    
-                                </td>
-    
-                            </tr>
-    
-                        {% empty %}
-    
-                            <tr>
-    
-                                <td
-                                    colspan="4"
-                                    class="text-center"
-                                >
-    
-                                    No enrollment history available.
-    
-                                </td>
-    
-                            </tr>
-    
-                        {% endfor %}
-    
-                    </tbody>
-    
-                </table>
-    
             </div>
-    
-        </div>
-    
-    </div>
 
+            <div class="bmk-card-body">
 
-</div>
+                <div class="row g-3">
 
+                    <div class="col-6 col-md-3">
 
+                        <div class="bmk-stat-box">
 
-<!-- Parents -->
+                            <span class="bmk-stat-label">
+                                Total Records
+                            </span>
 
-<div class="card shadow-sm mt-4">
+                            <p class="bmk-stat-value">
+                                {{ statistics.total }}
+                            </p>
 
-    <div class="card-header">
-        <strong>
-            Parents / Guardians
-        </strong>
-    </div>
+                        </div>
 
+                    </div>
 
-    <div class="card-body">
+                    <div class="col-6 col-md-3">
 
-        <div class="list-group">
+                        <div class="bmk-stat-box bmk-stat-present">
 
-            {% for parent in student.parents.all %}
+                            <span class="bmk-stat-label">
+                                Present
+                            </span>
 
-                <div class="list-group-item">
+                            <p class="bmk-stat-value">
+                                {{ statistics.present }}
+                            </p>
 
-                    {{ parent }}
+                        </div>
+
+                    </div>
+
+                    <div class="col-6 col-md-3">
+
+                        <div class="bmk-stat-box bmk-stat-absent">
+
+                            <span class="bmk-stat-label">
+                                Absent
+                            </span>
+
+                            <p class="bmk-stat-value">
+                                {{ statistics.absent }}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-6 col-md-3">
+
+                        <div class="bmk-stat-box bmk-stat-late">
+
+                            <span class="bmk-stat-label">
+                                Late
+                            </span>
+
+                            <p class="bmk-stat-value">
+                                {{ statistics.late }}
+                            </p>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
-            {% empty %}
+                <div class="bmk-attendance-rate">
 
-                <p class="text-muted mb-0">
-                    No parent or guardian has been linked to this student.
+                    <div class="bmk-rate-header">
+
+                        <span class="bmk-rate-label">
+                            Attendance Rate
+                        </span>
+
+                        <strong class="bmk-rate-value">
+                            {{ statistics.attendance_rate }}%
+                        </strong>
+
+                    </div>
+
+                    <div class="bmk-rate-bar">
+
+                        <div
+                            class="bmk-rate-fill"
+                            role="progressbar"
+                            style="width: {{ statistics.attendance_rate }}%;"
+                            aria-valuenow="{{ statistics.attendance_rate }}"
+                            aria-valuemin="0"
+                            aria-valuemax="100"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+                <div class="mt-4">
+
+                    <a
+                        href="{% url 'attendance:student_attendance' student.id %}"
+                        class="bmk-action-btn bmk-action-primary"
+                    >
+                        <span class="bmk-action-label">
+                            <span class="bmk-action-icon">
+                                <i class="bi bi-calendar3"></i>
+                            </span>
+                            View Full Attendance
+                        </span>
+
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Results -->
+
+        <div class="bmk-content-card mt-4">
+
+            <div class="bmk-card-header">
+
+                <span class="bmk-card-icon">
+                    <i class="bi bi-bar-chart-fill"></i>
+                </span>
+
+                <h2 class="bmk-card-title">
+                    Results & Academic Records
+                </h2>
+
+            </div>
+
+            <div class="bmk-card-body">
+
+                <p class="bmk-results-intro">
+                    Manage academic results and behavioural development records
+                    for {{ student.first_name }}.
                 </p>
 
-            {% endfor %}
+                <div class="d-flex flex-wrap gap-2">
+
+                    <a
+                        href="{% url 'results:enter_results' %}"
+                        class="bmk-results-action"
+                    >
+                        <i class="bi bi-pencil-square"></i>
+                        Enter Academic Result
+                    </a>
+
+                    <a
+                        href="{% url 'results:enter_behaviour_ratings' %}"
+                        class="bmk-small-action bmk-small-success"
+                    >
+                        <i class="bi bi-stars"></i>
+                        Enter Behaviour Ratings
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Report History -->
+
+        <div class="bmk-content-card mt-4">
+
+            <div class="bmk-card-header">
+
+                <span class="bmk-card-icon">
+                    <i class="bi bi-file-earmark-bar-graph-fill"></i>
+                </span>
+
+                <h2 class="bmk-card-title">
+                    Report History
+                </h2>
+
+            </div>
+
+            <div class="bmk-card-body p-0">
+
+                <div class="table-responsive">
+
+                    <table class="table align-middle bmk-report-table mb-0">
+
+                        <thead>
+
+                            <tr>
+                                <th>Academic Year</th>
+                                <th>Term</th>
+                                <th>Class</th>
+                                <th>Actions</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for enrollment in enrollment_history %}
+
+                                <tr>
+
+                                    <td>
+                                        <strong>
+                                            {{ enrollment.academic_year }}
+                                        </strong>
+                                    </td>
+
+                                    <td>
+                                        {{ enrollment.term }}
+                                    </td>
+
+                                    <td>
+                                        {{ enrollment.school_class }}
+                                    </td>
+
+                                    <td>
+
+                                        <div class="bmk-report-actions">
+
+                                            <a
+                                                href="{% url 'results:student_result' enrollment.id %}"
+                                                class="bmk-small-action bmk-small-primary"
+                                            >
+                                                <i class="bi bi-bar-chart"></i>
+                                                Results
+                                            </a>
+
+                                            {% if request.user.role == "admin" %}
+
+                                                <div class="dropdown">
+
+                                                    <button
+                                                        class="bmk-small-action bmk-small-success dropdown-toggle border-0"
+                                                        type="button"
+                                                        data-bs-toggle="dropdown"
+                                                        aria-expanded="false"
+                                                    >
+                                                        <i class="bi bi-file-earmark-text"></i>
+                                                        Report Card
+                                                    </button>
+
+                                                    <ul class="dropdown-menu">
+
+                                                        <li>
+                                                            <a
+                                                                href="{% url 'results:student_report_card' enrollment.id %}?show_position=0"
+                                                                class="dropdown-item"
+                                                            >
+                                                                Without Position
+                                                            </a>
+                                                        </li>
+
+                                                        <li>
+                                                            <a
+                                                                href="{% url 'results:student_report_card' enrollment.id %}?show_position=1"
+                                                                class="dropdown-item"
+                                                            >
+                                                                With Position
+                                                            </a>
+                                                        </li>
+
+                                                    </ul>
+
+                                                </div>
+
+                                            {% else %}
+
+                                                <a
+                                                    href="{% url 'results:student_report_card' enrollment.id %}?show_position=0"
+                                                    class="bmk-small-action bmk-small-success"
+                                                >
+                                                    <i class="bi bi-file-earmark-text"></i>
+                                                    Report Card
+                                                </a>
+
+                                            {% endif %}
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            {% empty %}
+
+                                <tr>
+
+                                    <td colspan="4">
+
+                                        <div class="p-4 text-center">
+
+                                            <p class="bmk-empty-message">
+                                                No enrollment history available.
+                                            </p>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
 
         </div>
 
     </div>
+
+    <!-- Sidebar -->
+
+    <div class="col-lg-4">
+
+        <!-- Quick Actions -->
+
+        <div class="bmk-content-card">
+
+            <div class="bmk-card-header">
+
+                <span class="bmk-card-icon">
+                    <i class="bi bi-lightning-charge-fill"></i>
+                </span>
+
+                <h2 class="bmk-card-title">
+                    Quick Actions
+                </h2>
+
+            </div>
+
+            <div class="bmk-card-body">
+
+                <div class="bmk-action-stack">
+
+                    <a
+                        href="{% url 'attendance:student_attendance' student.id %}"
+                        class="bmk-action-btn bmk-action-primary"
+                    >
+                        <span class="bmk-action-label">
+                            <span class="bmk-action-icon">
+                                <i class="bi bi-calendar-check"></i>
+                            </span>
+                            View Attendance
+                        </span>
+                        <i class="bi bi-chevron-right"></i>
+                    </a>
+
+                    <a
+                        href="{% url 'fees:student_fees' student.id %}"
+                        class="bmk-action-btn bmk-action-success"
+                    >
+                        <span class="bmk-action-label">
+                            <span class="bmk-action-icon">
+                                <i class="bi bi-wallet2"></i>
+                            </span>
+                            View School Fees
+                        </span>
+                        <i class="bi bi-chevron-right"></i>
+                    </a>
+
+                    {% if current_enrollment %}
+
+                        <a
+                            href="{% url 'results:student_result' current_enrollment.id %}"
+                            class="bmk-action-btn bmk-action-success"
+                        >
+                            <span class="bmk-action-label">
+                                <span class="bmk-action-icon">
+                                    <i class="bi bi-bar-chart-fill"></i>
+                                </span>
+                                View Results
+                            </span>
+                            <i class="bi bi-chevron-right"></i>
+                        </a>
+
+                        {% if request.user.role == "admin" %}
+
+                            <div class="dropdown bmk-dropdown">
+
+                                <button
+                                    class="bmk-dropdown-toggle"
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                >
+                                    <span>
+                                        <i class="bi bi-file-earmark-text me-2"></i>
+                                        View Report Card
+                                    </span>
+                                    <i class="bi bi-chevron-down"></i>
+                                </button>
+
+                                <ul class="dropdown-menu bmk-dropdown-menu">
+
+                                    <li>
+                                        <a
+                                            href="{% url 'results:student_report_card' current_enrollment.id %}?show_position=0"
+                                            class="dropdown-item"
+                                        >
+                                            Report Without Position
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a
+                                            href="{% url 'results:student_report_card' current_enrollment.id %}?show_position=1"
+                                            class="dropdown-item"
+                                        >
+                                            Report With Position
+                                        </a>
+                                    </li>
+
+                                </ul>
+
+                            </div>
+
+                        {% else %}
+
+                            <a
+                                href="{% url 'results:student_report_card' current_enrollment.id %}?show_position=0"
+                                class="bmk-action-btn bmk-action-success"
+                            >
+                                <span class="bmk-action-label">
+                                    <span class="bmk-action-icon">
+                                        <i class="bi bi-file-earmark-text"></i>
+                                    </span>
+                                    View Report Card
+                                </span>
+                                <i class="bi bi-chevron-right"></i>
+                            </a>
+
+                        {% endif %}
+
+                        <!-- Behaviour Ratings -->
+
+                        <a
+                            href="{% url 'results:enter_behaviour_ratings' %}?academic_year={{ current_enrollment.academic_year.id }}&term={{ current_enrollment.term.id }}&school_class={{ current_enrollment.school_class.id }}&enrollment={{ current_enrollment.id }}"
+                            class="bmk-action-btn bmk-action-success"
+                        >
+                            <span class="bmk-action-label">
+                                <span class="bmk-action-icon">
+                                    <i class="bi bi-stars"></i>
+                                </span>
+                                Behaviour Ratings
+                            </span>
+                            <i class="bi bi-chevron-right"></i>
+                        </a>
+
+                        <!-- Report Remarks -->
+
+                        <a
+                            href="{% url 'results:enter_report_remarks' %}?academic_year={{ current_enrollment.academic_year.id }}&term={{ current_enrollment.term.id }}&school_class={{ current_enrollment.school_class.id }}&enrollment={{ current_enrollment.id }}"
+                            class="bmk-action-btn bmk-action-success"
+                        >
+                            <span class="bmk-action-label">
+                                <span class="bmk-action-icon">
+                                    <i class="bi bi-chat-left-text"></i>
+                                </span>
+                                Report Remarks
+                            </span>
+                            <i class="bi bi-chevron-right"></i>
+                        </a>
+
+                    {% else %}
+
+                        <div class="p-3 rounded-3 bg-light text-muted small">
+                            <i class="bi bi-info-circle me-1"></i>
+                            Results, report cards, behaviour ratings and report remarks
+                            become available when the student has a current enrollment.
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Parents / Guardians -->
+
+        <div class="bmk-content-card mt-4">
+
+            <div class="bmk-card-header">
+
+                <span class="bmk-card-icon">
+                    <i class="bi bi-people-fill"></i>
+                </span>
+
+                <h2 class="bmk-card-title">
+                    Parents / Guardians
+                </h2>
+
+            </div>
+
+            <div class="bmk-card-body">
+
+                {% if student.parents.all %}
+
+                    <div class="bmk-parents-list">
+
+                        {% for parent in student.parents.all %}
+
+                            <div class="bmk-parent-item">
+
+                                <span class="bmk-parent-icon">
+                                    <i class="bi bi-person-fill"></i>
+                                </span>
+
+                                {{ parent }}
+
+                            </div>
+
+                        {% empty %}
+
+                            <p class="bmk-empty-message">
+                                No parent or guardian has been linked to this student.
+                            </p>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% else %}
+
+                    <p class="bmk-empty-message">
+                        No parent or guardian has been linked to this student.
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
 
 </div>
 

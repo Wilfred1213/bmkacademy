@@ -1,0 +1,292 @@
+/* =========================================================
+   BMK SYSTEM MESSAGES
+========================================================= */
+
+.bmk-messages-container {
+    width: min(1200px, calc(100% - 32px));
+    margin: 24px auto 0;
+}
+
+
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+.bmk-message {
+    position: relative;
+
+    display: flex;
+    align-items: flex-start;
+
+    gap: 14px;
+
+    padding: 16px 18px;
+
+    margin-bottom: 16px;
+
+    border-radius: 14px;
+
+    border: 1px solid transparent;
+
+    box-shadow: 0 10px 30px rgba(15, 35, 55, 0.08);
+
+    animation: bmkMessageSlideIn 0.35s ease;
+
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+/* =========================================================
+   MESSAGE ICON
+========================================================= */
+
+.bmk-message-icon {
+    flex: 0 0 40px;
+
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    font-size: 1.1rem;
+}
+
+
+/* =========================================================
+   MESSAGE CONTENT
+========================================================= */
+
+.bmk-message-content {
+    flex: 1;
+
+    min-width: 0;
+}
+
+.bmk-message-content strong {
+    display: block;
+
+    margin-bottom: 3px;
+
+    font-size: 0.95rem;
+    font-weight: 750;
+}
+
+.bmk-message-content p {
+    margin: 0;
+
+    font-size: 0.88rem;
+    line-height: 1.55;
+}
+
+
+/* =========================================================
+   CLOSE BUTTON
+========================================================= */
+
+.bmk-message-close {
+    flex: 0 0 auto;
+
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-left: auto;
+
+    padding: 0;
+
+    border: 0;
+
+    border-radius: 8px;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.bmk-message-close:hover {
+    transform: scale(1.05);
+}
+
+.bmk-message-close i {
+    font-size: 0.8rem;
+}
+
+
+/* =========================================================
+   SUCCESS
+========================================================= */
+
+.bmk-message-success {
+    background: #f0fdf4;
+
+    border-color: #bbf7d0;
+
+    color: #166534;
+}
+
+.bmk-message-success .bmk-message-icon {
+    background: #dcfce7;
+
+    color: #16a34a;
+}
+
+.bmk-message-success .bmk-message-close {
+    color: #166534;
+}
+
+.bmk-message-success .bmk-message-close:hover {
+    background: #dcfce7;
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.bmk-message-error {
+    background: #fff7f7;
+
+    border-color: #fecaca;
+
+    color: #991b1b;
+}
+
+.bmk-message-error .bmk-message-icon {
+    background: #fee2e2;
+
+    color: #dc2626;
+}
+
+.bmk-message-error .bmk-message-close {
+    color: #991b1b;
+}
+
+.bmk-message-error .bmk-message-close:hover {
+    background: #fee2e2;
+}
+
+
+/* =========================================================
+   WARNING
+========================================================= */
+
+.bmk-message-warning {
+    background: #fffbeb;
+
+    border-color: #fde68a;
+
+    color: #92400e;
+}
+
+.bmk-message-warning .bmk-message-icon {
+    background: #fef3c7;
+
+    color: #d97706;
+}
+
+.bmk-message-warning .bmk-message-close {
+    color: #92400e;
+}
+
+.bmk-message-warning .bmk-message-close:hover {
+    background: #fef3c7;
+}
+
+
+/* =========================================================
+   INFORMATION
+========================================================= */
+
+.bmk-message-info {
+    background: #eff6ff;
+
+    border-color: #bfdbfe;
+
+    color: #1e40af;
+}
+
+.bmk-message-info .bmk-message-icon {
+    background: #dbeafe;
+
+    color: #2563eb;
+}
+
+.bmk-message-info .bmk-message-close {
+    color: #1e40af;
+}
+
+.bmk-message-info .bmk-message-close:hover {
+    background: #dbeafe;
+}
+
+
+/* =========================================================
+   ANIMATION
+========================================================= */
+
+@keyframes bmkMessageSlideIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 575.98px) {
+
+    .bmk-messages-container {
+        width: calc(100% - 24px);
+
+        margin-top: 16px;
+    }
+
+    .bmk-message {
+        gap: 10px;
+
+        padding: 13px;
+
+        border-radius: 12px;
+    }
+
+    .bmk-message-icon {
+        flex-basis: 36px;
+
+        width: 36px;
+        height: 36px;
+
+        font-size: 1rem;
+    }
+
+    .bmk-message-content strong {
+        font-size: 0.9rem;
+    }
+
+    .bmk-message-content p {
+        font-size: 0.82rem;
+    }
+
+}

@@ -1,73 +1,117 @@
 {% extends "website/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'website/css/academics_class_detail.css' %}">
+{% endblock %}
+
+{% block title %}
+    {{ school_class.name }} | BMK Academy
+{% endblock %}
 
 {% block content %}
 
-<section class="py-5">
+<!-- =========================================================
+     CLASS DETAIL HERO
+========================================================= -->
 
-<div class="container">
+<section class="bmk-class-hero">
 
-    <!-- Back link -->
-    <div class="mb-4">
+    <div class="bmk-class-hero-glow bmk-class-glow-one"></div>
+    <div class="bmk-class-hero-glow bmk-class-glow-two"></div>
+
+    <div class="container">
+
+        <!-- Back Navigation -->
+
         <a
             href="{% url 'website:academics' %}"
-            class="text-decoration-none"
+            class="bmk-class-back"
         >
-            ← Back to Academics
+            <span class="bmk-class-back-icon">
+                <i class="bi bi-arrow-left"></i>
+            </span>
+
+            <span>Back to Academics</span>
         </a>
-    </div>
 
 
-    <!-- Class heading -->
-    <div class="text-center mb-5">
+        <div class="row align-items-center g-5">
 
-        <span class="badge bg-primary mb-3">
-            {{ school_class.get_section_display }}
-        </span>
+            <!-- Hero Content -->
 
-        <h1 class="fw-bold">
-            {{ school_class.name }}
-        </h1>
+            <div class="col-lg-7">
 
-        <p class="text-muted">
-            Subjects offered in {{ school_class.name }}
-        </p>
+                <div class="bmk-class-hero-content">
 
-    </div>
+                    <span class="bmk-class-eyebrow">
+                        <i class="bi bi-mortarboard-fill"></i>
+                        BMK Academic Programme
+                    </span>
 
 
-    <!-- Subjects -->
-    <div class="row g-4">
+                    <div class="bmk-class-section-badge">
 
-        {% for class_subject in school_class.class_subjects.all %}
+                        <span class="bmk-class-badge-dot"></span>
 
-            <div class="col-sm-6 col-lg-4">
+                        {{ school_class.get_section_display }}
 
-                <div class="card h-100 border-0 shadow-sm">
+                    </div>
 
-                    <div class="card-body text-center p-4">
 
-                        <div class="mb-3">
+                    <h1>
+                        {{ school_class.name }}
+                    </h1>
 
-                            <span
-                                class="d-inline-flex
-                                       align-items-center
-                                       justify-content-center
-                                       bg-light
-                                       rounded-circle"
-                                style="width: 60px; height: 60px;"
-                            >
-                                📚
-                            </span>
+
+                    <p>
+                        Explore the subjects and learning areas that form part
+                        of the academic programme for
+                        <strong>{{ school_class.name }}</strong>.
+                    </p>
+
+
+                    <div class="bmk-class-hero-stats">
+
+                        <div class="bmk-class-stat">
+
+                            <div class="bmk-class-stat-icon">
+                                <i class="bi bi-book-half"></i>
+                            </div>
+
+                            <div>
+                                <strong>
+                                    {{ school_class.class_subjects.all|length }}
+                                </strong>
+
+                                <span>
+                                    Subjects
+                                </span>
+                            </div>
 
                         </div>
 
-                        <h5 class="fw-bold mb-2">
-                            {{ class_subject.subject.name }}
-                        </h5>
 
-                        <p class="text-muted small mb-0">
-                            Subject
-                        </p>
+                        <div class="bmk-class-stat-divider"></div>
+
+
+                        <div class="bmk-class-stat">
+
+                            <div class="bmk-class-stat-icon">
+                                <i class="bi bi-people-fill"></i>
+                            </div>
+
+                            <div>
+                                <strong>
+                                    BMK
+                                </strong>
+
+                                <span>
+                                    Learning Community
+                                </span>
+                            </div>
+
+                        </div>
 
                     </div>
 
@@ -75,36 +119,350 @@
 
             </div>
 
-        {% empty %}
 
-            <div class="col-12">
+            <!-- Hero Visual -->
 
-                <div class="alert alert-light text-center">
-                    No subjects are currently available
-                    for this class.
+            <div class="col-lg-5">
+
+                <div class="bmk-class-hero-visual">
+
+                    <div class="bmk-class-orbit bmk-class-orbit-one"></div>
+                    <div class="bmk-class-orbit bmk-class-orbit-two"></div>
+
+                    <div class="bmk-class-book-card">
+
+                        <div class="bmk-class-book-icon">
+                            <i class="bi bi-journal-bookmark-fill"></i>
+                        </div>
+
+                        <span>LEARNING JOURNEY</span>
+
+                        <strong>
+                            {{ school_class.name }}
+                        </strong>
+
+                        <small>
+                            Education for Service
+                        </small>
+
+                    </div>
+
+
+                    <div class="bmk-floating-icon bmk-floating-icon-one">
+                        <i class="bi bi-pencil-fill"></i>
+                    </div>
+
+                    <div class="bmk-floating-icon bmk-floating-icon-two">
+                        <i class="bi bi-lightbulb-fill"></i>
+                    </div>
+
+                    <div class="bmk-floating-icon bmk-floating-icon-three">
+                        <i class="bi bi-star-fill"></i>
+                    </div>
+
                 </div>
 
             </div>
 
-        {% endfor %}
+        </div>
 
     </div>
-
-
-    <!-- Bottom navigation -->
-    <div class="text-center mt-5">
-
-        <a
-            href="{% url 'website:academics' %}"
-            class="btn btn-outline-primary"
-        >
-            View All Classes
-        </a>
-
-    </div>
-
-</div>
 
 </section>
+
+
+<!-- =========================================================
+     SUBJECTS SECTION
+========================================================= -->
+
+<section class="bmk-class-subjects">
+
+    <div class="container">
+
+        <div class="bmk-class-section-heading">
+
+            <div>
+
+                <span class="bmk-class-label">
+                    THE CURRICULUM
+                </span>
+
+                <h2>
+                    Subjects Offered
+                </h2>
+
+            </div>
+
+            <p>
+                The learning areas below form part of the academic programme
+                for {{ school_class.name }}.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+            {% for class_subject in school_class.class_subjects.all %}
+
+                <div class="col-sm-6 col-lg-4">
+
+                    <article class="bmk-subject-card">
+
+                        <div class="bmk-subject-number">
+                            {{ forloop.counter|stringformat:"02d" }}
+                        </div>
+
+
+                        <div class="bmk-subject-icon">
+
+                            <i class="bi bi-book-half"></i>
+
+                        </div>
+
+
+                        <div class="bmk-subject-content">
+
+                            <span>
+                                SUBJECT
+                            </span>
+
+                            <h3>
+                                {{ class_subject.subject.name }}
+                            </h3>
+
+                            <p>
+                                Part of the learning programme for
+                                {{ school_class.name }}.
+                            </p>
+
+                        </div>
+
+
+                        <div class="bmk-subject-arrow">
+                            <i class="bi bi-arrow-up-right"></i>
+                        </div>
+
+                    </article>
+
+                </div>
+
+            {% empty %}
+
+                <div class="col-12">
+
+                    <div class="bmk-class-empty">
+
+                        <div class="bmk-class-empty-icon">
+                            <i class="bi bi-journal-x"></i>
+                        </div>
+
+                        <h3>
+                            Subjects Coming Soon
+                        </h3>
+
+                        <p>
+                            No subjects are currently available for
+                            {{ school_class.name }}.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     EDUCATION FOR SERVICE
+========================================================= -->
+
+<section class="bmk-class-service">
+
+    <div class="container">
+
+        <div class="bmk-class-service-card">
+
+            <div class="row align-items-center g-5">
+
+                <div class="col-lg-7">
+
+                    <span class="bmk-class-label bmk-class-label-light">
+                        BMK ACADEMY
+                    </span>
+
+                    <h2>
+                        Learning with Purpose.
+                    </h2>
+
+                    <p>
+                        At BMK Academy, education goes beyond the classroom.
+                        Our academic programme is designed to help children
+                        develop knowledge, character, confidence and a sense
+                        of responsibility.
+                    </p>
+
+                    <div class="bmk-class-motto">
+
+                        <i class="bi bi-quote"></i>
+
+                        <span>
+                            Education for Service.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-lg-5">
+
+                    <div class="bmk-class-service-visual">
+
+                        <div class="bmk-service-icon">
+                            <i class="bi bi-stars"></i>
+                        </div>
+
+                        <strong>
+                            Knowledge
+                        </strong>
+
+                        <span>
+                            Character
+                        </span>
+
+                        <span>
+                            Confidence
+                        </span>
+
+                        <span>
+                            Service
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     BOTTOM NAVIGATION
+========================================================= -->
+
+<section class="bmk-class-bottom">
+
+    <div class="container">
+
+        <div class="bmk-class-bottom-content">
+
+            <div>
+
+                <span class="bmk-class-label">
+                    CONTINUE EXPLORING
+                </span>
+
+                <h2>
+                    Discover BMK Academics
+                </h2>
+
+                <p>
+                    Explore our wider academic programme and learning approach.
+                </p>
+
+            </div>
+
+
+            <a
+                href="{% url 'website:academics' %}"
+                class="bmk-class-primary-btn"
+            >
+
+                View All Classes
+
+                <i class="bi bi-arrow-right"></i>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const revealItems = document.querySelectorAll(
+        ".bmk-class-hero-content, " +
+        ".bmk-class-hero-visual, " +
+        ".bmk-subject-card, " +
+        ".bmk-class-service-card, " +
+        ".bmk-class-bottom-content"
+    );
+
+
+    if (!("IntersectionObserver" in window)) {
+
+        revealItems.forEach(function (item) {
+            item.classList.add("bmk-class-visible");
+        });
+
+        return;
+    }
+
+
+    const observer = new IntersectionObserver(
+        function (entries, observer) {
+
+            entries.forEach(function (entry) {
+
+                if (entry.isIntersecting) {
+
+                    entry.target.classList.add(
+                        "bmk-class-visible"
+                    );
+
+                    observer.unobserve(entry.target);
+
+                }
+
+            });
+
+        },
+        {
+            threshold: 0.12
+        }
+    );
+
+
+    revealItems.forEach(function (item, index) {
+
+        item.style.transitionDelay =
+            (index * 0.07) + "s";
+
+        observer.observe(item);
+
+    });
+
+});
+</script>
 
 {% endblock %}

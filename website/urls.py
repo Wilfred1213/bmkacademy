@@ -21,7 +21,7 @@ urlpatterns = [
     views.academic_class_detail,
     name="academic_class_detail",
     ),
-    # id="x2kh6h"
+
     path(
         "events/",
         views.events,

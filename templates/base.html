@@ -32,563 +32,18 @@
     >
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-
-    <style>
-
-        /* =========================================================
-           PRINT
-        ========================================================= */
-
-        @media print {
-
-            @page {
-                size: A4 portrait;
-                margin: 12mm;
-            }
-
-            body {
-                background: white !important;
-                font-size: 12px;
-            }
-
-            .no-print {
-                display: none !important;
-            }
-
-            .print-receipt {
-                width: 100%;
-                max-width: 180mm;
-                margin: 0 auto;
-                padding: 0;
-            }
-
-            .card {
-                border: 1px solid #000 !important;
-                box-shadow: none !important;
-            }
-
-            .table {
-                font-size: 12px;
-            }
-
-            .table th,
-            .table td {
-                padding: 6px 8px !important;
-            }
-
-            .receipt-header {
-                margin-bottom: 12px !important;
-            }
-
-            h1,
-            h2,
-            h3,
-            h4,
-            h5 {
-                margin-top: 0 !important;
-                margin-bottom: 6px !important;
-            }
-
-            p {
-                margin-bottom: 4px !important;
-            }
-
-            .receipt-section {
-                margin-bottom: 10px !important;
-            }
-
-            footer {
-                display: none !important;
-            }
-        }
-
-
-        /* =========================================================
-           REPORT CARD SCREEN
-        ========================================================= */
-
-        .report-wrapper {
-            max-width: 900px;
-            margin: 20px auto;
-        }
-
-        .report-card {
-            background: #fff;
-            border: 1px solid #222;
-            padding: 18px;
-            font-size: 12px;
-        }
-
-
-        /* HEADER */
-
-        .school-header {
-            text-align: center;
-            border-bottom: 2px solid #222;
-            padding-bottom: 10px;
-            margin-bottom: 10px;
-        }
-
-        .school-logo {
-            width: 65px;
-            height: 65px;
-            object-fit: contain;
-            margin-bottom: 4px;
-        }
-
-        .school-name {
-            font-size: 24px;
-            font-weight: 800;
-            margin: 0;
-            letter-spacing: 1px;
-        }
-
-        .school-motto {
-            font-size: 11px;
-            margin: 2px 0;
-        }
-
-        .school-title {
-            font-size: 15px;
-            font-weight: 700;
-            margin: 5px 0 0;
-        }
-
-        .school-contact {
-            font-size: 10px;
-            margin-top: 3px;
-        }
-
-
-        /* STUDENT INFORMATION */
-
-        .student-info {
-            border: 1px solid #333;
-            margin-bottom: 10px;
-        }
-
-        .student-info-title {
-            font-weight: 700;
-            padding: 5px 8px;
-            border-bottom: 1px solid #333;
-            background: #f2f2f2;
-        }
-
-        .student-info table {
-            width: 100%;
-            margin: 0;
-        }
-
-        .student-info td {
-            padding: 4px 7px;
-            border-right: 1px solid #ddd;
-        }
-
-        .label {
-            font-weight: 700;
-        }
-
-
-        /* STATUS */
-
-        .status-box {
-            text-align: center;
-            padding: 5px;
-            margin-bottom: 10px;
-            border: 1px solid #777;
-            font-weight: 700;
-        }
-
-        .status-incomplete {
-            background: #fff3cd;
-        }
-
-        .status-complete {
-            background: #d1e7dd;
-        }
-
-        .status-draft {
-            background: #e2e3e5;
-        }
-
-
-        /* SECTION TITLE */
-
-        .section-title {
-            font-size: 13px;
-            font-weight: 700;
-            border-bottom: 1px solid #333;
-            padding: 4px 6px;
-            margin-top: 8px;
-            margin-bottom: 5px;
-            background: #f2f2f2;
-        }
-
-
-        /* RESULTS TABLE */
-
-        .results-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 8px;
-        }
-
-        .results-table th,
-        .results-table td {
-            border: 1px solid #444;
-            padding: 3px 4px;
-            vertical-align: middle;
-        }
-
-        .results-table th {
-            text-align: center;
-            font-size: 10px;
-            background: #f2f2f2;
-        }
-
-        .results-table td {
-            font-size: 10px;
-        }
-
-        .subject-name {
-            font-weight: 600;
-        }
-
-        .center {
-            text-align: center;
-        }
-
-
-        /* SUMMARY */
-
-        .summary-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-bottom: 8px;
-        }
-
-        .summary-box {
-            border: 1px solid #444;
-        }
-
-        .summary-title {
-            font-weight: 700;
-            background: #f2f2f2;
-            padding: 4px 6px;
-            border-bottom: 1px solid #444;
-        }
-
-        .summary-content {
-            padding: 5px 7px;
-        }
-
-        .summary-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 2px 0;
-            border-bottom: 1px dotted #ccc;
-        }
-
-        .summary-row:last-child {
-            border-bottom: none;
-        }
-
-
-        /* ATTENDANCE */
-
-        .attendance-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 8px;
-        }
-
-        .attendance-table td {
-            border: 1px solid #444;
-            padding: 5px;
-            text-align: center;
-        }
-
-        .attendance-number {
-            font-size: 16px;
-            font-weight: 700;
-        }
-
-
-        /* BEHAVIOUR */
-
-        .behaviour-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 8px;
-        }
-
-        .behaviour-table th,
-        .behaviour-table td {
-            border: 1px solid #444;
-            padding: 3px 5px;
-        }
-
-        .behaviour-table th {
-            background: #f2f2f2;
-        }
-
-
-        /* REMARKS */
-
-        .remarks-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-bottom: 8px;
-        }
-
-        .remark-box {
-            border: 1px solid #444;
-            min-height: 55px;
-            padding: 6px;
-        }
-
-        .remark-title {
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .next-term {
-            border: 1px solid #444;
-            padding: 5px 7px;
-            margin-bottom: 8px;
-        }
-
-
-        /* SIGNATURES */
-
-        .signatures {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-top: 12px;
-        }
-
-        .signature-line {
-            border-top: 1px solid #333;
-            text-align: center;
-            padding-top: 3px;
-            margin-top: 22px;
-        }
-
-
-        /* ACTION BUTTONS */
-
-        .report-actions {
-            margin: 15px auto;
-            max-width: 900px;
-        }
-
-
-        /* =========================================================
-           REPORT CARD PRINT
-        ========================================================= */
-
-        @media print {
-
-            @page {
-                size: A4 portrait;
-                margin: 8mm;
-            }
-
-            body {
-                margin: 0 !important;
-                padding: 0 !important;
-                background: white !important;
-            }
-
-            .report-wrapper {
-                width: 100%;
-                max-width: none;
-                margin: 0;
-            }
-
-            .report-card {
-                width: 100%;
-                border: 1px solid #222;
-                padding: 10px;
-                font-size: 10px;
-                box-sizing: border-box;
-            }
-
-            .report-actions,
-            .no-print,
-            nav,
-            footer {
-                display: none !important;
-            }
-
-            .school-logo {
-                width: 55px;
-                height: 55px;
-            }
-
-            .school-name {
-                font-size: 20px;
-            }
-
-            .school-title {
-                font-size: 13px;
-            }
-
-            .school-contact,
-            .school-motto {
-                font-size: 9px;
-            }
-
-            .section-title {
-                font-size: 11px;
-                padding: 3px 5px;
-            }
-
-            .results-table th,
-            .results-table td {
-                padding: 2px 3px;
-                font-size: 8.5px;
-            }
-
-            .student-info td {
-                padding: 3px 5px;
-            }
-
-            .attendance-table td {
-                padding: 3px;
-            }
-
-            .behaviour-table th,
-            .behaviour-table td {
-                padding: 2px 4px;
-                font-size: 8.5px;
-            }
-
-            .remark-box {
-                min-height: 42px;
-                padding: 4px;
-                font-size: 9px;
-            }
-
-            .signatures {
-                margin-top: 8px;
-            }
-
-            .student-info,
-            .results-table,
-            .summary-grid,
-            .attendance-table,
-            .behaviour-table,
-            .remarks-grid,
-            .next-term,
-            .signatures {
-                break-inside: avoid;
-                page-break-inside: avoid;
-            }
-
-        }
-
-
-        /* =========================================================
-           NAVIGATION
-        ========================================================= */
-
-        .navbar .dropdown-menu {
-            max-height: 75vh;
-            overflow-y: auto;
-        }
-
-        .navbar .dropdown-item {
-            padding-top: 8px;
-            padding-bottom: 8px;
-        }
-
-        .navbar .dropdown-header {
-            font-size: 0.85rem;
-        }
-
-
-        /* =========================================================
-           MOBILE NAVIGATION
-        ========================================================= */
-
-        @media (max-width: 991.98px) {
-
-            .navbar-nav {
-                padding-top: 10px;
-                padding-bottom: 10px;
-            }
-
-            .navbar .dropdown-menu {
-                border: 0 !important;
-                box-shadow: none !important;
-                background: rgba(255, 255, 255, 0.08);
-            }
-
-            .navbar .dropdown-item {
-                color: rgba(255, 255, 255, 0.9);
-            }
-
-            .navbar .dropdown-item:hover,
-            .navbar .dropdown-item:focus {
-                color: #000;
-            }
-
-        }
-
-        /* =========================================
-        BMK LOGO FOOTER
-        ========================================= */
-        .bmk-footer-logo {
-            width: 70px;
-            height: 70px;
-            object-fit: contain;
-        }
-
-        .notification-bell {
-            position: relative;
-            width: 42px;
-            height: 42px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 !important;
-        }
+    <link
+            rel="stylesheet"
+            href="{% static 'website/css/admin_navbar.css' %}"
+        >
+    <link
+        rel="stylesheet"
+        href="{% static 'website/css/admin_base.css' %}"
+    >
+
+    {% block extra_css %}
         
-        .notification-bell i {
-            font-size: 1.25rem;
-        }
-        
-        .notification-badge {
-            position: absolute;
-            top: 2px;
-            right: 2px;
-        
-            min-width: 18px;
-            height: 18px;
-        
-            padding: 0 5px;
-        
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        
-            background-color: #dc3545;
-            color: white;
-        
-            border-radius: 50rem;
-        
-            font-size: 0.65rem;
-            font-weight: 600;
-            line-height: 1;
-        }
-
-    </style>
-
+    {% endblock %}
 </head>
 
 
@@ -599,7 +54,7 @@
          NAVIGATION
     ========================================================= -->
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bmk-admin-navbar sticky-top">
 
         <div class="container">
 
@@ -1597,28 +1052,80 @@
         <!-- MESSAGES -->
 
         {% if messages %}
+            <div class="bmk-messages-container">
 
-            {% for message in messages %}
+                {% for message in messages %}
 
-            <div
-                class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show"
-                role="alert"
-            >
+                    <div
+                        class="bmk-message
+                        {% if message.tags == 'success' %}
+                            bmk-message-success
+                        {% elif message.tags == 'error' %}
+                            bmk-message-error
+                        {% elif message.tags == 'warning' %}
+                            bmk-message-warning
+                        {% else %}
+                            bmk-message-info
+                        {% endif %}"
+                        role="alert"
+                    >
 
-                {{ message }}
+                        <div class="bmk-message-icon">
 
-                <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="alert"
-                ></button>
+                            {% if message.tags == 'success' %}
+                                <i class="bi bi-check-circle-fill"></i>
+
+                            {% elif message.tags == 'error' %}
+                                <i class="bi bi-exclamation-circle-fill"></i>
+
+                            {% elif message.tags == 'warning' %}
+                                <i class="bi bi-exclamation-triangle-fill"></i>
+
+                            {% else %}
+                                <i class="bi bi-info-circle-fill"></i>
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="bmk-message-content">
+
+                            <strong>
+                                {% if message.tags == 'success' %}
+                                    Success
+
+                                {% elif message.tags == 'error' %}
+                                    Something went wrong
+
+                                {% elif message.tags == 'warning' %}
+                                    Attention
+
+                                {% else %}
+                                    Information
+                                {% endif %}
+                            </strong>
+
+                            <p>
+                                {{ message }}
+                            </p>
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            class="bmk-message-close"
+                            aria-label="Close notification"
+                        >
+                            <i class="bi bi-x-lg"></i>
+                        </button>
+
+                    </div>
+
+                {% endfor %}
 
             </div>
-
-            {% endfor %}
-
         {% endif %}
-
 
         {% block content %}
 
@@ -1637,7 +1144,37 @@
     <!-- =========================================================
          JAVASCRIPT
     ========================================================= -->
-
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    
+            document
+                .querySelectorAll(".bmk-message-close")
+                .forEach(function (button) {
+    
+                    button.addEventListener("click", function () {
+    
+                        const message =
+                            button.closest(".bmk-message");
+    
+                        if (!message) {
+                            return;
+                        }
+    
+                        message.style.opacity = "0";
+                        message.style.transform = "translateY(-8px)";
+    
+                        setTimeout(function () {
+                            message.remove();
+                        }, 250);
+    
+                    });
+    
+                });
+    
+        });
+    </script>
+    {% block extra_js%}
+    {% endblock %}
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     ></script>

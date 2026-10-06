@@ -1,54 +1,144 @@
 {% extends "website/base.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'website/css/safeguarding.css' %}">
+
+{% endblock %}
 
 {% block title %}
 Safeguarding | BMK Academy
 {% endblock %}
 
+
+
+
 {% block content %}
 
-<section class="bmk-safeguarding-hero">
-    <div class="container">
-        <div class="row justify-content-center text-center">
-            <div class="col-lg-9">
+<!-- =========================================================
+     SAFEGUARDING HERO
+     ========================================================= -->
 
-                <div class="bmk-safeguarding-hero-icon">
-                    <i class="bi bi-shield-check"></i>
+<section class="bmk-safeguarding-hero">
+
+    <div class="bmk-safeguarding-hero-glow"></div>
+
+    <div class="container">
+
+        <div class="row align-items-center g-5">
+
+            <div class="col-lg-7">
+
+                <div class="bmk-safeguarding-hero-content">
+
+                    <span class="bmk-safeguarding-eyebrow">
+                        <i class="bi bi-shield-check"></i>
+                        Safeguarding at BMK
+                    </span>
+
+                    <h1>
+                        Protecting
+                        <span>Our Children.</span>
+                    </h1>
+
+                    <p>
+                        At BMK Academy, the safety, dignity and wellbeing
+                        of every child are fundamental to our school community.
+                    </p>
+
+                    <div class="bmk-safeguarding-hero-points">
+
+                        <div>
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span>Safe learning environment</span>
+                        </div>
+
+                        <div>
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span>Respect and dignity</span>
+                        </div>
+
+                        <div>
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span>Clear safeguarding responsibilities</span>
+                        </div>
+
+                    </div>
+
                 </div>
 
-                <span class="bmk-section-label">
-                    SAFEGUARDING
-                </span>
+            </div>
 
-                <h1>
-                    Protecting Our Children
-                </h1>
 
-                <p>
-                    At BMK Academy, the safety, dignity and wellbeing
-                    of every child are fundamental to our school community.
-                </p>
+            <div class="col-lg-5">
+
+                <div class="bmk-safeguarding-shield-card">
+
+                    <div class="bmk-shield-orbit orbit-one"></div>
+                    <div class="bmk-shield-orbit orbit-two"></div>
+
+                    <div class="bmk-safeguarding-shield">
+
+                        <i class="bi bi-shield-fill-check"></i>
+
+                    </div>
+
+                    <span>
+                        CHILD SAFETY
+                    </span>
+
+                    <strong>
+                        Every Child Matters
+                    </strong>
+
+                    <p>
+                        Creating an environment where children
+                        can learn, participate and grow with confidence.
+                    </p>
+
+                </div>
 
             </div>
+
         </div>
+
     </div>
+
 </section>
 
 
-<section class="bmk-safeguarding-content">
-    <div class="container py-5 py-lg-6">
+<!-- =========================================================
+     COMMITMENT
+     ========================================================= -->
 
-        <div class="row justify-content-center">
-            <div class="col-lg-9">
+<section class="bmk-safeguarding-commitment">
 
-                <div class="bmk-safeguarding-card">
+    <div class="container">
 
-                    <span class="bmk-section-label">
+        <div class="row align-items-center g-5">
+
+            <div class="col-lg-5">
+
+                <div class="bmk-safeguarding-section-intro">
+
+                    <span class="bmk-safeguarding-label">
                         OUR COMMITMENT
                     </span>
 
                     <h2>
-                        Creating a Safe Learning Environment
+                        Creating a Safe
+                        <span>Learning Environment.</span>
                     </h2>
+
+                    <div class="bmk-safeguarding-accent"></div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-7">
+
+                <div class="bmk-safeguarding-commitment-text">
 
                     <p>
                         BMK Academy is committed to providing a learning
@@ -71,81 +161,169 @@ Safeguarding | BMK Academy
 
                 </div>
 
+            </div>
 
-                <div class="row g-4 mt-1">
+        </div>
 
-                    <div class="col-md-4">
-                        <div class="bmk-safeguarding-feature">
+    </div>
 
-                            <div class="bmk-safeguarding-feature-icon">
-                                <i class="bi bi-shield-check"></i>
-                            </div>
+</section>
 
-                            <h4>
-                                Child Protection
-                            </h4>
 
-                            <p>
-                                Supporting the safety and wellbeing of
-                                children within the school environment.
-                            </p>
+<!-- =========================================================
+     THREE PRINCIPLES
+     ========================================================= -->
 
-                        </div>
+<section class="bmk-safeguarding-principles">
+
+    <div class="container">
+
+        <div class="bmk-safeguarding-heading">
+
+            <span class="bmk-safeguarding-label">
+                OUR APPROACH
+            </span>
+
+            <h2>
+                Three Things We Stand For
+            </h2>
+
+            <p>
+                Safeguarding is part of creating a school environment
+                where children feel protected, respected and heard.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+
+            <!-- CHILD PROTECTION -->
+
+            <div class="col-md-6 col-lg-4">
+
+                <article class="bmk-safeguarding-principle">
+
+                    <div class="bmk-principle-number">
+                        01
                     </div>
 
-
-                    <div class="col-md-4">
-                        <div class="bmk-safeguarding-feature">
-
-                            <div class="bmk-safeguarding-feature-icon">
-                                <i class="bi bi-people"></i>
-                            </div>
-
-                            <h4>
-                                Respect & Dignity
-                            </h4>
-
-                            <p>
-                                Promoting a respectful environment where
-                                children, families and staff are treated
-                                with dignity.
-                            </p>
-
-                        </div>
+                    <div class="bmk-principle-icon protection">
+                        <i class="bi bi-shield-check"></i>
                     </div>
 
+                    <span>
+                        PROTECTION
+                    </span>
 
-                    <div class="col-md-4">
-                        <div class="bmk-safeguarding-feature">
+                    <h3>
+                        Child Protection
+                    </h3>
 
-                            <div class="bmk-safeguarding-feature-icon">
-                                <i class="bi bi-exclamation-circle"></i>
-                            </div>
+                    <p>
+                        Supporting the safety and wellbeing of
+                        children within the school environment.
+                    </p>
 
-                            <h4>
-                                Raising Concerns
-                            </h4>
+                </article>
 
-                            <p>
-                                Concerns relating to children's safety or
-                                wellbeing should be raised through the
-                                appropriate reporting channels.
-                            </p>
+            </div>
 
-                        </div>
+
+            <!-- RESPECT -->
+
+            <div class="col-md-6 col-lg-4">
+
+                <article class="bmk-safeguarding-principle">
+
+                    <div class="bmk-principle-number">
+                        02
                     </div>
 
-                </div>
+                    <div class="bmk-principle-icon respect">
+                        <i class="bi bi-people-fill"></i>
+                    </div>
+
+                    <span>
+                        DIGNITY
+                    </span>
+
+                    <h3>
+                        Respect & Dignity
+                    </h3>
+
+                    <p>
+                        Promoting a respectful environment where
+                        children, families and staff are treated
+                        with dignity.
+                    </p>
+
+                </article>
+
+            </div>
 
 
-                <div class="bmk-safeguarding-card mt-5">
+            <!-- CONCERNS -->
 
-                    <span class="bmk-section-label">
+            <div class="col-md-6 col-lg-4">
+
+                <article class="bmk-safeguarding-principle">
+
+                    <div class="bmk-principle-number">
+                        03
+                    </div>
+
+                    <div class="bmk-principle-icon concerns">
+                        <i class="bi bi-exclamation-circle-fill"></i>
+                    </div>
+
+                    <span>
+                        RESPONSIBILITY
+                    </span>
+
+                    <h3>
+                        Raising Concerns
+                    </h3>
+
+                    <p>
+                        Concerns relating to children's safety or
+                        wellbeing should be raised through the
+                        appropriate reporting channels.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     SCL FRAMEWORK
+     ========================================================= -->
+
+<section class="bmk-safeguarding-framework">
+
+    <div class="container">
+
+        <div class="bmk-framework-card">
+
+            <div class="row align-items-center g-5">
+
+                <div class="col-lg-7">
+
+                    <span class="bmk-safeguarding-label light">
                         SCL SAFEGUARDING FRAMEWORK
                     </span>
 
                     <h2>
-                        A Wider Safeguarding Framework
+                        A Wider Safeguarding
+                        <span>Framework.</span>
                     </h2>
 
                     <p>
@@ -168,89 +346,247 @@ Safeguarding | BMK Academy
                         safeguarding information.
                     </p>
 
-                    <div class="bmk-safeguarding-action">
-
-                        <a
-                            href="https://www.sclng.com/safe-policy"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="btn btn-primary px-4 py-3"
-                        >
-                            View SCL Safeguarding Policy
-                            <i class="bi bi-box-arrow-up-right ms-2"></i>
-                        </a>
-
-                    </div>
+                    <a
+                        href="https://www.sclng.com/safe-policy"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="bmk-safeguarding-primary-btn"
+                    >
+                        View SCL Safeguarding Policy
+                        <i class="bi bi-box-arrow-up-right"></i>
+                    </a>
 
                 </div>
 
 
-                <div class="bmk-safeguarding-card mt-5">
+                <div class="col-lg-5">
 
-                    <span class="bmk-section-label">
-                        RAISING A CONCERN
-                    </span>
+                    <div class="bmk-framework-visual">
 
-                    <h2>
-                        If You Have a Safeguarding Concern
-                    </h2>
+                        <div class="bmk-framework-icon">
+                            <i class="bi bi-shield-lock-fill"></i>
+                        </div>
 
-                    <p>
-                        If you have a concern about the safety or wellbeing
-                        of a child or another vulnerable person, it is
-                        important that the concern is reported through
-                        the appropriate safeguarding mechanism.
-                    </p>
+                        <span>
+                            SCL
+                        </span>
 
-                    <p>
-                        SCL provides formal safeguarding reporting
-                        mechanisms through its safeguarding framework.
-                    </p>
+                        <strong>
+                            Safeguarding
+                            Framework
+                        </strong>
 
-                    <div class="d-flex flex-wrap gap-3 mt-4">
+                        <div class="bmk-framework-lines">
 
-                        <a
-                            href="https://www.sclng.com/safe-policy"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="btn btn-primary px-4 py-3"
-                        >
-                            Safeguarding Information
-                            <i class="bi bi-arrow-up-right ms-2"></i>
-                        </a>
+                            <div>
+                                <i class="bi bi-check2"></i>
+                                Prevention
+                            </div>
 
-                        <a
-                            href="https://www.sclng.com/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="btn btn-outline-secondary px-4 py-3"
-                        >
-                            Visit SCL Website
-                            <i class="bi bi-box-arrow-up-right ms-2"></i>
-                        </a>
+                            <div>
+                                <i class="bi bi-check2"></i>
+                                Protection
+                            </div>
+
+                            <div>
+                                <i class="bi bi-check2"></i>
+                                Reporting
+                            </div>
+
+                            <div>
+                                <i class="bi bi-check2"></i>
+                                Accountability
+                            </div>
+
+                        </div>
 
                     </div>
-
-                </div>
-
-
-                <div class="bmk-safeguarding-note mt-5">
-
-                    <i class="bi bi-info-circle me-2"></i>
-
-                    <span>
-                        This page provides general safeguarding information
-                        for the BMK Academy website. Where a formal
-                        safeguarding concern arises, the appropriate
-                        reporting and response procedures should be followed.
-                    </span>
 
                 </div>
 
             </div>
+
         </div>
 
     </div>
+
 </section>
+
+
+<!-- =========================================================
+     RAISING A CONCERN
+     ========================================================= -->
+
+<section class="bmk-safeguarding-concern">
+
+    <div class="container">
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-10">
+
+                <div class="bmk-concern-card">
+
+                    <div class="bmk-concern-icon">
+                        <i class="bi bi-hand-thumbs-up-fill"></i>
+                    </div>
+
+                    <div class="bmk-concern-content">
+
+                        <span class="bmk-safeguarding-label">
+                            RAISING A CONCERN
+                        </span>
+
+                        <h2>
+                            If You Have a Safeguarding Concern
+                        </h2>
+
+                        <p>
+                            If you have a concern about the safety or wellbeing
+                            of a child or another vulnerable person, it is
+                            important that the concern is reported through
+                            the appropriate safeguarding mechanism.
+                        </p>
+
+                        <p>
+                            SCL provides formal safeguarding reporting
+                            mechanisms through its safeguarding framework.
+                        </p>
+
+                        <div class="bmk-concern-actions">
+
+                            <a
+                                href="https://www.sclng.com/safe-policy"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="bmk-safeguarding-primary-btn"
+                            >
+                                Safeguarding Information
+                                <i class="bi bi-arrow-up-right"></i>
+                            </a>
+
+                            <a
+                                href="https://www.sclng.com/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="bmk-safeguarding-secondary-btn"
+                            >
+                                Visit SCL Website
+                                <i class="bi bi-box-arrow-up-right"></i>
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     NOTE
+     ========================================================= -->
+
+<section class="bmk-safeguarding-note-section">
+
+    <div class="container">
+
+        <div class="bmk-safeguarding-note">
+
+            <div class="bmk-note-icon">
+                <i class="bi bi-info-circle-fill"></i>
+            </div>
+
+            <div>
+
+                <strong>
+                    Important Information
+                </strong>
+
+                <p>
+                    This page provides general safeguarding information
+                    for the BMK Academy website. Where a formal
+                    safeguarding concern arises, the appropriate
+                    reporting and response procedures should be followed.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const revealItems = document.querySelectorAll(
+        ".bmk-safeguarding-commitment-text, " +
+        ".bmk-safeguarding-principle, " +
+        ".bmk-framework-card, " +
+        ".bmk-concern-card, " +
+        ".bmk-safeguarding-note"
+    );
+
+    if (!("IntersectionObserver" in window)) {
+
+        revealItems.forEach(function (item) {
+            item.classList.add("bmk-safeguarding-visible");
+        });
+
+        return;
+    }
+
+
+    const observer = new IntersectionObserver(
+        function (entries, observer) {
+
+            entries.forEach(function (entry) {
+
+                if (entry.isIntersecting) {
+
+                    entry.target.classList.add(
+                        "bmk-safeguarding-visible"
+                    );
+
+                    observer.unobserve(entry.target);
+
+                }
+
+            });
+
+        },
+        {
+            threshold: 0.12
+        }
+    );
+
+
+    revealItems.forEach(function (item, index) {
+
+        item.style.transitionDelay =
+            (index * 0.08) + "s";
+
+        observer.observe(item);
+
+    });
+
+});
+
+</script>
 
 {% endblock %}

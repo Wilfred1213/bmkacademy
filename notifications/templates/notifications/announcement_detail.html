@@ -1,95 +1,130 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}
     Announcement Details - BMK Academy
 {% endblock %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'website/css/notification.css' %}">
+{% endblock %}
+
 {% block content %}
 
-<div class="container py-4">
+<section class="bmk-notification-page">
 
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+    <div class="container py-5">
 
-        <div>
-            <h2 class="fw-bold mb-1">
-                Announcement Details
-            </h2>
+        <!-- Page Header -->
+        <div class="bmk-notification-header mb-5">
 
-            <p class="text-muted mb-0">
-                View announcement information and recipients.
-            </p>
+            <div class="bmk-notification-header-content">
+
+                <span class="bmk-notification-eyebrow">
+                    <i class="bi bi-megaphone-fill"></i>
+                    School Communications
+                </span>
+
+                <h1 class="bmk-notification-title">
+                    Announcement Details
+                </h1>
+
+                <p class="bmk-notification-subtitle">
+                    Review the announcement and see the members of the school community who received it.
+                </p>
+
+            </div>
+
+            <div class="bmk-notification-header-actions">
+
+                <a
+                    href="{% url 'notifications:announcement_history' %}"
+                    class="bmk-notification-secondary-btn"
+                >
+                    <i class="bi bi-arrow-left"></i>
+                    Back to History
+                </a>
+
+                <a
+                    href="{% url 'notifications:create_announcement' %}"
+                    class="bmk-notification-primary-btn"
+                >
+                    <i class="bi bi-megaphone-fill"></i>
+                    New Announcement
+                </a>
+
+            </div>
+
         </div>
 
-        <div class="d-flex flex-column flex-sm-row gap-2">
 
-            <a
-                href="{% url 'notifications:announcement_history' %}"
-                class="btn btn-outline-secondary"
-            >
-                <i class="bi bi-arrow-left me-2"></i>
-                Back to History
-            </a>
+        <!-- Announcement Information -->
+        <div class="bmk-announcement-detail-card mb-4">
 
-            <a
-                href="{% url 'notifications:create_announcement' %}"
-                class="btn btn-primary"
-            >
-                <i class="bi bi-megaphone me-2"></i>
-                New Announcement
-            </a>
+            <div class="bmk-announcement-detail-top">
 
-        </div>
+                <div class="bmk-announcement-detail-icon">
+                    <i class="bi bi-megaphone-fill"></i>
+                </div>
 
-    </div>
+                <div class="bmk-announcement-detail-heading">
 
+                    <span>
+                        Announcement
+                    </span>
 
-    <!-- Announcement Information -->
+                    <h2>
+                        {{ announcement.title }}
+                    </h2>
 
-    <div class="card border-0 shadow-sm mb-4">
+                </div>
 
-        <div class="card-body">
-
-            <h3 class="fw-bold mb-3">
-                {{ announcement.title }}
-            </h3>
+            </div>
 
 
-            <div class="row g-3 mb-4">
+            <!-- Announcement Meta -->
+            <div class="bmk-announcement-detail-meta">
 
-                <div class="col-md-4">
+                <!-- Audience -->
+                <div class="bmk-announcement-meta-item">
 
-                    <small class="text-muted d-block">
+                    <span class="bmk-announcement-meta-label">
+                        <i class="bi bi-people"></i>
                         Audience
-                    </small>
+                    </span>
 
                     {% if announcement.recipient_group == "parents" %}
 
-                        <span class="badge bg-primary">
+                        <span class="bmk-audience-badge parents">
+                            <i class="bi bi-people-fill"></i>
                             All Parents
                         </span>
 
                     {% elif announcement.recipient_group == "teachers" %}
 
-                        <span class="badge bg-success">
+                        <span class="bmk-audience-badge teachers">
+                            <i class="bi bi-person-workspace"></i>
                             All Teachers
                         </span>
 
                     {% elif announcement.recipient_group == "students" %}
 
-                        <span class="badge bg-warning text-dark">
+                        <span class="bmk-audience-badge students">
+                            <i class="bi bi-mortarboard-fill"></i>
                             All Students
                         </span>
 
                     {% elif announcement.recipient_group == "everyone" %}
 
-                        <span class="badge bg-dark">
+                        <span class="bmk-audience-badge everyone">
+                            <i class="bi bi-globe2"></i>
                             Everyone
                         </span>
 
                     {% else %}
 
-                        <span class="text-muted">
-                            —
+                        <span class="bmk-audience-badge">
+                            Unknown
                         </span>
 
                     {% endif %}
@@ -97,41 +132,56 @@
                 </div>
 
 
-                <div class="col-md-4">
+                <!-- Recipients -->
+                <div class="bmk-announcement-meta-item">
 
-                    <small class="text-muted d-block">
+                    <span class="bmk-announcement-meta-label">
+                        <i class="bi bi-person-check"></i>
                         Recipients
-                    </small>
+                    </span>
 
-                    <strong>
+                    <strong class="bmk-announcement-meta-value">
                         {{ recipient_count }}
                     </strong>
 
                 </div>
 
 
-                <div class="col-md-4">
+                <!-- Sent -->
+                <div class="bmk-announcement-meta-item">
 
-                    <small class="text-muted d-block">
+                    <span class="bmk-announcement-meta-label">
+                        <i class="bi bi-calendar3"></i>
                         Sent
-                    </small>
+                    </span>
 
-                    <strong>
-                        {{ announcement.created_at|date:"M d, Y - h:i A" }}
+                    <strong class="bmk-announcement-meta-value">
+                        {{ announcement.created_at|date:"M d, Y" }}
                     </strong>
+
+                    <small>
+                        {{ announcement.created_at|date:"h:i A" }}
+                    </small>
 
                 </div>
 
             </div>
 
 
-            <div>
+            <!-- Message -->
+            <div class="bmk-announcement-detail-message">
 
-                <h6 class="fw-bold">
-                    Message
-                </h6>
+                <div class="bmk-announcement-message-heading">
 
-                <div class="bg-light rounded p-3">
+                    <i class="bi bi-chat-left-text-fill"></i>
+
+                    <h3>
+                        Message
+                    </h3>
+
+                </div>
+
+                <div class="bmk-announcement-message-body">
                     {{ announcement.message|linebreaks }}
                 </div>
 
@@ -139,33 +189,41 @@
 
         </div>
 
-    </div>
 
+        <!-- Recipients -->
+        <div class="bmk-announcement-table-card">
 
-    <!-- Recipients -->
+            <div class="bmk-announcement-table-header">
 
-    <div class="card border-0 shadow-sm">
+                <div>
 
-        <div class="card-header bg-white">
+                    <h2>
+                        Recipients
+                    </h2>
 
-            <h5 class="fw-bold mb-0">
-                Recipients
-            </h5>
+                    <p>
+                        Members of the school community who received this announcement.
+                    </p>
 
-        </div>
+                </div>
 
+                <div class="bmk-announcement-table-icon">
+                    <i class="bi bi-people-fill"></i>
+                </div>
 
-        <div class="card-body p-0">
+            </div>
+
 
             <div class="table-responsive">
 
-                <table class="table table-hover align-middle mb-0">
+                <table class="table bmk-announcement-table align-middle mb-0">
 
-                    <thead class="table-light">
+                    <thead>
 
                         <tr>
-                            <th class="px-3">
-                                Name
+
+                            <th>
+                                Recipient
                             </th>
 
                             <th>
@@ -183,6 +241,7 @@
                             <th>
                                 Sent
                             </th>
+
                         </tr>
 
                     </thead>
@@ -194,42 +253,76 @@
 
                             <tr>
 
-                                <td class="px-3">
+                                <!-- Recipient -->
+                                <td>
 
-                                    <strong>
-                                        {{ notification.recipient.get_full_name|default:notification.recipient.username }}
-                                    </strong>
+                                    <div class="bmk-recipient-cell">
+
+                                        <div class="bmk-recipient-avatar">
+                                            <i class="bi bi-person-fill"></i>
+                                        </div>
+
+                                        <div>
+
+                                            <strong>
+                                                {{ notification.recipient.get_full_name|default:notification.recipient.username }}
+                                            </strong>
+
+                                            <small>
+                                                School community member
+                                            </small>
+
+                                        </div>
+
+                                    </div>
 
                                 </td>
 
 
+                                <!-- Username -->
                                 <td>
-                                    {{ notification.recipient.username }}
+
+                                    <span class="bmk-username">
+                                        {{ notification.recipient.username }}
+                                    </span>
+
                                 </td>
 
 
+                                <!-- Email -->
                                 <td>
+
                                     {% if notification.recipient.email %}
-                                        {{ notification.recipient.email }}
+
+                                        <span class="bmk-recipient-email">
+                                            {{ notification.recipient.email }}
+                                        </span>
+
                                     {% else %}
-                                        <span class="text-muted">
+
+                                        <span class="bmk-no-email">
                                             No email
                                         </span>
+
                                     {% endif %}
+
                                 </td>
 
 
+                                <!-- Status -->
                                 <td>
 
                                     {% if notification.is_read %}
 
-                                        <span class="badge bg-success">
+                                        <span class="bmk-status-badge read">
+                                            <i class="bi bi-check-circle-fill"></i>
                                             Read
                                         </span>
 
                                     {% else %}
 
-                                        <span class="badge bg-secondary">
+                                        <span class="bmk-status-badge unread">
+                                            <i class="bi bi-envelope-fill"></i>
                                             Unread
                                         </span>
 
@@ -238,9 +331,44 @@
                                 </td>
 
 
-                                <td class="text-nowrap">
+                                <!-- Sent -->
+                                <td>
 
-                                    {{ notification.created_at|date:"M d, Y H:i" }}
+                                    <div class="bmk-recipient-date">
+
+                                        <strong>
+                                            {{ notification.created_at|date:"M d, Y" }}
+                                        </strong>
+
+                                        <span>
+                                            {{ notification.created_at|date:"h:i A" }}
+                                        </span>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                        {% empty %}
+
+                            <tr>
+
+                                <td colspan="5">
+
+                                    <div class="bmk-recipient-empty">
+
+                                        <i class="bi bi-people"></i>
+
+                                        <strong>
+                                            No recipients found
+                                        </strong>
+
+                                        <span>
+                                            There are no recipient records for this announcement.
+                                        </span>
+
+                                    </div>
 
                                 </td>
 
@@ -258,6 +386,6 @@
 
     </div>
 
-</div>
+</section>
 
 {% endblock %}

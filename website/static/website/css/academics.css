@@ -1,0 +1,2280 @@
+/* =========================================================
+   BMK ACADEMY — ACADEMICS PAGE
+   ========================================================= */
+
+
+/* =========================================================
+   ACADEMICS HERO
+   ========================================================= */
+
+   .bmk-academics-hero {
+    position: relative;
+    overflow: hidden;
+    min-height: 520px;
+    display: flex;
+    align-items: center;
+    background:
+        radial-gradient(
+            circle at 85% 20%,
+            rgba(37, 99, 235, 0.30),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 15% 85%,
+            rgba(224, 168, 62, 0.16),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #081a2e 0%,
+            #0f2747 55%,
+            #173e6d 100%
+        );
+}
+
+
+/* Decorative circle */
+
+.bmk-academics-hero::before {
+    content: "";
+    position: absolute;
+    top: -180px;
+    right: -120px;
+    width: 420px;
+    height: 420px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+}
+
+
+/* Second decorative circle */
+
+.bmk-academics-hero::after {
+    content: "";
+    position: absolute;
+    bottom: -220px;
+    left: -150px;
+    width: 420px;
+    height: 420px;
+    border: 1px solid rgba(224, 168, 62, 0.12);
+    border-radius: 50%;
+}
+
+
+/* Keep content above decorations */
+
+.bmk-academics-hero .container {
+    position: relative;
+    z-index: 1;
+}
+
+
+/* Hero label */
+
+.bmk-academics-hero .bmk-section-label {
+    display: inline-block;
+    margin-bottom: 18px;
+    color: var(--bmk-gold-light);
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+
+/* Hero heading */
+
+.bmk-academics-hero h1 {
+    max-width: 850px;
+    margin: 0 auto 22px;
+    color: #ffffff;
+    font-size: clamp(2.6rem, 5vw, 4.4rem);
+    font-weight: 750;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+}
+
+
+/* Hero paragraph */
+
+.bmk-academics-hero p {
+    max-width: 720px;
+    margin: 0 auto;
+    color: rgba(255, 255, 255, 0.76);
+    font-size: 1.05rem;
+    line-height: 1.85;
+}
+
+
+/* =========================================================
+   HERO ENTRANCE ANIMATION
+   ========================================================= */
+
+.bmk-academics-hero .bmk-section-label,
+.bmk-academics-hero h1,
+.bmk-academics-hero p {
+    opacity: 0;
+    transform: translateY(25px);
+    animation: bmkAcademicsHeroReveal 0.8s ease forwards;
+}
+
+.bmk-academics-hero .bmk-section-label {
+    animation-delay: 0.1s;
+}
+
+.bmk-academics-hero h1 {
+    animation-delay: 0.25s;
+}
+
+.bmk-academics-hero p {
+    animation-delay: 0.4s;
+}
+
+
+@keyframes bmkAcademicsHeroReveal {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* =========================================================
+   MOBILE HERO
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .bmk-academics-hero {
+        min-height: 470px;
+        padding: 80px 0;
+    }
+
+    .bmk-academics-hero h1 {
+        font-size: 2.45rem;
+        line-height: 1.12;
+    }
+
+    .bmk-academics-hero p {
+        font-size: 0.94rem;
+        line-height: 1.75;
+    }
+
+    .bmk-academics-hero::before {
+        width: 280px;
+        height: 280px;
+        top: -130px;
+        right: -120px;
+    }
+
+    .bmk-academics-hero::after {
+        width: 280px;
+        height: 280px;
+        bottom: -150px;
+        left: -120px;
+    }
+}
+/* =========================================================
+   OUR APPROACH
+   ========================================================= */
+
+   .bmk-academic-approach {
+    position: relative;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+
+/* Soft background decoration */
+
+.bmk-academic-approach::before {
+    content: "";
+    position: absolute;
+    top: -150px;
+    left: -120px;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    background: rgba(29, 78, 216, 0.035);
+    pointer-events: none;
+}
+
+
+/* Keep content above decoration */
+
+.bmk-academic-approach .container {
+    position: relative;
+    z-index: 1;
+}
+
+
+/* Text area */
+
+.bmk-academic-approach .bmk-section-label {
+    display: inline-block;
+    margin-bottom: 14px;
+    color: var(--bmk-blue);
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+
+.bmk-academic-approach .bmk-section-title {
+    margin-bottom: 22px;
+    color: var(--bmk-navy);
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 750;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+}
+
+
+.bmk-academic-page-text {
+    max-width: 570px;
+    margin-bottom: 18px;
+    color: var(--bmk-muted);
+    font-size: 0.97rem;
+    line-height: 1.85;
+}
+
+
+/* =========================================================
+   APPROACH CARDS
+   ========================================================= */
+
+.bmk-academic-page-card {
+    position: relative;
+    height: 100%;
+    padding: 30px 28px;
+    overflow: hidden;
+
+    border: 1px solid rgba(15, 39, 71, 0.07);
+    border-radius: 21px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 12px 35px rgba(15, 35, 55, 0.07);
+
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease,
+        border-color 0.35s ease;
+}
+
+
+/* Decorative corner */
+
+.bmk-academic-page-card::before {
+    content: "";
+    position: absolute;
+    top: -65px;
+    right: -65px;
+
+    width: 140px;
+    height: 140px;
+
+    border-radius: 50%;
+
+    background: rgba(29, 78, 216, 0.045);
+
+    transition:
+        transform 0.45s ease,
+        background 0.45s ease;
+}
+
+
+/* Gold bottom accent */
+
+.bmk-academic-page-card::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 28px;
+
+    width: 0;
+    height: 3px;
+
+    border-radius: 999px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--bmk-blue),
+            var(--bmk-gold)
+        );
+
+    transition: width 0.4s ease;
+}
+
+
+/* Card hover */
+
+.bmk-academic-page-card:hover {
+    transform: translateY(-8px);
+
+    border-color: rgba(29, 78, 216, 0.14);
+
+    box-shadow:
+        0 22px 50px rgba(15, 35, 55, 0.13);
+}
+
+
+.bmk-academic-page-card:hover::before {
+    transform: scale(1.35);
+    background: rgba(29, 78, 216, 0.075);
+}
+
+
+.bmk-academic-page-card:hover::after {
+    width: 72px;
+}
+
+
+/* =========================================================
+   CARD ICON
+   ========================================================= */
+
+.bmk-academic-page-icon {
+    position: relative;
+    z-index: 1;
+
+    width: 58px;
+    height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 21px;
+
+    border-radius: 17px;
+
+    color: var(--bmk-blue);
+
+    background:
+        linear-gradient(
+            135deg,
+            #eef5ff,
+            #f7faff
+        );
+
+    box-shadow:
+        inset 0 0 0 1px rgba(29, 78, 216, 0.07);
+
+    transition:
+        transform 0.35s ease,
+        background 0.35s ease,
+        color 0.35s ease;
+}
+
+
+.bmk-academic-page-icon i {
+    font-size: 1.4rem;
+}
+
+
+.bmk-academic-page-card:hover .bmk-academic-page-icon {
+    transform: translateY(-3px) rotate(-3deg);
+
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--bmk-blue),
+            #2563eb
+        );
+}
+
+
+/* =========================================================
+   CARD TYPOGRAPHY
+   ========================================================= */
+
+.bmk-academic-page-card h4 {
+    position: relative;
+    z-index: 1;
+
+    margin-bottom: 11px;
+
+    color: var(--bmk-navy);
+
+    font-size: 1.12rem;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+
+.bmk-academic-page-card p {
+    position: relative;
+    z-index: 1;
+
+    margin-bottom: 0;
+
+    color: var(--bmk-muted);
+
+    font-size: 0.91rem;
+    line-height: 1.75;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .bmk-academic-approach .bmk-section-title {
+        font-size: 2rem;
+    }
+
+    .bmk-academic-page-text {
+        font-size: 0.92rem;
+        line-height: 1.75;
+    }
+
+    .bmk-academic-page-card {
+        padding: 26px 23px;
+        border-radius: 18px;
+    }
+
+    .bmk-academic-page-icon {
+        width: 54px;
+        height: 54px;
+        margin-bottom: 18px;
+        border-radius: 15px;
+    }
+
+    .bmk-academic-page-card h4 {
+        font-size: 1.06rem;
+    }
+
+    .bmk-academic-page-card p {
+        font-size: 0.9rem;
+        line-height: 1.7;
+    }
+}
+/* =========================================================
+   EDUCATIONAL JOURNEY
+   ========================================================= */
+
+   .bmk-learning-journey {
+    position: relative;
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f6f8fb 0%,
+            #ffffff 100%
+        );
+}
+
+
+/* Top transition */
+
+.bmk-learning-journey::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+
+    width: 110px;
+    height: 4px;
+
+    transform: translateX(-50%);
+
+    border-radius: 999px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--bmk-blue),
+            var(--bmk-gold)
+        );
+}
+
+
+/* Decorative background circle */
+
+.bmk-learning-journey::after {
+    content: "";
+    position: absolute;
+
+    right: -150px;
+    bottom: -170px;
+
+    width: 380px;
+    height: 380px;
+
+    border-radius: 50%;
+
+    background: rgba(224, 168, 62, 0.045);
+
+    pointer-events: none;
+}
+
+
+.bmk-learning-journey .container {
+    position: relative;
+    z-index: 1;
+}
+
+
+/* =========================================================
+   SECTION INTRO
+   ========================================================= */
+
+.bmk-learning-journey .bmk-section-label {
+    display: inline-block;
+
+    margin-bottom: 14px;
+
+    color: var(--bmk-blue);
+
+    font-size: 0.76rem;
+    font-weight: 800;
+
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+
+.bmk-learning-journey .bmk-section-title {
+    margin-bottom: 18px;
+
+    color: var(--bmk-navy);
+
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 750;
+
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+}
+
+
+.bmk-learning-intro {
+    max-width: 700px;
+
+    margin: 0 auto;
+
+    color: var(--bmk-muted);
+
+    font-size: 0.98rem;
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   JOURNEY STAGE
+   ========================================================= */
+
+.bmk-learning-stage {
+    position: relative;
+
+    height: 100%;
+
+    padding: 36px 30px 32px;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(15, 39, 71, 0.07);
+    border-radius: 22px;
+
+    background: #ffffff;
+
+    text-align: center;
+
+    box-shadow:
+        0 12px 35px rgba(15, 35, 55, 0.07);
+
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease,
+        border-color 0.35s ease;
+}
+
+
+/* Top stage number */
+
+.bmk-learning-stage-number {
+    position: absolute;
+
+    top: 18px;
+    right: 22px;
+
+    color: rgba(15, 39, 71, 0.10);
+
+    font-size: 2.4rem;
+    font-weight: 800;
+
+    line-height: 1;
+}
+
+
+/* Stage icon */
+
+.bmk-learning-stage-icon {
+    position: relative;
+    z-index: 1;
+
+    width: 70px;
+    height: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 22px;
+
+    border-radius: 21px;
+
+    color: var(--bmk-blue);
+
+    background:
+        linear-gradient(
+            135deg,
+            #eef5ff,
+            #f7faff
+        );
+
+    box-shadow:
+        inset 0 0 0 1px rgba(29, 78, 216, 0.07);
+
+    transition:
+        transform 0.35s ease,
+        background 0.35s ease,
+        color 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+
+.bmk-learning-stage-icon i {
+    font-size: 1.6rem;
+}
+
+
+/* Heading */
+
+.bmk-learning-stage h3 {
+    position: relative;
+    z-index: 1;
+
+    margin-bottom: 13px;
+
+    color: var(--bmk-navy);
+
+    font-size: 1.3rem;
+    font-weight: 750;
+
+    line-height: 1.3;
+}
+
+
+/* Description */
+
+.bmk-learning-stage p {
+    position: relative;
+    z-index: 1;
+
+    max-width: 330px;
+
+    margin: 0 auto;
+
+    color: var(--bmk-muted);
+
+    font-size: 0.91rem;
+    line-height: 1.75;
+}
+
+
+/* =========================================================
+   STAGE HOVER
+   ========================================================= */
+
+.bmk-learning-stage:hover {
+    transform: translateY(-8px);
+
+    border-color: rgba(29, 78, 216, 0.14);
+
+    box-shadow:
+        0 23px 52px rgba(15, 35, 55, 0.13);
+}
+
+
+.bmk-learning-stage:hover .bmk-learning-stage-icon {
+    transform: translateY(-4px) scale(1.04);
+
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--bmk-blue),
+            #2563eb
+        );
+
+    box-shadow:
+        0 12px 25px rgba(29, 78, 216, 0.20);
+}
+
+
+/* =========================================================
+   FEATURED PRIMARY STAGE
+   ========================================================= */
+
+.bmk-learning-stage.featured {
+    border-color: rgba(29, 78, 216, 0.14);
+
+    box-shadow:
+        0 18px 45px rgba(29, 78, 216, 0.10);
+}
+
+
+.bmk-learning-stage.featured::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 50%;
+
+    width: 70px;
+    height: 3px;
+
+    transform: translateX(-50%);
+
+    border-radius: 999px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--bmk-blue),
+            var(--bmk-gold)
+        );
+}
+
+
+.bmk-learning-stage.featured .bmk-learning-stage-number {
+    color: rgba(29, 78, 216, 0.12);
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .bmk-learning-journey .bmk-section-title {
+        font-size: 2rem;
+    }
+
+    .bmk-learning-intro {
+        font-size: 0.92rem;
+        line-height: 1.75;
+    }
+
+    .bmk-learning-stage {
+        padding: 32px 24px 28px;
+        border-radius: 19px;
+    }
+
+    .bmk-learning-stage-icon {
+        width: 62px;
+        height: 62px;
+        margin-bottom: 19px;
+        border-radius: 18px;
+    }
+
+    .bmk-learning-stage-icon i {
+        font-size: 1.45rem;
+    }
+
+    .bmk-learning-stage h3 {
+        font-size: 1.18rem;
+    }
+
+    .bmk-learning-stage p {
+        font-size: 0.9rem;
+        line-height: 1.7;
+    }
+
+    .bmk-learning-stage-number {
+        top: 15px;
+        right: 18px;
+        font-size: 2rem;
+    }
+}
+/* =========================================================
+   WHOLE CHILD
+   ========================================================= */
+
+.bmk-whole-child {
+    position: relative;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+
+/* Soft decorative background */
+
+.bmk-whole-child::before {
+    content: "";
+
+    position: absolute;
+    top: -160px;
+    right: -120px;
+
+    width: 360px;
+    height: 360px;
+
+    border-radius: 50%;
+
+    background: rgba(29, 78, 216, 0.035);
+
+    pointer-events: none;
+}
+
+
+.bmk-whole-child::after {
+    content: "";
+
+    position: absolute;
+    bottom: -180px;
+    left: -130px;
+
+    width: 360px;
+    height: 360px;
+
+    border-radius: 50%;
+
+    background: rgba(224, 168, 62, 0.045);
+
+    pointer-events: none;
+}
+
+
+.bmk-whole-child .container {
+    position: relative;
+    z-index: 1;
+}
+
+
+/* =========================================================
+   TEXT SIDE
+   ========================================================= */
+
+.bmk-whole-child .bmk-section-label {
+    display: inline-block;
+
+    margin-bottom: 14px;
+
+    color: var(--bmk-blue);
+
+    font-size: 0.76rem;
+    font-weight: 800;
+
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+
+.bmk-whole-child .bmk-section-title {
+    max-width: 620px;
+
+    margin-bottom: 22px;
+
+    color: var(--bmk-navy);
+
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 750;
+
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+}
+
+
+/* =========================================================
+   WHOLE CHILD FEATURE BOX
+   ========================================================= */
+
+.bmk-whole-child-box {
+    position: relative;
+
+    padding: 42px 40px;
+
+    overflow: hidden;
+
+    border-radius: 25px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--bmk-navy-dark) 0%,
+            var(--bmk-navy) 58%,
+            #173e6d 100%
+        );
+
+    box-shadow:
+        0 24px 60px rgba(15, 35, 55, 0.17);
+}
+
+
+/* Decorative glow */
+
+.bmk-whole-child-box::before {
+    content: "";
+
+    position: absolute;
+
+    top: -110px;
+    right: -80px;
+
+    width: 270px;
+    height: 270px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(37, 99, 235, 0.28),
+            rgba(37, 99, 235, 0)
+        );
+
+    pointer-events: none;
+}
+
+
+/* Gold glow */
+
+.bmk-whole-child-box::after {
+    content: "";
+
+    position: absolute;
+
+    bottom: -130px;
+    left: -100px;
+
+    width: 280px;
+    height: 280px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(224, 168, 62, 0.16),
+            rgba(224, 168, 62, 0)
+        );
+
+    pointer-events: none;
+}
+
+
+/* Keep contents above decoration */
+
+.bmk-whole-child-box > * {
+    position: relative;
+    z-index: 1;
+}
+
+
+/* =========================================================
+   FEATURE ICON
+   ========================================================= */
+
+.bmk-whole-child-icon {
+    width: 66px;
+    height: 66px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 24px;
+
+    border-radius: 19px;
+
+    color: var(--bmk-navy);
+
+    background:
+        linear-gradient(
+            135deg,
+            #f3d58a,
+            var(--bmk-gold)
+        );
+
+    box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.15);
+
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+
+.bmk-whole-child-box:hover .bmk-whole-child-icon {
+    transform: translateY(-4px) scale(1.04);
+
+    box-shadow:
+        0 17px 35px rgba(0, 0, 0, 0.20);
+}
+
+
+.bmk-whole-child-icon i {
+    font-size: 1.55rem;
+}
+
+
+/* =========================================================
+   FEATURE CONTENT
+   ========================================================= */
+
+.bmk-whole-child-box h3 {
+    margin-bottom: 15px;
+
+    color: #ffffff;
+
+    font-size: 1.65rem;
+    font-weight: 750;
+
+    line-height: 1.3;
+}
+
+
+.bmk-whole-child-box > p {
+    max-width: 620px;
+
+    margin-bottom: 26px;
+
+    color: rgba(255, 255, 255, 0.74);
+
+    font-size: 0.94rem;
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   WHOLE CHILD LIST
+   ========================================================= */
+
+.bmk-whole-child-list {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 13px 22px;
+}
+
+
+.bmk-whole-child-list > div {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    color: rgba(255, 255, 255, 0.90);
+
+    font-size: 0.88rem;
+}
+
+
+.bmk-whole-child-list i {
+    flex-shrink: 0;
+
+    color: var(--bmk-gold-light);
+
+    font-size: 0.95rem;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .bmk-whole-child .bmk-section-title {
+        font-size: 2rem;
+    }
+
+    .bmk-whole-child-box {
+        padding: 34px 24px;
+
+        border-radius: 21px;
+    }
+
+    .bmk-whole-child-icon {
+        width: 60px;
+        height: 60px;
+
+        margin-bottom: 20px;
+
+        border-radius: 17px;
+    }
+
+    .bmk-whole-child-icon i {
+        font-size: 1.4rem;
+    }
+
+    .bmk-whole-child-box h3 {
+        font-size: 1.45rem;
+    }
+
+    .bmk-whole-child-box > p {
+        font-size: 0.9rem;
+        line-height: 1.7;
+    }
+
+    .bmk-whole-child-list {
+        grid-template-columns: 1fr;
+
+        gap: 10px;
+    }
+
+    .bmk-whole-child-list > div {
+        font-size: 0.86rem;
+    }
+}
+/* =========================================================
+   EDUCATION FOR SERVICE
+   ========================================================= */
+
+   .bmk-academic-service {
+    position: relative;
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f6f8fb 0%,
+            #ffffff 100%
+        );
+}
+
+
+/* Decorative background circles */
+
+.bmk-academic-service::before {
+    content: "";
+
+    position: absolute;
+
+    top: -160px;
+    left: -130px;
+
+    width: 360px;
+    height: 360px;
+
+    border-radius: 50%;
+
+    background: rgba(29, 78, 216, 0.045);
+
+    pointer-events: none;
+}
+
+
+.bmk-academic-service::after {
+    content: "";
+
+    position: absolute;
+
+    right: -130px;
+    bottom: -170px;
+
+    width: 380px;
+    height: 380px;
+
+    border-radius: 50%;
+
+    background: rgba(224, 168, 62, 0.055);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   SERVICE BOX
+   ========================================================= */
+
+.bmk-academic-service-box {
+    position: relative;
+
+    max-width: 1050px;
+
+    margin: 0 auto;
+
+    padding: 58px 70px;
+
+    overflow: hidden;
+
+    border-radius: 28px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--bmk-navy-dark) 0%,
+            var(--bmk-navy) 55%,
+            #173e6d 100%
+        );
+
+    box-shadow:
+        0 25px 65px rgba(15, 35, 55, 0.18);
+}
+
+
+/* Blue glow */
+
+.bmk-academic-service-box::before {
+    content: "";
+
+    position: absolute;
+
+    top: -140px;
+    right: -100px;
+
+    width: 340px;
+    height: 340px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(37, 99, 235, 0.30),
+            rgba(37, 99, 235, 0)
+        );
+
+    pointer-events: none;
+}
+
+
+/* Gold glow */
+
+.bmk-academic-service-box::after {
+    content: "";
+
+    position: absolute;
+
+    bottom: -160px;
+    left: -110px;
+
+    width: 340px;
+    height: 340px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(224, 168, 62, 0.18),
+            rgba(224, 168, 62, 0)
+        );
+
+    pointer-events: none;
+}
+
+
+/* Keep content above decorations */
+
+.bmk-academic-service-box > * {
+    position: relative;
+    z-index: 1;
+}
+
+
+/* =========================================================
+   SERVICE ICON
+   ========================================================= */
+
+.bmk-academic-service-icon {
+    width: 70px;
+    height: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 23px;
+
+    border-radius: 21px;
+
+    color: var(--bmk-navy);
+
+    background:
+        linear-gradient(
+            135deg,
+            #f3d58a,
+            var(--bmk-gold)
+        );
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.16);
+
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+
+.bmk-academic-service-box:hover .bmk-academic-service-icon {
+    transform: translateY(-4px) scale(1.04);
+
+    box-shadow:
+        0 18px 38px rgba(0, 0, 0, 0.21);
+}
+
+
+.bmk-academic-service-icon i {
+    font-size: 1.7rem;
+}
+
+
+/* =========================================================
+   LABEL
+   ========================================================= */
+
+.bmk-academic-service-box .bmk-section-label {
+    display: inline-block;
+
+    margin-bottom: 12px;
+
+    color: var(--bmk-gold-light);
+
+    font-size: 0.76rem;
+    font-weight: 800;
+
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   HEADING
+   ========================================================= */
+
+.bmk-academic-service-box h2 {
+    margin-bottom: 18px;
+
+    color: #ffffff;
+
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 750;
+
+    line-height: 1.15;
+
+    letter-spacing: -0.025em;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.bmk-academic-service-box p {
+    max-width: 760px;
+
+    margin: 0 auto;
+
+    color: rgba(255, 255, 255, 0.76);
+
+    font-size: 0.98rem;
+
+    line-height: 1.85;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .bmk-academic-service-box {
+        padding: 40px 24px;
+
+        border-radius: 22px;
+    }
+
+    .bmk-academic-service-icon {
+        width: 62px;
+        height: 62px;
+
+        margin-bottom: 20px;
+
+        border-radius: 18px;
+    }
+
+    .bmk-academic-service-icon i {
+        font-size: 1.5rem;
+    }
+
+    .bmk-academic-service-box h2 {
+        font-size: 2rem;
+    }
+
+    .bmk-academic-service-box p {
+        font-size: 0.91rem;
+        line-height: 1.7;
+    }
+}
+/* =========================================================
+   EDUCATION FOR SERVICE
+   ========================================================= */
+
+   .bmk-academic-service {
+    position: relative;
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f6f8fb 0%,
+            #ffffff 100%
+        );
+}
+
+
+/* Decorative background circles */
+
+.bmk-academic-service::before {
+    content: "";
+
+    position: absolute;
+
+    top: -160px;
+    left: -130px;
+
+    width: 360px;
+    height: 360px;
+
+    border-radius: 50%;
+
+    background: rgba(29, 78, 216, 0.045);
+
+    pointer-events: none;
+}
+
+
+.bmk-academic-service::after {
+    content: "";
+
+    position: absolute;
+
+    right: -130px;
+    bottom: -170px;
+
+    width: 380px;
+    height: 380px;
+
+    border-radius: 50%;
+
+    background: rgba(224, 168, 62, 0.055);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   SERVICE BOX
+   ========================================================= */
+
+.bmk-academic-service-box {
+    position: relative;
+
+    max-width: 1050px;
+
+    margin: 0 auto;
+
+    padding: 58px 70px;
+
+    overflow: hidden;
+
+    border-radius: 28px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--bmk-navy-dark) 0%,
+            var(--bmk-navy) 55%,
+            #173e6d 100%
+        );
+
+    box-shadow:
+        0 25px 65px rgba(15, 35, 55, 0.18);
+}
+
+
+/* Blue glow */
+
+.bmk-academic-service-box::before {
+    content: "";
+
+    position: absolute;
+
+    top: -140px;
+    right: -100px;
+
+    width: 340px;
+    height: 340px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(37, 99, 235, 0.30),
+            rgba(37, 99, 235, 0)
+        );
+
+    pointer-events: none;
+}
+
+
+/* Gold glow */
+
+.bmk-academic-service-box::after {
+    content: "";
+
+    position: absolute;
+
+    bottom: -160px;
+    left: -110px;
+
+    width: 340px;
+    height: 340px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(224, 168, 62, 0.18),
+            rgba(224, 168, 62, 0)
+        );
+
+    pointer-events: none;
+}
+
+
+/* Keep content above decorations */
+
+.bmk-academic-service-box > * {
+    position: relative;
+    z-index: 1;
+}
+
+
+/* =========================================================
+   SERVICE ICON
+   ========================================================= */
+
+.bmk-academic-service-icon {
+    width: 70px;
+    height: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 23px;
+
+    border-radius: 21px;
+
+    color: var(--bmk-navy);
+
+    background:
+        linear-gradient(
+            135deg,
+            #f3d58a,
+            var(--bmk-gold)
+        );
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.16);
+
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+
+.bmk-academic-service-box:hover .bmk-academic-service-icon {
+    transform: translateY(-4px) scale(1.04);
+
+    box-shadow:
+        0 18px 38px rgba(0, 0, 0, 0.21);
+}
+
+
+.bmk-academic-service-icon i {
+    font-size: 1.7rem;
+}
+
+
+/* =========================================================
+   LABEL
+   ========================================================= */
+
+.bmk-academic-service-box .bmk-section-label {
+    display: inline-block;
+
+    margin-bottom: 12px;
+
+    color: var(--bmk-gold-light);
+
+    font-size: 0.76rem;
+    font-weight: 800;
+
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   HEADING
+   ========================================================= */
+
+.bmk-academic-service-box h2 {
+    margin-bottom: 18px;
+
+    color: #ffffff;
+
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 750;
+
+    line-height: 1.15;
+
+    letter-spacing: -0.025em;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.bmk-academic-service-box p {
+    max-width: 760px;
+
+    margin: 0 auto;
+
+    color: rgba(255, 255, 255, 0.76);
+
+    font-size: 0.98rem;
+
+    line-height: 1.85;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .bmk-academic-service-box {
+        padding: 40px 24px;
+
+        border-radius: 22px;
+    }
+
+    .bmk-academic-service-icon {
+        width: 62px;
+        height: 62px;
+
+        margin-bottom: 20px;
+
+        border-radius: 18px;
+    }
+
+    .bmk-academic-service-icon i {
+        font-size: 1.5rem;
+    }
+
+    .bmk-academic-service-box h2 {
+        font-size: 2rem;
+    }
+
+    .bmk-academic-service-box p {
+        font-size: 0.91rem;
+        line-height: 1.7;
+    }
+}
+/* =========================================================
+   ACADEMIC PROGRAMME
+   ========================================================= */
+
+   .bmk-academic-programme {
+    position: relative;
+    overflow: hidden;
+    padding: 90px 0;
+    background:
+        linear-gradient(
+            180deg,
+            #f6f8fb 0%,
+            #ffffff 100%
+        );
+}
+
+
+/* Decorative background */
+
+.bmk-academic-programme::before {
+    content: "";
+
+    position: absolute;
+
+    top: -160px;
+    right: -130px;
+
+    width: 360px;
+    height: 360px;
+
+    border-radius: 50%;
+
+    background: rgba(29, 78, 216, 0.04);
+
+    pointer-events: none;
+}
+
+
+.bmk-academic-programme::after {
+    content: "";
+
+    position: absolute;
+
+    bottom: -170px;
+    left: -130px;
+
+    width: 380px;
+    height: 380px;
+
+    border-radius: 50%;
+
+    background: rgba(224, 168, 62, 0.045);
+
+    pointer-events: none;
+}
+
+
+/* Keep content above decorations */
+
+.bmk-academic-programme .container {
+    position: relative;
+    z-index: 1;
+}
+
+
+/* =========================================================
+   SECTION INTRO
+   ========================================================= */
+
+.bmk-academic-programme .text-center.mb-5 {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.bmk-academic-programme .text-center.mb-5 > span {
+    display: inline-block;
+
+    margin-bottom: 10px;
+
+    color: var(--bmk-blue);
+
+    font-size: 0.76rem;
+    font-weight: 800;
+
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+
+.bmk-academic-programme .text-center.mb-5 h2 {
+    margin-top: 0 !important;
+    margin-bottom: 16px;
+
+    color: var(--bmk-navy);
+
+    font-size: clamp(2rem, 4vw, 2.7rem);
+    font-weight: 750;
+
+    line-height: 1.15;
+
+    letter-spacing: -0.025em;
+}
+
+
+.bmk-academic-programme .text-center.mb-5 p {
+    max-width: 700px;
+
+    color: var(--bmk-muted);
+
+    font-size: 0.97rem;
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   NURSERY / PRIMARY HEADINGS
+   ========================================================= */
+
+.bmk-academic-programme h3.fw-bold {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 25px !important;
+
+    color: var(--bmk-navy);
+
+    font-size: 1.45rem;
+    font-weight: 750 !important;
+}
+
+
+.bmk-academic-programme h3.fw-bold::before {
+    content: "";
+
+    display: block;
+
+    width: 6px;
+    height: 30px;
+
+    flex-shrink: 0;
+
+    border-radius: 999px;
+
+    background:
+        linear-gradient(
+            180deg,
+            var(--bmk-blue),
+            var(--bmk-gold)
+        );
+}
+
+
+/* =========================================================
+   CLASS CARDS
+   ========================================================= */
+
+.bmk-academic-programme .card {
+    position: relative;
+
+    height: 100%;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(15, 39, 71, 0.07) !important;
+
+    border-radius: 21px !important;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 12px 35px rgba(15, 35, 55, 0.07) !important;
+
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease,
+        border-color 0.35s ease;
+}
+
+
+/* Decorative top glow */
+
+.bmk-academic-programme .card::before {
+    content: "";
+
+    position: absolute;
+
+    top: -75px;
+    right: -70px;
+
+    width: 150px;
+    height: 150px;
+
+    border-radius: 50%;
+
+    background: rgba(29, 78, 216, 0.045);
+
+    transition:
+        transform 0.45s ease,
+        background 0.45s ease;
+}
+
+
+/* Bottom accent */
+
+.bmk-academic-programme .card::after {
+    content: "";
+
+    position: absolute;
+
+    left: 28px;
+    bottom: 0;
+
+    width: 0;
+    height: 3px;
+
+    border-radius: 999px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--bmk-blue),
+            var(--bmk-gold)
+        );
+
+    transition: width 0.4s ease;
+}
+
+
+.bmk-academic-programme .card:hover {
+    transform: translateY(-8px);
+
+    border-color: rgba(29, 78, 216, 0.14) !important;
+
+    box-shadow:
+        0 23px 52px rgba(15, 35, 55, 0.13) !important;
+}
+
+
+.bmk-academic-programme .card:hover::before {
+    transform: scale(1.35);
+
+    background: rgba(29, 78, 216, 0.075);
+}
+
+
+.bmk-academic-programme .card:hover::after {
+    width: 75px;
+}
+
+
+/* =========================================================
+   CARD BODY
+   ========================================================= */
+
+.bmk-academic-programme .card-body {
+    position: relative;
+
+    z-index: 1;
+
+    padding: 30px !important;
+}
+
+
+/* =========================================================
+   CLASS BADGE
+   ========================================================= */
+
+.bmk-academic-programme .badge {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 7px 12px;
+
+    border-radius: 999px;
+
+    font-size: 0.68rem;
+    font-weight: 750;
+
+    letter-spacing: 0.04em;
+
+    background: var(--bmk-blue) !important;
+}
+
+
+.bmk-academic-programme .badge.bg-success {
+    background: var(--bmk-green) !important;
+}
+
+
+/* =========================================================
+   CLASS NAME
+   ========================================================= */
+
+.bmk-academic-programme .card h4 {
+    margin-bottom: 11px;
+
+    color: var(--bmk-navy);
+
+    font-size: 1.25rem;
+    font-weight: 750;
+
+    line-height: 1.35;
+}
+
+
+/* =========================================================
+   CLASS DESCRIPTION
+   ========================================================= */
+
+.bmk-academic-programme .card p {
+    min-height: 52px;
+
+    margin-bottom: 22px;
+
+    color: var(--bmk-muted) !important;
+
+    font-size: 0.91rem;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   VIEW CLASS BUTTON
+   ========================================================= */
+
+.bmk-academic-programme .card .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px 18px;
+
+    border-width: 1.5px;
+
+    border-radius: 11px;
+
+    font-size: 0.88rem;
+    font-weight: 700;
+
+    transition:
+        transform 0.25s ease,
+        background-color 0.25s ease,
+        color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.bmk-academic-programme .card .btn-outline-primary {
+    color: var(--bmk-blue);
+    border-color: rgba(29, 78, 216, 0.25);
+}
+
+
+.bmk-academic-programme .card .btn-outline-primary:hover {
+    color: #ffffff;
+
+    background: var(--bmk-blue);
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 22px rgba(29, 78, 216, 0.20);
+}
+
+
+.bmk-academic-programme .card .btn-outline-success {
+    color: var(--bmk-green);
+    border-color: rgba(63, 125, 88, 0.28);
+}
+
+
+.bmk-academic-programme .card .btn-outline-success:hover {
+    color: #ffffff;
+
+    background: var(--bmk-green);
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 22px rgba(63, 125, 88, 0.20);
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.bmk-academic-programme .alert {
+    max-width: 650px;
+
+    margin: 0 auto;
+
+    padding: 22px 25px;
+
+    border: 1px solid rgba(15, 39, 71, 0.07);
+
+    border-radius: 16px;
+
+    color: var(--bmk-muted);
+
+    background: #ffffff;
+
+    box-shadow:
+        0 10px 30px rgba(15, 35, 55, 0.06);
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .bmk-academic-programme {
+        padding: 65px 0;
+    }
+
+    .bmk-academic-programme .text-center.mb-5 h2 {
+        font-size: 2rem;
+    }
+
+    .bmk-academic-programme .text-center.mb-5 p {
+        font-size: 0.92rem;
+        line-height: 1.7;
+    }
+
+    .bmk-academic-programme h3.fw-bold {
+        font-size: 1.3rem;
+    }
+
+    .bmk-academic-programme .card {
+        border-radius: 18px !important;
+    }
+
+    .bmk-academic-programme .card-body {
+        padding: 25px !important;
+    }
+
+    .bmk-academic-programme .card h4 {
+        font-size: 1.15rem;
+    }
+
+    .bmk-academic-programme .card p {
+        min-height: 0;
+        font-size: 0.89rem;
+        line-height: 1.7;
+    }
+
+    .bmk-academic-programme .card .btn {
+        width: 100%;
+    }
+}
+/* =========================================================
+   ACADEMICS SCROLL REVEALS
+   ========================================================= */
+
+.bmk-academic-approach .bmk-section-label,
+.bmk-academic-approach .bmk-section-title,
+.bmk-academic-approach .bmk-academic-page-text,
+.bmk-academic-page-card,
+.bmk-learning-journey .bmk-section-label,
+.bmk-learning-journey .bmk-section-title,
+.bmk-learning-intro,
+.bmk-learning-stage,
+.bmk-whole-child .bmk-section-label,
+.bmk-whole-child .bmk-section-title,
+.bmk-whole-child .bmk-academic-page-text,
+.bmk-whole-child-box,
+.bmk-academic-service-box,
+.bmk-academic-programme .text-center.mb-5,
+.bmk-academic-programme h3,
+.bmk-academic-programme .card {
+    opacity: 0;
+    transform: translateY(35px);
+
+    transition:
+        opacity 0.75s ease,
+        transform 0.75s ease;
+}
+
+
+/* Visible state */
+
+.bmk-academics-reveal-visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+
+/* =========================================================
+   STAGGERED CARD DELAYS
+   ========================================================= */
+
+.bmk-academic-approach .col-md-6:nth-child(1) .bmk-academic-page-card,
+.bmk-learning-journey .col-md-4:nth-child(1) .bmk-learning-stage {
+    transition-delay: 0.05s;
+}
+
+
+.bmk-academic-approach .col-md-6:nth-child(2) .bmk-academic-page-card,
+.bmk-learning-journey .col-md-4:nth-child(2) .bmk-learning-stage {
+    transition-delay: 0.15s;
+}
+
+
+.bmk-academic-approach .col-md-6:nth-child(3) .bmk-academic-page-card,
+.bmk-learning-journey .col-md-4:nth-child(3) .bmk-learning-stage {
+    transition-delay: 0.25s;
+}
+
+
+.bmk-academic-approach .col-md-6:nth-child(4) .bmk-academic-page-card {
+    transition-delay: 0.35s;
+}
+
+
+/* Academic programme cards */
+
+.bmk-academic-programme .col-md-6:nth-child(1) .card {
+    transition-delay: 0.05s;
+}
+
+.bmk-academic-programme .col-md-6:nth-child(2) .card {
+    transition-delay: 0.15s;
+}
+
+.bmk-academic-programme .col-md-6:nth-child(3) .card {
+    transition-delay: 0.25s;
+}
+
+.bmk-academic-programme .col-md-6:nth-child(4) .card {
+    transition-delay: 0.35s;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .bmk-academics-hero .bmk-section-label,
+    .bmk-academics-hero h1,
+    .bmk-academics-hero p,
+    .bmk-academic-approach .bmk-section-label,
+    .bmk-academic-approach .bmk-section-title,
+    .bmk-academic-approach .bmk-academic-page-text,
+    .bmk-academic-page-card,
+    .bmk-learning-journey .bmk-section-label,
+    .bmk-learning-journey .bmk-section-title,
+    .bmk-learning-intro,
+    .bmk-learning-stage,
+    .bmk-whole-child .bmk-section-label,
+    .bmk-whole-child .bmk-section-title,
+    .bmk-whole-child .bmk-academic-page-text,
+    .bmk-whole-child-box,
+    .bmk-academic-service-box,
+    .bmk-academic-programme .text-center.mb-5,
+    .bmk-academic-programme h3,
+    .bmk-academic-programme .card {
+        opacity: 1;
+        transform: none;
+        transition: none;
+        animation: none;
+    }
+}

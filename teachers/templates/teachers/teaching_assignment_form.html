@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 
 {% block title %}
@@ -8,188 +9,472 @@
 {% endblock %}
 
 
+{% block extra_css %}
+
+<link
+    rel="stylesheet"
+    href="{% static 'website/css/teacher.css' %}"
+>
+
+{% endblock %}
+
+
 {% block content %}
 
+<div class="teacher-page">
 
-<div class="row justify-content-center">
 
-    <div class="col-lg-7">
+    <!-- =================================================
+         PAGE HERO
+    ================================================== -->
 
+    <section class="teacher-form-hero">
 
-        <div class="card shadow-sm">
+        <div class="teacher-form-hero-content">
 
-            <div class="card-body p-4">
+            <div class="teacher-form-hero-icon">
 
-
-                <h2 class="mb-1">
-                    Assign Subject to Teacher
-                </h2>
-
-                <p class="text-muted mb-4">
-                    Assign a teacher to a class subject for an academic year.
-                </p>
-
-
-                <form method="post">
-
-                    {% csrf_token %}
-
-
-                    <!-- Teacher -->
-
-                    <div class="mb-3">
-
-                        <label
-                            for="teacher"
-                            class="form-label"
-                        >
-                            Teacher
-                        </label>
-
-
-                        <select
-                            name="teacher"
-                            id="teacher"
-                            class="form-select"
-                            required
-                        >
-
-                            <option value="">
-                                Select teacher
-                            </option>
-
-
-                            {% for teacher in teachers %}
-
-                                <option value="{{ teacher.id }}">
-
-                                    {{ teacher.user.get_full_name }}
-
-                                    —
-                                    {{ teacher.employee_id }}
-
-                                </option>
-
-                            {% endfor %}
-
-                        </select>
-
-                    </div>
-
-
-                    <!-- Class Subject -->
-
-                    <div class="mb-3">
-
-                        <label
-                            for="class_subject"
-                            class="form-label"
-                        >
-                            Class & Subject
-                        </label>
-
-
-                        <select
-                            name="class_subject"
-                            id="class_subject"
-                            class="form-select"
-                            required
-                        >
-
-                            <option value="">
-                                Select class and subject
-                            </option>
-
-
-                            {% for class_subject in class_subjects %}
-
-                                <option
-                                    value="{{ class_subject.id }}"
-                                >
-
-                                    {{ class_subject.school_class }}
-
-                                    —
-                                    {{ class_subject.subject }}
-
-                                </option>
-
-                            {% endfor %}
-
-                        </select>
-
-                    </div>
-
-
-                    <!-- Academic Year -->
-
-                    <div class="mb-4">
-
-                        <label
-                            for="academic_year"
-                            class="form-label"
-                        >
-                            Academic Year
-                        </label>
-
-
-                        <select
-                            name="academic_year"
-                            id="academic_year"
-                            class="form-select"
-                            required
-                        >
-
-                            <option value="">
-                                Select academic year
-                            </option>
-
-
-                            {% for academic_year in academic_years %}
-
-                                <option
-                                    value="{{ academic_year.id }}"
-                                >
-
-                                    {{ academic_year.name }}
-
-                                </option>
-
-                            {% endfor %}
-
-                        </select>
-
-                    </div>
-
-
-                    <div class="d-flex gap-2">
-
-                        <button
-                            type="submit"
-                            class="btn btn-primary"
-                        >
-                            Assign Subject
-                        </button>
-
-
-                        <a
-                            href="{% url 'teachers:teaching_assignment_list' %}"
-                            class="btn btn-outline-secondary"
-                        >
-                            Cancel
-                        </a>
-
-                    </div>
-
-
-                </form>
-
+                <i class="bi bi-journal-plus"></i>
 
             </div>
 
+
+            <span>
+                TEACHER MANAGEMENT
+            </span>
+
+
+            <h2>
+                Assign Subject to Teacher
+            </h2>
+
+
+            <p>
+                Assign a teacher to a class subject for an academic year.
+            </p>
+
         </div>
 
+
+        <a
+            href="{% url 'teachers:teaching_assignment_list' %}"
+            class="teacher-form-back-btn"
+        >
+
+            <i class="bi bi-arrow-left"></i>
+
+            Assignments
+
+        </a>
+
+    </section>
+
+
+
+    <!-- =================================================
+         FORM LAYOUT
+    ================================================== -->
+
+    <div class="row g-4">
+
+
+        <!-- =================================================
+             INFORMATION PANEL
+        ================================================== -->
+
+        <div class="col-lg-4">
+
+            <section class="teacher-form-info-card">
+
+
+                <div class="teacher-form-info-icon">
+
+                    <i class="bi bi-diagram-3"></i>
+
+                </div>
+
+
+                <h4>
+                    Create Teaching Assignment
+                </h4>
+
+
+                <p>
+                    Select the teacher, class subject and academic year
+                    to create a teaching assignment.
+                </p>
+
+
+
+                <!-- Step guide -->
+
+                <div class="teacher-form-steps">
+
+
+                    <div class="teacher-form-step">
+
+                        <span class="teacher-form-step-number">
+                            1
+                        </span>
+
+
+                        <div>
+
+                            <strong>
+                                Select Teacher
+                            </strong>
+
+                            <p>
+                                Choose the teacher who will handle the subject.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="teacher-form-step">
+
+                        <span class="teacher-form-step-number">
+                            2
+                        </span>
+
+
+                        <div>
+
+                            <strong>
+                                Select Class &amp; Subject
+                            </strong>
+
+                            <p>
+                                Choose the class and subject combination.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="teacher-form-step">
+
+                        <span class="teacher-form-step-number">
+                            3
+                        </span>
+
+
+                        <div>
+
+                            <strong>
+                                Select Academic Year
+                            </strong>
+
+                            <p>
+                                Specify the academic year for the assignment.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="teacher-form-info-note">
+
+                    <i class="bi bi-info-circle"></i>
+
+                    <span>
+                        Existing assignments will not be duplicated.
+                    </span>
+
+                </div>
+
+
+            </section>
+
+        </div>
+
+
+
+        <!-- =================================================
+             ASSIGNMENT FORM
+        ================================================== -->
+
+        <div class="col-lg-8">
+
+            <section class="teacher-form-card">
+
+
+                <!-- Card header -->
+
+                <div class="teacher-form-card-header">
+
+                    <div class="teacher-form-card-icon">
+
+                        <i class="bi bi-person-workspace"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h5>
+                            Assignment Details
+                        </h5>
+
+                        <p>
+                            Complete all three fields to continue.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Form body -->
+
+                <div class="teacher-form-card-body">
+
+
+                    <form method="post">
+
+                        {% csrf_token %}
+
+
+
+                        <!-- =================================================
+                             TEACHER
+                        ================================================== -->
+
+                        <div class="teacher-form-field">
+
+                            <label
+                                for="teacher"
+                                class="teacher-form-label"
+                            >
+
+                                <span class="teacher-form-label-icon">
+
+                                    <i class="bi bi-person"></i>
+
+                                </span>
+
+                                Teacher
+
+                            </label>
+
+
+                            <select
+                                name="teacher"
+                                id="teacher"
+                                class="teacher-form-select"
+                                required
+                            >
+
+                                <option value="">
+                                    Select teacher
+                                </option>
+
+
+                                {% for teacher in teachers %}
+
+                                    <option value="{{ teacher.id }}">
+
+                                        {{ teacher.user.get_full_name }}
+
+                                        —
+                                        {{ teacher.employee_id }}
+
+                                    </option>
+
+                                {% endfor %}
+
+                            </select>
+
+
+                            <small class="teacher-form-help">
+
+                                Choose an active teacher from the list.
+
+                            </small>
+
+                        </div>
+
+
+
+                        <!-- =================================================
+                             CLASS & SUBJECT
+                        ================================================== -->
+
+                        <div class="teacher-form-field">
+
+                            <label
+                                for="class_subject"
+                                class="teacher-form-label"
+                            >
+
+                                <span class="teacher-form-label-icon">
+
+                                    <i class="bi bi-book"></i>
+
+                                </span>
+
+                                Class &amp; Subject
+
+                            </label>
+
+
+                            <select
+                                name="class_subject"
+                                id="class_subject"
+                                class="teacher-form-select"
+                                required
+                            >
+
+                                <option value="">
+                                    Select class and subject
+                                </option>
+
+
+                                {% for class_subject in class_subjects %}
+
+                                    <option
+                                        value="{{ class_subject.id }}"
+                                    >
+
+                                        {{ class_subject.school_class }}
+
+                                        —
+                                        {{ class_subject.subject }}
+
+                                    </option>
+
+                                {% endfor %}
+
+                            </select>
+
+
+                            <small class="teacher-form-help">
+
+                                Select the class and subject the teacher will teach.
+
+                            </small>
+
+                        </div>
+
+
+
+                        <!-- =================================================
+                             ACADEMIC YEAR
+                        ================================================== -->
+
+                        <div class="teacher-form-field">
+
+                            <label
+                                for="academic_year"
+                                class="teacher-form-label"
+                            >
+
+                                <span class="teacher-form-label-icon">
+
+                                    <i class="bi bi-calendar3"></i>
+
+                                </span>
+
+                                Academic Year
+
+                            </label>
+
+
+                            <select
+                                name="academic_year"
+                                id="academic_year"
+                                class="teacher-form-select"
+                                required
+                            >
+
+                                <option value="">
+                                    Select academic year
+                                </option>
+
+
+                                {% for academic_year in academic_years %}
+
+                                    <option
+                                        value="{{ academic_year.id }}"
+                                    >
+
+                                        {{ academic_year.name }}
+
+                                    </option>
+
+                                {% endfor %}
+
+                            </select>
+
+
+                            <small class="teacher-form-help">
+
+                                Choose the academic year for this assignment.
+
+                            </small>
+
+                        </div>
+
+
+
+                        <!-- =================================================
+                             ACTIONS
+                        ================================================== -->
+
+                        <div class="teacher-form-actions">
+
+
+                            <button
+                                type="submit"
+                                class="teacher-submit-btn"
+                            >
+
+                                <i class="bi bi-check2-circle"></i>
+
+                                Assign Subject
+
+                            </button>
+
+
+                            <a
+                                href="{% url 'teachers:teaching_assignment_list' %}"
+                                class="teacher-cancel-btn"
+                            >
+
+                                <i class="bi bi-x-lg"></i>
+
+                                Cancel
+
+                            </a>
+
+
+                        </div>
+
+
+                    </form>
+
+
+                </div>
+
+
+            </section>
+
+        </div>
+
+
     </div>
+
 
 </div>
 

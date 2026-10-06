@@ -1,313 +1,197 @@
-{% extends "base.html" %}
+{% extends "website/base.html" %}
+{% load static %}
 
 {% block title %}
-    {{ post.title }} | BMK Academy
+{{ post.title }} | BMK Academy
+{% endblock %}
+
+{% block extra_css %}
+
+<link rel="stylesheet" href="{% static 'website/css/blog_detail.css' %}">
 {% endblock %}
 
 {% block content %}
 
 <!-- =========================================================
-     ARTICLE HEADER
+     BLOG DETAIL HERO
 ========================================================= -->
 
-<section class="py-4 py-lg-5">
-
-    <div class="row justify-content-center">
-
-        <div class="col-lg-9">
-
-            <!-- Back to Blog -->
-
-            <div class="mb-4">
-
-                <a
-                    href="{% url 'blog:post_list' %}"
-                    class="text-decoration-none text-muted"
-                >
-
-                    <i class="bi bi-arrow-left me-1"></i>
-
-                    Back to News &amp; Blog
-
-                </a>
-
-            </div>
+<section class="bmk-detail-hero">
 
 
-            <!-- Category -->
+<div class="bmk-detail-hero-shape bmk-detail-shape-one"></div>
+<div class="bmk-detail-hero-shape bmk-detail-shape-two"></div>
 
-            <div class="mb-3">
+<div class="container">
 
-                <span class="badge bg-primary px-3 py-2">
+    <div class="bmk-detail-hero-content">
 
-                    <i class="bi bi-folder2-open me-1"></i>
+        <a href="{% url 'blog:post_list' %}" class="bmk-detail-back">
+            <i class="bi bi-arrow-left"></i>
+            <span>Back to News &amp; Blog</span>
+        </a>
 
-                    {{ post.category.name }}
+        <div class="bmk-detail-category">
+            <i class="bi bi-folder2-open"></i>
+            {{ post.category.name }}
+        </div>
 
-                </span>
+        <h1>
+            {{ post.title }}
+        </h1>
 
-            </div>
+        <div class="bmk-detail-meta">
 
+            <span>
+                <i class="bi bi-calendar3"></i>
+                {{ post.published_at|date:"F d, Y" }}
+            </span>
 
-            <!-- Title -->
-
-            <h1 class="display-5 fw-bold mb-4">
-
-                {{ post.title }}
-
-            </h1>
-
-
-            <!-- Article Meta -->
-
-            <div class="d-flex
-                        flex-wrap
-                        align-items-center
-                        gap-3
-                        text-muted
-                        mb-4">
-
-                <div>
-
-                    <i class="bi bi-person-circle me-1"></i>
-
-                    {{ post.author.get_full_name|default:post.author.username }}
-
-                </div>
-
-
-                <div>
-
-                    <i class="bi bi-calendar3 me-1"></i>
-
-                    {{ post.published_at|date:"F d, Y" }}
-
-                </div>
-
-            </div>
+            <span>
+                <i class="bi bi-person-circle"></i>
+                {{ post.author.get_full_name|default:post.author.username }}
+            </span>
 
         </div>
 
     </div>
 
-</section>
-
-
-<!-- =========================================================
-     FEATURED IMAGE
-========================================================= -->
-
-{% if post.featured_image %}
-
-<section class="mb-5">
-
-    <div class="container-fluid px-0">
-
-        <div class="row justify-content-center">
-
-            <div class="col-lg-10">
-
-                <img
-                    src="{{ post.featured_image.url }}"
-                    class="img-fluid w-100 rounded-4 shadow-sm"
-                    style="max-height: 560px; object-fit: cover;"
-                    alt="{{ post.title }}"
-                >
-
-            </div>
-
-        </div>
-
-    </div>
+</div>
 
 </section>
 
-{% endif %}
-
-
 <!-- =========================================================
-     ARTICLE CONTENT
+     BLOG CONTENT
 ========================================================= -->
 
-<section class="pb-5">
+<section class="bmk-detail-section">
+
+<div class="container">
 
     <div class="row justify-content-center">
 
-        <div class="col-lg-8">
+        <div class="col-xl-9 col-lg-10">
 
+            <!-- Featured image -->
+            {% if post.featured_image %}
 
-            <!-- Excerpt -->
+                <div class="bmk-detail-image">
 
-            {% if post.excerpt %}
-
-                <div class="border-start border-primary border-4
-                            ps-4 mb-5">
-
-                    <p class="lead fw-semibold text-muted mb-0">
-
-                        {{ post.excerpt }}
-
-                    </p>
+                    <img
+                        src="{{ post.featured_image.url }}"
+                        alt="{{ post.title }}"
+                    >
 
                 </div>
 
             {% endif %}
 
 
-            <!-- Main Article -->
+            <!-- Article -->
+            <article class="bmk-detail-article">
 
-            <article class="blog-article">
+                {% if post.excerpt %}
 
-                {{ post.content|linebreaks }}
+                    <div class="bmk-detail-excerpt">
+                        {{ post.excerpt }}
+                    </div>
 
-            </article>
-
-
-            <!-- Article Footer -->
-
-            <div class="border-top mt-5 pt-4">
-
-                <div class="d-flex
-                            flex-wrap
-                            justify-content-between
-                            align-items-center
-                            gap-3">
+                {% endif %}
 
 
-                    <div class="text-muted small">
+                <div class="bmk-detail-content">
 
-                        <i class="bi bi-folder me-1"></i>
+                    {{ post.content|linebreaks }}
 
-                        {{ post.category.name }}
+                </div>
+
+
+                <!-- Article footer -->
+                <div class="bmk-detail-article-footer">
+
+                    <div class="bmk-detail-footer-brand">
+
+                        <div class="bmk-detail-footer-icon">
+                            <i class="bi bi-newspaper"></i>
+                        </div>
+
+                        <div>
+                            <strong>BMK Academy</strong>
+                            <span>News &amp; School Stories</span>
+                        </div>
 
                     </div>
 
-
                     <a
                         href="{% url 'blog:post_list' %}"
-                        class="btn btn-outline-primary"
+                        class="bmk-detail-explore"
                     >
-
-                        <i class="bi bi-arrow-left me-1"></i>
-
-                        Back to News
-
+                        Explore More Stories
+                        <i class="bi bi-arrow-right"></i>
                     </a>
 
                 </div>
 
-            </div>
+            </article>
 
-        </div>
 
-    </div>
+            <!-- =================================================
+                 COMMENTS
+            ================================================== -->
+            <section class="bmk-detail-comments">
 
-    <!-- =========================================================
-        COMMENTS
-    ========================================================= -->
+                <div class="bmk-detail-section-heading">
 
-    <section class="mt-5 pt-5 border-top">
+                    <span>COMMUNITY</span>
 
-        <div class="row justify-content-center">
+                    <h2>Comments</h2>
 
-            <div class="col-lg-8">
-
-                <!-- Comment Heading -->
-
-                <div class="mb-4">
-
-                    <h2 class="fw-bold">
-
-                        <i class="bi bi-chat-left-text text-primary me-2"></i>
-
-                        Comments
-
-                    </h2>
-
-                    <p class="text-muted mb-0">
-
-                        Join the conversation and share your thoughts.
-
+                    <p>
+                        Share your thoughts about this story.
                     </p>
 
                 </div>
 
 
-                <!-- Existing Comments -->
-
                 {% if comments %}
 
-                    <div class="mb-5">
+                    <div class="bmk-detail-comments-list">
 
                         {% for comment in comments %}
 
-                            <div class="card border-0 shadow-sm mb-3">
+                            <article class="bmk-detail-comment">
 
-                                <div class="card-body p-4">
+                                <div class="bmk-comment-avatar">
 
-                                    <div class="d-flex
-                                                align-items-start
-                                                gap-3">
-
-                                        <!-- Avatar -->
-
-                                        <div
-                                            class="rounded-circle
-                                                bg-primary-subtle
-                                                text-primary
-                                                d-flex
-                                                align-items-center
-                                                justify-content-center
-                                                flex-shrink-0"
-                                            style="
-                                                width: 45px;
-                                                height: 45px;
-                                            "
-                                        >
-
-                                            <i class="bi bi-person-fill"></i>
-
-                                        </div>
-
-
-                                        <!-- Comment -->
-
-                                        <div class="flex-grow-1">
-
-                                            <div class="d-flex
-                                                        justify-content-between
-                                                        align-items-center
-                                                        flex-wrap
-                                                        gap-2">
-
-                                                <h6 class="fw-bold mb-0">
-
-                                                    {{ comment.name }}
-
-                                                </h6>
-
-                                                <small class="text-muted">
-
-                                                    {{ comment.created_at|date:"M d, Y" }}
-
-                                                </small>
-
-                                            </div>
-
-
-                                            <p class="text-muted mt-3 mb-0">
-
-                                                {{ comment.message|linebreaksbr }}
-
-                                            </p>
-
-                                        </div>
-
-                                    </div>
+                                    {% if comment.name %}
+                                        {{ comment.name|first|upper }}
+                                    {% else %}
+                                        <i class="bi bi-person"></i>
+                                    {% endif %}
 
                                 </div>
 
-                            </div>
+                                <div class="bmk-comment-content">
+
+                                    <div class="bmk-comment-header">
+
+                                        <strong>
+                                            {{ comment.name }}
+                                        </strong>
+
+                                        <span>
+                                            {{ comment.created_at|date:"M d, Y" }}
+                                        </span>
+
+                                    </div>
+
+                                    <p>
+                                        {{ comment.message|linebreaksbr }}
+                                    </p>
+
+                                </div>
+
+                            </article>
 
                         {% endfor %}
 
@@ -315,24 +199,16 @@
 
                 {% else %}
 
-                    <div class="bg-light
-                                rounded-4
-                                p-4
-                                text-center
-                                mb-5">
+                    <div class="bmk-detail-no-comments">
 
-                        <i class="bi bi-chat-left
-                                text-muted
-                                fs-2
-                                d-block
-                                mb-2">
-                        </i>
+                        <div class="bmk-no-comments-icon">
+                            <i class="bi bi-chat-left-text"></i>
+                        </div>
 
-                        <p class="text-muted mb-0">
+                        <h3>No comments yet</h3>
 
-                            No comments yet.
-                            Be the first to share your thoughts.
-
+                        <p>
+                            Be the first to share your thoughts on this story.
                         </p>
 
                     </div>
@@ -340,281 +216,240 @@
                 {% endif %}
 
 
-                <!-- Comment Form -->
+                <!-- Comment form -->
+                <div class="bmk-detail-comment-form">
 
-                <div class="card border-0 shadow-sm">
+                    <div class="bmk-comment-form-heading">
 
-                    <div class="card-body p-4 p-lg-5">
+                        <span>JOIN THE CONVERSATION</span>
 
-                        <h3 class="h5 fw-bold mb-1">
+                        <h3>Leave a Comment</h3>
 
-                            Leave a Comment
-
-                        </h3>
-
-                        <p class="text-muted small mb-4">
-
-                            Your comment will be reviewed before it
-                            appears publicly.
-
-                        </p>
+                    </div>
 
 
-                        <form method="post">
+                    <form method="post">
 
-                            {% csrf_token %}
+                        {% csrf_token %}
 
+                        <div class="row g-4">
 
-                            <!-- Name -->
-
-                            <div class="mb-3">
+                            <div class="col-md-6">
 
                                 <label
                                     for="{{ comment_form.name.id_for_label }}"
-                                    class="form-label fw-semibold"
                                 >
-
-                                    Name
-
+                                    Your Name
                                 </label>
 
                                 {{ comment_form.name }}
 
-                                {% if comment_form.name.errors %}
-
-                                    <div class="text-danger small mt-1">
-
-                                        {{ comment_form.name.errors }}
-
-                                    </div>
-
-                                {% endif %}
-
                             </div>
 
 
-                            <!-- Email -->
-
-                            <div class="mb-3">
+                            <div class="col-md-6">
 
                                 <label
                                     for="{{ comment_form.email.id_for_label }}"
-                                    class="form-label fw-semibold"
                                 >
-
-                                    Email
-
+                                    Email Address
                                 </label>
 
                                 {{ comment_form.email }}
 
-                                <div class="form-text">
-
-                                    Your email will not be displayed publicly.
-
-                                </div>
-
-                                {% if comment_form.email.errors %}
-
-                                    <div class="text-danger small mt-1">
-
-                                        {{ comment_form.email.errors }}
-
-                                    </div>
-
-                                {% endif %}
-
                             </div>
 
 
-                            <!-- Message -->
-
-                            <div class="mb-4">
+                            <div class="col-12">
 
                                 <label
                                     for="{{ comment_form.message.id_for_label }}"
-                                    class="form-label fw-semibold"
                                 >
-
-                                    Comment
-
+                                    Your Comment
                                 </label>
 
                                 {{ comment_form.message }}
 
-                                {% if comment_form.message.errors %}
-
-                                    <div class="text-danger small mt-1">
-
-                                        {{ comment_form.message.errors }}
-
-                                    </div>
-
-                                {% endif %}
-
                             </div>
 
 
-                            <button
-                                type="submit"
-                                class="btn btn-primary px-4"
-                            >
+                            <div class="col-12">
 
-                                <i class="bi bi-send me-2"></i>
-
-                                Submit Comment
-
-                            </button>
-
-                        </form>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-    
-    <!-- Related Posts -->
-    {% if related_posts %}
-
-    <section class="mt-5 pt-5 border-top">
-
-        <div class="text-center mb-4">
-
-            <span class="text-primary fw-semibold">
-                KEEP READING
-            </span>
-
-            <h2 class="fw-bold mt-2">
-                Related Stories
-            </h2>
-
-            <p class="text-muted">
-                You may also be interested in these stories.
-            </p>
-
-        </div>
-
-
-        <div class="row g-4">
-
-            {% for related_post in related_posts %}
-
-                <div class="col-md-4">
-
-                    <article class="card h-100 border-0 shadow-sm overflow-hidden">
-
-                        {% if related_post.featured_image %}
-
-                            <img
-                                src="{{ related_post.featured_image.url }}"
-                                class="card-img-top"
-                                alt="{{ related_post.title }}"
-                                style="
-                                    height: 200px;
-                                    object-fit: cover;
-                                "
-                            >
-
-                        {% endif %}
-
-
-                        <div class="card-body d-flex flex-column">
-
-                            <span
-                                class="badge bg-primary-subtle text-primary align-self-start mb-2"
-                            >
-                                {{ related_post.category.name }}
-                            </span>
-
-
-                            <h5 class="fw-bold">
-                                {{ related_post.title }}
-                            </h5>
-
-
-                            <p class="text-muted small">
-
-                                {{ related_post.published_at|date:"M d, Y" }}
-
-                            </p>
-
-
-                            {% if related_post.excerpt %}
-
-                                <p class="text-muted">
-
-                                    {{ related_post.excerpt|truncatewords:18 }}
-
-                                </p>
-
-                            {% endif %}
-
-
-                            <div class="mt-auto">
-
-                                <a
-                                    href="{% url 'blog:post_detail' related_post.slug %}"
-                                    class="btn btn-outline-primary"
+                                <button
+                                    type="submit"
+                                    class="bmk-detail-submit"
                                 >
-                                    Read More
-                                </a>
+                                    <span>Post Comment</span>
+                                    <i class="bi bi-send"></i>
+                                </button>
 
                             </div>
 
                         </div>
 
-                    </article>
+                    </form>
 
                 </div>
 
-            {% endfor %}
+            </section>
+
+
+            <!-- =================================================
+                 RELATED POSTS
+            ================================================== -->
+            {% if related_posts %}
+
+                <section class="bmk-detail-related">
+
+                    <div class="bmk-detail-section-heading">
+
+                        <span>KEEP READING</span>
+
+                        <h2>Related Stories</h2>
+
+                        <p>
+                            Continue exploring stories from BMK Academy.
+                        </p>
+
+                    </div>
+
+
+                    <div class="row g-4">
+
+                        {% for related_post in related_posts %}
+
+                            <div class="col-md-6">
+
+                                <article class="bmk-detail-related-card">
+
+                                    {% if related_post.featured_image %}
+
+                                        <div class="bmk-related-image">
+
+                                            <img
+                                                src="{{ related_post.featured_image.url }}"
+                                                alt="{{ related_post.title }}"
+                                            >
+
+                                        </div>
+
+                                    {% else %}
+
+                                        <div class="bmk-related-placeholder">
+
+                                            <i class="bi bi-newspaper"></i>
+
+                                        </div>
+
+                                    {% endif %}
+
+
+                                    <div class="bmk-related-body">
+
+                                        <span class="bmk-related-category">
+                                            {{ related_post.category.name }}
+                                        </span>
+
+                                        <h3>
+                                            {{ related_post.title }}
+                                        </h3>
+
+                                        <div class="bmk-related-date">
+
+                                            <i class="bi bi-calendar3"></i>
+
+                                            {{ related_post.published_at|date:"M d, Y" }}
+
+                                        </div>
+
+                                        <a
+                                            href="{% url 'blog:post_detail' related_post.slug %}"
+                                        >
+                                            Read Story
+                                            <i class="bi bi-arrow-right"></i>
+                                        </a>
+
+                                    </div>
+
+                                </article>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                </section>
+
+            {% endif %}
 
         </div>
 
-    </section>
+    </div>
 
-    {% endif %}
-
+</div>
 
 
 </section>
 
+{% endblock %}
 
-<!-- =========================================================
-     ARTICLE STYLING
-========================================================= -->
+{% block extra_js %}
 
-<style>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
-    .blog-article {
-        font-size: 1.08rem;
-        line-height: 1.9;
-        color: #343a40;
+    const elements = document.querySelectorAll(
+        ".bmk-detail-hero-content, " +
+        ".bmk-detail-image, " +
+        ".bmk-detail-article, " +
+        ".bmk-detail-comment, " +
+        ".bmk-detail-no-comments, " +
+        ".bmk-detail-comment-form, " +
+        ".bmk-detail-related-card"
+    );
+
+    if (!("IntersectionObserver" in window)) {
+
+        elements.forEach(function (element) {
+            element.classList.add("bmk-detail-visible");
+        });
+
+        return;
     }
 
-    .blog-article p {
-        margin-bottom: 1.5rem;
-    }
+    const observer = new IntersectionObserver(
+        function (entries, observer) {
 
-    .blog-article p:first-child {
-        margin-top: 0;
-    }
+            entries.forEach(function (entry) {
 
-    @media (max-width: 768px) {
+                if (entry.isIntersecting) {
 
-        .blog-article {
-            font-size: 1rem;
-            line-height: 1.8;
+                    entry.target.classList.add("bmk-detail-visible");
+
+                    observer.unobserve(entry.target);
+
+                }
+
+            });
+
+        },
+        {
+            threshold: 0.08
         }
+    );
 
-    }
 
-</style>
+    elements.forEach(function (element, index) {
 
+        element.style.transitionDelay =
+            Math.min(index * 0.04, 0.25) + "s";
+
+        observer.observe(element);
+
+    });
+
+});
+</script>
 
 {% endblock %}

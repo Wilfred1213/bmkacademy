@@ -1,0 +1,1932 @@
+/* =========================================================
+   BMK MARK ATTENDANCE
+   ========================================================= */
+
+   .bmk-attendance-page {
+    min-height: calc(100vh - 70px);
+    padding: 30px 0 60px;
+    background:
+        radial-gradient(circle at top right, rgba(29, 78, 216, 0.05), transparent 28%),
+        #f6f8fb;
+}
+
+/* =========================================================
+   PAGE HERO
+   ========================================================= */
+
+.bmk-attendance-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 28px 30px;
+    margin-bottom: 24px;
+    border-radius: 22px;
+    color: #ffffff;
+    background:
+        radial-gradient(circle at 90% 15%, rgba(224, 168, 62, 0.25), transparent 25%),
+        radial-gradient(circle at 10% 100%, rgba(63, 125, 88, 0.18), transparent 28%),
+        linear-gradient(135deg, #0b1f33 0%, #0f2747 58%, #173e6d 100%);
+    box-shadow: 0 18px 45px rgba(15, 35, 55, 0.14);
+}
+
+.bmk-attendance-hero::before {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    right: -65px;
+    top: -90px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.bmk-attendance-hero::after {
+    content: "";
+    position: absolute;
+    width: 110px;
+    height: 110px;
+    left: 45%;
+    bottom: -75px;
+    border-radius: 50%;
+    background: rgba(224, 168, 62, 0.08);
+}
+
+.bmk-attendance-hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.bmk-attendance-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 9px;
+    color: #f3d58a;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.bmk-attendance-hero h2 {
+    margin-bottom: 6px;
+    font-size: clamp(1.7rem, 4vw, 2.2rem);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+}
+
+.bmk-attendance-hero p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.70);
+}
+
+.bmk-class-teacher-badge {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 999px;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+/* =========================================================
+   SELECTION CARD
+   ========================================================= */
+
+.bmk-attendance-selection {
+    overflow: hidden;
+    margin-bottom: 24px;
+    border: 1px solid rgba(15, 39, 71, 0.06);
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 12px 35px rgba(15, 35, 55, 0.08);
+}
+
+.bmk-card-heading {
+    padding: 20px 24px;
+    border-bottom: 1px solid #edf0f4;
+}
+
+.bmk-card-heading-inner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.bmk-heading-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 13px;
+    color: #1d4ed8;
+    background: #eef5ff;
+}
+
+.bmk-card-heading h5 {
+    margin: 0 0 2px;
+    color: #0f2747;
+    font-weight: 800;
+}
+
+.bmk-card-heading p {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.83rem;
+}
+
+.bmk-selection-body {
+    padding: 24px;
+}
+
+.bmk-selection-body .form-label {
+    color: #334155;
+    font-size: 0.83rem;
+    font-weight: 800;
+}
+
+.bmk-selection-body .form-control,
+.bmk-selection-body .form-select {
+    min-height: 46px;
+    border-color: #dfe5ec;
+    border-radius: 11px;
+    box-shadow: none;
+}
+
+.bmk-selection-body .form-control:focus,
+.bmk-selection-body .form-select:focus {
+    border-color: #1d4ed8;
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.10);
+}
+
+.bmk-selection-body .form-text {
+    color: #64748b;
+    font-size: 0.76rem;
+}
+
+.bmk-load-btn {
+    min-height: 46px;
+    border: 0;
+    border-radius: 11px;
+    color: #ffffff !important;
+    background: linear-gradient(135deg, #1d4ed8, #2563eb);
+    font-weight: 800;
+    box-shadow: 0 9px 22px rgba(29, 78, 216, 0.18);
+}
+
+.bmk-load-btn:hover {
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 13px 28px rgba(29, 78, 216, 0.24);
+}
+
+/* =========================================================
+   SUCCESS ALERT
+   ========================================================= */
+
+.bmk-attendance-success {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 15px 17px;
+    margin-bottom: 24px;
+    border: 1px solid #ccebd7;
+    border-radius: 15px;
+    color: #28643f;
+    background: #f0fbf4;
+}
+
+.bmk-success-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 11px;
+    color: #ffffff;
+    background: #3f7d58;
+}
+
+/* =========================================================
+   STATISTICS
+   ========================================================= */
+
+.bmk-attendance-stat {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    padding: 21px;
+    border: 1px solid rgba(15, 39, 71, 0.06);
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 10px 28px rgba(15, 35, 55, 0.07);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.bmk-attendance-stat:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(15, 35, 55, 0.10);
+}
+
+.bmk-attendance-stat-icon {
+    width: 43px;
+    height: 43px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    font-size: 1rem;
+}
+
+.bmk-stat-total .bmk-attendance-stat-icon {
+    color: #1d4ed8;
+    background: #eef5ff;
+}
+
+.bmk-stat-present .bmk-attendance-stat-icon {
+    color: #287347;
+    background: #eaf7ef;
+}
+
+.bmk-stat-absent .bmk-attendance-stat-icon {
+    color: #b42318;
+    background: #fff0ee;
+}
+
+.bmk-stat-late .bmk-attendance-stat-icon {
+    color: #9a6700;
+    background: #fff7df;
+}
+
+.bmk-stat-rate .bmk-attendance-stat-icon {
+    color: #0b7285;
+    background: #e8f8fb;
+}
+
+.bmk-attendance-stat-label {
+    display: block;
+    margin-bottom: 4px;
+    color: #64748b;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.bmk-attendance-stat-value {
+    margin: 0;
+    color: #0f2747;
+    font-size: 1.55rem;
+    font-weight: 800;
+}
+
+.bmk-stat-present .bmk-attendance-stat-value {
+    color: #287347;
+}
+
+.bmk-stat-absent .bmk-attendance-stat-value {
+    color: #b42318;
+}
+
+.bmk-stat-late .bmk-attendance-stat-value {
+    color: #a46f0c;
+}
+
+.bmk-stat-rate .bmk-attendance-stat-value {
+    color: #0b7285;
+}
+
+/* =========================================================
+   STUDENT CARD
+   ========================================================= */
+
+.bmk-students-card {
+    overflow: hidden;
+    border: 1px solid rgba(15, 39, 71, 0.06);
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 12px 35px rgba(15, 35, 55, 0.08);
+}
+
+.bmk-students-header {
+    padding: 21px 24px;
+    border-bottom: 1px solid #edf0f4;
+}
+
+.bmk-students-heading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.bmk-students-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 13px;
+    color: #1d4ed8;
+    background: #eef5ff;
+}
+
+.bmk-students-heading h5 {
+    margin: 0 0 2px;
+    color: #0f2747;
+    font-weight: 800;
+}
+
+.bmk-students-heading small {
+    color: #64748b;
+}
+
+.bmk-mark-all-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: 10px;
+    font-weight: 700;
+}
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.bmk-attendance-table {
+    min-width: 760px;
+}
+
+.bmk-attendance-table thead th {
+    padding: 14px 17px;
+    border-bottom: 1px solid #e5eaf0;
+    color: #64748b;
+    background: #f8fafc;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.bmk-attendance-table tbody td {
+    padding: 14px 17px;
+    border-color: #edf0f4;
+    color: #475569;
+}
+
+.bmk-attendance-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.bmk-attendance-table tbody tr:hover {
+    background: #f8fbff;
+}
+
+.bmk-student-number {
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    color: #1d4ed8;
+    background: #eef5ff;
+    font-size: 0.77rem;
+    font-weight: 800;
+}
+
+.bmk-student-name {
+    color: #0f2747;
+    font-weight: 750;
+}
+
+.bmk-admission-number {
+    color: #64748b;
+    font-size: 0.84rem;
+    font-weight: 600;
+}
+
+/* STATUS SELECT */
+
+.bmk-attendance-select {
+    min-width: 170px;
+    min-height: 42px;
+    border: 1px solid #dfe5ec;
+    border-radius: 10px;
+    color: #334155;
+    background-color: #ffffff;
+    font-size: 0.84rem;
+    font-weight: 650;
+    box-shadow: none;
+}
+
+.bmk-attendance-select:focus {
+    border-color: #1d4ed8;
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.10);
+}
+
+/* =========================================================
+   SAVE AREA
+   ========================================================= */
+
+.bmk-attendance-save {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 18px 24px;
+    border-top: 1px solid #edf0f4;
+    background: #fbfcfe;
+}
+
+.bmk-attendance-save-note {
+    color: #64748b;
+    font-size: 0.78rem;
+}
+
+.bmk-save-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 44px;
+    padding: 0 19px;
+    border: 0;
+    border-radius: 11px;
+    color: #ffffff !important;
+    background: linear-gradient(135deg, #3f7d58, #4d9367);
+    font-weight: 800;
+    box-shadow: 0 9px 22px rgba(63, 125, 88, 0.20);
+}
+
+.bmk-save-btn:hover {
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 13px 28px rgba(63, 125, 88, 0.25);
+}
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.bmk-attendance-empty {
+    padding: 55px 20px;
+    text-align: center;
+}
+
+.bmk-empty-icon {
+    width: 70px;
+    height: 70px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 21px;
+    color: #94a3b8;
+    background: #f1f5f9;
+    font-size: 1.8rem;
+}
+
+.bmk-attendance-empty h5 {
+    margin-top: 16px;
+    color: #334155;
+    font-weight: 800;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .bmk-attendance-page {
+        padding: 22px 0 45px;
+    }
+
+    .bmk-attendance-hero {
+        padding: 23px 20px;
+        border-radius: 19px;
+    }
+
+    .bmk-class-teacher-badge {
+        margin-top: 18px;
+    }
+
+    .bmk-selection-body {
+        padding: 20px;
+    }
+
+    .bmk-card-heading {
+        padding: 18px 20px;
+    }
+
+    .bmk-students-header {
+        padding: 18px 20px;
+    }
+
+    .bmk-attendance-save {
+        align-items: stretch;
+        flex-direction: column;
+        padding: 18px 20px;
+    }
+
+    .bmk-save-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+/* =========================================================
+   BMK ATTENDANCE HISTORY
+   ========================================================= */
+
+   .bmk-attendance-history {
+    min-height: calc(100vh - 70px);
+    padding: 30px 0 60px;
+    background:
+        radial-gradient(circle at top right, rgba(29, 78, 216, 0.05), transparent 28%),
+        #f6f8fb;
+}
+
+/* =========================================================
+   PAGE HERO
+   ========================================================= */
+
+.bmk-history-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 28px 30px;
+    margin-bottom: 24px;
+    border-radius: 22px;
+    color: #ffffff;
+    background:
+        radial-gradient(circle at 88% 10%, rgba(224, 168, 62, 0.24), transparent 26%),
+        linear-gradient(135deg, #0b1f33 0%, #0f2747 58%, #173e6d 100%);
+    box-shadow: 0 18px 45px rgba(15, 35, 55, 0.14);
+}
+
+.bmk-history-hero::before {
+    content: "";
+    position: absolute;
+    width: 190px;
+    height: 190px;
+    right: -70px;
+    top: -105px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.bmk-history-hero::after {
+    content: "";
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    left: 48%;
+    bottom: -70px;
+    border-radius: 50%;
+    background: rgba(224, 168, 62, 0.08);
+}
+
+.bmk-history-hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.bmk-history-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 9px;
+    color: #f3d58a;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.bmk-history-hero h2 {
+    margin-bottom: 6px;
+    font-size: clamp(1.7rem, 4vw, 2.2rem);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+}
+
+.bmk-history-hero p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.70);
+}
+
+/* =========================================================
+   FILTER CARD
+   ========================================================= */
+
+.bmk-history-filter {
+    overflow: hidden;
+    margin-bottom: 24px;
+    border: 1px solid rgba(15, 39, 71, 0.06);
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 12px 35px rgba(15, 35, 55, 0.08);
+}
+
+.bmk-filter-heading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 24px;
+    border-bottom: 1px solid #edf0f4;
+}
+
+.bmk-filter-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 13px;
+    color: #1d4ed8;
+    background: #eef5ff;
+    font-size: 1.05rem;
+}
+
+.bmk-filter-heading h5 {
+    margin: 0 0 2px;
+    color: #0f2747;
+    font-weight: 800;
+}
+
+.bmk-filter-heading p {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.83rem;
+}
+
+.bmk-filter-body {
+    padding: 24px;
+}
+
+.bmk-filter-body .form-label {
+    color: #334155;
+    font-size: 0.82rem;
+    font-weight: 800;
+}
+
+.bmk-filter-body .form-control,
+.bmk-filter-body .form-select {
+    min-height: 46px;
+    border-color: #dfe5ec;
+    border-radius: 11px;
+    box-shadow: none;
+}
+
+.bmk-filter-body .form-control:focus,
+.bmk-filter-body .form-select:focus {
+    border-color: #1d4ed8;
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.10);
+}
+
+.bmk-filter-body .form-text {
+    margin-top: 7px;
+    color: #64748b;
+    font-size: 0.75rem;
+}
+
+.bmk-search-btn {
+    min-height: 46px;
+    border: 0;
+    border-radius: 11px;
+    color: #ffffff !important;
+    background: linear-gradient(135deg, #1d4ed8, #2563eb);
+    font-weight: 800;
+    box-shadow: 0 9px 22px rgba(29, 78, 216, 0.18);
+}
+
+.bmk-search-btn:hover {
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 13px 28px rgba(29, 78, 216, 0.24);
+}
+
+/* =========================================================
+   RESULTS CARD
+   ========================================================= */
+
+.bmk-history-results {
+    overflow: hidden;
+    border: 1px solid rgba(15, 39, 71, 0.06);
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 12px 35px rgba(15, 35, 55, 0.08);
+}
+
+.bmk-results-header {
+    padding: 21px 24px;
+    border-bottom: 1px solid #edf0f4;
+}
+
+.bmk-results-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.bmk-results-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 13px;
+    color: #1d4ed8;
+    background: #eef5ff;
+}
+
+.bmk-results-title h5 {
+    margin: 0 0 2px;
+    color: #0f2747;
+    font-weight: 800;
+}
+
+.bmk-results-title small {
+    color: #64748b;
+}
+
+.bmk-record-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    border: 1px solid #e5eaf0;
+    border-radius: 999px;
+    color: #475569;
+    background: #f8fafc;
+    font-size: 0.76rem;
+    font-weight: 750;
+}
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.bmk-history-table {
+    min-width: 760px;
+}
+
+.bmk-history-table thead th {
+    padding: 14px 17px;
+    border-bottom: 1px solid #e5eaf0;
+    color: #64748b;
+    background: #f8fafc;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.bmk-history-table tbody td {
+    padding: 15px 17px;
+    border-color: #edf0f4;
+    color: #475569;
+}
+
+.bmk-history-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.bmk-history-table tbody tr:hover {
+    background: #f8fbff;
+}
+
+.bmk-history-date {
+    color: #0f2747;
+    font-size: 0.86rem;
+    font-weight: 750;
+}
+
+.bmk-history-student {
+    color: #0f2747;
+    font-weight: 750;
+}
+
+.bmk-history-admission {
+    color: #64748b;
+    font-size: 0.84rem;
+    font-weight: 600;
+}
+
+/* =========================================================
+   STATUS BADGES
+   ========================================================= */
+
+.bmk-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 11px;
+    border-radius: 999px;
+    font-size: 0.74rem;
+    font-weight: 800;
+}
+
+.bmk-status-present {
+    color: #287347;
+    background: #eaf7ef;
+}
+
+.bmk-status-absent {
+    color: #b42318;
+    background: #fff0ee;
+}
+
+.bmk-status-late {
+    color: #916400;
+    background: #fff7df;
+}
+
+.bmk-status-excused {
+    color: #087990;
+    background: #e8f8fb;
+}
+
+/* =========================================================
+   EMPTY STATES
+   ========================================================= */
+
+.bmk-history-empty {
+    padding: 60px 24px;
+    text-align: center;
+}
+
+.bmk-history-empty-icon {
+    width: 72px;
+    height: 72px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 21px;
+    color: #94a3b8;
+    background: #f1f5f9;
+    font-size: 1.8rem;
+}
+
+.bmk-history-empty h5 {
+    margin-top: 17px;
+    color: #334155;
+    font-weight: 800;
+}
+
+.bmk-history-empty p {
+    max-width: 500px;
+    margin-right: auto;
+    margin-left: auto;
+    color: #64748b;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .bmk-attendance-history {
+        padding: 22px 0 45px;
+    }
+
+    .bmk-history-hero {
+        padding: 23px 20px;
+        border-radius: 19px;
+    }
+
+    .bmk-filter-heading,
+    .bmk-results-header {
+        padding: 18px 20px;
+    }
+
+    .bmk-filter-body {
+        padding: 20px;
+    }
+
+    .bmk-results-header {
+        align-items: flex-start !important;
+    }
+
+    .bmk-record-count {
+        margin-top: 14px;
+    }
+}
+
+/* =========================================================
+   BMK ATTENDANCE DASHBOARD
+   ========================================================= */
+
+   .bmk-attendance-dashboard {
+    min-height: calc(100vh - 70px);
+    padding: 30px 0 60px;
+    background:
+        radial-gradient(circle at top right, rgba(29, 78, 216, 0.05), transparent 28%),
+        #f6f8fb;
+}
+
+/* =========================================================
+   PAGE HERO
+   ========================================================= */
+
+.bmk-dashboard-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 30px;
+    margin-bottom: 24px;
+    border-radius: 22px;
+    color: #ffffff;
+    background:
+        radial-gradient(circle at 88% 10%, rgba(224, 168, 62, 0.25), transparent 27%),
+        radial-gradient(circle at 15% 110%, rgba(63, 125, 88, 0.16), transparent 28%),
+        linear-gradient(135deg, #0b1f33 0%, #0f2747 58%, #173e6d 100%);
+    box-shadow: 0 18px 45px rgba(15, 35, 55, 0.14);
+}
+
+.bmk-dashboard-hero::before {
+    content: "";
+    position: absolute;
+    width: 190px;
+    height: 190px;
+    right: -65px;
+    top: -105px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.bmk-dashboard-hero::after {
+    content: "";
+    position: absolute;
+    width: 110px;
+    height: 110px;
+    left: 47%;
+    bottom: -75px;
+    border-radius: 50%;
+    background: rgba(224, 168, 62, 0.08);
+}
+
+.bmk-dashboard-hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.bmk-dashboard-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 9px;
+    color: #f3d58a;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.bmk-dashboard-hero h2 {
+    margin-bottom: 6px;
+    font-size: clamp(1.7rem, 4vw, 2.2rem);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+}
+
+.bmk-dashboard-hero p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.70);
+}
+
+/* =========================================================
+   FILTER CARD
+   ========================================================= */
+
+.bmk-dashboard-filter {
+    overflow: hidden;
+    margin-bottom: 24px;
+    border: 1px solid rgba(15, 39, 71, 0.06);
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 12px 35px rgba(15, 35, 55, 0.08);
+}
+
+.bmk-filter-heading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 24px;
+    border-bottom: 1px solid #edf0f4;
+}
+
+.bmk-filter-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 13px;
+    color: #1d4ed8;
+    background: #eef5ff;
+    font-size: 1.05rem;
+}
+
+.bmk-filter-heading h5 {
+    margin: 0 0 2px;
+    color: #0f2747;
+    font-weight: 800;
+}
+
+.bmk-filter-heading p {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.83rem;
+}
+
+.bmk-filter-body {
+    padding: 24px;
+}
+
+.bmk-filter-body .form-label {
+    color: #334155;
+    font-size: 0.82rem;
+    font-weight: 800;
+}
+
+.bmk-filter-body .form-control,
+.bmk-filter-body .form-select {
+    min-height: 46px;
+    border-color: #dfe5ec;
+    border-radius: 11px;
+    box-shadow: none;
+}
+
+.bmk-filter-body .form-control:focus,
+.bmk-filter-body .form-select:focus {
+    border-color: #1d4ed8;
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.10);
+}
+
+.bmk-filter-body .form-text {
+    margin-top: 7px;
+    color: #64748b;
+    font-size: 0.75rem;
+}
+
+.bmk-analyze-btn {
+    min-height: 46px;
+    border: 0;
+    border-radius: 11px;
+    color: #ffffff !important;
+    background: linear-gradient(135deg, #1d4ed8, #2563eb);
+    font-weight: 800;
+    box-shadow: 0 9px 22px rgba(29, 78, 216, 0.18);
+}
+
+.bmk-analyze-btn:hover {
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 13px 28px rgba(29, 78, 216, 0.24);
+}
+
+/* =========================================================
+   SELECTED CLASS
+   ========================================================= */
+
+.bmk-selected-class {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin-bottom: 18px;
+    padding: 17px 20px;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 8px 24px rgba(15, 35, 55, 0.05);
+}
+
+.bmk-selected-class-icon {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 12px;
+    color: #1d4ed8;
+    background: #eef5ff;
+}
+
+.bmk-selected-class h5 {
+    margin: 0 0 2px;
+    color: #0f2747;
+    font-weight: 800;
+}
+
+.bmk-selected-class p {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.8rem;
+}
+
+/* =========================================================
+   STATISTICS
+   ========================================================= */
+
+.bmk-stat-card {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    padding: 22px;
+    border: 1px solid rgba(15, 39, 71, 0.06);
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 10px 28px rgba(15, 35, 55, 0.07);
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.bmk-stat-card::after {
+    content: "";
+    position: absolute;
+    width: 85px;
+    height: 85px;
+    right: -35px;
+    bottom: -38px;
+    border-radius: 50%;
+    background: rgba(29, 78, 216, 0.035);
+}
+
+.bmk-stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 38px rgba(15, 35, 55, 0.10);
+}
+
+.bmk-stat-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.bmk-stat-label {
+    display: block;
+    margin-bottom: 5px;
+    color: #64748b;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.bmk-stat-value {
+    margin: 0;
+    color: #0f2747;
+    font-size: 1.65rem;
+    font-weight: 800;
+}
+
+.bmk-stat-icon {
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 13px;
+    font-size: 1.1rem;
+}
+
+/* Individual colors */
+
+.bmk-stat-total .bmk-stat-icon {
+    color: #1d4ed8;
+    background: #eef5ff;
+}
+
+.bmk-stat-present .bmk-stat-icon {
+    color: #287347;
+    background: #eaf7ef;
+}
+
+.bmk-stat-absent .bmk-stat-icon {
+    color: #b42318;
+    background: #fff0ee;
+}
+
+.bmk-stat-late .bmk-stat-icon {
+    color: #9a6700;
+    background: #fff7df;
+}
+
+.bmk-stat-excused .bmk-stat-icon {
+    color: #087990;
+    background: #e8f8fb;
+}
+
+.bmk-stat-rate .bmk-stat-icon {
+    color: #6d4aff;
+    background: #f0edff;
+}
+
+.bmk-stat-present .bmk-stat-value {
+    color: #287347;
+}
+
+.bmk-stat-absent .bmk-stat-value {
+    color: #b42318;
+}
+
+.bmk-stat-late .bmk-stat-value {
+    color: #a46f0c;
+}
+
+.bmk-stat-excused .bmk-stat-value {
+    color: #087990;
+}
+
+.bmk-stat-rate .bmk-stat-value {
+    color: #5b3fc7;
+}
+
+/* =========================================================
+   SUMMARY CARD
+   ========================================================= */
+
+.bmk-summary-card {
+    overflow: hidden;
+    margin-top: 6px;
+    border: 1px solid rgba(15, 39, 71, 0.06);
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 12px 35px rgba(15, 35, 55, 0.08);
+}
+
+.bmk-summary-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 24px;
+    border-bottom: 1px solid #edf0f4;
+}
+
+.bmk-summary-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 13px;
+    color: #3f7d58;
+    background: #eaf7ef;
+}
+
+.bmk-summary-header h5 {
+    margin: 0;
+    color: #0f2747;
+    font-weight: 800;
+}
+
+.bmk-summary-body {
+    padding: 28px 24px;
+}
+
+.bmk-rate-display {
+    width: 150px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    border: 9px solid #eaf7ef;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow:
+        inset 0 0 0 1px #d8eee0,
+        0 10px 25px rgba(63, 125, 88, 0.08);
+}
+
+.bmk-rate-display strong {
+    color: #287347;
+    font-size: 1.85rem;
+    font-weight: 850;
+    line-height: 1;
+}
+
+.bmk-rate-display span {
+    margin-top: 6px;
+    color: #64748b;
+    font-size: 0.7rem;
+    font-weight: 750;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.bmk-performance-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 9px;
+}
+
+.bmk-performance-heading span:first-child {
+    color: #334155;
+    font-size: 0.85rem;
+    font-weight: 800;
+}
+
+.bmk-performance-value {
+    color: #287347;
+    font-size: 0.85rem;
+    font-weight: 800;
+}
+
+.bmk-performance-progress {
+    height: 12px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #eaf0ec;
+}
+
+.bmk-performance-progress .progress-bar {
+    border-radius: 999px;
+    background: linear-gradient(90deg, #3f7d58, #61a77d);
+    transition: width 0.8s ease;
+}
+
+.bmk-summary-note {
+    display: flex;
+    gap: 8px;
+    margin-top: 15px;
+    color: #64748b;
+    font-size: 0.76rem;
+    line-height: 1.6;
+}
+
+.bmk-summary-note i {
+    color: #1d4ed8;
+    margin-top: 2px;
+}
+
+/* =========================================================
+   INITIAL STATE
+   ========================================================= */
+
+.bmk-dashboard-empty {
+    overflow: hidden;
+    padding: 65px 24px;
+    text-align: center;
+    border: 1px solid rgba(15, 39, 71, 0.06);
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 12px 35px rgba(15, 35, 55, 0.08);
+}
+
+.bmk-empty-icon {
+    width: 76px;
+    height: 76px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 23px;
+    color: #94a3b8;
+    background: #f1f5f9;
+    font-size: 1.9rem;
+}
+
+.bmk-dashboard-empty h5 {
+    margin-top: 18px;
+    color: #334155;
+    font-weight: 800;
+}
+
+.bmk-dashboard-empty p {
+    max-width: 500px;
+    margin-right: auto;
+    margin-left: auto;
+    color: #64748b;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .bmk-attendance-dashboard {
+        padding: 22px 0 45px;
+    }
+
+    .bmk-dashboard-hero {
+        padding: 23px 20px;
+        border-radius: 19px;
+    }
+
+    .bmk-filter-heading,
+    .bmk-summary-header {
+        padding: 18px 20px;
+    }
+
+    .bmk-filter-body {
+        padding: 20px;
+    }
+
+    .bmk-selected-class {
+        align-items: flex-start;
+    }
+
+    .bmk-summary-body {
+        padding: 25px 20px;
+    }
+
+    .bmk-rate-display {
+        width: 135px;
+        height: 135px;
+        margin-bottom: 25px;
+    }
+}
+/* =========================================================
+       BMK STUDENT ATTENDANCE
+       Frontend only — backend logic unchanged
+    ========================================================= */
+
+    .bmk-student-attendance {
+        padding: 34px 0 70px;
+        background:
+            radial-gradient(circle at top right, rgba(29, 78, 216, 0.06), transparent 28%),
+            linear-gradient(180deg, #f7f9fc 0%, #ffffff 65%);
+        min-height: 100vh;
+    }
+
+    /* ---------------------------------------------------------
+       Header
+    --------------------------------------------------------- */
+
+    .bmk-student-attendance-header {
+        position: relative;
+        overflow: hidden;
+        padding: 30px 32px;
+        margin-bottom: 24px;
+        border-radius: 24px;
+        background: linear-gradient(135deg, #0f2747 0%, #163d6b 62%, #1d4ed8 100%);
+        color: #ffffff;
+        box-shadow: 0 18px 45px rgba(15, 39, 71, 0.16);
+    }
+
+    .bmk-student-attendance-header::before {
+        content: "";
+        position: absolute;
+        width: 210px;
+        height: 210px;
+        top: -100px;
+        right: -55px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.07);
+    }
+
+    .bmk-student-attendance-header::after {
+        content: "";
+        position: absolute;
+        width: 130px;
+        height: 130px;
+        bottom: -80px;
+        left: 32%;
+        border-radius: 50%;
+        background: rgba(224, 168, 62, 0.12);
+    }
+
+    .bmk-header-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .bmk-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        margin-bottom: 10px;
+        color: #f3d58a;
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .bmk-eyebrow i {
+        font-size: 0.85rem;
+    }
+
+    .bmk-student-name {
+        margin: 0;
+        color: #ffffff;
+        font-size: clamp(1.55rem, 3vw, 2.15rem);
+        font-weight: 800;
+        line-height: 1.2;
+    }
+
+    .bmk-admission-number {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        margin-top: 10px;
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 0.9rem;
+    }
+
+    .bmk-admission-number strong {
+        color: #ffffff;
+        font-weight: 700;
+    }
+
+    /* ---------------------------------------------------------
+       Filter
+    --------------------------------------------------------- */
+
+    .bmk-attendance-filter {
+        margin-bottom: 24px;
+        overflow: hidden;
+        border: 1px solid #e5eaf0;
+        border-radius: 22px;
+        background: #ffffff;
+        box-shadow: 0 12px 35px rgba(15, 35, 55, 0.07);
+    }
+
+    .bmk-filter-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 19px 24px;
+        border-bottom: 1px solid #edf0f4;
+        background: #fbfcfe;
+    }
+
+    .bmk-filter-icon {
+        width: 40px;
+        height: 40px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 40px;
+        border-radius: 12px;
+        color: #1d4ed8;
+        background: #eef5ff;
+    }
+
+    .bmk-filter-title {
+        margin: 0;
+        color: #0f2747;
+        font-size: 0.98rem;
+        font-weight: 800;
+    }
+
+    .bmk-filter-subtitle {
+        margin: 2px 0 0;
+        color: #64748b;
+        font-size: 0.78rem;
+    }
+
+    .bmk-filter-body {
+        padding: 24px;
+    }
+
+    .bmk-filter-label {
+        display: block;
+        margin-bottom: 7px;
+        color: #334155;
+        font-size: 0.78rem;
+        font-weight: 800;
+    }
+
+    .bmk-filter-input {
+        min-height: 46px;
+        border: 1px solid #dce3eb;
+        border-radius: 12px;
+        color: #0f2747;
+        background: #ffffff;
+        box-shadow: none;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .bmk-filter-input:focus {
+        border-color: #1d4ed8;
+        box-shadow: 0 0 0 4px rgba(29, 78, 216, 0.09);
+    }
+
+    .bmk-filter-btn {
+        min-height: 46px;
+        border: 0;
+        border-radius: 12px;
+        color: #ffffff !important;
+        background: linear-gradient(135deg, #1d4ed8, #2563eb);
+        font-size: 0.86rem;
+        font-weight: 800;
+        box-shadow: 0 9px 22px rgba(29, 78, 216, 0.20);
+    }
+
+    .bmk-filter-btn:hover {
+        color: #ffffff !important;
+        transform: translateY(-2px);
+        box-shadow: 0 13px 28px rgba(29, 78, 216, 0.27);
+    }
+
+    /* ---------------------------------------------------------
+       Statistics
+    --------------------------------------------------------- */
+
+    .bmk-attendance-stat {
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+        padding: 21px;
+        border: 1px solid #e5eaf0;
+        border-radius: 20px;
+        background: #ffffff;
+        box-shadow: 0 10px 30px rgba(15, 35, 55, 0.06);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .bmk-attendance-stat:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 17px 38px rgba(15, 35, 55, 0.10);
+    }
+
+    .bmk-stat-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 15px;
+    }
+
+    .bmk-stat-label {
+        color: #64748b;
+        font-size: 0.76rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .bmk-stat-icon {
+        width: 38px;
+        height: 38px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 11px;
+        font-size: 1rem;
+    }
+
+    .bmk-stat-value {
+        margin: 0;
+        color: #0f2747;
+        font-size: 1.65rem;
+        font-weight: 850;
+        line-height: 1;
+    }
+
+    .bmk-stat-total .bmk-stat-icon {
+        color: #1d4ed8;
+        background: #eef5ff;
+    }
+
+    .bmk-stat-present .bmk-stat-icon {
+        color: #15803d;
+        background: #ecfdf3;
+    }
+
+    .bmk-stat-absent .bmk-stat-icon {
+        color: #dc2626;
+        background: #fef2f2;
+    }
+
+    .bmk-stat-late .bmk-stat-icon {
+        color: #b45309;
+        background: #fff7ed;
+    }
+
+    .bmk-stat-rate .bmk-stat-icon {
+        color: #7c3aed;
+        background: #f5f3ff;
+    }
+
+    .bmk-stat-present .bmk-stat-value {
+        color: #15803d;
+    }
+
+    .bmk-stat-absent .bmk-stat-value {
+        color: #dc2626;
+    }
+
+    .bmk-stat-late .bmk-stat-value {
+        color: #b45309;
+    }
+
+    .bmk-stat-rate .bmk-stat-value {
+        color: #7c3aed;
+    }
+
+    /* ---------------------------------------------------------
+       Attendance history
+    --------------------------------------------------------- */
+
+    .bmk-history-card {
+        overflow: hidden;
+        margin-top: 24px;
+        border: 1px solid #e5eaf0;
+        border-radius: 22px;
+        background: #ffffff;
+        box-shadow: 0 15px 40px rgba(15, 35, 55, 0.07);
+    }
+
+    .bmk-history-header {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        padding: 20px 24px;
+        border-bottom: 1px solid #edf0f4;
+        background: #fbfcfe;
+    }
+
+    .bmk-history-icon {
+        width: 42px;
+        height: 42px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 42px;
+        border-radius: 12px;
+        color: #1d4ed8;
+        background: #eef5ff;
+    }
+
+    .bmk-history-title {
+        margin: 0;
+        color: #0f2747;
+        font-size: 1rem;
+        font-weight: 800;
+    }
+
+    .bmk-history-subtitle {
+        margin: 2px 0 0;
+        color: #64748b;
+        font-size: 0.78rem;
+    }
+
+    .bmk-history-body {
+        padding: 0;
+    }
+
+    .bmk-history-table {
+        margin: 0;
+    }
+
+    .bmk-history-table thead th {
+        padding: 15px 24px;
+        border-bottom: 1px solid #e5eaf0;
+        color: #64748b;
+        background: #f8fafc;
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    .bmk-history-table tbody td {
+        padding: 16px 24px;
+        border-bottom: 1px solid #edf0f4;
+        color: #334155;
+        font-size: 0.88rem;
+    }
+
+    .bmk-history-table tbody tr:last-child td {
+        border-bottom: 0;
+    }
+
+    .bmk-history-table tbody tr {
+        transition: background-color 0.2s ease;
+    }
+
+    .bmk-history-table tbody tr:hover {
+        background: #fafcff;
+    }
+
+    .bmk-date {
+        color: #0f2747;
+        font-weight: 700;
+    }
+
+    .bmk-status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 11px;
+        border-radius: 999px;
+        font-size: 0.72rem;
+        font-weight: 800;
+        white-space: nowrap;
+    }
+
+    .bmk-status-present {
+        color: #15803d;
+        background: #ecfdf3;
+    }
+
+    .bmk-status-absent {
+        color: #dc2626;
+        background: #fef2f2;
+    }
+
+    .bmk-status-late {
+        color: #b45309;
+        background: #fff7ed;
+    }
+
+    .bmk-status-excused {
+        color: #0369a1;
+        background: #e0f2fe;
+    }
+
+    .bmk-empty-state {
+        padding: 55px 24px;
+        text-align: center;
+    }
+
+    .bmk-empty-icon {
+        width: 58px;
+        height: 58px;
+        margin: 0 auto 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 17px;
+        color: #64748b;
+        background: #f1f5f9;
+        font-size: 1.35rem;
+    }
+
+    .bmk-empty-state h4 {
+        margin-bottom: 6px;
+        color: #0f2747;
+        font-size: 1rem;
+        font-weight: 800;
+    }
+
+    .bmk-empty-state p {
+        margin: 0;
+        color: #64748b;
+        font-size: 0.85rem;
+    }
+
+    /* ---------------------------------------------------------
+       Responsive
+    --------------------------------------------------------- */
+
+    @media (max-width: 767.98px) {
+
+        .bmk-student-attendance {
+            padding: 22px 0 55px;
+        }
+
+        .bmk-student-attendance-header {
+            padding: 25px 20px;
+            border-radius: 20px;
+        }
+
+        .bmk-student-name {
+            font-size: 1.45rem;
+        }
+
+        .bmk-filter-header,
+        .bmk-filter-body,
+        .bmk-history-header {
+            padding-left: 18px;
+            padding-right: 18px;
+        }
+
+        .bmk-attendance-stat {
+            padding: 18px;
+        }
+
+        .bmk-history-body {
+            overflow-x: auto;
+        }
+
+        .bmk-history-table {
+            min-width: 520px;
+        }
+
+        .bmk-history-table thead th,
+        .bmk-history-table tbody td {
+            padding-left: 18px;
+            padding-right: 18px;
+        }
+    }

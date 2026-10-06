@@ -1,4 +1,9 @@
 {% extends "website/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'website/css/events.css' %}">
+{% endblock %}
 
 {% block title %}
     School Events | BMK Academy
@@ -7,27 +12,23 @@
 
 {% block content %}
 
-<section class="py-5">
+<section class="bmk-events-page">
 
     <div class="container">
 
+        <!-- PAGE INTRO -->
 
-        <!-- PAGE HEADER -->
+        <div class="bmk-events-intro">
 
-        <div class="text-center mb-5">
-
-            <span class="text-primary fw-semibold">
+            <span class="bmk-events-intro-label">
                 BMK ACADEMY
             </span>
 
-            <h1 class="fw-bold mt-2">
+            <h1>
                 School Events
             </h1>
 
-            <p
-                class="text-muted mx-auto"
-                style="max-width: 700px;"
-            >
+            <p>
                 Stay informed about upcoming activities,
                 celebrations, meetings and important events
                 at BMK Academy.
@@ -36,20 +37,19 @@
         </div>
 
 
-
         <!-- UPCOMING EVENTS -->
 
         {% if upcoming_events %}
 
-            <div class="mb-5">
+            <div class="bmk-events-section mb-5">
 
-                <div class="mb-4">
+                <div class="bmk-events-section-heading">
 
-                    <span class="text-primary fw-semibold">
+                    <span>
                         WHAT'S COMING UP
                     </span>
 
-                    <h2 class="fw-bold mt-2">
+                    <h2>
                         Upcoming Events
                     </h2>
 
@@ -62,63 +62,69 @@
 
                         <div class="col-md-6 col-lg-4">
 
-                            <div
-                                class="card h-100 border-0 shadow-sm"
-                            >
+                            <article class="bmk-event-card">
 
                                 {% if event.image %}
 
-                                    <img
-                                        src="{{ event.image.url }}"
-                                        class="card-img-top"
-                                        alt="{{ event.title }}"
-                                        style="
-                                            height: 220px;
-                                            object-fit: cover;
-                                        "
-                                    >
+                                    <div class="bmk-event-image-wrapper">
+
+                                        <img
+                                            src="{{ event.image.url }}"
+                                            alt="{{ event.title }}"
+                                            loading="lazy"
+                                        >
+
+                                        <div class="bmk-event-date-badge">
+
+                                            <span class="day">
+                                                {{ event.event_date|date:"j" }}
+                                            </span>
+
+                                            <span class="month">
+                                                {{ event.event_date|date:"M" }}
+                                            </span>
+
+                                        </div>
+
+                                    </div>
 
                                 {% endif %}
 
 
-                                <div class="card-body p-4">
+                                <div class="bmk-event-card-body">
 
-                                    <span
-                                        class="badge bg-primary mb-3"
-                                    >
+                                    <span class="bmk-event-status">
                                         Upcoming
                                     </span>
 
 
-                                    <h4 class="fw-bold">
+                                    <h4>
                                         {{ event.title }}
                                     </h4>
 
 
-                                    <div
-                                        class="text-muted mb-3"
-                                    >
+                                    <div class="bmk-event-meta">
 
-                                        <div class="mb-2">
+                                        <div>
 
-                                            <i
-                                                class="bi bi-calendar-event text-primary me-2"
-                                            ></i>
+                                            <i class="bi bi-calendar-event"></i>
 
-                                            {{ event.event_date|date:"j F Y" }}
+                                            <span>
+                                                {{ event.event_date|date:"j F Y" }}
+                                            </span>
 
                                         </div>
 
 
                                         {% if event.event_time %}
 
-                                            <div class="mb-2">
+                                            <div>
 
-                                                <i
-                                                    class="bi bi-clock text-primary me-2"
-                                                ></i>
+                                                <i class="bi bi-clock"></i>
 
-                                                {{ event.event_time|time:"g:i A" }}
+                                                <span>
+                                                    {{ event.event_time|time:"g:i A" }}
+                                                </span>
 
                                             </div>
 
@@ -129,11 +135,11 @@
 
                                             <div>
 
-                                                <i
-                                                    class="bi bi-geo-alt text-primary me-2"
-                                                ></i>
+                                                <i class="bi bi-geo-alt"></i>
 
-                                                {{ event.venue }}
+                                                <span>
+                                                    {{ event.venue }}
+                                                </span>
 
                                             </div>
 
@@ -144,10 +150,8 @@
 
                                     {% if event.description %}
 
-                                        <p class="text-muted">
-
+                                        <p>
                                             {{ event.description|truncatewords:20 }}
-
                                         </p>
 
                                     {% endif %}
@@ -155,14 +159,14 @@
 
                                     <a
                                         href="{% url 'website:event_detail' event.slug %}"
-                                        class="btn btn-outline-primary"
+                                        class="bmk-event-view-btn"
                                     >
                                         View Event
                                     </a>
 
                                 </div>
 
-                            </div>
+                            </article>
 
                         </div>
 
@@ -180,15 +184,15 @@
 
         {% if past_events %}
 
-            <div>
+            <div class="bmk-events-section">
 
-                <div class="mb-4">
+                <div class="bmk-events-section-heading">
 
-                    <span class="text-muted fw-semibold">
+                    <span class="past-heading">
                         EVENT HISTORY
                     </span>
 
-                    <h2 class="fw-bold mt-2">
+                    <h2>
                         Past Events
                     </h2>
 
@@ -201,63 +205,69 @@
 
                         <div class="col-md-6 col-lg-4">
 
-                            <div
-                                class="card h-100 border-0 shadow-sm"
-                            >
+                            <article class="bmk-event-card">
 
                                 {% if event.image %}
 
-                                    <img
-                                        src="{{ event.image.url }}"
-                                        class="card-img-top"
-                                        alt="{{ event.title }}"
-                                        style="
-                                            height: 220px;
-                                            object-fit: cover;
-                                        "
-                                    >
+                                    <div class="bmk-event-image-wrapper">
+
+                                        <img
+                                            src="{{ event.image.url }}"
+                                            alt="{{ event.title }}"
+                                            loading="lazy"
+                                        >
+
+                                        <div class="bmk-event-date-badge">
+
+                                            <span class="day">
+                                                {{ event.event_date|date:"j" }}
+                                            </span>
+
+                                            <span class="month">
+                                                {{ event.event_date|date:"M" }}
+                                            </span>
+
+                                        </div>
+
+                                    </div>
 
                                 {% endif %}
 
 
-                                <div class="card-body p-4">
+                                <div class="bmk-event-card-body">
 
-                                    <span
-                                        class="badge bg-secondary mb-3"
-                                    >
+                                    <span class="bmk-event-status past">
                                         Past Event
                                     </span>
 
 
-                                    <h4 class="fw-bold">
+                                    <h4>
                                         {{ event.title }}
                                     </h4>
 
 
-                                    <div
-                                        class="text-muted mb-3"
-                                    >
+                                    <div class="bmk-event-meta past">
 
-                                        <div class="mb-2">
+                                        <div>
 
-                                            <i
-                                                class="bi bi-calendar-event me-2"
-                                            ></i>
+                                            <i class="bi bi-calendar-event"></i>
 
-                                            {{ event.event_date|date:"j F Y" }}
+                                            <span>
+                                                {{ event.event_date|date:"j F Y" }}
+                                            </span>
 
                                         </div>
 
 
                                         {% if event.event_time %}
 
-                                            <div class="mb-2">
+                                            <div>
 
-                                                <i
-                                                    class="bi bi-clock me-2"
-                                                ></i>
+                                                <i class="bi bi-clock"></i>
 
-                                                {{ event.event_time|time:"g:i A" }}
+                                                <span>
+                                                    {{ event.event_time|time:"g:i A" }}
+                                                </span>
 
                                             </div>
 
@@ -268,11 +278,11 @@
 
                                             <div>
 
-                                                <i
-                                                    class="bi bi-geo-alt me-2"
-                                                ></i>
+                                                <i class="bi bi-geo-alt"></i>
 
-                                                {{ event.venue }}
+                                                <span>
+                                                    {{ event.venue }}
+                                                </span>
 
                                             </div>
 
@@ -283,10 +293,8 @@
 
                                     {% if event.description %}
 
-                                        <p class="text-muted">
-
+                                        <p>
                                             {{ event.description|truncatewords:20 }}
-
                                         </p>
 
                                     {% endif %}
@@ -294,14 +302,14 @@
 
                                     <a
                                         href="{% url 'website:event_detail' event.slug %}"
-                                        class="btn btn-outline-secondary"
+                                        class="bmk-event-view-btn past"
                                     >
                                         View Event
                                     </a>
 
                                 </div>
 
-                            </div>
+                            </article>
 
                         </div>
 
@@ -319,28 +327,17 @@
 
         {% if not upcoming_events and not past_events %}
 
-            <div class="text-center py-5">
+            <div class="bmk-events-empty">
 
-                <div class="mb-3">
+                <i class="bi bi-calendar-x"></i>
 
-                    <i
-                        class="bi bi-calendar-x text-muted"
-                        style="font-size: 3rem;"
-                    ></i>
-
-                </div>
-
-
-                <h4 class="fw-bold">
+                <h4>
                     No Events Available
                 </h4>
 
-
-                <p class="text-muted">
-
+                <p>
                     There are currently no school events
                     to display.
-
                 </p>
 
             </div>
@@ -352,3 +349,4 @@
 </section>
 
 {% endblock %}
+

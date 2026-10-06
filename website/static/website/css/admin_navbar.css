@@ -1,0 +1,468 @@
+/* =========================================================
+   BMK ACADEMY
+   ADMINISTRATION NAVBAR
+   Designed to match the BMK Public Navbar
+========================================================= */
+
+
+/* =========================================================
+   NAVBAR FOUNDATION
+========================================================= */
+
+.bmk-admin-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+
+    min-height: 82px;
+    padding: 10px 0;
+
+    background: #0f2747 !important;
+
+    border-bottom: 3px solid #e0a83e;
+
+    box-shadow:
+        0 6px 25px rgba(15, 35, 55, 0.14) !important;
+
+    backdrop-filter: blur(12px);
+}
+
+.bmk-admin-navbar .container {
+    min-height: 82px;
+}
+
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.bmk-admin-navbar .navbar-brand {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 5px 0 !important;
+
+    color: #ffffff !important;
+
+    font-size: 1.2rem;
+    font-weight: 800;
+
+    letter-spacing: -0.025em;
+
+    text-decoration: none !important;
+}
+
+.bmk-admin-navbar .navbar-brand span {
+    color: #ffffff !important;
+    white-space: nowrap;
+}
+
+.bmk-admin-navbar .navbar-brand:hover span {
+    color: #f3d58a !important;
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.bmk-admin-navbar img {
+    width: 55px;
+    height: 55px;
+
+    object-fit: contain;
+
+    flex-shrink: 0;
+
+    background: #ffffff;
+
+    padding: 4px;
+
+    border-radius: 10px;
+
+    transition: transform 0.3s ease;
+}
+
+.bmk-admin-navbar .navbar-brand:hover img {
+    transform: rotate(-3deg) scale(1.04);
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.bmk-admin-navbar .navbar-nav {
+    gap: 5px;
+}
+
+.bmk-admin-navbar .navbar-nav .nav-link {
+    position: relative;
+
+    display: inline-flex;
+    align-items: center;
+
+    min-height: 44px;
+
+    padding: 8px 13px !important;
+
+    margin: 0;
+
+    border-radius: 10px;
+
+    color: #ffffff !important;
+
+    font-size: 0.9rem;
+    font-weight: 650;
+
+    text-decoration: none !important;
+
+    transition:
+        color 0.25s ease,
+        background-color 0.25s ease;
+}
+
+
+/* =========================================================
+   NAVIGATION ICONS
+========================================================= */
+
+.bmk-admin-navbar .nav-link i {
+    color: #f3d58a !important;
+}
+
+
+/* =========================================================
+   HOVER
+========================================================= */
+
+.bmk-admin-navbar .navbar-nav .nav-link:hover,
+.bmk-admin-navbar .navbar-nav .nav-link:focus {
+    color: #ffffff !important;
+
+    background-color:
+        rgba(255, 255, 255, 0.12) !important;
+}
+
+
+/* =========================================================
+   DROPDOWN ARROW
+========================================================= */
+
+.bmk-admin-navbar .dropdown-toggle::after {
+    margin-left: 7px;
+
+    color: #ffffff !important;
+
+    border-top-color: #ffffff !important;
+}
+
+
+/* =========================================================
+   DROPDOWN
+========================================================= */
+
+.bmk-admin-navbar .dropdown-menu {
+    min-width: 235px;
+
+    margin-top: 12px !important;
+
+    padding: 8px;
+
+    border: 1px solid rgba(15, 39, 71, 0.07) !important;
+
+    border-top: 3px solid #e0a83e !important;
+
+    border-radius: 16px;
+
+    background: #ffffff !important;
+
+    box-shadow:
+        0 20px 55px rgba(15, 35, 55, 0.15) !important;
+}
+
+
+/* =========================================================
+   DROPDOWN ITEMS
+========================================================= */
+
+.bmk-admin-navbar .dropdown-item {
+    padding: 11px 13px;
+
+    border-radius: 10px;
+
+    color: #475569 !important;
+
+    background: transparent !important;
+
+    font-size: 0.88rem;
+    font-weight: 600;
+
+    text-decoration: none !important;
+
+    transition:
+        color 0.2s ease,
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+/* =========================================================
+   DROPDOWN ICONS
+========================================================= */
+
+.bmk-admin-navbar .dropdown-item i {
+    color: #1d4ed8 !important;
+}
+
+
+/* =========================================================
+   DROPDOWN HOVER
+========================================================= */
+
+.bmk-admin-navbar .dropdown-item:hover,
+.bmk-admin-navbar .dropdown-item:focus {
+    color: #1d4ed8 !important;
+
+    background-color: #eef5ff !important;
+
+    transform: translateX(3px);
+}
+
+
+/* =========================================================
+   DROPDOWN DIVIDER
+========================================================= */
+
+.bmk-admin-navbar .dropdown-divider {
+    margin: 7px 4px;
+
+    border-color: rgba(15, 39, 71, 0.08);
+}
+
+
+/* =========================================================
+   NOTIFICATION
+========================================================= */
+
+.bmk-admin-navbar .notification-bell {
+    position: relative;
+
+    width: 42px;
+    height: 42px;
+
+    display: inline-flex !important;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 !important;
+
+    border-radius: 50% !important;
+}
+
+.bmk-admin-navbar .notification-bell i {
+    color: #ffffff !important;
+    font-size: 1.15rem;
+}
+
+.bmk-admin-navbar .notification-bell:hover {
+    background: rgba(255, 255, 255, 0.12) !important;
+}
+
+
+/* =========================================================
+   NOTIFICATION BADGE
+========================================================= */
+
+.bmk-admin-navbar .notification-badge {
+    position: absolute;
+
+    top: 1px;
+    right: -1px;
+
+    min-width: 18px;
+    height: 18px;
+
+    padding: 0 4px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #e0a83e !important;
+
+    color: #0f2747 !important;
+
+    border: 2px solid #0f2747;
+
+    border-radius: 50px;
+
+    font-size: 0.65rem;
+    font-weight: 800;
+
+    line-height: 1;
+}
+
+
+/* =========================================================
+   ACCOUNT BUTTON
+========================================================= */
+
+.bmk-admin-navbar .btn-light {
+    color: #0f2747 !important;
+
+    background: #ffffff !important;
+
+    border: none !important;
+
+    font-weight: 700;
+
+    border-radius: 10px;
+}
+
+.bmk-admin-navbar .btn-light:hover {
+    color: #0f2747 !important;
+
+    background: #f3d58a !important;
+}
+
+
+/* =========================================================
+   MOBILE TOGGLER
+========================================================= */
+
+.bmk-admin-navbar .navbar-toggler {
+    width: 45px;
+    height: 45px;
+
+    padding: 0;
+
+    border: 1px solid
+        rgba(255, 255, 255, 0.35) !important;
+
+    border-radius: 12px;
+
+    background: transparent;
+}
+
+.bmk-admin-navbar .navbar-toggler-icon {
+    filter: brightness(0) invert(1);
+}
+
+.bmk-admin-navbar .navbar-toggler:focus {
+    border-color: rgba(224, 168, 62, 0.5);
+
+    box-shadow:
+        0 0 0 4px rgba(224, 168, 62, 0.15);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 991.98px) {
+
+    .bmk-admin-navbar {
+        min-height: 70px;
+        padding: 7px 0;
+    }
+
+    .bmk-admin-navbar .container {
+        min-height: 70px;
+    }
+
+    .bmk-admin-navbar img {
+        width: 47px;
+        height: 47px;
+    }
+
+    .bmk-admin-navbar .navbar-brand {
+        font-size: 1.08rem;
+    }
+
+    .bmk-admin-navbar .navbar-collapse {
+        margin-top: 12px;
+
+        padding: 12px 0 8px;
+
+        border-top:
+            1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .bmk-admin-navbar .navbar-nav {
+        gap: 3px;
+    }
+
+    .bmk-admin-navbar .navbar-nav .nav-link {
+        width: 100%;
+
+        min-height: 46px;
+
+        padding: 10px 14px !important;
+
+        border-radius: 10px;
+    }
+
+    .bmk-admin-navbar .dropdown-menu {
+        position: static !important;
+
+        width: 100%;
+
+        margin-top: 4px !important;
+
+        border-radius: 12px;
+
+        background: #f8fafc !important;
+
+        box-shadow: none !important;
+    }
+
+    .bmk-admin-navbar .dropdown-item {
+        padding: 11px 14px;
+    }
+
+    .bmk-admin-navbar .notification-bell {
+        width: 100%;
+        height: 46px;
+
+        justify-content: flex-start;
+
+        padding: 10px 14px !important;
+
+        border-radius: 10px !important;
+    }
+}
+
+
+/* =========================================================
+   SMALL PHONES
+========================================================= */
+
+@media (max-width: 575.98px) {
+
+    .bmk-admin-navbar .container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .bmk-admin-navbar img {
+        width: 44px;
+        height: 44px;
+    }
+
+    .bmk-admin-navbar .navbar-brand {
+        gap: 9px;
+
+        font-size: 1rem;
+    }
+
+    .bmk-admin-navbar .navbar-toggler {
+        width: 42px;
+        height: 42px;
+    }
+}

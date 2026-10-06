@@ -1,24 +1,47 @@
-{% extends "base.html" %}
-
+{% extends "website/base.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'website/css/blog.css' %}">
+{% endblock %}
 {% block title %}
-    Create Blog Category | BMK Academy
+Create Blog Category | BMK Academy
 {% endblock %}
 
 {% block content %}
 
-<div class="container py-5">
+<style>
+
+</style>
+
+<section class="bmk-category-page">
+
+<div class="container">
 
     <div class="row justify-content-center">
 
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-8">
 
-            <div class="card border-0 shadow-sm">
+            <div class="bmk-category-card">
 
-                <div class="card-body p-4">
+                <div class="bmk-category-header">
 
-                    <h2 class="fw-bold mb-4">
+                    <div class="bmk-category-eyebrow">
+                        <i class="bi bi-folder-plus me-1"></i>
+                        Blog Management
+                    </div>
+
+                    <h1>
                         Create Blog Category
-                    </h2>
+                    </h1>
+
+                    <p>
+                        Organize BMK Academy stories into clear categories.
+                    </p>
+
+                </div>
+
+
+                <div class="bmk-category-body">
 
                     <form method="post">
 
@@ -26,12 +49,14 @@
 
                         {{ form.as_p }}
 
-                        <div class="d-flex gap-2 mt-4">
+
+                        <div class="bmk-category-actions">
 
                             <button
                                 type="submit"
                                 class="btn btn-primary"
                             >
+                                <i class="bi bi-check2-circle me-1"></i>
                                 Save Category
                             </button>
 
@@ -55,5 +80,7 @@
     </div>
 
 </div>
+
+</section>
 
 {% endblock %}

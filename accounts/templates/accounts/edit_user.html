@@ -1,173 +1,283 @@
 {% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
 
+<link rel="stylesheet" href="{% static 'website/css/user_management.css' %}">
+{% endblock %}
 {% block title %}
     Edit User - BMK Academy
 {% endblock %}
 
 {% block content %}
 
-<div class="container">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+<div class="container bmk-edit-user">
 
-        <div>
 
-            <h2 class="fw-bold mb-1">
+    <!-- PAGE HEADER -->
+
+    <div class="bmk-edit-header">
+
+        <div class="bmk-edit-header-content">
+
+            <a
+                href="{% url 'accounts:user_detail' user_account.id %}"
+                class="bmk-back-button"
+            >
+                <i class="bi bi-arrow-left"></i>
+                Back to User
+            </a>
+
+            <h1>
                 Edit User
-            </h2>
+            </h1>
 
-            <p class="text-muted mb-0">
-                Update the user's account information.
+            <p>
+                Update the account information and role for this BMK Academy user.
             </p>
 
         </div>
 
-        <a
-            href="{% url 'accounts:user_detail' user_account.id %}"
-            class="btn btn-outline-secondary"
-        >
-            ← Back to User
-        </a>
-
     </div>
 
 
-    <div class="card shadow-sm border-0">
+    <!-- FORM -->
 
-        <div class="card-body p-4">
+    <div class="bmk-form-card">
+
+
+        <div class="bmk-form-card-header">
+
+            <div class="bmk-form-icon">
+                <i class="bi bi-person-gear"></i>
+            </div>
+
+            <div>
+
+                <h2>
+                    Account Information
+                </h2>
+
+                <p>
+                    Update the details associated with this user account.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="bmk-form-body">
 
             <form method="post">
 
                 {% csrf_token %}
 
 
-                <div class="row g-3">
+                <div class="row g-4">
 
-                    <!-- First Name -->
+
+                    <!-- FIRST NAME -->
 
                     <div class="col-md-6">
 
-                        <label class="form-label fw-semibold">
-                            First Name
-                        </label>
+                        <div class="bmk-field">
 
-                        <input
-                            type="text"
-                            name="first_name"
-                            class="form-control"
-                            value="{{ user_account.first_name }}"
-                            required
-                        >
+                            <label
+                                for="id_first_name"
+                                class="bmk-field-label"
+                            >
+                                <i class="bi bi-person"></i>
+                                First Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="id_first_name"
+                                name="first_name"
+                                class="form-control bmk-form-control"
+                                value="{{ user_account.first_name }}"
+                                required
+                            >
+
+                        </div>
 
                     </div>
 
 
-                    <!-- Last Name -->
+                    <!-- LAST NAME -->
 
                     <div class="col-md-6">
 
-                        <label class="form-label fw-semibold">
-                            Last Name
-                        </label>
+                        <div class="bmk-field">
 
-                        <input
-                            type="text"
-                            name="last_name"
-                            class="form-control"
-                            value="{{ user_account.last_name }}"
-                            required
-                        >
+                            <label
+                                for="id_last_name"
+                                class="bmk-field-label"
+                            >
+                                <i class="bi bi-person"></i>
+                                Last Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="id_last_name"
+                                name="last_name"
+                                class="form-control bmk-form-control"
+                                value="{{ user_account.last_name }}"
+                                required
+                            >
+
+                        </div>
 
                     </div>
 
 
-                    <!-- Username -->
+                    <!-- USERNAME -->
 
                     <div class="col-md-6">
 
-                        <label class="form-label fw-semibold">
-                            Username
-                        </label>
+                        <div class="bmk-field">
 
-                        <input
-                            type="text"
-                            name="username"
-                            class="form-control"
-                            value="{{ user_account.username }}"
-                            required
-                        >
+                            <label
+                                for="id_username"
+                                class="bmk-field-label"
+                            >
+                                <i class="bi bi-at"></i>
+                                Username
+                            </label>
+
+                            <input
+                                type="text"
+                                id="id_username"
+                                name="username"
+                                class="form-control bmk-form-control"
+                                value="{{ user_account.username }}"
+                                required
+                            >
+
+                            <div class="bmk-field-help">
+                                This username is used when signing in.
+                            </div>
+
+                        </div>
 
                     </div>
 
 
-                    <!-- Email -->
+                    <!-- EMAIL -->
 
                     <div class="col-md-6">
 
-                        <label class="form-label fw-semibold">
-                            Email
-                        </label>
+                        <div class="bmk-field">
 
-                        <input
-                            type="email"
-                            name="email"
-                            class="form-control"
-                            value="{{ user_account.email }}"
-                        >
+                            <label
+                                for="id_email"
+                                class="bmk-field-label"
+                            >
+                                <i class="bi bi-envelope"></i>
+                                Email Address
+                            </label>
+
+                            <input
+                                type="email"
+                                id="id_email"
+                                name="email"
+                                class="form-control bmk-form-control"
+                                value="{{ user_account.email }}"
+                            >
+
+                            <div class="bmk-field-help">
+                                Optional contact email address.
+                            </div>
+
+                        </div>
 
                     </div>
 
 
-                    <!-- Role -->
+                    <!-- ROLE -->
 
                     <div class="col-md-6">
 
-                        <label class="form-label fw-semibold">
-                            Role
-                        </label>
+                        <div class="bmk-field">
 
-                        <select
-                            name="role"
-                            class="form-select"
-                            required
-                        >
+                            <label
+                                for="id_role"
+                                class="bmk-field-label"
+                            >
+                                <i class="bi bi-person-badge"></i>
+                                User Role
+                            </label>
 
-                            {% for value, label in user_account.ROLE_CHOICES %}
+                            <select
+                                id="id_role"
+                                name="role"
+                                class="form-select bmk-form-select"
+                                required
+                            >
 
-                                <option
-                                    value="{{ value }}"
-                                    {% if user_account.role == value %}
-                                        selected
-                                    {% endif %}
-                                >
-                                    {{ label }}
-                                </option>
+                                {% for value, label in user_account.ROLE_CHOICES %}
 
-                            {% endfor %}
+                                    <option
+                                        value="{{ value }}"
+                                        {% if user_account.role == value %}
+                                            selected
+                                        {% endif %}
+                                    >
+                                        {{ label }}
+                                    </option>
 
-                        </select>
+                                {% endfor %}
 
+                            </select>
+
+                            <div class="bmk-field-help">
+                                The role determines the user's access within BMK Academy.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- ROLE INFORMATION -->
+
+                <div class="bmk-role-note">
+
+                    <i class="bi bi-info-circle-fill"></i>
+
+                    <div>
+                        Changing a user's role may change the sections and features
+                        available to that account when they sign in.
                     </div>
 
                 </div>
 
 
-                <hr class="my-4">
+                <hr class="bmk-form-divider">
 
 
-                <div class="d-flex justify-content-end gap-2">
+                <!-- ACTIONS -->
+
+                <div class="bmk-form-actions">
 
                     <a
                         href="{% url 'accounts:user_detail' user_account.id %}"
-                        class="btn btn-outline-secondary"
+                        class="btn btn-outline-secondary bmk-form-button"
                     >
+                        <i class="bi bi-x-lg"></i>
                         Cancel
                     </a>
 
                     <button
                         type="submit"
-                        class="btn btn-primary"
+                        class="btn btn-primary bmk-form-button"
                     >
+                        <i class="bi bi-check2-circle"></i>
                         Save Changes
                     </button>
 

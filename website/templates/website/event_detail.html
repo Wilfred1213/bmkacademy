@@ -1,4 +1,10 @@
+
 {% extends "website/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'website/css/events.css' %}">
+{% endblock %}
 
 {% block title %}
     {{ event.title }} | BMK Academy
@@ -7,7 +13,7 @@
 
 {% block content %}
 
-<section class="py-5">
+<section class="bmk-event-detail">
 
     <div class="container">
 
@@ -19,16 +25,11 @@
 
                 {% if event.image %}
 
-                    <div class="mb-4">
+                    <div class="bmk-event-detail-image">
 
                         <img
                             src="{{ event.image.url }}"
                             alt="{{ event.title }}"
-                            class="img-fluid rounded shadow-sm w-100"
-                            style="
-                                max-height: 500px;
-                                object-fit: cover;
-                            "
                         >
 
                     </div>
@@ -38,13 +39,13 @@
 
                 <!-- EVENT CONTENT -->
 
-                <div class="mb-4">
+                <div class="bmk-event-detail-header">
 
-                    <span class="text-primary fw-semibold">
+                    <span class="bmk-event-detail-label">
                         BMK ACADEMY EVENT
                     </span>
 
-                    <h1 class="fw-bold mt-2">
+                    <h1>
                         {{ event.title }}
                     </h1>
 
@@ -53,24 +54,27 @@
 
                 <!-- EVENT INFORMATION -->
 
-                <div class="card border-0 shadow-sm mb-4">
+                <div class="bmk-event-info">
 
-                    <div class="card-body p-4">
+                    <div class="bmk-event-info-body">
 
                         <div class="row g-4">
 
+                            <!-- DATE -->
+
                             <div class="col-md-4">
 
-                                <div class="d-flex align-items-start">
+                                <div class="bmk-event-info-item">
 
-                                    <i
-                                        class="bi bi-calendar-event
-                                               text-primary fs-4 me-3"
-                                    ></i>
+                                    <div class="bmk-event-info-icon">
+
+                                        <i class="bi bi-calendar-event"></i>
+
+                                    </div>
 
                                     <div>
 
-                                        <small class="text-muted d-block">
+                                        <small>
                                             Date
                                         </small>
 
@@ -85,20 +89,23 @@
                             </div>
 
 
+                            <!-- TIME -->
+
                             {% if event.event_time %}
 
                                 <div class="col-md-4">
 
-                                    <div class="d-flex align-items-start">
+                                    <div class="bmk-event-info-item">
 
-                                        <i
-                                            class="bi bi-clock
-                                                   text-primary fs-4 me-3"
-                                        ></i>
+                                        <div class="bmk-event-info-icon">
+
+                                            <i class="bi bi-clock"></i>
+
+                                        </div>
 
                                         <div>
 
-                                            <small class="text-muted d-block">
+                                            <small>
                                                 Time
                                             </small>
 
@@ -115,20 +122,23 @@
                             {% endif %}
 
 
+                            <!-- VENUE -->
+
                             {% if event.venue %}
 
                                 <div class="col-md-4">
 
-                                    <div class="d-flex align-items-start">
+                                    <div class="bmk-event-info-item">
 
-                                        <i
-                                            class="bi bi-geo-alt
-                                                   text-primary fs-4 me-3"
-                                        ></i>
+                                        <div class="bmk-event-info-icon">
+
+                                            <i class="bi bi-geo-alt"></i>
+
+                                        </div>
 
                                         <div>
 
-                                            <small class="text-muted d-block">
+                                            <small>
                                                 Venue
                                             </small>
 
@@ -155,13 +165,13 @@
 
                 {% if event.description %}
 
-                    <div class="mb-4">
+                    <div class="bmk-event-description">
 
-                        <h3 class="fw-bold mb-3">
+                        <h3>
                             About This Event
                         </h3>
 
-                        <div class="text-muted">
+                        <div class="bmk-event-description-content">
                             {{ event.description|linebreaks }}
                         </div>
 
@@ -174,9 +184,9 @@
 
                 <a
                     href="{% url 'website:events' %}"
-                    class="btn btn-outline-primary"
+                    class="bmk-event-back"
                 >
-                    <i class="bi bi-arrow-left me-1"></i>
+                    <i class="bi bi-arrow-left"></i>
                     Back to Events
                 </a>
 

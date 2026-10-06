@@ -1,0 +1,336 @@
+/* =========================================
+BMK ACADEMY FOOTER
+========================================= */
+body {
+    outline: 8px solid red !important;
+}
+.bmk-footer {
+    position: relative;
+    color: #ffffff;
+    background:
+    radial-gradient(
+    circle at 85% 20%,
+    rgba(29, 78, 216, 0.20),
+    transparent 30%
+    ),
+    radial-gradient(
+    circle at 10% 80%,
+    rgba(224, 168, 62, 0.10),
+    transparent 28%
+    ),
+    linear-gradient(
+    135deg,
+    #081b2d 0%,
+    #0f2747 50%,
+    #0b2038 100%
+    );
+    overflow: hidden;
+    }
+    
+    /* Decorative top line */
+    
+    .bmk-footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(
+    90deg,
+    var(--bmk-gold),
+    var(--bmk-blue),
+    var(--bmk-gold)
+    );
+    }
+    
+    /* Decorative circle */
+    
+    .bmk-footer::after {
+    content: "";
+    position: absolute;
+    right: -150px;
+    bottom: -180px;
+    width: 420px;
+    height: 420px;
+    border: 1px solid rgba(224, 168, 62, 0.13);
+    border-radius: 50%;
+    pointer-events: none;
+    }
+    
+    /* =========================================
+    TOP AREA
+    ========================================= */
+    
+    .bmk-footer-top {
+    position: relative;
+    z-index: 1;
+    padding: 75px 0 60px;
+    }
+    
+    /* =========================================
+    BRAND
+    ========================================= */
+    
+    .bmk-footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 20px;
+    }
+    
+    .bmk-footer-logo-wrap {
+    width: 82px;
+    height: 82px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.12);
+    }
+    
+    .bmk-footer-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    }
+    
+    .bmk-footer-label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--bmk-gold-light);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    }
+    
+    .bmk-footer-school-name {
+    max-width: 400px;
+    margin: 0;
+    color: #ffffff;
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.4;
+    }
+    
+    /* =========================================
+    MOTTO
+    ========================================= */
+    
+    .bmk-footer-motto {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 18px;
+    padding: 8px 14px;
+    border: 1px solid rgba(224, 168, 62, 0.28);
+    border-radius: 50px;
+    color: var(--bmk-gold-light);
+    background: rgba(224, 168, 62, 0.08);
+    font-size: 0.86rem;
+    font-weight: 700;
+    }
+    
+    .bmk-footer-motto i {
+    font-size: 0.95rem;
+    }
+    
+    .bmk-footer-description {
+    max-width: 520px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 0.95rem;
+    line-height: 1.85;
+    }
+    
+    /* =========================================
+    HEADINGS
+    ========================================= */
+    
+    .bmk-footer-heading {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 22px;
+    color: #ffffff;
+    font-size: 0.92rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    }
+    
+    .bmk-footer-heading::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -9px;
+    width: 30px;
+    height: 2px;
+    border-radius: 20px;
+    background: var(--bmk-gold);
+    }
+    
+    /* =========================================
+    QUICK LINKS
+    ========================================= */
+    
+    .bmk-footer-links {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    }
+    
+    .bmk-footer-links li {
+    margin-bottom: 11px;
+    }
+    
+    .bmk-footer-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: rgba(255, 255, 255, 0.66);
+    text-decoration: none;
+    font-size: 0.93rem;
+    transition:
+    color 0.25s ease,
+    transform 0.25s ease;
+    }
+    
+    .bmk-footer-links a i {
+    color: var(--bmk-gold);
+    font-size: 0.72rem;
+    transition: transform 0.25s ease;
+    }
+    
+    .bmk-footer-links a:hover {
+    color: #ffffff;
+    transform: translateX(4px);
+    }
+    
+    .bmk-footer-links a:hover i {
+    transform: translateX(3px);
+    }
+    
+    /* =========================================
+    CONTACT
+    ========================================= */
+    
+    .bmk-footer-contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+    }
+    
+    .bmk-footer-contact {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+    }
+    
+    .bmk-footer-contact-icon {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 12px;
+    color: var(--bmk-gold-light);
+    background: rgba(255, 255, 255, 0.06);
+    transition:
+    background-color 0.25s ease,
+    transform 0.25s ease;
+    }
+    
+    .bmk-footer-contact:hover .bmk-footer-contact-icon {
+    background: rgba(224, 168, 62, 0.14);
+    transform: translateY(-3px);
+    }
+    
+    .bmk-footer-contact span {
+    display: block;
+    margin-bottom: 2px;
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    }
+    
+    .bmk-footer-contact p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.91rem;
+    }
+    
+    /* =========================================
+    FOOTER BOTTOM
+    ========================================= */
+    
+    .bmk-footer-bottom {
+    position: relative;
+    z-index: 1;
+    padding: 22px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.09);
+    background: rgba(0, 0, 0, 0.14);
+    }
+    
+    .bmk-footer-copyright,
+    .bmk-footer-developer {
+    color: rgba(255, 255, 255, 0.48);
+    font-size: 0.78rem;
+    }
+    
+    .bmk-footer-developer span {
+    color: var(--bmk-gold-light);
+    font-weight: 600;
+    }
+    
+    /* =========================================
+    RESPONSIVE
+    ========================================= */
+    
+    @media (max-width: 767.98px) {
+    
+    .bmk-footer-top {
+        padding: 60px 0 45px;
+    }
+    
+    .bmk-footer-brand {
+        align-items: flex-start;
+        gap: 14px;
+    }
+    
+    .bmk-footer-logo-wrap {
+        width: 68px;
+        height: 68px;
+        border-radius: 18px;
+    }
+    
+    .bmk-footer-school-name {
+        font-size: 1rem;
+    }
+    
+    .bmk-footer-description {
+        font-size: 0.9rem;
+    }
+    
+    .bmk-footer-heading {
+        margin-top: 8px;
+    }
+    
+    .bmk-footer-bottom {
+        text-align: center;
+    }
+    
+    .bmk-footer-developer {
+        text-align: center;
+    }
+    
+    
+    }
+    

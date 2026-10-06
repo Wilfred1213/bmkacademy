@@ -1,163 +1,189 @@
 {% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
 
-
-{% block title %}
-    Payment History | {{ student.first_name }} {{ student.last_name }}
+<link rel="stylesheet" href="{% static 'website/css/fees.css' %}">
 {% endblock %}
 
+{% block title %}
+Payment History | {{ student.first_name }} {{ student.last_name }}
+{% endblock %}
 
 {% block content %}
 
-<div class="d-flex justify-content-between align-items-center mb-4">
 
-    <div>
+<div class="bmk-payment-history-page">
 
-        <h2 class="fw-bold mb-1">
-            Payment History
-        </h2>
+<div class="container">
 
-        <p class="text-muted mb-0">
+    <div class="bmk-history-header">
 
-            {{ student.first_name }}
+        <div>
 
-            {% if student.middle_name %}
-                {{ student.middle_name }}
-            {% endif %}
+            <div class="bmk-history-eyebrow">
+                Fee Management
+            </div>
 
-            {{ student.last_name }}
+            <h1 class="bmk-history-title">
+                Payment History
+            </h1>
 
-            — {{ student.admission_number }}
+            <p class="bmk-history-student">
+                {{ student.first_name }}
 
-        </p>
+                {% if student.middle_name %}
+                    {{ student.middle_name }}
+                {% endif %}
+
+                {{ student.last_name }}
+
+                <strong>— {{ student.admission_number }}</strong>
+            </p>
+
+        </div>
+
+        <a
+            href="{% url 'fees:student_fees' student.id %}"
+            class="bmk-back-fees"
+        >
+            <i class="bi bi-arrow-left"></i>
+            Back to Fees
+        </a>
 
     </div>
 
 
-    <a
-        href="{% url 'fees:student_fees' student.id %}"
-        class="btn btn-outline-secondary"
-    >
-        ← Back to Fees
-    </a>
+    <!-- Invoice Summary -->
 
-</div>
+    <div class="bmk-history-card">
 
+        <div class="bmk-history-card-header">
 
-<!-- Invoice Summary -->
-
-<div class="card shadow-sm mb-4">
-
-    <div class="card-header">
-
-        <strong>
-            Invoice Summary
-        </strong>
-
-    </div>
-
-
-    <div class="card-body">
-
-        <div class="row g-4">
-
-            <div class="col-md-4">
-
-                <small class="text-muted">
-                    Academic Year
-                </small>
-
-                <div class="fw-semibold">
-                    {{ invoice.enrollment.academic_year }}
-                </div>
-
+            <div class="bmk-history-card-icon">
+                <i class="bi bi-receipt-cutoff"></i>
             </div>
 
+            <div>
+                <h2 class="bmk-history-card-title">
+                    Invoice Summary
+                </h2>
 
-            <div class="col-md-4">
-
-                <small class="text-muted">
-                    Description
-                </small>
-
-                <div class="fw-semibold">
-                    {{ invoice.description }}
-                </div>
-
+                <p class="bmk-history-card-subtitle">
+                    Current financial position for this invoice.
+                </p>
             </div>
 
+        </div>
 
-            <div class="col-md-4">
 
-                <small class="text-muted">
-                    Invoice Amount
-                </small>
+        <div class="bmk-history-card-body">
 
-                <div class="fw-semibold">
-                    ₦{{ summary.amount|floatformat:2 }}
+            <div class="bmk-invoice-summary">
+
+                <div class="bmk-summary-item">
+
+                    <span class="bmk-summary-label">
+                        Academic Year
+                    </span>
+
+                    <div class="bmk-summary-value">
+                        {{ invoice.enrollment.academic_year }}
+                    </div>
+
                 </div>
 
-            </div>
 
+                <div class="bmk-summary-item">
 
-            <div class="col-md-4">
+                    <span class="bmk-summary-label">
+                        Description
+                    </span>
 
-                <small class="text-muted">
-                    Total Paid
-                </small>
+                    <div class="bmk-summary-value">
+                        {{ invoice.description }}
+                    </div>
 
-                <div class="fw-semibold text-success">
-                    ₦{{ summary.paid|floatformat:2 }}
                 </div>
 
-            </div>
 
+                <div class="bmk-summary-item bmk-summary-money">
 
-            <div class="col-md-4">
+                    <span class="bmk-summary-label">
+                        Invoice Amount
+                    </span>
 
-                <small class="text-muted">
-                    Balance
-                </small>
+                    <div class="bmk-summary-value">
+                        ₦{{ summary.amount|floatformat:2 }}
+                    </div>
 
-                <div class="fw-semibold text-danger">
-                    ₦{{ summary.balance|floatformat:2 }}
                 </div>
 
-            </div>
+
+                <div class="bmk-summary-item bmk-summary-paid">
+
+                    <span class="bmk-summary-label">
+                        Total Paid
+                    </span>
+
+                    <div class="bmk-summary-value bmk-summary-money">
+                        ₦{{ summary.paid|floatformat:2 }}
+                    </div>
+
+                </div>
 
 
-            <div class="col-md-4">
+                <div class="bmk-summary-item bmk-summary-balance">
 
-                <small class="text-muted">
-                    Status
-                </small>
+                    <span class="bmk-summary-label">
+                        Balance
+                    </span>
 
-                <div>
+                    <div class="bmk-summary-value bmk-summary-money">
+                        ₦{{ summary.balance|floatformat:2 }}
+                    </div>
 
-                    {% if summary.status == "paid" %}
+                </div>
 
-                        <span class="badge bg-success">
-                            Paid
+
+                <div class="bmk-summary-item bmk-summary-status">
+
+                    <div>
+
+                        <span class="bmk-summary-label">
+                            Status
                         </span>
 
-                    {% elif summary.status == "partial" %}
+                        {% if summary.status == "paid" %}
 
-                        <span class="badge bg-warning text-dark">
-                            Partially Paid
-                        </span>
+                            <span class="bmk-status-badge bmk-status-paid">
+                                <i class="bi bi-check-circle-fill"></i>
+                                Paid
+                            </span>
 
-                    {% elif summary.status == "cancelled" %}
+                        {% elif summary.status == "partial" %}
 
-                        <span class="badge bg-secondary">
-                            Cancelled
-                        </span>
+                            <span class="bmk-status-badge bmk-status-partial">
+                                <i class="bi bi-hourglass-split"></i>
+                                Partially Paid
+                            </span>
 
-                    {% else %}
+                        {% elif summary.status == "cancelled" %}
 
-                        <span class="badge bg-danger">
-                            Unpaid
-                        </span>
+                            <span class="bmk-status-badge bmk-status-cancelled">
+                                <i class="bi bi-slash-circle"></i>
+                                Cancelled
+                            </span>
 
-                    {% endif %}
+                        {% else %}
+
+                            <span class="bmk-status-badge bmk-status-unpaid">
+                                <i class="bi bi-exclamation-circle-fill"></i>
+                                Unpaid
+                            </span>
+
+                        {% endif %}
+
+                    </div>
 
                 </div>
 
@@ -167,56 +193,56 @@
 
     </div>
 
-</div>
 
+    <!-- Payment History -->
 
-<!-- Payment History -->
+    <div class="bmk-payments-card">
 
-<div class="card shadow-sm">
+        <div class="bmk-payments-header">
 
-    <div class="card-header">
+            <div class="bmk-payments-heading">
 
-        <strong>
-            Payments
-        </strong>
+                <div class="bmk-payments-icon">
+                    <i class="bi bi-clock-history"></i>
+                </div>
 
-    </div>
+                <div>
+                    <h2 class="bmk-payments-title">
+                        Payments
+                    </h2>
 
+                    <p class="bmk-payments-subtitle">
+                        Recorded transactions for this invoice.
+                    </p>
+                </div>
 
-    <div class="card-body">
+            </div>
+
+            {% if payments %}
+                <span class="bmk-payment-count">
+                    {{ payments|length }} payment{{ payments|length|pluralize }}
+                </span>
+            {% endif %}
+
+        </div>
+
 
         {% if payments %}
 
-            <div class="table-responsive">
+            <div class="bmk-table-wrapper">
 
-                <table class="table table-hover align-middle">
+                <table class="bmk-payments-table">
 
                     <thead>
 
                         <tr>
 
-                            <th>
-                                Date
-                            </th>
-
-                            <th>
-                                Amount
-                            </th>
-
-                            <th>
-                                Payment Method
-                            </th>
-
-                            <th>
-                                Reference
-                            </th>
-
-                            <th>
-                                Remarks
-                            </th>
-                            <th>
-                                Action
-                            </th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Payment Method</th>
+                            <th>Reference</th>
+                            <th>Remarks</th>
+                            <th>Action</th>
 
                         </tr>
 
@@ -229,21 +255,33 @@
 
                             <tr>
 
-                                <td>
+                                <td class="bmk-payment-date">
                                     {{ payment.payment_date|date:"M. d, Y" }}
                                 </td>
 
 
-                                <td class="text-success fw-semibold">
-
+                                <td class="bmk-payment-amount">
                                     ₦{{ payment.amount|floatformat:2 }}
-
                                 </td>
 
 
                                 <td>
 
-                                    {{ payment.get_payment_method_display }}
+                                    <span class="bmk-method">
+
+                                        {% if payment.payment_method == "cash" %}
+                                            <i class="bi bi-cash-stack"></i>
+                                        {% elif payment.payment_method == "bank_transfer" %}
+                                            <i class="bi bi-bank"></i>
+                                        {% elif payment.payment_method == "pos" %}
+                                            <i class="bi bi-credit-card"></i>
+                                        {% else %}
+                                            <i class="bi bi-credit-card-2-front"></i>
+                                        {% endif %}
+
+                                        {{ payment.get_payment_method_display }}
+
+                                    </span>
 
                                 </td>
 
@@ -252,7 +290,9 @@
 
                                     {% if payment.reference %}
 
-                                        {{ payment.reference }}
+                                        <span class="bmk-reference">
+                                            {{ payment.reference }}
+                                        </span>
 
                                     {% else %}
 
@@ -269,7 +309,9 @@
 
                                     {% if payment.remarks %}
 
-                                        {{ payment.remarks }}
+                                        <div class="bmk-remarks">
+                                            {{ payment.remarks }}
+                                        </div>
 
                                     {% else %}
 
@@ -280,15 +322,18 @@
                                     {% endif %}
 
                                 </td>
+
+
                                 <td>
 
                                     <a
                                         href="{% url 'fees:payment_receipt' payment.id %}"
-                                        class="btn btn-sm btn-outline-primary"
+                                        class="bmk-receipt-btn"
                                     >
+                                        <i class="bi bi-receipt"></i>
                                         Receipt
                                     </a>
-                                
+
                                 </td>
 
                             </tr>
@@ -303,16 +348,18 @@
 
         {% else %}
 
-            <div class="text-center py-5">
+            <div class="bmk-empty-state">
 
-                <h5>
+                <div class="bmk-empty-icon">
+                    <i class="bi bi-wallet2"></i>
+                </div>
+
+                <h3>
                     No payments found
-                </h5>
+                </h3>
 
-                <p class="text-muted mb-0">
-
+                <p>
                     No payments have been recorded for this invoice.
-
                 </p>
 
             </div>
@@ -323,5 +370,6 @@
 
 </div>
 
+</div>
 
 {% endblock %}

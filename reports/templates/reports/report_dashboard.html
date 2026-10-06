@@ -1,55 +1,102 @@
 {% extends "base.html" %}
 
 {% block title %}
-    Reports - BMK Academy
+    Reports Centre - BMK Academy
+{% endblock %}
+
+{% block extra_css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'website/css/reports.css' %}">
 {% endblock %}
 
 {% block content %}
 
-<div class="container">
+<div class="report-page">
 
-    <!-- HEADER -->
+    <!-- HERO -->
+    <section class="report-hero">
 
-    <div class="mb-4">
+        <div class="report-hero-decoration report-hero-decoration-one"></div>
+        <div class="report-hero-decoration report-hero-decoration-two"></div>
 
-        <h2 class="fw-bold mb-1">
-            Reports
-        </h2>
+        <div class="report-hero-content">
 
-        <p class="text-muted mb-0">
-            View and manage student academic reports.
-        </p>
+            <div class="report-hero-icon">
+                <i class="bi bi-bar-chart-line-fill"></i>
+            </div>
 
-    </div>
+            <div>
+                <span class="report-eyebrow">
+                    ACADEMIC MANAGEMENT
+                </span>
+
+                <h1>
+                    Reports Centre
+                </h1>
+
+                <p>
+                    View student reports, analyse class performance,
+                    and access academic results in one place.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
 
 
-    <!-- FILTER -->
+    <!-- REPORT SELECTION -->
+    <section class="report-selection-card">
 
-    <div class="card shadow-sm border-0 mb-4">
+        <div class="report-card-header">
 
-        <div class="card-body p-4">
+            <div class="report-card-heading">
 
-            <h5 class="fw-bold mb-4">
-                Find Student Report
-            </h5>
+                <div class="report-card-icon">
+                    <i class="bi bi-funnel-fill"></i>
+                </div>
 
+                <div>
+                    <h2>
+                        Find Academic Reports
+                    </h2>
+
+                    <p>
+                        Select an academic year, term and class to continue.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="report-card-body">
 
             <form method="get">
 
-                <div class="row g-3">
+                <div class="report-selection-grid">
 
 
-                    <!-- Academic Year -->
+                    <!-- ACADEMIC YEAR -->
+                    <div class="report-field">
 
-                    <div class="col-md-4">
+                        <div class="report-step-heading">
 
-                        <label class="form-label fw-semibold">
-                            Academic Year
-                        </label>
+                            <span class="report-step-number">
+                                1
+                            </span>
+
+                            <label for="academicYear">
+                                Academic Year
+                            </label>
+
+                        </div>
 
                         <select
+                            id="academicYear"
                             name="academic_year"
-                            class="form-select"
+                            class="report-select"
                             onchange="this.form.submit()"
                         >
 
@@ -72,20 +119,32 @@
 
                         </select>
 
+                        <small class="report-field-help">
+                            Choose the academic session.
+                        </small>
+
                     </div>
 
 
-                    <!-- Term -->
+                    <!-- TERM -->
+                    <div class="report-field">
 
-                    <div class="col-md-4">
+                        <div class="report-step-heading">
 
-                        <label class="form-label fw-semibold">
-                            Term
-                        </label>
+                            <span class="report-step-number {% if selected_academic_year %}active{% endif %}">
+                                2
+                            </span>
+
+                            <label for="term">
+                                Term
+                            </label>
+
+                        </div>
 
                         <select
+                            id="term"
                             name="term"
-                            class="form-select"
+                            class="report-select"
                             {% if not selected_academic_year %}
                                 disabled
                             {% endif %}
@@ -111,20 +170,32 @@
 
                         </select>
 
+                        <small class="report-field-help">
+                            Select the reporting term.
+                        </small>
+
                     </div>
 
 
-                    <!-- Class -->
+                    <!-- CLASS -->
+                    <div class="report-field">
 
-                    <div class="col-md-4">
+                        <div class="report-step-heading">
 
-                        <label class="form-label fw-semibold">
-                            Class
-                        </label>
+                            <span class="report-step-number {% if selected_term %}active{% endif %}">
+                                3
+                            </span>
+
+                            <label for="schoolClass">
+                                Class
+                            </label>
+
+                        </div>
 
                         <select
+                            id="schoolClass"
                             name="school_class"
-                            class="form-select"
+                            class="report-select"
                             {% if not selected_term %}
                                 disabled
                             {% endif %}
@@ -150,179 +221,367 @@
 
                         </select>
 
+                        <small class="report-field-help">
+                            Choose the class to review.
+                        </small>
+
                     </div>
 
                 </div>
 
             </form>
 
-        </div>
 
-    </div>
+            <!-- SELECTED CONTEXT -->
+            {% if selected_academic_year and selected_term and selected_class %}
 
+                <div class="report-selected-context">
 
-    {% if selected_academic_year and selected_term and selected_class %}
+                    <div class="report-context-title">
 
-        <div class="d-flex justify-content-end mb-4">
+                        <i class="bi bi-check-circle-fill"></i>
 
-            <a
-                href="{% url 'reports:class_performance_report' selected_academic_year selected_term selected_class %}"
-                class="btn btn-primary"
-            >
-                View Class Performance
-            </a>
-
-        </div>
-
-    {% endif %}
-
-
-    <!-- STUDENT RESULTS -->
-
-    <div id="studentReports">
-
-        {% if selected_class %}
-
-            <div class="card shadow-sm border-0">
-
-                <div class="card-body p-4">
-
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-
-                        <div>
-
-                            <h5 class="fw-bold mb-1">
-                                Students
-                            </h5>
-
-                            <p class="text-muted mb-0">
-                                Select a student to view the report.
-                            </p>
-
-                        </div>
-
-                        <span class="badge bg-primary">
-                            {{ enrollments|length }} Student{{ enrollments|length|pluralize }}
+                        <span>
+                            Report period selected
                         </span>
 
                     </div>
 
+                    <div class="report-context-items">
 
-                    {% if enrollments %}
+                        <div class="report-context-item">
 
-                        <div class="table-responsive">
+                            <span>
+                                Academic Year
+                            </span>
 
-                            <table class="table table-hover align-middle">
+                            {% for year in academic_years %}
 
-                                <thead class="table-light">
+                                {% if selected_academic_year|stringformat:"s" == year.id|stringformat:"s" %}
+                                    <strong>
+                                        {{ year }}
+                                    </strong>
+                                {% endif %}
 
-                                    <tr>
-
-                                        <th>#</th>
-
-                                        <th>Student</th>
-
-                                        <th>Admission No.</th>
-
-                                        <th>Class</th>
-
-                                        <th>Action</th>
-
-                                    </tr>
-
-                                </thead>
-
-
-                                <tbody>
-
-                                    {% for enrollment in enrollments %}
-
-                                        <tr>
-
-                                            <td>
-                                                {{ forloop.counter }}
-                                            </td>
-
-                                            <td class="fw-semibold">
-
-                                                {{ enrollment.student.first_name }}
-
-                                                {% if enrollment.student.middle_name %}
-                                                    {{ enrollment.student.middle_name }}
-                                                {% endif %}
-
-                                                {{ enrollment.student.last_name }}
-
-                                            </td>
-
-                                            <td>
-                                                {{ enrollment.student.admission_number }}
-                                            </td>
-
-                                            <td>
-                                                {{ enrollment.school_class }}
-                                            </td>
-
-                                            <td>
-
-                                                <a
-                                                    href="{% url 'reports:student_report' enrollment.id %}"
-                                                    class="btn btn-sm btn-primary"
-                                                >
-                                                    View Report
-                                                </a>
-
-                                            </td>
-
-                                        </tr>
-
-                                    {% endfor %}
-
-                                </tbody>
-
-                            </table>
+                            {% endfor %}
 
                         </div>
 
-                    {% else %}
 
-                        <div class="alert alert-info mb-0">
+                        <div class="report-context-divider"></div>
 
-                            No students were found for the selected
-                            academic year, term and class.
+
+                        <div class="report-context-item">
+
+                            <span>
+                                Term
+                            </span>
+
+                            {% for term in terms %}
+
+                                {% if selected_term|stringformat:"s" == term.id|stringformat:"s" %}
+                                    <strong>
+                                        {{ term }}
+                                    </strong>
+                                {% endif %}
+
+                            {% endfor %}
 
                         </div>
 
-                    {% endif %}
+
+                        <div class="report-context-divider"></div>
+
+
+                        <div class="report-context-item">
+
+                            <span>
+                                Class
+                            </span>
+
+                            {% for school_class in classes %}
+
+                                {% if selected_class|stringformat:"s" == school_class.id|stringformat:"s" %}
+                                    <strong>
+                                        {{ school_class }}
+                                    </strong>
+                                {% endif %}
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
 
                 </div>
 
-            </div>
+            {% endif %}
 
-        {% else %}
+        </div>
 
-            <div class="card shadow-sm border-0">
+    </section>
 
-                <div class="card-body text-center py-5">
 
-                    <h5 class="fw-bold">
-                        Select the academic period
-                    </h5>
+    <!-- CLASS PERFORMANCE ACTION -->
+    {% if selected_academic_year and selected_term and selected_class %}
 
-                    <p class="text-muted mb-0">
-                        Choose an academic year, term and class
-                        to view available student reports.
+        <section class="report-performance-card">
+
+            <div class="report-performance-content">
+
+                <div class="report-performance-icon">
+                    <i class="bi bi-graph-up-arrow"></i>
+                </div>
+
+                <div>
+
+                    <span class="report-performance-label">
+                        CLASS ANALYSIS
+                    </span>
+
+                    <h2>
+                        Review Class Performance
+                    </h2>
+
+                    <p>
+                        Analyse student averages, subject performance
+                        and overall class results.
                     </p>
 
                 </div>
 
             </div>
 
+            <a
+                href="{% url 'reports:class_performance_report' selected_academic_year selected_term selected_class %}"
+                class="report-performance-btn"
+            >
+                <span>
+                    View Class Performance
+                </span>
+
+                <i class="bi bi-arrow-right"></i>
+            </a>
+
+        </section>
+
+    {% endif %}
+
+
+    <!-- STUDENTS -->
+    <section class="report-students-section">
+
+        {% if selected_class %}
+
+            <div class="report-students-card">
+
+                <div class="report-students-header">
+
+                    <div class="report-card-heading">
+
+                        <div class="report-card-icon">
+                            <i class="bi bi-people-fill"></i>
+                        </div>
+
+                        <div>
+
+                            <h2>
+                                Student Reports
+                            </h2>
+
+                            <p>
+                                Select a student to view their academic report.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="report-student-count">
+
+                        <strong>
+                            {{ enrollments|length }}
+                        </strong>
+
+                        <span>
+                            Student{{ enrollments|length|pluralize }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                {% if enrollments %}
+
+                    <div class="report-table-wrapper">
+
+                        <table class="report-students-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        #
+                                    </th>
+
+                                    <th>
+                                        Student
+                                    </th>
+
+                                    <th>
+                                        Admission Number
+                                    </th>
+
+                                    <th>
+                                        Class
+                                    </th>
+
+                                    <th>
+                                        Action
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                {% for enrollment in enrollments %}
+
+                                    <tr>
+
+                                        <td class="report-number-cell">
+                                            {{ forloop.counter }}
+                                        </td>
+
+
+                                        <td>
+
+                                            <div class="report-student-name">
+
+                                                <div class="report-student-avatar">
+                                                    <i class="bi bi-person-fill"></i>
+                                                </div>
+
+                                                <div>
+
+                                                    <strong>
+
+                                                        {{ enrollment.student.first_name }}
+
+                                                        {% if enrollment.student.middle_name %}
+                                                            {{ enrollment.student.middle_name }}
+                                                        {% endif %}
+
+                                                        {{ enrollment.student.last_name }}
+
+                                                    </strong>
+
+                                                    <span>
+                                                        Student
+                                                    </span>
+
+                                                </div>
+
+                                            </div>
+
+                                        </td>
+
+
+                                        <td>
+
+                                            <span class="report-admission-number">
+                                                {{ enrollment.student.admission_number }}
+                                            </span>
+
+                                        </td>
+
+
+                                        <td>
+
+                                            <span class="report-class-badge">
+                                                {{ enrollment.school_class }}
+                                            </span>
+
+                                        </td>
+
+
+                                        <td>
+
+                                            <a
+                                                href="{% url 'reports:student_report' enrollment.id %}"
+                                                class="report-view-btn"
+                                            >
+
+                                                <span>
+                                                    View Report
+                                                </span>
+
+                                                <i class="bi bi-arrow-right"></i>
+
+                                            </a>
+
+                                        </td>
+
+                                    </tr>
+
+                                {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                {% else %}
+
+                    <div class="report-empty-state">
+
+                        <div class="report-empty-icon">
+                            <i class="bi bi-person-x"></i>
+                        </div>
+
+                        <h3>
+                            No Students Found
+                        </h3>
+
+                        <p>
+                            No students were found for the selected
+                            academic year, term and class.
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        {% else %}
+
+            <div class="report-empty-state report-empty-selection">
+
+                <div class="report-empty-icon">
+                    <i class="bi bi-file-earmark-bar-graph"></i>
+                </div>
+
+                <h3>
+                    Select an Academic Period
+                </h3>
+
+                <p>
+                    Choose an academic year, term and class above
+                    to view available student reports.
+                </p>
+
+            </div>
+
         {% endif %}
 
-    </div>
-
-
+    </section>
 
 </div>
 

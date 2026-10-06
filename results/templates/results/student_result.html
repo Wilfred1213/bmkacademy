@@ -1,114 +1,149 @@
 {% extends "base.html" %}
 
 {% block title %}
-
-    {{ enrollment.student }} Result
-
+{{ enrollment.student }} Result
 {% endblock %}
 
+{% block extra_css %}
+
+<link rel="stylesheet" href="{% static 'website/css/results.css' %}">
+{% endblock %}
 
 {% block content %}
 
+<div class="results-page">
 
-<div class="d-flex justify-content-between align-items-center mb-4">
+
+<!-- =====================================================
+     PAGE HEADER
+====================================================== -->
+
+<div class="result-detail-hero">
 
     <div>
 
-        <h2 class="mb-1">
+        <div class="result-page-icon">
+            <i class="bi bi-bar-chart-line"></i>
+        </div>
 
+        <h2>
             Student Result
-
         </h2>
 
-        <p class="text-muted mb-0">
-
+        <p>
             {{ enrollment.academic_year }}
-            -
+            ·
             {{ enrollment.term.get_name_display }}
-
         </p>
 
     </div>
 
-
-    
-
 </div>
 
 
-<!-- ========================= -->
-<!-- STUDENT INFORMATION -->
-<!-- ========================= -->
+<!-- =====================================================
+     STUDENT INFORMATION
+====================================================== -->
 
-<div class="card mb-4">
+<div class="result-info-card mb-4">
 
-    <div class="card-body">
+    <div class="result-section-header">
 
-        <div class="row">
+        <div>
 
-            <div class="col-md-6 mb-3">
+            <span class="result-section-icon">
+                <i class="bi bi-person"></i>
+            </span>
 
-                <strong>
+            <div>
+                <h5>
+                    Student Information
+                </h5>
 
-                    Student Name:
+                <p>
+                    Basic academic information for this enrollment.
+                </p>
+            </div>
 
-                </strong>
+        </div>
 
-                {{ enrollment.student.first_name }}
-                {{ enrollment.student.middle_name }}
-                {{ enrollment.student.last_name }}
+    </div>
+
+
+    <div class="result-info-body">
+
+        <div class="row g-0">
+
+
+            <div class="col-lg-6 col-md-6 result-info-item">
+
+                <span class="result-info-label">
+                    Student Name
+                </span>
+
+                <span class="result-info-value">
+
+                    {{ enrollment.student.first_name }}
+
+                    {% if enrollment.student.middle_name %}
+                        {{ enrollment.student.middle_name }}
+                    {% endif %}
+
+                    {{ enrollment.student.last_name }}
+
+                </span>
 
             </div>
 
 
-            <div class="col-md-3 mb-3">
+            <div class="col-lg-3 col-md-6 result-info-item">
 
-                <strong>
+                <span class="result-info-label">
+                    Class
+                </span>
 
-                    Class:
-
-                </strong>
-
-                {{ enrollment.school_class }}
-
-            </div>
-
-
-            <div class="col-md-3 mb-3">
-
-                <strong>
-
-                    Academic Year:
-
-                </strong>
-
-                {{ enrollment.academic_year }}
+                <span class="result-info-value">
+                    {{ enrollment.school_class }}
+                </span>
 
             </div>
 
 
-            <div class="col-md-6">
+            <div class="col-lg-3 col-md-6 result-info-item">
 
-                <strong>
+                <span class="result-info-label">
+                    Academic Year
+                </span>
 
-                    Term:
-
-                </strong>
-
-                {{ enrollment.term.get_name_display }}
+                <span class="result-info-value">
+                    {{ enrollment.academic_year }}
+                </span>
 
             </div>
 
 
-            <div class="col-md-6">
+            <div class="col-lg-6 col-md-6 result-info-item">
 
-                <strong>
+                <span class="result-info-label">
+                    Term
+                </span>
 
-                    Admission Number:
+                <span class="result-info-value">
+                    {{ enrollment.term.get_name_display }}
+                </span>
 
-                </strong>
+            </div>
 
-                {{ enrollment.student.admission_number }}
+
+            <div class="col-lg-6 col-md-6 result-info-item">
+
+                <span class="result-info-label">
+                    Admission Number
+                </span>
+
+                <span class="result-info-value">
+                    {{ enrollment.student.admission_number }}
+                </span>
 
             </div>
 
@@ -119,198 +154,253 @@
 </div>
 
 
-<!-- ========================= -->
-<!-- ACADEMIC RESULTS -->
-<!-- ========================= -->
+<!-- =====================================================
+     ACADEMIC RESULTS
+====================================================== -->
 
-<div class="card mb-4">
+<div class="result-info-card mb-4">
 
-    <div class="card-header">
+    <div class="result-section-header">
 
-        <strong>
+        <div>
 
-            Academic Performance
+            <span class="result-section-icon academic">
+                <i class="bi bi-journal-check"></i>
+            </span>
 
-        </strong>
+            <div>
+
+                <h5>
+                    Academic Performance
+                </h5>
+
+                <p>
+                    Assessment scores and subject performance.
+                </p>
+
+            </div>
+
+        </div>
 
     </div>
 
 
-    <div class="card-body p-0">
+    <div class="result-table-wrapper">
 
-        <div class="table-responsive">
+        <table class="table result-table mb-0">
 
-            <table class="table table-bordered mb-0">
+            <thead>
 
-                <thead>
+                <tr>
+
+                    <th>
+                        Subject
+                    </th>
+
+
+                    {% for component in enrollment.term.assessment_components.all %}
+
+                        {% if component.is_active %}
+
+                            <th class="text-center">
+
+                                {{ component.name }}
+
+                                <span class="result-max-score">
+                                    / {{ component.max_score }}
+                                </span>
+
+                            </th>
+
+                        {% endif %}
+
+                    {% endfor %}
+
+
+                    <th class="text-center">
+                        Total
+                    </th>
+
+
+                    <th class="text-center">
+                        Grade
+                    </th>
+
+
+                    <th>
+                        Remark
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for result in result_summary.subject_results %}
 
                     <tr>
 
-                        <th>
 
-                            Subject
+                        <!-- Subject -->
 
-                        </th>
+                        <td>
 
+                            <span class="result-subject-name">
+
+                                {{ result.class_subject.subject.name }}
+
+                            </span>
+
+                        </td>
+
+
+                        <!-- Assessment Scores -->
 
                         {% for component in enrollment.term.assessment_components.all %}
 
                             {% if component.is_active %}
 
-                                <th class="text-center">
+                                <td class="text-center">
 
-                                    {{ component.name }}
+                                    {% for score in result.assessment_scores.all %}
 
-                                    <br>
+                                        {% if score.assessment_component_id == component.id %}
 
-                                    <small>
+                                            <span class="score-value">
 
-                                        / {{ component.max_score }}
+                                                {{ score.score }}
 
-                                    </small>
+                                            </span>
 
-                                </th>
+                                        {% endif %}
+
+                                    {% endfor %}
+
+                                </td>
 
                             {% endif %}
 
                         {% endfor %}
 
 
-                        <th class="text-center">
+                        <!-- Total -->
 
-                            Total
+                        <td class="text-center">
 
-                        </th>
-
-
-                        <th class="text-center">
-
-                            Grade
-
-                        </th>
-
-
-                        <th>
-
-                            Remark
-
-                        </th>
-
-                    </tr>
-
-                </thead>
-
-
-                <tbody>
-
-                    {% for result in result_summary.subject_results %}
-
-                        <tr>
-
-                            <td>
-
-                                {{ result.class_subject.subject.name }}
-
-                            </td>
-
-
-                            {% for component in enrollment.term.assessment_components.all %}
-
-                                {% if component.is_active %}
-
-                                    <td class="text-center">
-
-                                        {% for score in result.assessment_scores.all %}
-
-                                            {% if score.assessment_component_id == component.id %}
-
-                                                {{ score.score }}
-
-                                            {% endif %}
-
-                                        {% endfor %}
-
-                                    </td>
-
-                                {% endif %}
-
-                            {% endfor %}
-
-
-                            <td class="text-center">
+                            <span class="total-score">
 
                                 {{ result.total_score }}
 
-                            </td>
+                            </span>
+
+                        </td>
 
 
-                            <td class="text-center">
+                        <!-- Grade -->
+
+                        <td class="text-center">
+
+                            <span class="grade-badge">
 
                                 {{ result.grade }}
 
-                            </td>
+                            </span>
+
+                        </td>
 
 
-                            <td>
+                        <!-- Remark -->
+
+                        <td>
+
+                            <span class="result-remark">
 
                                 {{ result.remark }}
 
-                            </td>
+                            </span>
 
-                        </tr>
+                        </td>
 
-                    {% empty %}
+                    </tr>
 
-                        <tr>
 
-                            <td
-                                colspan="10"
-                                class="text-center text-muted"
-                            >
+                {% empty %}
 
+                    <tr>
+
+                        <td
+                            colspan="10"
+                            class="result-empty-cell"
+                        >
+
+                            <div class="result-empty-icon">
+
+                                <i class="bi bi-clipboard-x"></i>
+
+                            </div>
+
+                            <strong>
                                 No results have been entered yet.
+                            </strong>
 
-                            </td>
+                            <span>
+                                Academic results will appear here once they are entered.
+                            </span>
 
-                        </tr>
+                        </td>
 
-                    {% endfor %}
+                    </tr>
 
-                </tbody>
+                {% endfor %}
 
-            </table>
+            </tbody>
 
-        </div>
+        </table>
 
     </div>
 
 </div>
 
 
-<!-- ========================= -->
-<!-- RESULT SUMMARY -->
-<!-- ========================= -->
+<!-- =====================================================
+     RESULT SUMMARY
+====================================================== -->
 
-<div class="row">
+<div class="result-summary-title">
+
+    <span>
+        Performance Summary
+    </span>
+
+</div>
 
 
-    <div class="col-md-4 mb-3">
+<div class="row g-3">
 
-        <div class="card">
 
-            <div class="card-body text-center">
+    <!-- Total Score -->
 
-                <small class="text-muted">
+    <div class="col-lg-4 col-md-4">
 
+        <div class="result-summary-card total">
+
+            <div class="result-summary-icon">
+
+                <i class="bi bi-calculator"></i>
+
+            </div>
+
+            <div>
+
+                <span class="result-summary-label">
                     Total Score
+                </span>
 
-                </small>
-
-                <h3>
-
+                <strong class="result-summary-value">
                     {{ result_summary.total_score }}
-
-                </h3>
+                </strong>
 
             </div>
 
@@ -319,23 +409,27 @@
     </div>
 
 
-    <div class="col-md-4 mb-3">
+    <!-- Subjects Scored -->
 
-        <div class="card">
+    <div class="col-lg-4 col-md-4">
 
-            <div class="card-body text-center">
+        <div class="result-summary-card subjects">
 
-                <small class="text-muted">
+            <div class="result-summary-icon">
 
+                <i class="bi bi-book"></i>
+
+            </div>
+
+            <div>
+
+                <span class="result-summary-label">
                     Subjects Scored
+                </span>
 
-                </small>
-
-                <h3>
-
+                <strong class="result-summary-value">
                     {{ result_summary.scored_subjects }}
-
-                </h3>
+                </strong>
 
             </div>
 
@@ -344,33 +438,38 @@
     </div>
 
 
-    <div class="col-md-4 mb-3">
+    <!-- Average -->
 
-        <div class="card">
+    <div class="col-lg-4 col-md-4">
 
-            <div class="card-body text-center">
+        <div class="result-summary-card average">
 
-                <small class="text-muted">
+            <div class="result-summary-icon">
 
+                <i class="bi bi-graph-up-arrow"></i>
+
+            </div>
+
+            <div>
+
+                <span class="result-summary-label">
                     Average
+                </span>
 
-                </small>
-
-                <h3>
-
+                <strong class="result-summary-value">
                     {{ result_summary.average }}
-
-                </h3>
+                </strong>
 
             </div>
 
         </div>
 
     </div>
-    
 
 
 </div>
 
+
+</div>
 
 {% endblock %}

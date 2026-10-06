@@ -1,0 +1,4989 @@
+/* =========================================================
+       BMK PARENT — CHILD REPORTS
+       Frontend only — backend logic unchanged
+       ========================================================= */
+
+       .bmk-child-reports {
+        min-height: 100vh;
+        padding: 45px 0 80px;
+        background:
+            radial-gradient(circle at top right, rgba(29, 78, 216, 0.06), transparent 28%),
+            linear-gradient(180deg, #f6f8fb 0%, #ffffff 75%);
+    }
+
+    /* =========================
+       PAGE HEADER
+       ========================= */
+
+    .bmk-report-page-header {
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 28px;
+        padding: 30px;
+        border-radius: 24px;
+        background: linear-gradient(
+            135deg,
+            #0f2747 0%,
+            #163c68 58%,
+            #1d4ed8 100%
+        );
+        box-shadow: 0 20px 50px rgba(15, 39, 71, 0.16);
+        color: #ffffff;
+    }
+
+    .bmk-report-page-header::before {
+        content: "";
+        position: absolute;
+        width: 230px;
+        height: 230px;
+        right: -90px;
+        top: -120px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.07);
+    }
+
+    .bmk-report-page-header::after {
+        content: "";
+        position: absolute;
+        width: 150px;
+        height: 150px;
+        right: 100px;
+        bottom: -100px;
+        border-radius: 50%;
+        background: rgba(224, 168, 62, 0.12);
+    }
+
+    .bmk-report-header-content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 25px;
+    }
+
+    .bmk-report-header-left {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+    }
+
+    .bmk-report-avatar {
+        width: 62px;
+        height: 62px;
+        flex: 0 0 62px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 18px;
+        background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.20),
+            rgba(255, 255, 255, 0.08)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        color: #ffffff;
+        font-size: 1.35rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    .bmk-report-eyebrow {
+        margin: 0 0 5px;
+        color: #f3d58a;
+        font-size: 0.76rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .bmk-report-page-header h2 {
+        margin: 0 0 5px;
+        color: #ffffff;
+        font-size: clamp(1.55rem, 3vw, 2.1rem);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+    }
+
+    .bmk-report-page-header p {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.75);
+        font-size: 0.94rem;
+    }
+
+    .bmk-report-back-btn {
+        position: relative;
+        z-index: 2;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 11px 17px;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 12px;
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.09);
+        text-decoration: none;
+        font-size: 0.88rem;
+        font-weight: 700;
+        white-space: nowrap;
+        transition:
+            background-color 0.25s ease,
+            transform 0.25s ease,
+            border-color 0.25s ease;
+    }
+
+    .bmk-report-back-btn:hover {
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.16);
+        border-color: rgba(255, 255, 255, 0.35);
+        transform: translateX(-3px);
+    }
+
+    /* =========================
+       STUDENT INFORMATION
+       ========================= */
+
+    .bmk-student-info-card {
+        margin-bottom: 28px;
+        overflow: hidden;
+        border: 1px solid rgba(15, 39, 71, 0.07);
+        border-radius: 22px;
+        background: #ffffff;
+        box-shadow: 0 15px 40px rgba(15, 35, 55, 0.08);
+    }
+
+    .bmk-card-heading {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 21px 25px;
+        border-bottom: 1px solid #edf0f4;
+    }
+
+    .bmk-card-heading-icon {
+        width: 38px;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 11px;
+        color: #1d4ed8;
+        background: #eef5ff;
+        font-size: 1rem;
+    }
+
+    .bmk-card-heading h5 {
+        margin: 0;
+        color: #0f2747;
+        font-size: 1rem;
+        font-weight: 800;
+    }
+
+    .bmk-student-info-body {
+        padding: 24px 25px;
+    }
+
+    .bmk-student-detail {
+        height: 100%;
+        padding: 16px 18px;
+        border: 1px solid #edf0f4;
+        border-radius: 14px;
+        background: #fafbfd;
+    }
+
+    .bmk-student-detail-label {
+        display: block;
+        margin-bottom: 5px;
+        color: #64748b;
+        font-size: 0.73rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+    }
+
+    .bmk-student-detail-value {
+        display: block;
+        color: #0f2747;
+        font-size: 0.93rem;
+        font-weight: 700;
+    }
+
+    .bmk-status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        color: #166534;
+        background: #dcfce7;
+        font-size: 0.76rem;
+        font-weight: 800;
+    }
+
+    .bmk-status-badge::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #22c55e;
+    }
+
+    /* =========================
+       REPORTS CARD
+       ========================= */
+
+    .bmk-reports-card {
+        overflow: hidden;
+        border: 1px solid rgba(15, 39, 71, 0.07);
+        border-radius: 22px;
+        background: #ffffff;
+        box-shadow: 0 18px 45px rgba(15, 35, 55, 0.08);
+    }
+
+    .bmk-reports-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 24px 25px;
+        border-bottom: 1px solid #edf0f4;
+    }
+
+    .bmk-reports-title {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+    }
+
+    .bmk-reports-title-icon {
+        width: 42px;
+        height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        color: #3f7d58;
+        background: #edf8f1;
+        font-size: 1.05rem;
+    }
+
+    .bmk-reports-title h5 {
+        margin: 0 0 3px;
+        color: #0f2747;
+        font-size: 1.05rem;
+        font-weight: 800;
+    }
+
+    .bmk-reports-title p {
+        margin: 0;
+        color: #64748b;
+        font-size: 0.84rem;
+    }
+
+    .bmk-report-count {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        color: #1d4ed8;
+        background: #eef5ff;
+        font-size: 0.78rem;
+        font-weight: 800;
+        white-space: nowrap;
+    }
+
+    /* =========================
+       REPORT TABLE
+       ========================= */
+
+    .bmk-reports-table-wrapper {
+        padding: 8px 25px 25px;
+    }
+
+    .bmk-reports-table {
+        min-width: 720px;
+        margin-bottom: 0;
+        border-collapse: separate;
+        border-spacing: 0 8px;
+    }
+
+    .bmk-reports-table thead th {
+        padding: 13px 15px;
+        border: 0;
+        color: #64748b;
+        background: #f8fafc;
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+    }
+
+    .bmk-reports-table thead th:first-child {
+        border-radius: 10px 0 0 10px;
+    }
+
+    .bmk-reports-table thead th:last-child {
+        border-radius: 0 10px 10px 0;
+    }
+
+    .bmk-reports-table tbody tr {
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .bmk-reports-table tbody tr:hover {
+        transform: translateY(-2px);
+    }
+
+    .bmk-reports-table tbody td {
+        padding: 17px 15px;
+        border-top: 1px solid #edf0f4;
+        border-bottom: 1px solid #edf0f4;
+        color: #334155;
+        background: #ffffff;
+        font-size: 0.88rem;
+        vertical-align: middle;
+    }
+
+    .bmk-reports-table tbody td:first-child {
+        border-left: 1px solid #edf0f4;
+        border-radius: 13px 0 0 13px;
+        color: #0f2747;
+        font-weight: 750;
+    }
+
+    .bmk-reports-table tbody td:last-child {
+        border-right: 1px solid #edf0f4;
+        border-radius: 0 13px 13px 0;
+    }
+
+    .bmk-term-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: #475569;
+        font-weight: 650;
+    }
+
+    .bmk-term-badge i {
+        color: #e0a83e;
+    }
+
+    .bmk-class-name {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 6px 9px;
+        border-radius: 8px;
+        color: #3f7d58;
+        background: #f0f8f3;
+        font-size: 0.78rem;
+        font-weight: 750;
+    }
+
+    .bmk-view-report-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        padding: 9px 14px;
+        border: 0;
+        border-radius: 10px;
+        color: #ffffff;
+        background: linear-gradient(135deg, #1d4ed8, #2563eb);
+        box-shadow: 0 7px 18px rgba(29, 78, 216, 0.18);
+        font-size: 0.78rem;
+        font-weight: 750;
+        text-decoration: none;
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .bmk-view-report-btn:hover {
+        color: #ffffff;
+        transform: translateY(-2px);
+        box-shadow: 0 11px 23px rgba(29, 78, 216, 0.25);
+    }
+
+    /* =========================
+       EMPTY STATE
+       ========================= */
+
+    .bmk-no-reports {
+        margin: 18px 25px 25px;
+        padding: 45px 25px;
+        border: 1px dashed #cbd5e1;
+        border-radius: 18px;
+        text-align: center;
+        background: #fafbfd;
+    }
+
+    .bmk-no-reports-icon {
+        width: 58px;
+        height: 58px;
+        margin: 0 auto 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 16px;
+        color: #1d4ed8;
+        background: #eef5ff;
+        font-size: 1.35rem;
+    }
+
+    .bmk-no-reports h6 {
+        margin-bottom: 7px;
+        color: #0f2747;
+        font-size: 0.98rem;
+        font-weight: 800;
+    }
+
+    .bmk-no-reports p {
+        max-width: 430px;
+        margin: 0 auto;
+        color: #64748b;
+        font-size: 0.86rem;
+    }
+
+    /* =========================
+       MOBILE
+       ========================= */
+
+    @media (max-width: 767.98px) {
+
+        .bmk-child-reports {
+            padding: 25px 0 60px;
+        }
+
+        .bmk-report-page-header {
+            padding: 23px 20px;
+            border-radius: 19px;
+        }
+
+        .bmk-report-header-content {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .bmk-report-header-left {
+            align-items: flex-start;
+        }
+
+        .bmk-report-avatar {
+            width: 52px;
+            height: 52px;
+            flex-basis: 52px;
+            border-radius: 15px;
+        }
+
+        .bmk-report-page-header h2 {
+            font-size: 1.4rem;
+        }
+
+        .bmk-report-page-header p {
+            font-size: 0.83rem;
+        }
+
+        .bmk-report-back-btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .bmk-student-info-card,
+        .bmk-reports-card {
+            border-radius: 18px;
+        }
+
+        .bmk-card-heading,
+        .bmk-student-info-body,
+        .bmk-reports-card-header {
+            padding-left: 18px;
+            padding-right: 18px;
+        }
+
+        .bmk-reports-card-header {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .bmk-report-count {
+            align-self: flex-start;
+        }
+
+        .bmk-reports-table-wrapper {
+            padding-left: 18px;
+            padding-right: 18px;
+            overflow-x: auto;
+        }
+
+        .bmk-reports-table {
+            min-width: 680px;
+        }
+
+        .bmk-no-reports {
+            margin-left: 18px;
+            margin-right: 18px;
+        }
+    }
+
+/* =========================================================
+       BMK PARENT — CHILD ATTENDANCE
+       Frontend only — backend logic unchanged
+       ========================================================= */
+
+       .bmk-child-attendance {
+        min-height: 100vh;
+        padding: 45px 0 80px;
+        background:
+            radial-gradient(circle at top right, rgba(29, 78, 216, 0.06), transparent 28%),
+            linear-gradient(180deg, #f6f8fb 0%, #ffffff 75%);
+    }
+
+    /* =========================
+       PAGE HEADER
+       ========================= */
+
+    .bmk-attendance-header {
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 28px;
+        padding: 30px;
+        border-radius: 24px;
+        background: linear-gradient(
+            135deg,
+            #0f2747 0%,
+            #163c68 58%,
+            #1d4ed8 100%
+        );
+        box-shadow: 0 20px 50px rgba(15, 39, 71, 0.16);
+        color: #ffffff;
+    }
+
+    .bmk-attendance-header::before {
+        content: "";
+        position: absolute;
+        width: 230px;
+        height: 230px;
+        right: -90px;
+        top: -120px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.07);
+    }
+
+    .bmk-attendance-header::after {
+        content: "";
+        position: absolute;
+        width: 150px;
+        height: 150px;
+        right: 100px;
+        bottom: -100px;
+        border-radius: 50%;
+        background: rgba(224, 168, 62, 0.12);
+    }
+
+    .bmk-attendance-header-content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 25px;
+    }
+
+    .bmk-attendance-header-left {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+    }
+
+    .bmk-attendance-avatar {
+        width: 62px;
+        height: 62px;
+        flex: 0 0 62px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 18px;
+        background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.20),
+            rgba(255, 255, 255, 0.08)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        color: #ffffff;
+        font-size: 1.35rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    .bmk-attendance-eyebrow {
+        margin: 0 0 5px;
+        color: #f3d58a;
+        font-size: 0.76rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .bmk-attendance-header h2 {
+        margin: 0 0 6px;
+        color: #ffffff;
+        font-size: clamp(1.55rem, 3vw, 2.1rem);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+    }
+
+    .bmk-attendance-subtitle {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.76);
+        font-size: 0.91rem;
+    }
+
+    .bmk-attendance-back-btn {
+        position: relative;
+        z-index: 2;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 11px 17px;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 12px;
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.09);
+        text-decoration: none;
+        font-size: 0.88rem;
+        font-weight: 700;
+        white-space: nowrap;
+        transition:
+            background-color 0.25s ease,
+            transform 0.25s ease,
+            border-color 0.25s ease;
+    }
+
+    .bmk-attendance-back-btn:hover {
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.16);
+        border-color: rgba(255, 255, 255, 0.35);
+        transform: translateX(-3px);
+    }
+
+    /* =========================
+       SUMMARY CARDS
+       ========================= */
+
+    .bmk-attendance-summary {
+        margin-bottom: 28px;
+    }
+
+    .bmk-attendance-stat {
+        position: relative;
+        height: 100%;
+        overflow: hidden;
+        padding: 22px;
+        border: 1px solid rgba(15, 39, 71, 0.07);
+        border-radius: 19px;
+        background: #ffffff;
+        box-shadow: 0 13px 35px rgba(15, 35, 55, 0.07);
+        transition:
+            transform 0.25s ease,
+            box-shadow 0.25s ease;
+    }
+
+    .bmk-attendance-stat:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 19px 42px rgba(15, 35, 55, 0.11);
+    }
+
+    .bmk-attendance-stat::after {
+        content: "";
+        position: absolute;
+        width: 75px;
+        height: 75px;
+        right: -25px;
+        bottom: -28px;
+        border-radius: 50%;
+        background: rgba(15, 39, 71, 0.035);
+    }
+
+    .bmk-stat-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 18px;
+    }
+
+    .bmk-stat-icon {
+        width: 42px;
+        height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        font-size: 1rem;
+    }
+
+    .bmk-stat-present .bmk-stat-icon {
+        color: #15803d;
+        background: #dcfce7;
+    }
+
+    .bmk-stat-absent .bmk-stat-icon {
+        color: #dc2626;
+        background: #fee2e2;
+    }
+
+    .bmk-stat-late .bmk-stat-icon {
+        color: #b45309;
+        background: #fef3c7;
+    }
+
+    .bmk-stat-rate .bmk-stat-icon {
+        color: #1d4ed8;
+        background: #dbeafe;
+    }
+
+    .bmk-stat-label {
+        margin: 0 0 5px;
+        color: #64748b;
+        font-size: 0.76rem;
+        font-weight: 750;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+    }
+
+    .bmk-stat-value {
+        margin: 0;
+        color: #0f2747;
+        font-size: 1.85rem;
+        font-weight: 850;
+        line-height: 1.1;
+    }
+
+    .bmk-stat-present .bmk-stat-value {
+        color: #15803d;
+    }
+
+    .bmk-stat-absent .bmk-stat-value {
+        color: #dc2626;
+    }
+
+    .bmk-stat-late .bmk-stat-value {
+        color: #b45309;
+    }
+
+    .bmk-stat-rate .bmk-stat-value {
+        color: #1d4ed8;
+    }
+
+    /* =========================
+       ATTENDANCE RECORDS
+       ========================= */
+
+    .bmk-attendance-records {
+        overflow: hidden;
+        border: 1px solid rgba(15, 39, 71, 0.07);
+        border-radius: 22px;
+        background: #ffffff;
+        box-shadow: 0 18px 45px rgba(15, 35, 55, 0.08);
+    }
+
+    .bmk-records-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 24px 25px;
+        border-bottom: 1px solid #edf0f4;
+    }
+
+    .bmk-records-title {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+    }
+
+    .bmk-records-icon {
+        width: 42px;
+        height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        color: #1d4ed8;
+        background: #eef5ff;
+        font-size: 1.05rem;
+    }
+
+    .bmk-records-title h5 {
+        margin: 0 0 3px;
+        color: #0f2747;
+        font-size: 1.05rem;
+        font-weight: 800;
+    }
+
+    .bmk-records-title p {
+        margin: 0;
+        color: #64748b;
+        font-size: 0.84rem;
+    }
+
+    .bmk-term-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        color: #475569;
+        background: #f8fafc;
+        font-size: 0.76rem;
+        font-weight: 750;
+        white-space: nowrap;
+    }
+
+    .bmk-term-badge i {
+        color: #e0a83e;
+    }
+
+    /* =========================
+       RECORD TABLE
+       ========================= */
+
+    .bmk-records-table-wrapper {
+        padding: 8px 25px 25px;
+    }
+
+    .bmk-attendance-table {
+        min-width: 650px;
+        margin-bottom: 0;
+        border-collapse: separate;
+        border-spacing: 0 8px;
+    }
+
+    .bmk-attendance-table thead th {
+        padding: 13px 15px;
+        border: 0;
+        color: #64748b;
+        background: #f8fafc;
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+    }
+
+    .bmk-attendance-table thead th:first-child {
+        border-radius: 10px 0 0 10px;
+    }
+
+    .bmk-attendance-table thead th:last-child {
+        border-radius: 0 10px 10px 0;
+    }
+
+    .bmk-attendance-table tbody tr {
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .bmk-attendance-table tbody tr:hover {
+        transform: translateY(-2px);
+    }
+
+    .bmk-attendance-table tbody td {
+        padding: 16px 15px;
+        border-top: 1px solid #edf0f4;
+        border-bottom: 1px solid #edf0f4;
+        color: #334155;
+        background: #ffffff;
+        font-size: 0.87rem;
+        vertical-align: middle;
+    }
+
+    .bmk-attendance-table tbody td:first-child {
+        border-left: 1px solid #edf0f4;
+        border-radius: 13px 0 0 13px;
+        color: #0f2747;
+        font-weight: 750;
+    }
+
+    .bmk-attendance-table tbody td:last-child {
+        border-right: 1px solid #edf0f4;
+        border-radius: 0 13px 13px 0;
+    }
+
+    .bmk-attendance-date {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .bmk-attendance-date i {
+        color: #1d4ed8;
+    }
+
+    .bmk-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 7px 11px;
+        border-radius: 999px;
+        font-size: 0.75rem;
+        font-weight: 800;
+    }
+
+    .bmk-status::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+    }
+
+    .bmk-status-present {
+        color: #166534;
+        background: #dcfce7;
+    }
+
+    .bmk-status-present::before {
+        background: #22c55e;
+    }
+
+    .bmk-status-absent {
+        color: #991b1b;
+        background: #fee2e2;
+    }
+
+    .bmk-status-absent::before {
+        background: #ef4444;
+    }
+
+    .bmk-status-late {
+        color: #92400e;
+        background: #fef3c7;
+    }
+
+    .bmk-status-late::before {
+        background: #f59e0b;
+    }
+
+    .bmk-status-excused {
+        color: #475569;
+        background: #e2e8f0;
+    }
+
+    .bmk-status-excused::before {
+        background: #64748b;
+    }
+
+    .bmk-remarks {
+        color: #64748b;
+        font-size: 0.84rem;
+    }
+
+    .bmk-no-records {
+        margin: 18px 25px 25px;
+        padding: 45px 25px;
+        border: 1px dashed #cbd5e1;
+        border-radius: 18px;
+        text-align: center;
+        background: #fafbfd;
+    }
+
+    .bmk-no-records-icon {
+        width: 58px;
+        height: 58px;
+        margin: 0 auto 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 16px;
+        color: #1d4ed8;
+        background: #eef5ff;
+        font-size: 1.35rem;
+    }
+
+    .bmk-no-records h6 {
+        margin-bottom: 7px;
+        color: #0f2747;
+        font-size: 0.98rem;
+        font-weight: 800;
+    }
+
+    .bmk-no-records p {
+        max-width: 430px;
+        margin: 0 auto;
+        color: #64748b;
+        font-size: 0.86rem;
+    }
+
+    /* =========================
+       NO ENROLLMENT
+       ========================= */
+
+    .bmk-no-enrollment {
+        padding: 55px 25px;
+        border: 1px solid rgba(15, 39, 71, 0.07);
+        border-radius: 22px;
+        background: #ffffff;
+        box-shadow: 0 18px 45px rgba(15, 35, 55, 0.08);
+        text-align: center;
+    }
+
+    .bmk-no-enrollment-icon {
+        width: 68px;
+        height: 68px;
+        margin: 0 auto 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 18px;
+        color: #b45309;
+        background: #fef3c7;
+        font-size: 1.5rem;
+    }
+
+    .bmk-no-enrollment h5 {
+        margin-bottom: 8px;
+        color: #0f2747;
+        font-weight: 800;
+    }
+
+    .bmk-no-enrollment p {
+        max-width: 500px;
+        margin: 0 auto;
+        color: #64748b;
+        font-size: 0.9rem;
+    }
+
+    /* =========================
+       MOBILE
+       ========================= */
+
+    @media (max-width: 767.98px) {
+
+        .bmk-child-attendance {
+            padding: 25px 0 60px;
+        }
+
+        .bmk-attendance-header {
+            padding: 23px 20px;
+            border-radius: 19px;
+        }
+
+        .bmk-attendance-header-content {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .bmk-attendance-header-left {
+            align-items: flex-start;
+        }
+
+        .bmk-attendance-avatar {
+            width: 52px;
+            height: 52px;
+            flex-basis: 52px;
+            border-radius: 15px;
+        }
+
+        .bmk-attendance-header h2 {
+            font-size: 1.4rem;
+        }
+
+        .bmk-attendance-subtitle {
+            font-size: 0.82rem;
+        }
+
+        .bmk-attendance-back-btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .bmk-attendance-stat {
+            padding: 19px;
+            border-radius: 17px;
+        }
+
+        .bmk-stat-value {
+            font-size: 1.65rem;
+        }
+
+        .bmk-attendance-records {
+            border-radius: 18px;
+        }
+
+        .bmk-records-header {
+            align-items: flex-start;
+            flex-direction: column;
+            padding: 20px 18px;
+        }
+
+        .bmk-term-badge {
+            align-self: flex-start;
+        }
+
+        .bmk-records-table-wrapper {
+            padding-left: 18px;
+            padding-right: 18px;
+            overflow-x: auto;
+        }
+
+        .bmk-attendance-table {
+            min-width: 620px;
+        }
+
+        .bmk-no-records {
+            margin-left: 18px;
+            margin-right: 18px;
+        }
+
+        .bmk-no-enrollment {
+            padding: 45px 20px;
+            border-radius: 18px;
+        }
+    }
+/* =========================================================
+       BMK PARENT — CHILD FEES
+       Frontend only — backend logic unchanged
+       ========================================================= */
+
+       .bmk-child-fees {
+        min-height: 100vh;
+        padding: 45px 0 80px;
+        background:
+            radial-gradient(circle at top right, rgba(29, 78, 216, 0.06), transparent 28%),
+            linear-gradient(180deg, #f6f8fb 0%, #ffffff 75%);
+    }
+
+    /* =========================
+       PAGE HEADER
+       ========================= */
+
+    .bmk-fees-header {
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 28px;
+        padding: 30px;
+        border-radius: 24px;
+        background: linear-gradient(
+            135deg,
+            #0f2747 0%,
+            #163c68 58%,
+            #1d4ed8 100%
+        );
+        box-shadow: 0 20px 50px rgba(15, 39, 71, 0.16);
+        color: #ffffff;
+    }
+
+    .bmk-fees-header::before {
+        content: "";
+        position: absolute;
+        width: 230px;
+        height: 230px;
+        right: -90px;
+        top: -120px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.07);
+    }
+
+    .bmk-fees-header::after {
+        content: "";
+        position: absolute;
+        width: 150px;
+        height: 150px;
+        right: 100px;
+        bottom: -100px;
+        border-radius: 50%;
+        background: rgba(224, 168, 62, 0.12);
+    }
+
+    .bmk-fees-header-content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 25px;
+    }
+
+    .bmk-fees-header-left {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+    }
+
+    .bmk-fees-avatar {
+        width: 62px;
+        height: 62px;
+        flex: 0 0 62px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 18px;
+        background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.20),
+            rgba(255, 255, 255, 0.08)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        color: #ffffff;
+        font-size: 1.35rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    .bmk-fees-eyebrow {
+        margin: 0 0 5px;
+        color: #f3d58a;
+        font-size: 0.76rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .bmk-fees-header h2 {
+        margin: 0 0 6px;
+        color: #ffffff;
+        font-size: clamp(1.55rem, 3vw, 2.1rem);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+    }
+
+    .bmk-fees-subtitle {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.76);
+        font-size: 0.91rem;
+    }
+
+    .bmk-fees-back-btn {
+        position: relative;
+        z-index: 2;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 11px 17px;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 12px;
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.09);
+        text-decoration: none;
+        font-size: 0.88rem;
+        font-weight: 700;
+        white-space: nowrap;
+        transition:
+            background-color 0.25s ease,
+            transform 0.25s ease,
+            border-color 0.25s ease;
+    }
+
+    .bmk-fees-back-btn:hover {
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.16);
+        border-color: rgba(255, 255, 255, 0.35);
+        transform: translateX(-3px);
+    }
+
+    /* =========================
+       FEE SUMMARY
+       ========================= */
+
+    .bmk-fee-summary {
+        margin-bottom: 28px;
+    }
+
+    .bmk-fee-stat {
+        position: relative;
+        height: 100%;
+        overflow: hidden;
+        padding: 22px;
+        border: 1px solid rgba(15, 39, 71, 0.07);
+        border-radius: 19px;
+        background: #ffffff;
+        box-shadow: 0 13px 35px rgba(15, 35, 55, 0.07);
+        transition:
+            transform 0.25s ease,
+            box-shadow 0.25s ease;
+    }
+
+    .bmk-fee-stat:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 19px 42px rgba(15, 35, 55, 0.11);
+    }
+
+    .bmk-fee-stat::after {
+        content: "";
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        right: -27px;
+        bottom: -30px;
+        border-radius: 50%;
+        background: rgba(15, 39, 71, 0.035);
+    }
+
+    .bmk-fee-stat-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 17px;
+    }
+
+    .bmk-fee-stat-icon {
+        width: 43px;
+        height: 43px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        font-size: 1.05rem;
+    }
+
+    .bmk-fee-invoiced .bmk-fee-stat-icon {
+        color: #1d4ed8;
+        background: #dbeafe;
+    }
+
+    .bmk-fee-paid .bmk-fee-stat-icon {
+        color: #15803d;
+        background: #dcfce7;
+    }
+
+    .bmk-fee-outstanding .bmk-fee-stat-icon {
+        color: #dc2626;
+        background: #fee2e2;
+    }
+
+    .bmk-fee-stat-label {
+        margin: 0 0 6px;
+        color: #64748b;
+        font-size: 0.75rem;
+        font-weight: 750;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+    }
+
+    .bmk-fee-stat-value {
+        margin: 0;
+        color: #0f2747;
+        font-size: clamp(1.25rem, 2.4vw, 1.7rem);
+        font-weight: 850;
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+    }
+
+    .bmk-fee-paid .bmk-fee-stat-value {
+        color: #15803d;
+    }
+
+    .bmk-fee-outstanding .bmk-fee-stat-value {
+        color: #dc2626;
+    }
+
+    /* =========================
+       INVOICES CARD
+       ========================= */
+
+    .bmk-invoices-card {
+        overflow: hidden;
+        border: 1px solid rgba(15, 39, 71, 0.07);
+        border-radius: 22px;
+        background: #ffffff;
+        box-shadow: 0 18px 45px rgba(15, 35, 55, 0.08);
+    }
+
+    .bmk-invoices-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 24px 25px;
+        border-bottom: 1px solid #edf0f4;
+    }
+
+    .bmk-invoices-title {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+    }
+
+    .bmk-invoices-icon {
+        width: 42px;
+        height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        color: #e0a83e;
+        background: #fff7e3;
+        font-size: 1.05rem;
+    }
+
+    .bmk-invoices-title h5 {
+        margin: 0 0 3px;
+        color: #0f2747;
+        font-size: 1.05rem;
+        font-weight: 800;
+    }
+
+    .bmk-invoices-title p {
+        margin: 0;
+        color: #64748b;
+        font-size: 0.84rem;
+    }
+
+    /* =========================
+       INVOICE TABLE
+       ========================= */
+
+    .bmk-invoices-table-wrapper {
+        padding: 8px 25px 25px;
+    }
+
+    .bmk-invoices-table {
+        min-width: 900px;
+        margin-bottom: 0;
+        border-collapse: separate;
+        border-spacing: 0 8px;
+    }
+
+    .bmk-invoices-table thead th {
+        padding: 13px 15px;
+        border: 0;
+        color: #64748b;
+        background: #f8fafc;
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    .bmk-invoices-table thead th:first-child {
+        border-radius: 10px 0 0 10px;
+    }
+
+    .bmk-invoices-table thead th:last-child {
+        border-radius: 0 10px 10px 0;
+    }
+
+    .bmk-invoices-table tbody tr {
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .bmk-invoices-table tbody tr:hover {
+        transform: translateY(-2px);
+    }
+
+    .bmk-invoices-table tbody td {
+        padding: 16px 15px;
+        border-top: 1px solid #edf0f4;
+        border-bottom: 1px solid #edf0f4;
+        color: #334155;
+        background: #ffffff;
+        font-size: 0.87rem;
+        vertical-align: middle;
+    }
+
+    .bmk-invoices-table tbody td:first-child {
+        border-left: 1px solid #edf0f4;
+        border-radius: 13px 0 0 13px;
+    }
+
+    .bmk-invoices-table tbody td:last-child {
+        border-right: 1px solid #edf0f4;
+        border-radius: 0 13px 13px 0;
+    }
+
+    .bmk-invoice-description {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #0f2747;
+        font-weight: 750;
+    }
+
+    .bmk-invoice-description-icon {
+        width: 34px;
+        height: 34px;
+        flex: 0 0 34px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 9px;
+        color: #1d4ed8;
+        background: #eef5ff;
+        font-size: 0.9rem;
+    }
+
+    .bmk-invoice-amount {
+        color: #0f2747;
+        font-weight: 800;
+        white-space: nowrap;
+    }
+
+    .bmk-due-date {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        color: #64748b;
+        white-space: nowrap;
+    }
+
+    .bmk-due-date i {
+        color: #e0a83e;
+    }
+
+    /* =========================
+       PAYMENT STATUS
+       ========================= */
+
+    .bmk-payment-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 7px 11px;
+        border-radius: 999px;
+        font-size: 0.74rem;
+        font-weight: 800;
+        white-space: nowrap;
+    }
+
+    .bmk-payment-status::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+    }
+
+    .bmk-status-paid {
+        color: #166534;
+        background: #dcfce7;
+    }
+
+    .bmk-status-paid::before {
+        background: #22c55e;
+    }
+
+    .bmk-status-partial {
+        color: #92400e;
+        background: #fef3c7;
+    }
+
+    .bmk-status-partial::before {
+        background: #f59e0b;
+    }
+
+    .bmk-status-unpaid {
+        color: #991b1b;
+        background: #fee2e2;
+    }
+
+    .bmk-status-unpaid::before {
+        background: #ef4444;
+    }
+
+    .bmk-status-other {
+        color: #475569;
+        background: #e2e8f0;
+    }
+
+    .bmk-status-other::before {
+        background: #64748b;
+    }
+
+    /* =========================
+       PAYMENT HISTORY BUTTON
+       ========================= */
+
+    .bmk-payment-history-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        padding: 9px 13px;
+        border: 1px solid #cbdaf5;
+        border-radius: 10px;
+        color: #1d4ed8;
+        background: #f5f8ff;
+        font-size: 0.76rem;
+        font-weight: 750;
+        text-decoration: none;
+        white-space: nowrap;
+        transition:
+            transform 0.2s ease,
+            background-color 0.2s ease,
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .bmk-payment-history-btn:hover {
+        color: #ffffff;
+        background: #1d4ed8;
+        border-color: #1d4ed8;
+        transform: translateY(-2px);
+        box-shadow: 0 9px 20px rgba(29, 78, 216, 0.20);
+    }
+
+    /* =========================
+       EMPTY STATES
+       ========================= */
+
+    .bmk-no-invoices {
+        margin: 18px 25px 25px;
+        padding: 45px 25px;
+        border: 1px dashed #cbd5e1;
+        border-radius: 18px;
+        text-align: center;
+        background: #fafbfd;
+    }
+
+    .bmk-no-invoices-icon {
+        width: 58px;
+        height: 58px;
+        margin: 0 auto 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 16px;
+        color: #e0a83e;
+        background: #fff7e3;
+        font-size: 1.35rem;
+    }
+
+    .bmk-no-invoices h6 {
+        margin-bottom: 7px;
+        color: #0f2747;
+        font-size: 0.98rem;
+        font-weight: 800;
+    }
+
+    .bmk-no-invoices p {
+        max-width: 430px;
+        margin: 0 auto;
+        color: #64748b;
+        font-size: 0.86rem;
+    }
+
+    .bmk-no-enrollment {
+        padding: 55px 25px;
+        border: 1px solid rgba(15, 39, 71, 0.07);
+        border-radius: 22px;
+        background: #ffffff;
+        box-shadow: 0 18px 45px rgba(15, 35, 55, 0.08);
+        text-align: center;
+    }
+
+    .bmk-no-enrollment-icon {
+        width: 68px;
+        height: 68px;
+        margin: 0 auto 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 18px;
+        color: #b45309;
+        background: #fef3c7;
+        font-size: 1.5rem;
+    }
+
+    .bmk-no-enrollment h5 {
+        margin-bottom: 8px;
+        color: #0f2747;
+        font-weight: 800;
+    }
+
+    .bmk-no-enrollment p {
+        max-width: 500px;
+        margin: 0 auto;
+        color: #64748b;
+        font-size: 0.9rem;
+    }
+
+    /* =========================
+       MOBILE
+       ========================= */
+
+    @media (max-width: 767.98px) {
+
+        .bmk-child-fees {
+            padding: 25px 0 60px;
+        }
+
+        .bmk-fees-header {
+            padding: 23px 20px;
+            border-radius: 19px;
+        }
+
+        .bmk-fees-header-content {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .bmk-fees-header-left {
+            align-items: flex-start;
+        }
+
+        .bmk-fees-avatar {
+            width: 52px;
+            height: 52px;
+            flex-basis: 52px;
+            border-radius: 15px;
+        }
+
+        .bmk-fees-header h2 {
+            font-size: 1.4rem;
+        }
+
+        .bmk-fees-subtitle {
+            font-size: 0.82rem;
+        }
+
+        .bmk-fees-back-btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .bmk-fee-stat {
+            padding: 19px;
+            border-radius: 17px;
+        }
+
+        .bmk-fee-stat-value {
+            font-size: 1.25rem;
+        }
+
+        .bmk-invoices-card {
+            border-radius: 18px;
+        }
+
+        .bmk-invoices-header {
+            align-items: flex-start;
+            padding: 20px 18px;
+        }
+
+        .bmk-invoices-table-wrapper {
+            padding-left: 18px;
+            padding-right: 18px;
+            overflow-x: auto;
+        }
+
+        .bmk-invoices-table {
+            min-width: 900px;
+        }
+
+        .bmk-no-invoices {
+            margin-left: 18px;
+            margin-right: 18px;
+        }
+
+        .bmk-no-enrollment {
+            padding: 45px 20px;
+            border-radius: 18px;
+        }
+    }
+/* =========================================================
+       BMK PARENT — PAYMENT HISTORY
+       Frontend only — backend logic unchanged
+       ========================================================= */
+
+       .bmk-payment-history {
+        min-height: 100vh;
+        padding: 45px 0 80px;
+        background:
+            radial-gradient(circle at top right, rgba(29, 78, 216, 0.06), transparent 28%),
+            linear-gradient(180deg, #f6f8fb 0%, #ffffff 75%);
+    }
+
+    /* =========================
+       PAGE HEADER
+       ========================= */
+
+    .bmk-payment-header {
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 28px;
+        padding: 30px;
+        border-radius: 24px;
+        background: linear-gradient(
+            135deg,
+            #0f2747 0%,
+            #163c68 58%,
+            #1d4ed8 100%
+        );
+        box-shadow: 0 20px 50px rgba(15, 39, 71, 0.16);
+        color: #ffffff;
+    }
+
+    .bmk-payment-header::before {
+        content: "";
+        position: absolute;
+        width: 230px;
+        height: 230px;
+        right: -90px;
+        top: -120px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.07);
+    }
+
+    .bmk-payment-header::after {
+        content: "";
+        position: absolute;
+        width: 150px;
+        height: 150px;
+        right: 100px;
+        bottom: -100px;
+        border-radius: 50%;
+        background: rgba(224, 168, 62, 0.12);
+    }
+
+    .bmk-payment-header-content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 25px;
+    }
+
+    .bmk-payment-header-left {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+    }
+
+    .bmk-payment-icon {
+        width: 62px;
+        height: 62px;
+        flex: 0 0 62px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 18px;
+        background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.20),
+            rgba(255, 255, 255, 0.08)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        color: #ffffff;
+        font-size: 1.35rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    .bmk-payment-eyebrow {
+        margin: 0 0 5px;
+        color: #f3d58a;
+        font-size: 0.76rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .bmk-payment-header h2 {
+        margin: 0 0 5px;
+        color: #ffffff;
+        font-size: clamp(1.55rem, 3vw, 2.1rem);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+    }
+
+    .bmk-payment-header p {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.76);
+        font-size: 0.91rem;
+    }
+
+    .bmk-payment-back-btn {
+        position: relative;
+        z-index: 2;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 11px 17px;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 12px;
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.09);
+        text-decoration: none;
+        font-size: 0.88rem;
+        font-weight: 700;
+        white-space: nowrap;
+        transition:
+            background-color 0.25s ease,
+            transform 0.25s ease,
+            border-color 0.25s ease;
+    }
+
+    .bmk-payment-back-btn:hover {
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.16);
+        border-color: rgba(255, 255, 255, 0.35);
+        transform: translateX(-3px);
+    }
+
+    /* =========================
+       INVOICE SUMMARY
+       ========================= */
+
+    .bmk-invoice-summary {
+        overflow: hidden;
+        margin-bottom: 28px;
+        border: 1px solid rgba(15, 39, 71, 0.07);
+        border-radius: 22px;
+        background: #ffffff;
+        box-shadow: 0 18px 45px rgba(15, 35, 55, 0.08);
+    }
+
+    .bmk-invoice-summary-header {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        padding: 22px 25px;
+        border-bottom: 1px solid #edf0f4;
+    }
+
+    .bmk-invoice-summary-icon {
+        width: 42px;
+        height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        color: #e0a83e;
+        background: #fff7e3;
+        font-size: 1.05rem;
+    }
+
+    .bmk-invoice-summary-header h5 {
+        margin: 0;
+        color: #0f2747;
+        font-size: 1rem;
+        font-weight: 800;
+    }
+
+    .bmk-invoice-summary-body {
+        padding: 24px 25px;
+    }
+
+    .bmk-invoice-description {
+        margin-bottom: 22px;
+        color: #0f2747;
+        font-size: 1.08rem;
+        font-weight: 800;
+    }
+
+    .bmk-invoice-stat {
+        height: 100%;
+        padding: 17px 18px;
+        border: 1px solid #edf0f4;
+        border-radius: 14px;
+        background: #fafbfd;
+    }
+
+    .bmk-invoice-stat-label {
+        display: block;
+        margin-bottom: 6px;
+        color: #64748b;
+        font-size: 0.72rem;
+        font-weight: 750;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+    }
+
+    .bmk-invoice-stat-value {
+        margin: 0;
+        color: #0f2747;
+        font-size: 1.12rem;
+        font-weight: 850;
+    }
+
+    .bmk-invoice-stat-paid .bmk-invoice-stat-value {
+        color: #15803d;
+    }
+
+    .bmk-invoice-stat-balance .bmk-invoice-stat-value {
+        color: #dc2626;
+    }
+
+    .bmk-invoice-stat-date .bmk-invoice-stat-value {
+        font-size: 0.95rem;
+    }
+
+    /* =========================
+       PAYMENTS CARD
+       ========================= */
+
+    .bmk-payments-card {
+        overflow: hidden;
+        border: 1px solid rgba(15, 39, 71, 0.07);
+        border-radius: 22px;
+        background: #ffffff;
+        box-shadow: 0 18px 45px rgba(15, 35, 55, 0.08);
+    }
+
+    .bmk-payments-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 24px 25px;
+        border-bottom: 1px solid #edf0f4;
+    }
+
+    .bmk-payments-title {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+    }
+
+    .bmk-payments-title-icon {
+        width: 42px;
+        height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        color: #3f7d58;
+        background: #edf8f1;
+        font-size: 1.05rem;
+    }
+
+    .bmk-payments-title h5 {
+        margin: 0 0 3px;
+        color: #0f2747;
+        font-size: 1.05rem;
+        font-weight: 800;
+    }
+
+    .bmk-payments-title p {
+        margin: 0;
+        color: #64748b;
+        font-size: 0.84rem;
+    }
+
+    /* =========================
+       PAYMENT TABLE
+       ========================= */
+
+    .bmk-payments-table-wrapper {
+        padding: 8px 25px 25px;
+    }
+
+    .bmk-payments-table {
+        min-width: 900px;
+        margin-bottom: 0;
+        border-collapse: separate;
+        border-spacing: 0 8px;
+    }
+
+    .bmk-payments-table thead th {
+        padding: 13px 15px;
+        border: 0;
+        color: #64748b;
+        background: #f8fafc;
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    .bmk-payments-table thead th:first-child {
+        border-radius: 10px 0 0 10px;
+    }
+
+    .bmk-payments-table thead th:last-child {
+        border-radius: 0 10px 10px 0;
+    }
+
+    .bmk-payments-table tbody tr {
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .bmk-payments-table tbody tr:hover {
+        transform: translateY(-2px);
+    }
+
+    .bmk-payments-table tbody td {
+        padding: 16px 15px;
+        border-top: 1px solid #edf0f4;
+        border-bottom: 1px solid #edf0f4;
+        color: #334155;
+        background: #ffffff;
+        font-size: 0.87rem;
+        vertical-align: middle;
+    }
+
+    .bmk-payments-table tbody td:first-child {
+        border-left: 1px solid #edf0f4;
+        border-radius: 13px 0 0 13px;
+    }
+
+    .bmk-payments-table tbody td:last-child {
+        border-right: 1px solid #edf0f4;
+        border-radius: 0 13px 13px 0;
+    }
+
+    .bmk-receipt-number {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #0f2747;
+        font-weight: 800;
+    }
+
+    .bmk-receipt-icon {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 9px;
+        color: #1d4ed8;
+        background: #eef5ff;
+        font-size: 0.85rem;
+    }
+
+    .bmk-payment-date {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        color: #64748b;
+        white-space: nowrap;
+    }
+
+    .bmk-payment-date i {
+        color: #e0a83e;
+    }
+
+    .bmk-payment-amount {
+        color: #15803d;
+        font-weight: 850;
+        white-space: nowrap;
+    }
+
+    .bmk-payment-method {
+        display: inline-flex;
+        align-items: center;
+        padding: 6px 9px;
+        border-radius: 8px;
+        color: #475569;
+        background: #f1f5f9;
+        font-size: 0.76rem;
+        font-weight: 700;
+    }
+
+    .bmk-payment-reference {
+        max-width: 180px;
+        color: #64748b;
+        font-size: 0.82rem;
+        word-break: break-word;
+    }
+
+    .bmk-view-receipt-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        padding: 9px 13px;
+        border: 1px solid #cbdaf5;
+        border-radius: 10px;
+        color: #1d4ed8;
+        background: #f5f8ff;
+        font-size: 0.76rem;
+        font-weight: 750;
+        text-decoration: none;
+        white-space: nowrap;
+        transition:
+            transform 0.2s ease,
+            background-color 0.2s ease,
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .bmk-view-receipt-btn:hover {
+        color: #ffffff;
+        background: #1d4ed8;
+        border-color: #1d4ed8;
+        transform: translateY(-2px);
+        box-shadow: 0 9px 20px rgba(29, 78, 216, 0.20);
+    }
+
+    /* =========================
+       EMPTY STATE
+       ========================= */
+
+    .bmk-no-payments {
+        margin: 18px 25px 25px;
+        padding: 48px 25px;
+        border: 1px dashed #cbd5e1;
+        border-radius: 18px;
+        text-align: center;
+        background: #fafbfd;
+    }
+
+    .bmk-no-payments-icon {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 17px;
+        color: #64748b;
+        background: #f1f5f9;
+        font-size: 1.4rem;
+    }
+
+    .bmk-no-payments h6 {
+        margin-bottom: 7px;
+        color: #0f2747;
+        font-size: 0.98rem;
+        font-weight: 800;
+    }
+
+    .bmk-no-payments p {
+        max-width: 430px;
+        margin: 0 auto;
+        color: #64748b;
+        font-size: 0.86rem;
+    }
+
+    /* =========================
+       MOBILE
+       ========================= */
+
+    @media (max-width: 767.98px) {
+
+        .bmk-payment-history {
+            padding: 25px 0 60px;
+        }
+
+        .bmk-payment-header {
+            padding: 23px 20px;
+            border-radius: 19px;
+        }
+
+        .bmk-payment-header-content {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .bmk-payment-header-left {
+            align-items: flex-start;
+        }
+
+        .bmk-payment-icon {
+            width: 52px;
+            height: 52px;
+            flex-basis: 52px;
+            border-radius: 15px;
+        }
+
+        .bmk-payment-header h2 {
+            font-size: 1.4rem;
+        }
+
+        .bmk-payment-header p {
+            font-size: 0.82rem;
+        }
+
+        .bmk-payment-back-btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .bmk-invoice-summary,
+        .bmk-payments-card {
+            border-radius: 18px;
+        }
+
+        .bmk-invoice-summary-header,
+        .bmk-invoice-summary-body,
+        .bmk-payments-header {
+            padding-left: 18px;
+            padding-right: 18px;
+        }
+
+        .bmk-payments-header {
+            align-items: flex-start;
+        }
+
+        .bmk-payments-table-wrapper {
+            padding-left: 18px;
+            padding-right: 18px;
+            overflow-x: auto;
+        }
+
+        .bmk-payments-table {
+            min-width: 900px;
+        }
+
+        .bmk-no-payments {
+            margin-left: 18px;
+            margin-right: 18px;
+        }
+    }
+
+/* =========================================================
+   BMK PAYMENT RECEIPT
+   ========================================================= */
+
+   .bmk-receipt-page {
+    min-height: 100vh;
+    padding: 45px 0 80px;
+
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(29, 78, 216, 0.07),
+            transparent 28%
+        ),
+        linear-gradient(
+            180deg,
+            #f6f8fb 0%,
+            #ffffff 75%
+        );
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.bmk-receipt-page-header {
+    max-width: 1080px;
+    margin: 0 auto 28px;
+    padding: 0 20px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.bmk-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    margin-bottom: 8px;
+
+    color: var(--bmk-blue);
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.bmk-receipt-page-header h1 {
+    margin: 0 0 5px;
+
+    color: var(--bmk-navy);
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+}
+
+.bmk-receipt-page-header p {
+    margin: 0;
+
+    color: var(--bmk-muted);
+    font-size: 0.95rem;
+}
+
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.bmk-receipt-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.bmk-receipt-back,
+.bmk-print-btn {
+    min-height: 44px;
+    padding: 10px 17px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    border-radius: 12px;
+
+    font-size: 0.86rem;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background-color 0.25s ease;
+}
+
+
+/* Back button */
+
+.bmk-receipt-back {
+    color: var(--bmk-navy) !important;
+
+    background: #ffffff !important;
+
+    border: 1px solid var(--bmk-border);
+}
+
+.bmk-receipt-back:hover {
+    color: var(--bmk-blue) !important;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 22px rgba(15, 35, 55, 0.08);
+}
+
+
+/* =========================================================
+   PRINT BUTTON
+   IMPORTANT: force readable white text
+   ========================================================= */
+
+button.bmk-print-btn {
+    color: #ffffff !important;
+
+    -webkit-text-fill-color: #ffffff !important;
+
+    background: #1d4ed8 !important;
+
+    border: 1px solid #1d4ed8 !important;
+
+    box-shadow:
+        0 9px 22px rgba(29, 78, 216, 0.25);
+
+    text-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.15);
+}
+
+button.bmk-print-btn span {
+    color: #ffffff !important;
+
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+button.bmk-print-btn i {
+    color: #ffffff !important;
+
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+button.bmk-print-btn:hover {
+    color: #ffffff !important;
+
+    -webkit-text-fill-color: #ffffff !important;
+
+    background: #163fae !important;
+
+    border-color: #163fae !important;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 13px 28px rgba(29, 78, 216, 0.30);
+}
+
+
+/* =========================================================
+   RECEIPT CARD
+   ========================================================= */
+
+.bmk-receipt-card {
+    width: min(1080px, calc(100% - 40px));
+    margin: 0 auto;
+
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid rgba(15, 39, 71, 0.08);
+    border-radius: 24px;
+
+    box-shadow:
+        0 25px 65px rgba(15, 35, 55, 0.12);
+}
+
+
+/* =========================================================
+   SCHOOL HEADER
+   ========================================================= */
+
+.bmk-receipt-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 30px;
+
+    padding: 30px 38px;
+
+    background:
+        radial-gradient(
+            circle at 90% 20%,
+            rgba(224, 168, 62, 0.18),
+            transparent 25%
+        ),
+        linear-gradient(
+            135deg,
+            var(--bmk-navy-dark),
+            var(--bmk-navy)
+        );
+}
+
+.bmk-school-brand {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+}
+
+
+/* =========================================================
+   BMK LOGO
+   ========================================================= */
+
+.bmk-school-logo {
+    width: 68px;
+    height: 68px;
+
+    flex: 0 0 68px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 6px;
+
+    border-radius: 16px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.18);
+}
+
+.bmk-school-logo img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+}
+
+
+/* =========================================================
+   SCHOOL NAME
+   ========================================================= */
+
+.bmk-school-name h2 {
+    margin: 0 0 3px;
+
+    color: #ffffff;
+
+    font-size: 1.45rem;
+    font-weight: 850;
+    letter-spacing: 0.04em;
+}
+
+.bmk-school-name p {
+    margin: 0 0 3px;
+
+    color: rgba(255, 255, 255, 0.80);
+
+    font-size: 0.82rem;
+}
+
+.bmk-school-name span {
+    color: var(--bmk-gold-light);
+
+    font-size: 0.78rem;
+    font-weight: 700;
+    font-style: italic;
+}
+
+
+/* =========================================================
+   RECEIPT LABEL
+   ========================================================= */
+
+.bmk-receipt-label {
+    flex: 0 0 auto;
+
+    text-align: right;
+}
+
+.bmk-receipt-label span {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: var(--bmk-gold-light);
+
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+}
+
+.bmk-receipt-label strong {
+    display: block;
+
+    color: #ffffff;
+
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+}
+
+.bmk-receipt-label small {
+    display: block;
+
+    margin-top: 3px;
+
+    color: rgba(255, 255, 255, 0.65);
+
+    font-size: 0.72rem;
+}
+
+
+/* =========================================================
+   DIVIDER
+   ========================================================= */
+
+.bmk-receipt-divider {
+    height: 4px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--bmk-blue),
+            var(--bmk-gold),
+            var(--bmk-blue)
+        );
+}
+
+
+/* =========================================================
+   STUDENT INFORMATION
+   ========================================================= */
+
+.bmk-student-section {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 30px;
+
+    padding: 27px 38px 23px;
+
+    border-bottom: 1px solid var(--bmk-border);
+}
+
+.bmk-detail-label {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: var(--bmk-muted);
+
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.bmk-student-block h3 {
+    margin: 0;
+
+    color: var(--bmk-navy);
+
+    font-size: 1.25rem;
+    font-weight: 800;
+}
+
+.bmk-student-block strong {
+    display: inline-block;
+
+    color: var(--bmk-blue);
+
+    font-size: 1.05rem;
+    font-weight: 800;
+}
+
+.bmk-student-admission {
+    text-align: right;
+}
+
+
+/* =========================================================
+   PAYMENT DETAILS
+   ========================================================= */
+
+.bmk-payment-details {
+    padding: 27px 38px;
+}
+
+.bmk-section-heading {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    margin-bottom: 17px;
+}
+
+.bmk-section-icon {
+    width: 43px;
+    height: 43px;
+
+    flex: 0 0 43px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    color: var(--bmk-blue);
+
+    background: var(--bmk-light-blue);
+}
+
+.bmk-section-heading h3 {
+    margin: 0 0 2px;
+
+    color: var(--bmk-navy);
+
+    font-size: 1.05rem;
+    font-weight: 800;
+}
+
+.bmk-section-heading p {
+    margin: 0;
+
+    color: var(--bmk-muted);
+
+    font-size: 0.78rem;
+}
+
+
+/* =========================================================
+   PAYMENT TABLE
+   ========================================================= */
+
+.bmk-payment-table-wrapper {
+    overflow: hidden;
+
+    border: 1px solid var(--bmk-border);
+    border-radius: 15px;
+}
+
+.bmk-payment-table {
+    width: 100%;
+    margin: 0;
+
+    border-collapse: collapse;
+}
+
+.bmk-payment-table th,
+.bmk-payment-table td {
+    padding: 13px 17px;
+
+    border-bottom: 1px solid var(--bmk-border);
+
+    vertical-align: middle;
+
+    text-align: left;
+}
+
+.bmk-payment-table tr:last-child th,
+.bmk-payment-table tr:last-child td {
+    border-bottom: 0;
+}
+
+.bmk-payment-table th {
+    width: 35%;
+
+    color: var(--bmk-muted);
+
+    background: #f8fafc;
+
+    font-size: 0.78rem;
+    font-weight: 750;
+}
+
+.bmk-payment-table td {
+    color: var(--bmk-text);
+
+    background: #ffffff;
+
+    font-size: 0.87rem;
+    font-weight: 600;
+}
+
+.bmk-receipt-number {
+    color: var(--bmk-blue) !important;
+    font-weight: 800 !important;
+}
+
+
+/* =========================================================
+   AMOUNTS
+   ========================================================= */
+
+.bmk-amount-row th,
+.bmk-amount-row td {
+    background: #f0fdf4 !important;
+}
+
+.bmk-amount-paid {
+    color: #15803d !important;
+
+    font-size: 1.05rem !important;
+    font-weight: 850 !important;
+}
+
+.bmk-balance-row th,
+.bmk-balance-row td {
+    background: #fffaf0 !important;
+}
+
+.bmk-balance-paid {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    color: #15803d;
+
+    font-weight: 800;
+}
+
+.bmk-balance-due {
+    color: #dc2626;
+
+    font-weight: 850;
+}
+
+
+/* =========================================================
+   REMARKS
+   ========================================================= */
+
+.bmk-receipt-remarks {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+
+    margin: 0 38px 27px;
+    padding: 15px 18px;
+
+    border: 1px solid #e6edf5;
+    border-radius: 15px;
+
+    background: #f8fafc;
+}
+
+.bmk-remarks-icon {
+    width: 38px;
+    height: 38px;
+
+    flex: 0 0 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    color: var(--bmk-blue);
+
+    background: var(--bmk-light-blue);
+}
+
+.bmk-receipt-remarks h4 {
+    margin: 0 0 4px;
+
+    color: var(--bmk-navy);
+
+    font-size: 0.88rem;
+    font-weight: 800;
+}
+
+.bmk-receipt-remarks p {
+    margin: 0;
+
+    color: var(--bmk-text);
+
+    font-size: 0.84rem;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.bmk-receipt-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 20px 38px;
+
+    border-top: 1px solid var(--bmk-border);
+
+    background: #fbfcfe;
+}
+
+.bmk-thank-you {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.bmk-thank-you > i {
+    color: #16a34a;
+
+    font-size: 1.25rem;
+}
+
+.bmk-thank-you strong,
+.bmk-thank-you span {
+    display: block;
+}
+
+.bmk-thank-you strong {
+    color: var(--bmk-navy);
+
+    font-size: 0.83rem;
+    font-weight: 800;
+}
+
+.bmk-thank-you span {
+    margin-top: 2px;
+
+    color: var(--bmk-muted);
+
+    font-size: 0.72rem;
+}
+
+.bmk-footer-motto {
+    color: var(--bmk-gold);
+
+    font-size: 0.76rem;
+    font-weight: 800;
+    font-style: italic;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .bmk-receipt-page {
+        padding: 30px 0 55px;
+    }
+
+    .bmk-receipt-page-header {
+        align-items: stretch;
+        flex-direction: column;
+
+        padding: 0 16px;
+
+        margin-bottom: 20px;
+    }
+
+    .bmk-receipt-actions {
+        width: 100%;
+    }
+
+    .bmk-receipt-back,
+    .bmk-print-btn {
+        flex: 1;
+    }
+
+    .bmk-receipt-card {
+        width: calc(100% - 24px);
+
+        border-radius: 18px;
+    }
+
+    .bmk-receipt-top {
+        align-items: flex-start;
+        flex-direction: column;
+
+        padding: 23px 20px;
+    }
+
+    .bmk-school-brand {
+        align-items: flex-start;
+    }
+
+    .bmk-school-logo {
+        width: 52px;
+        height: 52px;
+        flex-basis: 52px;
+
+        padding: 5px;
+
+        border-radius: 12px;
+    }
+
+    .bmk-school-name h2 {
+        font-size: 1.12rem;
+    }
+
+    .bmk-school-name p {
+        font-size: 0.71rem;
+    }
+
+    .bmk-receipt-label {
+        text-align: left;
+    }
+
+    .bmk-student-section {
+        grid-template-columns: 1fr;
+
+        gap: 18px;
+
+        padding: 24px 20px;
+    }
+
+    .bmk-student-admission {
+        text-align: left;
+    }
+
+    .bmk-payment-details {
+        padding: 24px 18px;
+    }
+
+    .bmk-payment-table th,
+    .bmk-payment-table td {
+        padding: 11px;
+    }
+
+    .bmk-payment-table th {
+        width: 42%;
+        font-size: 0.72rem;
+    }
+
+    .bmk-payment-table td {
+        font-size: 0.8rem;
+    }
+
+    .bmk-receipt-remarks {
+        margin: 0 18px 23px;
+    }
+
+    .bmk-receipt-footer {
+        align-items: flex-start;
+        flex-direction: column;
+
+        padding: 19px 20px;
+    }
+
+}
+
+
+/* =========================================================
+   PRINT — ONE A4 PAGE
+   ========================================================= */
+
+@media print {
+
+    @page {
+        size: A4 portrait;
+        margin: 7mm;
+    }
+
+    html,
+    body {
+        width: 100%;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        background: #ffffff !important;
+    }
+
+    body {
+        font-size: 10px !important;
+    }
+
+
+    /* Hide screen controls */
+
+    nav,
+    footer,
+    .no-print,
+    .btn,
+    .bmk-receipt-page-header {
+        display: none !important;
+    }
+
+
+    /* Receipt */
+
+    .bmk-receipt-page {
+        width: 100% !important;
+
+        min-height: auto !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        background: #ffffff !important;
+    }
+
+    .bmk-receipt-card {
+        width: 100% !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        overflow: visible !important;
+
+        border: 1px solid #222222 !important;
+        border-radius: 0 !important;
+
+        box-shadow: none !important;
+
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+
+    /* ---------------------------------------------------------
+       PRINT SCHOOL HEADER
+       --------------------------------------------------------- */
+
+    .bmk-receipt-top {
+        min-height: 70px;
+
+        padding: 12px 18px !important;
+
+        background: #ffffff !important;
+
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    .bmk-school-brand {
+        gap: 10px;
+    }
+
+    .bmk-school-logo {
+        width: 48px !important;
+        height: 48px !important;
+        flex-basis: 48px !important;
+
+        padding: 3px !important;
+
+        border: 1px solid #cccccc !important;
+        border-radius: 7px !important;
+
+        background: #ffffff !important;
+
+        box-shadow: none !important;
+    }
+
+    .bmk-school-logo img {
+        max-width: 100% !important;
+        max-height: 100% !important;
+    }
+
+    .bmk-school-name h2 {
+        margin-bottom: 1px !important;
+
+        color: #000000 !important;
+
+        font-size: 1rem !important;
+    }
+
+    .bmk-school-name p {
+        margin-bottom: 1px !important;
+
+        color: #000000 !important;
+
+        font-size: 0.59rem !important;
+    }
+
+    .bmk-school-name span {
+        color: #000000 !important;
+
+        font-size: 0.57rem !important;
+    }
+
+    .bmk-receipt-label span,
+    .bmk-receipt-label strong,
+    .bmk-receipt-label small {
+        color: #000000 !important;
+    }
+
+    .bmk-receipt-label span {
+        font-size: 0.52rem !important;
+    }
+
+    .bmk-receipt-label strong {
+        font-size: 0.75rem !important;
+    }
+
+    .bmk-receipt-label small {
+        font-size: 0.55rem !important;
+    }
+
+
+    /* Divider */
+
+    .bmk-receipt-divider {
+        height: 2px !important;
+
+        background: #000000 !important;
+    }
+
+
+    /* ---------------------------------------------------------
+       STUDENT
+       --------------------------------------------------------- */
+
+    .bmk-student-section {
+        padding: 11px 18px !important;
+
+        gap: 20px;
+
+        border-color: #000000 !important;
+
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    .bmk-detail-label {
+        margin-bottom: 2px !important;
+
+        color: #000000 !important;
+
+        font-size: 0.55rem !important;
+    }
+
+    .bmk-student-block h3 {
+        color: #000000 !important;
+
+        font-size: 0.84rem !important;
+    }
+
+    .bmk-student-block strong {
+        color: #000000 !important;
+
+        font-size: 0.78rem !important;
+    }
+
+
+    /* ---------------------------------------------------------
+       PAYMENT DETAILS
+       --------------------------------------------------------- */
+
+    .bmk-payment-details {
+        padding: 12px 18px !important;
+
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    .bmk-section-heading {
+        gap: 7px;
+
+        margin-bottom: 7px !important;
+    }
+
+    .bmk-section-icon {
+        width: 27px !important;
+        height: 27px !important;
+        flex-basis: 27px !important;
+
+        border-radius: 5px !important;
+
+        color: #000000 !important;
+        background: #eeeeee !important;
+    }
+
+    .bmk-section-icon i {
+        font-size: 0.7rem;
+    }
+
+    .bmk-section-heading h3 {
+        margin-bottom: 0 !important;
+
+        color: #000000 !important;
+
+        font-size: 0.75rem !important;
+    }
+
+    .bmk-section-heading p {
+        color: #000000 !important;
+
+        font-size: 0.55rem !important;
+    }
+
+
+    /* ---------------------------------------------------------
+       PAYMENT TABLE
+       --------------------------------------------------------- */
+
+    .bmk-payment-table-wrapper {
+        overflow: visible !important;
+
+        border-color: #000000 !important;
+        border-radius: 0 !important;
+
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    .bmk-payment-table {
+        width: 100% !important;
+
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    .bmk-payment-table tr {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    .bmk-payment-table th,
+    .bmk-payment-table td {
+        padding: 6px 9px !important;
+
+        border-color: #000000 !important;
+
+        line-height: 1.2 !important;
+    }
+
+    .bmk-payment-table th {
+        width: 34% !important;
+
+        color: #000000 !important;
+        background: #ffffff !important;
+
+        font-size: 0.61rem !important;
+    }
+
+    .bmk-payment-table td {
+        color: #000000 !important;
+        background: #ffffff !important;
+
+        font-size: 0.64rem !important;
+        font-weight: 600 !important;
+    }
+
+    .bmk-receipt-number {
+        color: #000000 !important;
+    }
+
+
+    /* ---------------------------------------------------------
+       AMOUNTS
+       --------------------------------------------------------- */
+
+    .bmk-amount-row th,
+    .bmk-amount-row td,
+    .bmk-balance-row th,
+    .bmk-balance-row td {
+        background: #ffffff !important;
+    }
+
+    .bmk-amount-paid {
+        color: #000000 !important;
+
+        font-size: 0.74rem !important;
+    }
+
+    .bmk-balance-paid,
+    .bmk-balance-due {
+        color: #000000 !important;
+
+        font-size: 0.69rem !important;
+    }
+
+    .bmk-balance-paid i {
+        display: none !important;
+    }
+
+
+    /* ---------------------------------------------------------
+       REMARKS
+       --------------------------------------------------------- */
+
+    .bmk-receipt-remarks {
+        margin: 8px 18px 10px !important;
+
+        padding: 7px 9px !important;
+
+        border-color: #000000 !important;
+        border-radius: 0 !important;
+
+        background: #ffffff !important;
+
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    .bmk-remarks-icon {
+        width: 24px !important;
+        height: 24px !important;
+        flex-basis: 24px !important;
+
+        color: #000000 !important;
+        background: #eeeeee !important;
+    }
+
+    .bmk-receipt-remarks h4 {
+        margin-bottom: 1px !important;
+
+        color: #000000 !important;
+
+        font-size: 0.64rem !important;
+    }
+
+    .bmk-receipt-remarks p {
+        color: #000000 !important;
+
+        font-size: 0.59rem !important;
+
+        line-height: 1.25 !important;
+    }
+
+
+    /* ---------------------------------------------------------
+       FOOTER
+       --------------------------------------------------------- */
+
+    .bmk-receipt-footer {
+        margin-top: 0 !important;
+
+        padding: 9px 18px !important;
+
+        border-color: #000000 !important;
+
+        background: #ffffff !important;
+
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    .bmk-thank-you {
+        gap: 6px;
+    }
+
+    .bmk-thank-you > i {
+        color: #000000 !important;
+
+        font-size: 0.75rem !important;
+    }
+
+    .bmk-thank-you strong {
+        color: #000000 !important;
+
+        font-size: 0.61rem !important;
+    }
+
+    .bmk-thank-you span {
+        color: #000000 !important;
+
+        font-size: 0.52rem !important;
+    }
+
+    .bmk-footer-motto {
+        color: #000000 !important;
+
+        font-size: 0.57rem !important;
+    }
+
+}
+
+/* =========================================================
+   BMK ACADEMY
+   REPORTS MODULE
+   ========================================================= */
+
+.report-page {
+    padding-bottom: 50px;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.report-hero {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 26px;
+    padding: 30px;
+    border-radius: 20px;
+    background: linear-gradient(
+        135deg,
+        #0f2747 0%,
+        #173d68 65%,
+        #1d4ed8 100%
+    );
+    color: #ffffff;
+    box-shadow: 0 15px 40px rgba(15, 39, 71, 0.12);
+}
+
+.report-hero-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.report-hero-icon {
+    width: 55px;
+    height: 55px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    background: rgba(224, 168, 62, 0.18);
+    color: #f3d58a;
+    font-size: 1.45rem;
+}
+
+.report-eyebrow {
+    display: block;
+    margin-bottom: 5px;
+    color: #f3d58a;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 1.4px;
+}
+
+.report-hero h1 {
+    margin: 0 0 5px;
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: -0.4px;
+}
+
+.report-hero p {
+    max-width: 700px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.76);
+    font-size: 0.94rem;
+}
+
+.report-hero-decoration {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.report-hero-decoration-one {
+    width: 230px;
+    height: 230px;
+    top: -120px;
+    right: -70px;
+    background: rgba(224, 168, 62, 0.10);
+}
+
+.report-hero-decoration-two {
+    width: 160px;
+    height: 160px;
+    right: 150px;
+    bottom: -115px;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+
+/* =========================================================
+   COMMON CARD
+   ========================================================= */
+
+.report-selection-card,
+.report-students-card {
+    overflow: hidden;
+    margin-bottom: 24px;
+    border: 1px solid #e5eaf0;
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 12px 35px rgba(15, 39, 71, 0.07);
+}
+
+.report-card-header,
+.report-students-header {
+    padding: 19px 22px;
+    border-bottom: 1px solid #edf0f4;
+    background: #fbfcfe;
+}
+
+.report-card-heading {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.report-card-icon {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+    background: #eef4fb;
+    color: #0f2747;
+    font-size: 1rem;
+}
+
+.report-card-heading h2 {
+    margin: 0;
+    color: #0f2747;
+    font-size: 1rem;
+    font-weight: 750;
+}
+
+.report-card-heading p {
+    margin: 3px 0 0;
+    color: #64748b;
+    font-size: 0.82rem;
+}
+
+.report-card-body {
+    padding: 23px;
+}
+
+
+/* =========================================================
+   REPORT SELECTION
+   ========================================================= */
+
+.report-selection-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.report-field {
+    min-width: 0;
+}
+
+.report-step-heading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.report-step-heading label {
+    margin: 0;
+    color: #334155;
+    font-size: 0.82rem;
+    font-weight: 750;
+}
+
+.report-step-number {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #eef2f7;
+    color: #64748b;
+    font-size: 0.72rem;
+    font-weight: 800;
+}
+
+.report-step-number.active {
+    background: #0f2747;
+    color: #ffffff;
+}
+
+.report-select {
+    width: 100%;
+    min-height: 46px;
+    padding: 0 13px;
+    border: 1px solid #dce2e9;
+    border-radius: 10px;
+    outline: none;
+    background: #ffffff;
+    color: #0f2747;
+    font-size: 0.9rem;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.report-select:focus {
+    border-color: #1d4ed8;
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.10);
+}
+
+.report-select:disabled {
+    cursor: not-allowed;
+    background: #f3f5f8;
+    color: #94a3b8;
+}
+
+.report-field-help {
+    display: block;
+    margin-top: 6px;
+    color: #94a3b8;
+    font-size: 0.72rem;
+}
+
+
+/* =========================================================
+   SELECTED CONTEXT
+   ========================================================= */
+
+.report-selected-context {
+    margin-top: 22px;
+    padding: 17px;
+    border: 1px solid #dfe8f2;
+    border-radius: 15px;
+    background: linear-gradient(
+        135deg,
+        #f8fbff,
+        #f4f8fc
+    );
+}
+
+.report-context-title {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 13px;
+    color: #3f7d58;
+    font-size: 0.78rem;
+    font-weight: 800;
+}
+
+.report-context-items {
+    display: flex;
+    align-items: center;
+}
+
+.report-context-item {
+    flex: 1;
+    min-width: 0;
+    padding: 0 15px;
+}
+
+.report-context-item:first-child {
+    padding-left: 0;
+}
+
+.report-context-item:last-child {
+    padding-right: 0;
+}
+
+.report-context-item span {
+    display: block;
+    margin-bottom: 3px;
+    color: #64748b;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.report-context-item strong {
+    color: #0f2747;
+    font-size: 0.88rem;
+}
+
+.report-context-divider {
+    width: 1px;
+    height: 34px;
+    background: #dce4ed;
+}
+
+
+/* =========================================================
+   CLASS PERFORMANCE
+   ========================================================= */
+
+.report-performance-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 24px;
+    padding: 20px 22px;
+    border: 1px solid #dce6f0;
+    border-radius: 18px;
+    background: linear-gradient(
+        135deg,
+        #f8fbff,
+        #f2f7fd
+    );
+}
+
+.report-performance-content {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.report-performance-icon {
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 13px;
+    background: #0f2747;
+    color: #f3d58a;
+    font-size: 1.1rem;
+}
+
+.report-performance-label {
+    display: block;
+    margin-bottom: 3px;
+    color: #1d4ed8;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.report-performance-content h2 {
+    margin: 0 0 3px;
+    color: #0f2747;
+    font-size: 1rem;
+    font-weight: 750;
+}
+
+.report-performance-content p {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.8rem;
+}
+
+.report-performance-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    flex-shrink: 0;
+    padding: 10px 16px;
+    border-radius: 9px;
+    background: #e0a83e;
+    color: #0f2747;
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-decoration: none;
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.report-performance-btn:hover {
+    background: #f0bd58;
+    color: #0f2747;
+    transform: translateY(-1px);
+    box-shadow: 0 7px 18px rgba(224, 168, 62, 0.22);
+}
+
+
+/* =========================================================
+   STUDENT HEADER
+   ========================================================= */
+
+.report-students-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.report-student-count {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 5px;
+    padding: 7px 11px;
+    border-radius: 999px;
+    background: #eef4fb;
+    color: #0f2747;
+    white-space: nowrap;
+}
+
+.report-student-count strong {
+    font-size: 0.9rem;
+    font-weight: 800;
+}
+
+.report-student-count span {
+    color: #64748b;
+    font-size: 0.72rem;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   STUDENT TABLE
+   ========================================================= */
+
+.report-table-wrapper {
+    overflow-x: auto;
+}
+
+.report-students-table {
+    width: 100%;
+    min-width: 760px;
+    margin: 0;
+    border-collapse: collapse;
+}
+
+.report-students-table thead th {
+    padding: 13px 16px;
+    border-bottom: 2px solid #dce3eb;
+    background: #f7f9fc;
+    color: #475569;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    white-space: nowrap;
+}
+
+.report-students-table tbody td {
+    padding: 13px 16px;
+    border-bottom: 1px solid #edf0f3;
+    color: #475569;
+    font-size: 0.82rem;
+    vertical-align: middle;
+}
+
+.report-students-table tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.report-students-table tbody tr:hover {
+    background: #f8fbff;
+}
+
+.report-students-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.report-number-cell {
+    width: 55px;
+    color: #94a3b8 !important;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   STUDENT NAME
+   ========================================================= */
+
+.report-student-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.report-student-avatar {
+    width: 35px;
+    height: 35px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: #eef4fb;
+    color: #1d4ed8;
+    font-size: 0.8rem;
+}
+
+.report-student-name strong {
+    display: block;
+    color: #0f2747;
+    font-size: 0.83rem;
+    font-weight: 750;
+}
+
+.report-student-name span {
+    display: block;
+    margin-top: 2px;
+    color: #94a3b8;
+    font-size: 0.68rem;
+}
+
+
+/* =========================================================
+   TABLE BADGES
+   ========================================================= */
+
+.report-admission-number {
+    color: #475569;
+    font-weight: 650;
+}
+
+.report-class-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 9px;
+    border-radius: 7px;
+    background: #f1f5f9;
+    color: #475569;
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   VIEW REPORT BUTTON
+   ========================================================= */
+
+.report-view-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 11px;
+    border: 1px solid #dce4ee;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #1d4ed8;
+    font-size: 0.72rem;
+    font-weight: 750;
+    text-decoration: none;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.report-view-btn:hover {
+    border-color: #c8d7ea;
+    background: #f3f7fd;
+    color: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   EMPTY STATES
+   ========================================================= */
+
+.report-empty-state {
+    padding: 55px 25px;
+    border: 1px dashed #d9e0e8;
+    border-radius: 18px;
+    background: #ffffff;
+    text-align: center;
+    color: #64748b;
+}
+
+.report-empty-selection {
+    margin-bottom: 24px;
+}
+
+.report-empty-icon {
+    width: 58px;
+    height: 58px;
+    margin: 0 auto 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #fff5df;
+    color: #b8790c;
+    font-size: 1.3rem;
+}
+
+.report-empty-state h3 {
+    margin: 0 0 6px;
+    color: #0f2747;
+    font-size: 1rem;
+    font-weight: 750;
+}
+
+.report-empty-state p {
+    max-width: 500px;
+    margin: 0 auto;
+    color: #64748b;
+    font-size: 0.82rem;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 991.98px) {
+
+    .report-selection-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .report-performance-card {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .report-performance-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+}
+
+
+@media (max-width: 767.98px) {
+
+    .report-page {
+        padding-bottom: 35px;
+    }
+
+    .report-hero {
+        padding: 23px;
+        border-radius: 16px;
+    }
+
+    .report-hero-content {
+        align-items: flex-start;
+    }
+
+    .report-hero-icon {
+        width: 46px;
+        height: 46px;
+        border-radius: 12px;
+        font-size: 1.15rem;
+    }
+
+    .report-hero h1 {
+        font-size: 1.4rem;
+    }
+
+    .report-hero p {
+        font-size: 0.82rem;
+        line-height: 1.5;
+    }
+
+    .report-card-header,
+    .report-card-body,
+    .report-students-header {
+        padding: 17px;
+    }
+
+    .report-context-items {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .report-context-item,
+    .report-context-item:first-child,
+    .report-context-item:last-child {
+        padding: 9px 0;
+    }
+
+    .report-context-divider {
+        width: 100%;
+        height: 1px;
+    }
+
+    .report-performance-card {
+        padding: 17px;
+    }
+
+    .report-performance-content {
+        align-items: flex-start;
+    }
+
+    .report-performance-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 11px;
+    }
+
+    .report-students-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .report-student-count {
+        align-self: flex-start;
+    }
+
+}
+
+/* =========================================================
+   CLASS PERFORMANCE REPORT
+   ========================================================= */
+
+   .class-report-page {
+    padding-bottom: 50px;
+}
+
+
+/* =========================================================
+   SCREEN ACTIONS
+   ========================================================= */
+
+.class-report-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.class-report-back-btn,
+.class-report-print-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 15px;
+    border-radius: 9px;
+    font-size: 0.8rem;
+    font-weight: 750;
+    text-decoration: none;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.class-report-back-btn {
+    border: 1px solid #dce3eb;
+    background: #ffffff;
+    color: #475569;
+}
+
+.class-report-back-btn:hover {
+    background: #f8fafc;
+    color: #0f2747;
+    transform: translateY(-1px);
+}
+
+.class-report-print-btn {
+    border: none;
+    background: #0f2747;
+    color: #ffffff;
+}
+
+.class-report-print-btn:hover {
+    background: #173d68;
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 7px 18px rgba(15, 39, 71, 0.18);
+}
+
+
+/* =========================================================
+   REPORT DOCUMENT
+   ========================================================= */
+
+.class-report-document {
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 18px 50px rgba(15, 39, 71, 0.09);
+}
+
+
+/* =========================================================
+   SCHOOL HEADER
+   ========================================================= */
+
+.class-report-header {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 28px 25px 23px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+    background: linear-gradient(
+        135deg,
+        #0f2747 0%,
+        #173d68 65%,
+        #1d4ed8 100%
+    );
+    color: #ffffff;
+    text-align: center;
+}
+
+.class-report-header::after {
+    content: "";
+    position: absolute;
+    width: 240px;
+    height: 240px;
+    right: -90px;
+    top: -130px;
+    border-radius: 50%;
+    background: rgba(224, 168, 62, 0.10);
+    pointer-events: none;
+}
+
+.class-report-brand {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.class-report-logo-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.class-report-logo {
+    width: 78px;
+    height: 78px;
+    object-fit: cover;
+    border: 3px solid rgba(255, 255, 255, 0.75);
+    border-radius: 14px;
+    background: #ffffff;
+}
+
+.class-report-school-details h1 {
+    margin: 0 0 5px;
+    color: #ffffff;
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    line-height: 1.15;
+}
+
+.class-report-school-subtitle {
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 0.85rem;
+    font-weight: 650;
+}
+
+.class-report-school-motto {
+    margin-top: 4px;
+    color: #f3d58a;
+    font-size: 0.78rem;
+    font-style: italic;
+}
+
+.class-report-title {
+    position: relative;
+    z-index: 1;
+    margin-top: 17px;
+    text-align: center;
+}
+
+.class-report-title span {
+    display: block;
+    margin-bottom: 4px;
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 0.63rem;
+    font-weight: 750;
+    letter-spacing: 1.4px;
+}
+
+.class-report-title strong {
+    display: block;
+    color: #ffffff;
+    font-size: 0.92rem;
+    font-weight: 800;
+    letter-spacing: 0.9px;
+}
+
+
+/* =========================================================
+   SECTION HEADING
+   ========================================================= */
+
+.class-report-section-heading {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin-bottom: 18px;
+}
+
+.class-report-section-icon {
+    width: 39px;
+    height: 39px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: #eef4fb;
+    color: #0f2747;
+    font-size: 0.95rem;
+}
+
+.class-report-section-icon.performance-icon {
+    background: #fff5df;
+    color: #b8790c;
+}
+
+.class-report-section-heading span {
+    display: block;
+    margin-bottom: 2px;
+    color: #64748b;
+    font-size: 0.68rem;
+    font-weight: 750;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+.class-report-section-heading h2 {
+    margin: 0;
+    color: #0f2747;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   CLASS INFORMATION
+   ========================================================= */
+
+.class-report-info {
+    padding: 22px;
+    border-bottom: 1px solid #edf0f4;
+}
+
+.class-report-info-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border: 1px solid #e5eaf0;
+    border-radius: 13px;
+    overflow: hidden;
+}
+
+.class-report-info-item {
+    min-width: 0;
+    padding: 14px 16px;
+    background: #fbfcfe;
+    border-right: 1px solid #e5eaf0;
+}
+
+.class-report-info-item:last-child {
+    border-right: none;
+}
+
+.class-report-info-item span {
+    display: block;
+    margin-bottom: 4px;
+    color: #64748b;
+    font-size: 0.67rem;
+    font-weight: 750;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.class-report-info-item strong {
+    display: block;
+    color: #0f2747;
+    font-size: 0.88rem;
+    font-weight: 750;
+}
+
+
+/* =========================================================
+   PERFORMANCE SECTION
+   ========================================================= */
+
+.class-report-performance {
+    padding: 22px;
+    border-bottom: 1px solid #edf0f4;
+}
+
+.class-report-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 13px;
+}
+
+.class-report-summary-card {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    min-width: 0;
+    padding: 14px;
+    border: 1px solid #e5eaf0;
+    border-radius: 13px;
+    background: #ffffff;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.class-report-summary-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(15, 39, 71, 0.07);
+}
+
+.class-report-summary-icon {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 0.9rem;
+}
+
+.class-report-summary-icon.students {
+    background: #eef4fb;
+    color: #1d4ed8;
+}
+
+.class-report-summary-icon.average {
+    background: #eef8f2;
+    color: #3f7d58;
+}
+
+.class-report-summary-icon.highest {
+    background: #fff5df;
+    color: #b8790c;
+}
+
+.class-report-summary-icon.lowest {
+    background: #fff0f0;
+    color: #c24141;
+}
+
+.class-report-summary-card span {
+    display: block;
+    margin-bottom: 2px;
+    color: #64748b;
+    font-size: 0.66rem;
+    font-weight: 750;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.class-report-summary-card strong {
+    color: #0f2747;
+    font-size: 1.05rem;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   RESULTS
+   ========================================================= */
+
+.class-report-results {
+    padding: 22px;
+}
+
+.class-report-results-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 17px;
+}
+
+.class-report-results-heading span {
+    display: block;
+    margin-bottom: 2px;
+    color: #64748b;
+    font-size: 0.68rem;
+    font-weight: 750;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+.class-report-results-heading h2 {
+    margin: 0;
+    color: #0f2747;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.class-report-result-count {
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: #eef4fb;
+    color: #0f2747;
+    font-size: 0.7rem;
+    font-weight: 750;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   RESULTS TABLE
+   ========================================================= */
+
+.class-report-table-wrapper {
+    overflow-x: auto;
+    border: 1px solid #e2e8f0;
+    border-radius: 13px;
+}
+
+.class-report-table {
+    width: 100%;
+    min-width: 900px;
+    margin: 0;
+    border-collapse: collapse;
+}
+
+.class-report-table thead th {
+    padding: 12px 10px;
+    border-bottom: 2px solid #dce3eb;
+    background: #f7f9fc;
+    color: #475569;
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.35px;
+    white-space: normal;
+    vertical-align: middle;
+}
+
+.class-report-table thead th.student-column {
+    min-width: 230px;
+    text-align: left;
+}
+
+.class-report-table thead th.position-column {
+    width: 65px;
+}
+
+.class-report-table tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #edf0f3;
+    color: #475569;
+    font-size: 0.76rem;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.class-report-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.class-report-table tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.class-report-table tbody tr:hover {
+    background: #f8fbff;
+}
+
+
+/* =========================================================
+   STUDENT CELL
+   ========================================================= */
+
+.class-report-table td.student-cell {
+    min-width: 230px;
+    text-align: left;
+}
+
+.class-report-student {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.class-report-student-avatar {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    background: #eef4fb;
+    color: #1d4ed8;
+    font-size: 0.72rem;
+}
+
+.class-report-student strong {
+    display: block;
+    color: #0f2747;
+    font-size: 0.77rem;
+    font-weight: 750;
+}
+
+.class-report-student span {
+    display: block;
+    margin-top: 2px;
+    color: #94a3b8;
+    font-size: 0.62rem;
+}
+
+
+/* =========================================================
+   POSITION
+   ========================================================= */
+
+.position-badge {
+    width: 27px;
+    height: 27px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 0.68rem;
+    font-weight: 800;
+}
+
+.position-badge.first {
+    background: #fff2c9;
+    color: #a66b00;
+}
+
+.position-badge.second {
+    background: #eef2f5;
+    color: #5c6875;
+}
+
+.position-badge.third {
+    background: #f6e8dc;
+    color: #9a5b35;
+}
+
+.position-number {
+    color: #64748b;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   SCORES
+   ========================================================= */
+
+.score-cell {
+    min-width: 65px;
+}
+
+.missing-score {
+    color: #cbd5e1;
+}
+
+.total-cell strong,
+.average-cell strong {
+    color: #0f2747;
+    font-weight: 800;
+}
+
+.average-cell {
+    background: #f8fbff;
+}
+
+
+/* =========================================================
+   EMPTY ROW
+   ========================================================= */
+
+.class-report-empty-row {
+    padding: 40px !important;
+}
+
+.class-report-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    color: #64748b;
+}
+
+.class-report-empty i {
+    color: #b8790c;
+    font-size: 1rem;
+}
+
+
+/* =========================================================
+   SIGNATURES
+   ========================================================= */
+
+.class-report-signatures {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 80px;
+    padding: 35px 22px 28px;
+    border-top: 1px solid #edf0f4;
+}
+
+.class-report-signature {
+    text-align: center;
+}
+
+.class-report-signature .signature-line {
+    width: 75%;
+    height: 1px;
+    margin: 0 auto 8px;
+    background: #64748b;
+}
+
+.class-report-signature strong {
+    display: block;
+    color: #334155;
+    font-size: 0.75rem;
+    font-weight: 750;
+}
+
+.class-report-signature span {
+    display: block;
+    margin-top: 2px;
+    color: #94a3b8;
+    font-size: 0.65rem;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.class-report-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 11px 22px;
+    border-top: 1px solid #edf0f4;
+    background: #fbfcfe;
+    color: #94a3b8;
+    font-size: 0.62rem;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 991.98px) {
+
+    .class-report-info-grid,
+    .class-report-summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .class-report-info-item:nth-child(2) {
+        border-right: none;
+    }
+
+    .class-report-info-item:nth-child(-n + 2) {
+        border-bottom: 1px solid #e5eaf0;
+    }
+
+}
+
+
+@media (max-width: 767.98px) {
+
+    .class-report-actions {
+        gap: 10px;
+    }
+
+    .class-report-back-btn,
+    .class-report-print-btn {
+        padding: 8px 11px;
+    }
+
+    .class-report-document {
+        border-radius: 16px;
+    }
+
+    .class-report-header {
+        padding: 23px 17px 20px;
+    }
+
+    .class-report-logo {
+        width: 65px;
+        height: 65px;
+        border-radius: 11px;
+    }
+
+    .class-report-school-details h1 {
+        font-size: 1.05rem;
+    }
+
+    .class-report-school-subtitle {
+        font-size: 0.75rem;
+    }
+
+    .class-report-school-motto {
+        font-size: 0.7rem;
+    }
+
+    .class-report-title {
+        margin-top: 13px;
+    }
+
+    .class-report-title strong {
+        font-size: 0.78rem;
+    }
+
+    .class-report-info,
+    .class-report-performance,
+    .class-report-results {
+        padding: 17px;
+    }
+
+    .class-report-info-grid,
+    .class-report-summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .class-report-info-item {
+        border-right: none !important;
+        border-bottom: 1px solid #e5eaf0;
+    }
+
+    .class-report-info-item:last-child {
+        border-bottom: none;
+    }
+
+    .class-report-summary-card {
+        padding: 12px;
+    }
+
+    .class-report-results-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .class-report-signatures {
+        gap: 30px;
+        padding: 28px 17px 23px;
+    }
+
+    .class-report-footer {
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+    }
+
+}

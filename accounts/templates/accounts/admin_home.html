@@ -1,1087 +1,55 @@
 {% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
 
+<link rel="stylesheet" href="{% static 'website/css/dashboard.css' %}">
+{% endblock %}
 {% block title %}
-    Admin Dashboard | BMK Academy
+Admin Dashboard | BMK Academy
 {% endblock %}
 
 {% block content %}
 
-<div class="container-fluid py-4">
+<div class="bmk-admin-dashboard">
 
-    <!-- Header -->
-    <div class="mb-4">
+<!-- =====================================================
+     DASHBOARD HEADER
+====================================================== -->
 
-        <h2 class="fw-bold mb-1">
-            Admin Dashboard
-        </h2>
+<div class="bmk-dashboard-header">
 
-        <p class="text-muted mb-0">
-            Welcome back,
-            {{ request.user.get_full_name|default:request.user.username }}.
-            Here's an overview of BMK Academy.
-        </p>
+    <div class="bmk-dashboard-header-content">
 
-    </div>
+        <div class="d-flex flex-column flex-md-row
+                    align-items-md-center
+                    justify-content-between
+                    gap-4">
 
+            <div>
 
-    <!-- Summary Cards -->
-    <div class="row g-4 mb-4">
-
-        <!-- Users -->
-        <div class="col-md-6 col-xl-3">
-
-            <div class="card border-0 shadow-sm h-100">
-
-                <div class="card-body">
-
-                    <div class="d-flex justify-content-between align-items-start">
-
-                        <div>
-
-                            <p class="text-muted mb-1">
-                                Total Users
-                            </p>
-
-                            <h3 class="fw-bold mb-0">
-                                {{ total_users }}
-                            </h3>
-
-                        </div>
-
-                        <div class="bg-primary bg-opacity-10
-                                    text-primary rounded-circle
-                                    p-3">
-
-                            <i class="bi bi-people fs-4"></i>
-
-                        </div>
-
-                    </div>
-
+                <div class="bmk-dashboard-eyebrow">
+                    <i class="bi bi-grid-1x2-fill"></i>
+                    Administration
                 </div>
+
+                <h1 class="bmk-dashboard-title">
+                    Welcome back,
+                    {{ request.user.get_full_name|default:request.user.username }}
+                </h1>
+
+                <p class="bmk-dashboard-subtitle">
+                    Here's an overview of what's happening
+                    across BMK Academy today.
+                </p>
 
             </div>
 
-        </div>
-
-
-        <!-- Students -->
-        <div class="col-md-6 col-xl-3">
-
-            <div class="card border-0 shadow-sm h-100">
-
-                <div class="card-body">
-
-                    <div class="d-flex justify-content-between align-items-start">
-
-                        <div>
-
-                            <p class="text-muted mb-1">
-                                Students
-                            </p>
-
-                            <h3 class="fw-bold mb-0">
-                                {{ total_students }}
-                            </h3>
-
-                        </div>
-
-                        <div class="bg-success bg-opacity-10
-                                    text-success rounded-circle
-                                    p-3">
-
-                            <i class="bi bi-mortarboard fs-4"></i>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- Teachers -->
-        <div class="col-md-6 col-xl-3">
-
-            <div class="card border-0 shadow-sm h-100">
-
-                <div class="card-body">
-
-                    <div class="d-flex justify-content-between align-items-start">
-
-                        <div>
-
-                            <p class="text-muted mb-1">
-                                Teachers
-                            </p>
-
-                            <h3 class="fw-bold mb-0">
-                                {{ total_teachers }}
-                            </h3>
-
-                        </div>
-
-                        <div class="bg-warning bg-opacity-10
-                                    text-warning rounded-circle
-                                    p-3">
-
-                            <i class="bi bi-person-workspace fs-4"></i>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- Pending Admissions -->
-        <div class="col-md-6 col-xl-3">
-
-            <div class="card border-0 shadow-sm h-100">
-
-                <div class="card-body">
-
-                    <div class="d-flex justify-content-between align-items-start">
-
-                        <div>
-
-                            <p class="text-muted mb-1">
-                                Pending Admissions
-                            </p>
-
-                            <h3 class="fw-bold mb-0">
-                                {{ pending_admissions }}
-                            </h3>
-
-                        </div>
-
-                        <div class="bg-danger bg-opacity-10
-                                    text-danger rounded-circle
-                                    p-3">
-
-                            <i class="bi bi-person-plus fs-4"></i>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- Total Invoiced -->
-        <div class="col-md-6 col-xl-3">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-start">
-
-                        <div>
-                            <p class="text-muted mb-1">
-                                Total Invoiced
-                            </p>
-
-                            <h3 class="fw-bold mb-0">
-                                ₦{{ fee_summary.total_invoiced|floatformat:2 }}
-                            </h3>
-                        </div>
-
-                        <div class="bg-primary bg-opacity-10 text-primary rounded-circle p-3">
-                            <i class="bi bi-receipt fs-4"></i>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <!-- Total Paid -->
-        <div class="col-md-6 col-xl-3">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-start">
-
-                        <div>
-                            <p class="text-muted mb-1">
-                                Total Paid
-                            </p>
-
-                            <h3 class="fw-bold mb-0">
-                                ₦{{ fee_summary.total_paid|floatformat:2 }}
-                            </h3>
-                        </div>
-
-                        <div class="bg-success bg-opacity-10 text-success rounded-circle p-3">
-                            <i class="bi bi-cash-stack fs-4"></i>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <!-- Outstanding -->
-        <div class="col-md-6 col-xl-3">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-start">
-
-                        <div>
-                            <p class="text-muted mb-1">
-                                Outstanding
-                            </p>
-
-                            <h3 class="fw-bold mb-0">
-                                ₦{{ fee_summary.outstanding|floatformat:2 }}
-                            </h3>
-                        </div>
-
-                        <div class="bg-danger bg-opacity-10 text-danger rounded-circle p-3">
-                            <i class="bi bi-wallet2 fs-4"></i>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- ATTENDANCE OVERVIEW -->
-    <div class="row g-4 mb-4">
-
-        <!-- Present -->
-        <div class="col-md-6 col-lg">
-
-            <div class="card border-0 shadow-sm h-100">
-
-                <div class="card-body">
-
-                    <p class="text-muted mb-1">
-                        Present Today
-                    </p>
-
-                    <h3 class="fw-bold text-success">
-                        {{ attendance_today.present }}
-                    </h3>
-
-                    <small class="text-muted">
-                        Students marked present
-                    </small>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- Absent -->
-        <div class="col-md-6 col-lg">
-
-            <div class="card border-0 shadow-sm h-100">
-
-                <div class="card-body">
-
-                    <p class="text-muted mb-1">
-                        Absent Today
-                    </p>
-
-                    <h3 class="fw-bold text-danger">
-                        {{ attendance_today.absent }}
-                    </h3>
-
-                    <small class="text-muted">
-                        Students marked absent
-                    </small>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- Late -->
-        <div class="col-md-6 col-lg">
-
-            <div class="card border-0 shadow-sm h-100">
-
-                <div class="card-body">
-
-                    <p class="text-muted mb-1">
-                        Late Today
-                    </p>
-
-                    <h3 class="fw-bold text-warning">
-                        {{ attendance_today.late }}
-                    </h3>
-
-                    <small class="text-muted">
-                        Students marked late
-                    </small>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- Excused -->
-        <div class="col-md-6 col-lg">
-
-            <div class="card border-0 shadow-sm h-100">
-
-                <div class="card-body">
-
-                    <p class="text-muted mb-1">
-                        Excused Today
-                    </p>
-
-                    <h3 class="fw-bold text-info">
-                        {{ attendance_today.excused }}
-                    </h3>
-
-                    <small class="text-muted">
-                        Students excused
-                    </small>
-
-                </div>
-
-            </div>
-
-        </div>
-        <!-- Not Marked -->
-        <div class="col-md-6 col-lg">
-
-            <div class="card border-0 shadow-sm h-100">
-
-                <div class="card-body">
-
-                    <p class="text-muted mb-1">
-                        Not Marked
-                    </p>
-
-                    <h3 class="fw-bold text-secondary">
-                        {{ attendance_today.not_marked }}
-                    </h3>
-
-                    <small class="text-muted">
-                        Students without attendance records
-                    </small>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-    <!-- ATTENDANCE RATE -->
-    <div class="row mb-4">
-
-        <div class="col-12">
-
-            <div class="card border-0 shadow-sm">
-
-                <div class="card-body">
-
-                    <div class="d-flex justify-content-between mb-2">
-
-                        <h5 class="fw-bold mb-0">
-                            Today's Attendance Rate
-                        </h5>
-
-                        <span class="fw-bold">
-                            {{ attendance_today.attendance_rate }}%
-                        </span>
-
-                    </div>
-
-                    <div
-                        class="progress"
-                        style="height: 10px;"
-                    >
-
-                        <div
-                            class="progress-bar bg-success"
-                            role="progressbar"
-                            style="width: {{ attendance_today.attendance_rate }}%;"
-                            aria-valuenow="{{ attendance_today.attendance_rate }}"
-                            aria-valuemin="0"
-                            aria-valuemax="100"
-                        >
-                        </div>
-
-                    </div>
-
-                    <small class="text-muted">
-                        Based on students with attendance records today.
-                    </small>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-    <!-- Main Dashboard -->
-    <div class="row g-4">
-
-        <!-- Admissions -->
-        <div class="col-lg-8">
-
-            <div class="card border-0 shadow-sm h-100">
-
-                <div class="card-body p-4">
-
-                    <div class="d-flex justify-content-between
-                                align-items-center mb-4">
-
-                        <div>
-
-                            <h5 class="fw-bold mb-1">
-                                Admissions Overview
-                            </h5>
-
-                            <p class="text-muted mb-0">
-                                Current admission application status.
-                            </p>
-
-                        </div>
-
-                        <a
-                            href="{% url 'admissions:admission_list' %}"
-                            class="btn btn-sm btn-outline-primary"
-                        >
-                            View Admissions
-                        </a>
-
-                    </div>
-
-
-                    <div class="row g-3">
-
-                        <div class="col-md-6">
-
-                            <div class="border rounded-3 p-3">
-
-                                <div class="d-flex justify-content-between">
-
-                                    <span class="text-muted">
-                                        Pending
-                                    </span>
-
-                                    <span class="badge text-bg-warning">
-                                        {{ pending_admissions }}
-                                    </span>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="col-md-6">
-
-                            <div class="border rounded-3 p-3">
-
-                                <div class="d-flex justify-content-between">
-
-                                    <span class="text-muted">
-                                        Approved
-                                    </span>
-
-                                    <span class="badge text-bg-success">
-                                        {{ approved_admissions }}
-                                    </span>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- Quick Actions -->
-        <div class="col-lg-4">
-
-            <div class="card border-0 shadow-sm h-100">
-
-                <div class="card-body p-4">
-
-                    <h5 class="fw-bold mb-4">
-                        Quick Actions
-                    </h5>
-
-
-                    <div class="d-grid gap-2">
-
-                        <a
-                            href="{% url 'accounts:user_list' %}"
-                            class="btn btn-outline-primary text-start"
-                        >
-                            <i class="bi bi-people me-2"></i>
-                            Manage Users
-                        </a>
-
-
-                        <a
-                            href="{% url 'admissions:admission_list' %}"
-                            class="btn btn-outline-primary text-start"
-                        >
-                            <i class="bi bi-person-plus me-2"></i>
-                            Manage Admissions
-                        </a>
-
-
-                        <a
-                            href="{% url 'students:student_list' %}"
-                            class="btn btn-outline-primary text-start"
-                        >
-                            <i class="bi bi-mortarboard me-2"></i>
-                            Manage Students
-                        </a>
-
-
-                        <a
-                            href="{% url 'teachers:teacher_list' %}"
-                            class="btn btn-outline-primary text-start"
-                        >
-                            <i class="bi bi-person-workspace me-2"></i>
-                            Manage Teachers
-                        </a>
-                        <a
-                            href="{% url 'attendance:mark_attendance' %}"
-                            class="btn btn-outline-info"
-                        >
-                            <i class="bi bi-calendar-check me-1"></i>
-                            Mark Attendance
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- Fee Overview -->
-    <div class="row g-4 mt-1">
-
-        <!-- Fee Overview Card -->
-        <div class="col-lg-8">
-
-            <div class="card border-0 shadow-sm h-100">
-
-                <div class="card-body p-4">
-
-                    <div class="d-flex justify-content-between
-                                align-items-center mb-4">
-
-                        <div>
-
-                            <h5 class="fw-bold mb-1">
-                                Fee Overview
-                            </h5>
-
-                            <p class="text-muted mb-0">
-                                Current school fee collection status.
-                            </p>
-
-                        </div>
-
-                        <a
-                            href="{% url 'fees:invoice_list' %}"
-                            class="btn btn-sm btn-outline-primary"
-                        >
-                            View Invoices
-                        </a>
-
-                    </div>
-
-
-                    <div class="row g-3">
-
-                        <!-- Total Invoiced -->
-                        <div class="col-md-4">
-
-                            <div class="border rounded-3 p-3">
-
-                                <p class="text-muted mb-1">
-                                    Invoiced
-                                </p>
-
-                                <h5 class="fw-bold mb-0">
-                                    ₦{{ collection_report.total_invoiced|floatformat:2 }}
-                                </h5>
-
-                            </div>
-
-                        </div>
-
-
-                        <!-- Total Paid -->
-                        <div class="col-md-4">
-
-                            <div class="border rounded-3 p-3">
-
-                                <p class="text-muted mb-1">
-                                    Collected
-                                </p>
-
-                                <h5 class="fw-bold text-success mb-0">
-                                    ₦{{ collection_report.total_paid|floatformat:2 }}
-                                </h5>
-
-                            </div>
-
-                        </div>
-
-
-                        <!-- Outstanding -->
-                        <div class="col-md-4">
-
-                            <div class="border rounded-3 p-3">
-
-                                <p class="text-muted mb-1">
-                                    Outstanding
-                                </p>
-
-                                <h5 class="fw-bold text-danger mb-0">
-                                    ₦{{ collection_report.outstanding|floatformat:2 }}
-                                </h5>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- Collection Rate -->
-                    <div class="mt-4">
-
-                        <div class="d-flex justify-content-between mb-2">
-
-                            <span class="text-muted">
-                                Collection Rate
-                            </span>
-
-                            <strong>
-                                {{ collection_report.collection_rate|floatformat:1 }}%
-                            </strong>
-
-                        </div>
-
-
-                        <div
-                            class="progress"
-                            role="progressbar"
-                            aria-valuenow="{{ collection_report.collection_rate }}"
-                            aria-valuemin="0"
-                            aria-valuemax="100"
-                        >
-
-                            <div
-                                class="progress-bar"
-                                style="width: {{ collection_report.collection_rate }}%;"
-                            ></div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- Invoice Status -->
-        <div class="col-lg-4">
-
-            <div class="card border-0 shadow-sm h-100">
-
-                <div class="card-body p-4">
-
-                    <h5 class="fw-bold mb-4">
-                        Invoice Status
-                    </h5>
-
-
-                    {% for status, data in collection_report.status_breakdown.items %}
-
-                        <div class="d-flex justify-content-between
-                                    align-items-center mb-3">
-
-                            <span>
-                                {{ data.label }}
-                            </span>
-
-                            <span class="badge text-bg-secondary">
-                                {{ data.count }}
-                            </span>
-
-                        </div>
-
-                    {% empty %}
-
-                        <p class="text-muted mb-0">
-                            No invoice data available.
-                        </p>
-
-                    {% endfor %}
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- Monthly Fee Collections -->
-        <div class="row g-4 mt-1">
-
-            <div class="col-12">
-
-                <div class="card border-0 shadow-sm">
-
-                    <div class="card-body p-4">
-
-                        <div class="mb-4">
-
-                            <h5 class="fw-bold mb-1">
-                                Monthly Fee Collections
-                            </h5>
-
-                            <p class="text-muted mb-0">
-                                Monthly payments received by BMK Academy.
-                            </p>
-
-                        </div>
-
-
-                        <div style="height: 300px;">
-
-                            <canvas id="monthlyCollectionsChart"></canvas>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-        <!-- Recent Admissions -->
-        <div class="row g-4 mt-1">
-
-            <div class="col-12">
-
-                <div class="card border-0 shadow-sm">
-
-                    <div class="card-body p-4">
-
-                        <div class="d-flex justify-content-between
-                                    align-items-center mb-4">
-
-                            <div>
-
-                                <h5 class="fw-bold mb-1">
-                                    Recent Admission Applications
-                                </h5>
-
-                                <p class="text-muted mb-0">
-                                    The latest admission applications submitted.
-                                </p>
-
-                            </div>
-
-                            <a
-                                href="{% url 'admissions:admission_list' %}"
-                                class="btn btn-sm btn-outline-primary"
-                            >
-                                View All
-                            </a>
-
-                        </div>
-
-
-                        {% if recent_admissions %}
-
-                            <div class="table-responsive">
-
-                                <table class="table table-hover align-middle mb-0">
-
-                                    <thead>
-
-                                        <tr>
-
-                                            <th>
-                                                Student
-                                            </th>
-
-                                            <th>
-                                                Class
-                                            </th>
-
-                                            <th>
-                                                Academic Year
-                                            </th>
-
-                                            <th>
-                                                Term
-                                            </th>
-
-                                            <th>
-                                                Status
-                                            </th>
-
-                                            <th>
-                                                Submitted
-                                            </th>
-
-                                        </tr>
-
-                                    </thead>
-
-
-                                    <tbody>
-
-                                        {% for application in recent_admissions %}
-
-                                            <tr>
-
-                                                <td>
-
-                                                    <strong>
-                                                        {{ application.first_name }}
-                                                        {{ application.last_name }}
-                                                    </strong>
-
-                                                </td>
-
-
-                                                <td>
-                                                    {{ application.desired_class }}
-                                                </td>
-
-
-                                                <td>
-                                                    {{ application.academic_year }}
-                                                </td>
-
-
-                                                <td>
-                                                    {{ application.term }}
-                                                </td>
-
-
-                                                <td>
-
-                                                    {% if application.status == "pending" %}
-
-                                                        <span class="badge text-bg-warning">
-                                                            Pending
-                                                        </span>
-
-                                                    {% elif application.status == "approved" %}
-
-                                                        <span class="badge text-bg-success">
-                                                            Approved
-                                                        </span>
-
-                                                    {% elif application.status == "rejected" %}
-
-                                                        <span class="badge text-bg-danger">
-                                                            Rejected
-                                                        </span>
-
-                                                    {% endif %}
-
-                                                </td>
-
-
-                                                <td>
-                                                    {{ application.submitted_at|date:"d M Y" }}
-                                                </td>
-
-                                            </tr>
-
-                                        {% endfor %}
-
-                                    </tbody>
-
-                                </table>
-
-                            </div>
-
-                        {% else %}
-
-                            <div class="text-center py-4">
-
-                                <i class="bi bi-inbox fs-1 text-muted"></i>
-
-                                <p class="text-muted mt-2 mb-0">
-                                    No admission applications have been submitted yet.
-                                </p>
-
-                            </div>
-
-                        {% endif %}
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-        <!-- RECENT NOTIFICATIONS -->
-        <div class="row g-4 mt-1">
-
-            <div class="col-12">
-
-                <div class="card border-0 shadow-sm">
-
-                    <div class="card-body p-4">
-
-                        <div class="d-flex justify-content-between align-items-center mb-4">
-
-                            <div>
-
-                                <h5 class="fw-bold mb-1">
-                                    Recent Notifications
-                                </h5>
-
-                                <p class="text-muted mb-0">
-                                    Recent activity and important notifications.
-                                </p>
-
-                            </div>
-
-                            {% if unread_notification_count %}
-
-                                <span class="badge bg-danger">
-                                    {{ unread_notification_count }} unread
-                                </span>
-
-                            {% else %}
-
-                                <span class="badge bg-success">
-                                    All caught up
-                                </span>
-
-                            {% endif %}
-
-                        </div>
-
-
-                        {% if notifications %}
-
-                            <div class="list-group list-group-flush">
-
-                                {% for notification in notifications %}
-
-                                    <div class="list-group-item px-0">
-
-                                        <div class="d-flex justify-content-between align-items-start">
-
-                                            <div>
-
-                                                <h6 class="fw-bold mb-1">
-
-                                                    {{ notification.title }}
-
-                                                    {% if not notification.is_read %}
-
-                                                        <span
-                                                            class="badge bg-primary ms-2"
-                                                        >
-                                                            New
-                                                        </span>
-
-                                                    {% endif %}
-
-                                                </h6>
-
-                                                <p class="text-muted mb-1">
-                                                    {{ notification.message }}
-                                                </p>
-
-                                                <small class="text-muted">
-                                                    {{ notification.created_at|date:"M d, Y • h:i A" }}
-                                                </small>
-
-                                            </div>
-
-
-                                            {% if notification.link %}
-
-                                                <a
-                                                    href="{{ notification.link }}"
-                                                    class="btn btn-sm btn-outline-primary ms-3"
-                                                >
-                                                    View
-                                                </a>
-
-                                            {% endif %}
-
-                                        </div>
-
-                                    </div>
-
-                                {% endfor %}
-
-                            </div>
-
-                        {% else %}
-
-                            <div class="text-center py-4">
-
-                                <i
-                                    class="bi bi-bell text-muted"
-                                    style="font-size: 2rem;"
-                                ></i>
-
-                                <p class="text-muted mt-2 mb-0">
-                                    No notifications yet.
-                                </p>
-
-                            </div>
-
-                        {% endif %}
-
-                    </div>
-
-                </div>
+            <div class="bmk-dashboard-logo-mark">
+
+                <img
+                    src="{% static 'website/images/bmk-logo.png' %}"
+                    alt="BMK Academy"
+                >
 
             </div>
 
@@ -1092,75 +60,1434 @@
 </div>
 
 
+<!-- =====================================================
+     CORE STATISTICS
+====================================================== -->
 
+<div class="row g-4 mb-4">
+
+    <!-- Users -->
+    <div class="col-sm-6 col-xl-3">
+
+        <div class="bmk-kpi-card bmk-kpi-blue">
+
+            <div class="bmk-kpi-top">
+
+                <div>
+
+                    <div class="bmk-kpi-label">
+                        Total Users
+                    </div>
+
+                    <h2 class="bmk-kpi-value">
+                        {{ total_users }}
+                    </h2>
+
+                </div>
+
+                <div class="bmk-kpi-icon">
+                    <i class="bi bi-people"></i>
+                </div>
+
+            </div>
+
+            <div class="bmk-kpi-footer">
+                Registered accounts
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Students -->
+    <div class="col-sm-6 col-xl-3">
+
+        <div class="bmk-kpi-card bmk-kpi-green">
+
+            <div class="bmk-kpi-top">
+
+                <div>
+
+                    <div class="bmk-kpi-label">
+                        Students
+                    </div>
+
+                    <h2 class="bmk-kpi-value">
+                        {{ total_students }}
+                    </h2>
+
+                </div>
+
+                <div class="bmk-kpi-icon">
+                    <i class="bi bi-mortarboard"></i>
+                </div>
+
+            </div>
+
+            <div class="bmk-kpi-footer">
+                Enrolled learners
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Teachers -->
+    <div class="col-sm-6 col-xl-3">
+
+        <div class="bmk-kpi-card bmk-kpi-gold">
+
+            <div class="bmk-kpi-top">
+
+                <div>
+
+                    <div class="bmk-kpi-label">
+                        Teachers
+                    </div>
+
+                    <h2 class="bmk-kpi-value">
+                        {{ total_teachers }}
+                    </h2>
+
+                </div>
+
+                <div class="bmk-kpi-icon">
+                    <i class="bi bi-person-workspace"></i>
+                </div>
+
+            </div>
+
+            <div class="bmk-kpi-footer">
+                Active teaching staff
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Pending Admissions -->
+    <div class="col-sm-6 col-xl-3">
+
+        <div class="bmk-kpi-card bmk-kpi-red">
+
+            <div class="bmk-kpi-top">
+
+                <div>
+
+                    <div class="bmk-kpi-label">
+                        Pending Admissions
+                    </div>
+
+                    <h2 class="bmk-kpi-value">
+                        {{ pending_admissions }}
+                    </h2>
+
+                </div>
+
+                <div class="bmk-kpi-icon">
+                    <i class="bi bi-person-plus"></i>
+                </div>
+
+            </div>
+
+            <div class="bmk-kpi-footer">
+                Applications awaiting review
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     FINANCIAL SUMMARY
+====================================================== -->
+
+<div class="row g-4 mb-4">
+
+    <!-- Total Invoiced -->
+    <div class="col-sm-6 col-xl-4">
+
+        <div class="bmk-kpi-card bmk-kpi-blue">
+
+            <div class="bmk-kpi-top">
+
+                <div>
+
+                    <div class="bmk-kpi-label">
+                        Total Invoiced
+                    </div>
+
+                    <h2 class="bmk-kpi-value">
+                        ₦{{ fee_summary.total_invoiced|floatformat:2 }}
+                    </h2>
+
+                </div>
+
+                <div class="bmk-kpi-icon">
+                    <i class="bi bi-receipt"></i>
+                </div>
+
+            </div>
+
+            <div class="bmk-kpi-footer">
+                Total fees invoiced
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Total Paid -->
+    <div class="col-sm-6 col-xl-4">
+
+        <div class="bmk-kpi-card bmk-kpi-green">
+
+            <div class="bmk-kpi-top">
+
+                <div>
+
+                    <div class="bmk-kpi-label">
+                        Total Paid
+                    </div>
+
+                    <h2 class="bmk-kpi-value">
+                        ₦{{ fee_summary.total_paid|floatformat:2 }}
+                    </h2>
+
+                </div>
+
+                <div class="bmk-kpi-icon">
+                    <i class="bi bi-cash-stack"></i>
+                </div>
+
+            </div>
+
+            <div class="bmk-kpi-footer">
+                Payments received
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Outstanding -->
+    <div class="col-sm-6 col-xl-4">
+
+        <div class="bmk-kpi-card bmk-kpi-red">
+
+            <div class="bmk-kpi-top">
+
+                <div>
+
+                    <div class="bmk-kpi-label">
+                        Outstanding
+                    </div>
+
+                    <h2 class="bmk-kpi-value">
+                        ₦{{ fee_summary.outstanding|floatformat:2 }}
+                    </h2>
+
+                </div>
+
+                <div class="bmk-kpi-icon">
+                    <i class="bi bi-wallet2"></i>
+                </div>
+
+            </div>
+
+            <div class="bmk-kpi-footer">
+                Fees still outstanding
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     ATTENDANCE
+====================================================== -->
+
+<div class="bmk-admin-card mb-4">
+
+    <div class="bmk-admin-card-header">
+
+        <div>
+
+            <h3 class="bmk-admin-card-title">
+                Today's Attendance
+            </h3>
+
+            <p class="bmk-admin-card-subtitle">
+                Attendance activity recorded for today.
+            </p>
+
+        </div>
+
+        <a
+            href="{% url 'attendance:attendance_dashboard' %}"
+            class="btn btn-sm btn-outline-primary bmk-admin-btn"
+        >
+            <i class="bi bi-bar-chart"></i>
+            Dashboard
+        </a>
+
+    </div>
+
+
+    <div class="bmk-admin-card-body">
+
+        <div class="row g-3">
+
+            <!-- Present -->
+            <div class="col-6 col-lg">
+
+                <div class="bmk-attendance-card bmk-attendance-present">
+
+                    <div class="bmk-attendance-label">
+                        Present
+                    </div>
+
+                    <div class="bmk-attendance-number">
+                        {{ attendance_today.present }}
+                    </div>
+
+                    <div class="bmk-attendance-description">
+                        Students present
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Absent -->
+            <div class="col-6 col-lg">
+
+                <div class="bmk-attendance-card bmk-attendance-absent">
+
+                    <div class="bmk-attendance-label">
+                        Absent
+                    </div>
+
+                    <div class="bmk-attendance-number">
+                        {{ attendance_today.absent }}
+                    </div>
+
+                    <div class="bmk-attendance-description">
+                        Students absent
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Late -->
+            <div class="col-6 col-lg">
+
+                <div class="bmk-attendance-card bmk-attendance-late">
+
+                    <div class="bmk-attendance-label">
+                        Late
+                    </div>
+
+                    <div class="bmk-attendance-number">
+                        {{ attendance_today.late }}
+                    </div>
+
+                    <div class="bmk-attendance-description">
+                        Students late
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Excused -->
+            <div class="col-6 col-lg">
+
+                <div class="bmk-attendance-card bmk-attendance-excused">
+
+                    <div class="bmk-attendance-label">
+                        Excused
+                    </div>
+
+                    <div class="bmk-attendance-number">
+                        {{ attendance_today.excused }}
+                    </div>
+
+                    <div class="bmk-attendance-description">
+                        Students excused
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Not Marked -->
+            <div class="col-6 col-lg">
+
+                <div class="bmk-attendance-card bmk-attendance-unmarked">
+
+                    <div class="bmk-attendance-label">
+                        Not Marked
+                    </div>
+
+                    <div class="bmk-attendance-number">
+                        {{ attendance_today.not_marked }}
+                    </div>
+
+                    <div class="bmk-attendance-description">
+                        No record today
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Attendance Rate -->
+
+        <div class="mt-4">
+
+            <div class="d-flex justify-content-between
+                        align-items-center mb-2">
+
+                <div>
+
+                    <strong class="text-dark">
+                        Attendance Rate
+                    </strong>
+
+                    <div class="small text-muted">
+                        Based on students with attendance records today.
+                    </div>
+
+                </div>
+
+                <strong class="text-success">
+                    {{ attendance_today.attendance_rate }}%
+                </strong>
+
+            </div>
+
+
+            <div class="progress bmk-progress">
+
+                <div
+                    class="progress-bar"
+                    role="progressbar"
+                    style="width: {{ attendance_today.attendance_rate }}%;"
+                    aria-valuenow="{{ attendance_today.attendance_rate }}"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                ></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     ADMISSIONS + QUICK ACTIONS
+====================================================== -->
+
+<div class="row g-4 mb-4">
+
+    <!-- Admissions -->
+    <div class="col-lg-8">
+
+        <div class="bmk-admin-card">
+
+            <div class="bmk-admin-card-header">
+
+                <div>
+
+                    <h3 class="bmk-admin-card-title">
+                        Admissions Overview
+                    </h3>
+
+                    <p class="bmk-admin-card-subtitle">
+                        Current admission application status.
+                    </p>
+
+                </div>
+
+                <a
+                    href="{% url 'admissions:admission_list' %}"
+                    class="btn btn-sm btn-outline-primary bmk-admin-btn"
+                >
+                    <i class="bi bi-arrow-right"></i>
+                    View Admissions
+                </a>
+
+            </div>
+
+
+            <div class="bmk-admin-card-body">
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+
+                        <div class="bmk-mini-stat">
+
+                            <div class="bmk-mini-stat-label">
+                                Pending Applications
+                            </div>
+
+                            <h4 class="bmk-mini-stat-value">
+                                {{ pending_admissions }}
+                            </h4>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <div class="bmk-mini-stat">
+
+                            <div class="bmk-mini-stat-label">
+                                Approved Applications
+                            </div>
+
+                            <h4 class="bmk-mini-stat-value text-success">
+                                {{ approved_admissions }}
+                            </h4>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Quick Actions -->
+    <!-- =====================================================
+     QUICK ACTIONS
+    ====================================================== -->
+
+    <div class="col-lg-4">
+
+        <div class="bmk-admin-card">
+
+            <div class="bmk-admin-card-header">
+
+                <div>
+
+                    <h3 class="bmk-admin-card-title">
+                        Quick Actions
+                    </h3>
+
+                    <p class="bmk-admin-card-subtitle">
+                        Frequently used administration tools.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="bmk-admin-card-body">
+
+                <!-- =================================================
+                    PEOPLE & ADMISSIONS
+                ================================================== -->
+
+                <div class="bmk-quick-action-group">
+
+                    <div class="bmk-quick-action-group-title">
+                        <i class="bi bi-people-fill"></i>
+                        People & Admissions
+                    </div>
+
+
+                    <div class="d-grid gap-2">
+
+                        <a
+                            href="{% url 'accounts:user_list' %}"
+                            class="bmk-quick-action"
+                        >
+
+                            <span class="bmk-quick-action-icon">
+                                <i class="bi bi-people"></i>
+                            </span>
+
+                            <span class="bmk-quick-action-text">
+                                Manage Users
+                            </span>
+
+                        </a>
+
+
+                        <a
+                            href="{% url 'admissions:admission_list' %}"
+                            class="bmk-quick-action"
+                        >
+
+                            <span class="bmk-quick-action-icon">
+                                <i class="bi bi-person-plus"></i>
+                            </span>
+
+                            <span class="bmk-quick-action-text">
+                                Manage Admissions
+                            </span>
+
+                        </a>
+
+
+                        <a
+                            href="{% url 'students:student_list' %}"
+                            class="bmk-quick-action"
+                        >
+
+                            <span class="bmk-quick-action-icon">
+                                <i class="bi bi-mortarboard"></i>
+                            </span>
+
+                            <span class="bmk-quick-action-text">
+                                Manage Students
+                            </span>
+
+                        </a>
+
+
+                        <a
+                            href="{% url 'teachers:teacher_list' %}"
+                            class="bmk-quick-action"
+                        >
+
+                            <span class="bmk-quick-action-icon">
+                                <i class="bi bi-person-workspace"></i>
+                            </span>
+
+                            <span class="bmk-quick-action-text">
+                                Manage Teachers
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                    TEACHING
+                ================================================== -->
+
+                <div class="bmk-quick-action-group">
+
+                    <div class="bmk-quick-action-group-title">
+                        <i class="bi bi-journal-bookmark-fill"></i>
+                        Teaching
+                    </div>
+
+
+                    <div class="d-grid gap-2">
+
+                        <a
+                            href="{% url 'teachers:teaching_assignment_list' %}"
+                            class="bmk-quick-action"
+                        >
+
+                            <span class="bmk-quick-action-icon">
+                                <i class="bi bi-journal-bookmark"></i>
+                            </span>
+
+                            <span class="bmk-quick-action-text">
+                                Teaching Assignments
+                            </span>
+
+                        </a>
+
+
+                        <a
+                            href="{% url 'teachers:assign_subject_teacher' %}"
+                            class="bmk-quick-action"
+                        >
+
+                            <span class="bmk-quick-action-icon">
+                                <i class="bi bi-person-check"></i>
+                            </span>
+
+                            <span class="bmk-quick-action-text">
+                                Assign Subject Teacher
+                            </span>
+
+                        </a>
+
+
+                        <a
+                            href="{% url 'teachers:class_teacher_assignment_list' %}"
+                            class="bmk-quick-action"
+                        >
+
+                            <span class="bmk-quick-action-icon">
+                                <i class="bi bi-person-badge"></i>
+                            </span>
+
+                            <span class="bmk-quick-action-text">
+                                Class Teachers
+                            </span>
+
+                        </a>
+
+
+                        <a
+                            href="{% url 'teachers:assign_class_teacher' %}"
+                            class="bmk-quick-action"
+                        >
+
+                            <span class="bmk-quick-action-icon">
+                                <i class="bi bi-person-plus-fill"></i>
+                            </span>
+
+                            <span class="bmk-quick-action-text">
+                                Assign Class Teacher
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                    ATTENDANCE & COMMUNICATION
+                ================================================== -->
+
+                <div class="bmk-quick-action-group">
+
+                    <div class="bmk-quick-action-group-title">
+                        <i class="bi bi-megaphone-fill"></i>
+                        Attendance & Communication
+                    </div>
+
+
+                    <div class="d-grid gap-2">
+
+                        <!-- Mark Attendance -->
+
+                        <a
+                            href="{% url 'attendance:mark_attendance' %}"
+                            class="bmk-quick-action"
+                        >
+
+                            <span class="bmk-quick-action-icon">
+                                <i class="bi bi-calendar-check"></i>
+                            </span>
+
+                            <span class="bmk-quick-action-text">
+                                Mark Attendance
+                            </span>
+
+                        </a>
+
+
+                        <!-- Notifications -->
+
+                        <a
+                            href="{% url 'notifications:notification_list' %}"
+                            class="bmk-quick-action bmk-quick-action-notification"
+                        >
+
+                            <span class="bmk-quick-action-icon">
+                                <i class="bi bi-bell"></i>
+                            </span>
+
+                            <span class="bmk-quick-action-text">
+                                Notifications
+                            </span>
+
+                            <span class="bmk-quick-action-arrow">
+                                <i class="bi bi-arrow-right"></i>
+                            </span>
+
+                        </a>
+
+
+                        <!-- Create Announcement -->
+
+                        <a
+                            href="{% url 'notifications:create_announcement' %}"
+                            class="bmk-quick-action bmk-quick-action-announcement"
+                        >
+
+                            <span class="bmk-quick-action-icon">
+                                <i class="bi bi-megaphone"></i>
+                            </span>
+
+                            <span class="bmk-quick-action-text">
+                                Create Announcement
+                            </span>
+
+                            <span class="bmk-quick-action-arrow">
+                                <i class="bi bi-arrow-right"></i>
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<!-- =====================================================
+     FEES
+====================================================== -->
+
+<div class="row g-4 mb-4">
+
+    <!-- Fee Overview -->
+    <div class="col-lg-8">
+
+        <div class="bmk-admin-card">
+
+            <div class="bmk-admin-card-header">
+
+                <div>
+
+                    <h3 class="bmk-admin-card-title">
+                        Fee Overview
+                    </h3>
+
+                    <p class="bmk-admin-card-subtitle">
+                        Current school fee collection status.
+                    </p>
+
+                </div>
+
+                <a
+                    href="{% url 'fees:invoice_list' %}"
+                    class="btn btn-sm btn-outline-primary bmk-admin-btn"
+                >
+                    <i class="bi bi-receipt"></i>
+                    View Invoices
+                </a>
+
+            </div>
+
+
+            <div class="bmk-admin-card-body">
+
+                <div class="row g-3">
+
+                    <div class="col-md-4">
+
+                        <div class="bmk-mini-stat">
+
+                            <div class="bmk-mini-stat-label">
+                                Total Invoiced
+                            </div>
+
+                            <h4 class="bmk-mini-stat-value">
+                                ₦{{ collection_report.total_invoiced|floatformat:2 }}
+                            </h4>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <div class="bmk-mini-stat">
+
+                            <div class="bmk-mini-stat-label">
+                                Total Collected
+                            </div>
+
+                            <h4 class="bmk-mini-stat-value text-success">
+                                ₦{{ collection_report.total_paid|floatformat:2 }}
+                            </h4>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <div class="bmk-mini-stat">
+
+                            <div class="bmk-mini-stat-label">
+                                Outstanding
+                            </div>
+
+                            <h4 class="bmk-mini-stat-value text-danger">
+                                ₦{{ collection_report.outstanding|floatformat:2 }}
+                            </h4>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="mt-4">
+
+                    <div class="d-flex justify-content-between mb-2">
+
+                        <span class="small text-muted">
+                            Collection Rate
+                        </span>
+
+                        <strong class="small">
+                            {{ collection_report.collection_rate|floatformat:1 }}%
+                        </strong>
+
+                    </div>
+
+
+                    <div
+                        class="progress bmk-progress"
+                        role="progressbar"
+                        aria-valuenow="{{ collection_report.collection_rate }}"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                    >
+
+                        <div
+                            class="progress-bar"
+                            style="width: {{ collection_report.collection_rate }}%;"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Invoice Status -->
+    <div class="col-lg-4">
+
+        <div class="bmk-admin-card">
+
+            <div class="bmk-admin-card-header">
+
+                <div>
+
+                    <h3 class="bmk-admin-card-title">
+                        Invoice Status
+                    </h3>
+
+                    <p class="bmk-admin-card-subtitle">
+                        Current invoice breakdown.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="bmk-admin-card-body">
+
+                {% for status, data in collection_report.status_breakdown.items %}
+
+                    <div class="d-flex justify-content-between
+                                align-items-center mb-3">
+
+                        <span class="small fw-semibold">
+                            {{ data.label }}
+                        </span>
+
+                        <span class="badge text-bg-secondary">
+                            {{ data.count }}
+                        </span>
+
+                    </div>
+
+                {% empty %}
+
+                    <div class="bmk-empty-state py-3">
+
+                        <div class="bmk-empty-state-icon">
+                            <i class="bi bi-receipt"></i>
+                        </div>
+
+                        <div class="small">
+                            No invoice data available.
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MONTHLY COLLECTION CHART
+====================================================== -->
+
+<div class="bmk-admin-card mb-4">
+
+    <div class="bmk-admin-card-header">
+
+        <div>
+
+            <h3 class="bmk-admin-card-title">
+                Monthly Fee Collections
+            </h3>
+
+            <p class="bmk-admin-card-subtitle">
+                Monthly payments received by BMK Academy.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="bmk-admin-card-body">
+
+        <div style="height: 320px;">
+            <canvas id="monthlyCollectionsChart"></canvas>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     RECENT ADMISSIONS
+====================================================== -->
+
+<div class="bmk-admin-card mb-4">
+
+    <div class="bmk-admin-card-header">
+
+        <div>
+
+            <h3 class="bmk-admin-card-title">
+                Recent Admission Applications
+            </h3>
+
+            <p class="bmk-admin-card-subtitle">
+                The latest admission applications submitted.
+            </p>
+
+        </div>
+
+        <a
+            href="{% url 'admissions:admission_list' %}"
+            class="btn btn-sm btn-outline-primary bmk-admin-btn"
+        >
+            <i class="bi bi-arrow-right"></i>
+            View All
+        </a>
+
+    </div>
+
+
+    {% if recent_admissions %}
+
+        <div class="table-responsive">
+
+            <table class="table bmk-admin-table table-hover align-middle">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Student</th>
+                        <th>Class</th>
+                        <th>Academic Year</th>
+                        <th>Term</th>
+                        <th>Status</th>
+                        <th>Submitted</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for application in recent_admissions %}
+
+                        <tr>
+
+                            <td>
+                                <span class="bmk-student-name">
+                                    {{ application.first_name }}
+                                    {{ application.last_name }}
+                                </span>
+                            </td>
+
+                            <td>
+                                {{ application.desired_class }}
+                            </td>
+
+                            <td>
+                                {{ application.academic_year }}
+                            </td>
+
+                            <td>
+                                {{ application.term }}
+                            </td>
+
+                            <td>
+
+                                {% if application.status == "pending" %}
+
+                                    <span class="badge text-bg-warning">
+                                        Pending
+                                    </span>
+
+                                {% elif application.status == "approved" %}
+
+                                    <span class="badge text-bg-success">
+                                        Approved
+                                    </span>
+
+                                {% elif application.status == "rejected" %}
+
+                                    <span class="badge text-bg-danger">
+                                        Rejected
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                            <td class="text-nowrap">
+                                {{ application.submitted_at|date:"d M Y" }}
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    {% else %}
+
+        <div class="bmk-empty-state">
+
+            <div class="bmk-empty-state-icon">
+                <i class="bi bi-inbox"></i>
+            </div>
+
+            <div class="fw-semibold text-dark mb-1">
+                No admission applications
+            </div>
+
+            <div class="small">
+                No admission applications have been submitted yet.
+            </div>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+
+<!-- =====================================================
+     RECENT NOTIFICATIONS
+====================================================== -->
+
+<div class="bmk-admin-card mb-4">
+
+    <div class="bmk-admin-card-header">
+
+        <div>
+
+            <h3 class="bmk-admin-card-title">
+                Recent Notifications
+            </h3>
+
+            <p class="bmk-admin-card-subtitle">
+                Recent activity and important notifications.
+            </p>
+
+        </div>
+
+
+        {% if unread_notification_count %}
+
+            <span class="badge bg-danger">
+                {{ unread_notification_count }} unread
+            </span>
+
+        {% else %}
+
+            <span class="badge bg-success">
+                All caught up
+            </span>
+
+        {% endif %}
+
+    </div>
+
+
+    <div class="bmk-admin-card-body">
+
+        {% if notifications %}
+
+            {% for notification in notifications %}
+
+                <div class="bmk-notification-item">
+
+                    <div class="bmk-notification-icon">
+                        <i class="bi bi-bell"></i>
+                    </div>
+
+
+                    <div class="flex-grow-1">
+
+                        <h4 class="bmk-notification-title">
+
+                            {{ notification.title }}
+
+                            {% if not notification.is_read %}
+
+                                <span class="badge bg-primary ms-1">
+                                    New
+                                </span>
+
+                            {% endif %}
+
+                        </h4>
+
+
+                        <p class="bmk-notification-message">
+                            {{ notification.message }}
+                        </p>
+
+
+                        <div class="bmk-notification-date">
+                            {{ notification.created_at|date:"M d, Y • h:i A" }}
+                        </div>
+
+                    </div>
+
+
+                    {% if notification.link %}
+
+                        <a
+                            href="{{ notification.link }}"
+                            class="btn btn-sm btn-outline-primary bmk-admin-btn"
+                        >
+                            View
+                        </a>
+
+                    {% endif %}
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="bmk-empty-state">
+
+                <div class="bmk-empty-state-icon">
+                    <i class="bi bi-bell-slash"></i>
+                </div>
+
+                <div class="fw-semibold text-dark mb-1">
+                    No notifications
+                </div>
+
+                <div class="small">
+                    There are no recent notifications to display.
+                </div>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+</div>
 
 <script>
+
+document.addEventListener("DOMContentLoaded", function () {
 
     const monthlyCollections = [
         {% for item in monthly_collections %}
         {
-            month: "{{ item.month_name }}",
+            month: "{{ item.month_name|escapejs }}",
             total: {{ item.total|default:0 }}
         }{% if not forloop.last %},{% endif %}
         {% endfor %}
     ];
 
 
-    const monthlyLabels = monthlyCollections.map(
-        item => item.month
-    );
-
-
-    const monthlyTotals = monthlyCollections.map(
-        item => Number(item.total)
-    );
-
-
-    const ctx = document.getElementById(
+    const chartElement = document.getElementById(
         "monthlyCollectionsChart"
     );
 
 
-    new Chart(ctx, {
+    if (chartElement) {
 
-        type: "bar",
+        const monthlyLabels = monthlyCollections.map(
+            item => item.month
+        );
 
-        data: {
 
-            labels: monthlyLabels,
+        const monthlyTotals = monthlyCollections.map(
+            item => Number(item.total)
+        );
 
-            datasets: [
 
-                {
-                    label: "Monthly Collections",
+        new Chart(chartElement, {
 
-                    data: monthlyTotals,
+            type: "bar",
 
-                    borderWidth: 1
-                }
+            data: {
 
-            ]
+                labels: monthlyLabels,
 
-        },
+                datasets: [
 
-        options: {
+                    {
+                        label: "Monthly Collections",
 
-            responsive: true,
+                        data: monthlyTotals,
 
-            maintainAspectRatio: false,
+                        borderWidth: 0,
 
-            scales: {
+                        borderRadius: 8,
 
-                y: {
+                        backgroundColor: "rgba(29, 78, 216, 0.78)",
 
-                    beginAtZero: true,
+                        hoverBackgroundColor: "rgba(224, 168, 62, 0.9)"
 
-                    ticks: {
+                    }
 
-                        callback: function(value) {
+                ]
 
-                            return "₦" +
-                                Number(value).toLocaleString();
+            },
+
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                plugins: {
+
+                    legend: {
+                        display: false
+                    },
+
+                    tooltip: {
+
+                        callbacks: {
+
+                            label: function (context) {
+
+                                return " ₦" +
+                                    Number(
+                                        context.raw
+                                    ).toLocaleString();
+
+                            }
+
+                        }
+
+                    }
+
+                },
+
+
+                scales: {
+
+                    x: {
+
+                        grid: {
+                            display: false
+                        },
+
+                        ticks: {
+                            color: "#718096"
+                        }
+
+                    },
+
+
+                    y: {
+
+                        beginAtZero: true,
+
+                        grid: {
+                            color: "rgba(15, 39, 71, 0.07)"
+                        },
+
+                        ticks: {
+
+                            color: "#718096",
+
+                            callback: function (value) {
+
+                                return "₦" +
+                                    Number(
+                                        value
+                                    ).toLocaleString();
+
+                            }
 
                         }
 
@@ -1170,9 +1497,11 @@
 
             }
 
-        }
+        });
 
-    });
+    }
+
+});
 
 </script>
 

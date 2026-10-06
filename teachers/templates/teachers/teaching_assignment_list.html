@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 
 {% block title %}
@@ -8,57 +9,141 @@
 {% endblock %}
 
 
+{% block extra_css %}
+
+<link
+    rel="stylesheet"
+    href="{% static 'website/css/teacher.css' %}"
+>
+
+{% endblock %}
+
+
 {% block content %}
 
-
-<div class="d-flex justify-content-between align-items-center mb-4">
-
-    <div>
-
-        <h2 class="mb-1">
-            Teaching Assignments
-        </h2>
-
-        <p class="text-muted mb-0">
-            Teachers assigned to classes and subjects.
-        </p>
-
-    </div>
+<div class="teacher-page">
 
 
-    <div class="d-flex gap-2">
+    <!-- =================================================
+         PAGE HERO
+    ================================================== -->
 
-        <a
-            href="{% url 'teachers:assign_subject_teacher' %}"
-            class="btn btn-primary"
-        >
-            Assign Subject
-        </a>
+    <section class="teacher-list-hero">
 
+        <div class="teacher-list-hero-content">
 
-        <a
-            href="{% url 'teachers:teacher_list' %}"
-            class="btn btn-outline-secondary"
-        >
-            Teachers
-        </a>
+            <div class="teacher-list-hero-icon">
 
-    </div>
+                <i class="bi bi-journal-bookmark"></i>
 
-</div>
+            </div>
 
 
-<div class="card shadow-sm">
+            <span>
+                ACADEMIC MANAGEMENT
+            </span>
 
-    <div class="card-body">
+
+            <h2>
+                Teaching Assignments
+            </h2>
+
+
+            <p>
+                Manage teachers assigned to classes and subjects.
+            </p>
+
+        </div>
+
+
+        <div class="teacher-list-hero-actions">
+
+            <a
+                href="{% url 'teachers:assign_subject_teacher' %}"
+                class="teacher-hero-primary-btn"
+            >
+
+                <i class="bi bi-plus-lg"></i>
+
+                Assign Subject
+
+            </a>
+
+
+            <a
+                href="{% url 'teachers:teacher_list' %}"
+                class="teacher-hero-secondary-btn"
+            >
+
+                <i class="bi bi-people"></i>
+
+                Teachers
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         ASSIGNMENTS CARD
+    ================================================== -->
+
+    <section class="teacher-list-card">
+
+
+        <div class="teacher-list-card-header">
+
+            <div class="teacher-list-card-title">
+
+                <div class="teacher-list-section-icon">
+
+                    <i class="bi bi-diagram-3"></i>
+
+                </div>
+
+
+                <div>
+
+                    <h5>
+                        Subject Teaching Assignments
+                    </h5>
+
+                    <p>
+                        Current and previous teacher assignments.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            {% if assignments %}
+
+                <span class="teacher-record-count">
+
+                    <i class="bi bi-list-check"></i>
+
+                    {{ assignments|length }} assignment{{ assignments|length|pluralize }}
+
+                </span>
+
+            {% endif %}
+
+        </div>
+
+
 
         {% if assignments %}
 
-            <div class="table-responsive">
 
-                <table class="table table-hover align-middle">
+            <div class="teacher-assignment-list-wrapper">
 
-                    <thead class="table-light">
+                <table class="teacher-assignment-list-table">
+
+                    <thead>
 
                         <tr>
 
@@ -89,51 +174,148 @@
 
                     <tbody>
 
+
                         {% for assignment in assignments %}
 
                             <tr>
 
+
+                                <!-- =========================
+                                     TEACHER
+                                ========================== -->
+
                                 <td>
-                                    {{ assignment.teacher.user.get_full_name }}
+
+                                    <div class="teacher-list-teacher-cell">
+
+                                        <div class="teacher-list-mini-avatar">
+
+                                            {{ assignment.teacher.user.first_name|first|upper }}
+
+                                            {% if assignment.teacher.user.last_name %}
+                                                {{ assignment.teacher.user.last_name|first|upper }}
+                                            {% endif %}
+
+                                        </div>
+
+
+                                        <div class="teacher-list-teacher-name">
+
+                                            <strong>
+                                                {{ assignment.teacher.user.get_full_name }}
+                                            </strong>
+
+
+                                            <span>
+                                                {{ assignment.teacher.employee_id }}
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
                                 </td>
 
 
+
+                                <!-- =========================
+                                     CLASS
+                                ========================== -->
+
                                 <td>
-                                    {{ assignment.class_subject.school_class }}
+
+                                    <span class="teacher-list-class-badge">
+
+                                        <i class="bi bi-people"></i>
+
+                                        {{ assignment.class_subject.school_class }}
+
+                                    </span>
+
                                 </td>
 
 
+
+                                <!-- =========================
+                                     SUBJECT
+                                ========================== -->
+
                                 <td>
-                                    {{ assignment.class_subject.subject }}
+
+                                    <div class="teacher-list-subject-cell">
+
+                                        <span class="teacher-list-subject-icon">
+
+                                            <i class="bi bi-book"></i>
+
+                                        </span>
+
+
+                                        <strong>
+
+                                            {{ assignment.class_subject.subject }}
+
+                                        </strong>
+
+                                    </div>
+
                                 </td>
 
 
+
+                                <!-- =========================
+                                     ACADEMIC YEAR
+                                ========================== -->
+
                                 <td>
-                                    {{ assignment.academic_year }}
+
+                                    <span class="teacher-list-year">
+
+                                        <i class="bi bi-calendar3"></i>
+
+                                        {{ assignment.academic_year }}
+
+                                    </span>
+
                                 </td>
 
+
+
+                                <!-- =========================
+                                     STATUS
+                                ========================== -->
 
                                 <td>
 
                                     {% if assignment.is_active %}
 
-                                        <span class="badge text-bg-success">
+                                        <span class="teacher-list-status teacher-list-status-active">
+
+                                            <span></span>
+
                                             Active
+
                                         </span>
 
                                     {% else %}
 
-                                        <span class="badge text-bg-secondary">
+                                        <span class="teacher-list-status teacher-list-status-inactive">
+
+                                            <span></span>
+
                                             Inactive
+
                                         </span>
 
                                     {% endif %}
 
                                 </td>
 
+
                             </tr>
 
                         {% endfor %}
+
 
                     </tbody>
 
@@ -141,30 +323,53 @@
 
             </div>
 
+
         {% else %}
 
-            <div class="text-center py-5">
+
+            <!-- =================================================
+                 EMPTY STATE
+            ================================================== -->
+
+            <div class="teacher-list-empty">
+
+                <div class="teacher-list-empty-icon">
+
+                    <i class="bi bi-journal-x"></i>
+
+                </div>
+
 
                 <h5>
-                    No teaching assignments
+                    No Teaching Assignments
                 </h5>
 
-                <p class="text-muted">
+
+                <p>
                     No teachers have been assigned to subjects yet.
+                    Start by creating the first subject assignment.
                 </p>
+
 
                 <a
                     href="{% url 'teachers:assign_subject_teacher' %}"
-                    class="btn btn-primary"
+                    class="teacher-submit-btn"
                 >
+
+                    <i class="bi bi-plus-lg"></i>
+
                     Assign Subject
+
                 </a>
 
             </div>
 
+
         {% endif %}
 
-    </div>
+
+    </section>
+
 
 </div>
 

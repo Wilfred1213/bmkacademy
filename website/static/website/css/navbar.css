@@ -1,0 +1,435 @@
+/* =========================================================
+   BMK NAVBAR — COMPLETE FOUNDATION
+========================================================= */
+
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+    min-height: 82px;
+    padding: 10px 0;
+    background: rgba(255, 255, 255, 0.97) !important;
+    border-bottom: 1px solid rgba(15, 39, 71, 0.07);
+    box-shadow: 0 6px 25px rgba(15, 35, 55, 0.06) !important;
+    backdrop-filter: blur(12px);
+}
+
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.bmk-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 5px 0 !important;
+    color: var(--bmk-navy) !important;
+    text-decoration: none;
+}
+
+.bmk-logo {
+    width: 55px;
+    height: 55px;
+    object-fit: contain;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.bmk-brand:hover .bmk-logo {
+    transform: rotate(-3deg) scale(1.04);
+}
+
+.bmk-brand span {
+    color: var(--bmk-navy);
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.navbar-nav {
+    gap: 5px;
+}
+
+.navbar .nav-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 8px 13px !important;
+    border-radius: 10px;
+    color: #475569;
+    font-size: 0.9rem;
+    font-weight: 650;
+    transition:
+        color 0.25s ease,
+        background-color 0.25s ease;
+}
+
+.navbar .nav-link:hover {
+    color: var(--bmk-blue);
+    background: #f1f6ff;
+}
+
+
+/* =========================================================
+   NAVIGATION UNDERLINE
+========================================================= */
+
+.navbar .nav-item > .nav-link::after {
+    content: "";
+    position: absolute;
+    right: 13px;
+    bottom: 4px;
+    left: 13px;
+    width: auto;
+    height: 2px;
+    border: 0;
+    border-radius: 999px;
+    background: linear-gradient(
+        90deg,
+        var(--bmk-blue),
+        var(--bmk-gold)
+    );
+    opacity: 0;
+    transform: scaleX(0.3);
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
+}
+
+.navbar .nav-item > .nav-link:hover::after {
+    opacity: 1;
+    transform: scaleX(1);
+}
+
+
+/* =========================================================
+   ADMISSIONS
+========================================================= */
+
+.navbar .nav-item > .btn-primary {
+    position: relative;
+    min-height: 44px;
+    padding: 9px 21px !important;
+    border: 0;
+    border-radius: 12px;
+    color: #ffffff;
+    background: linear-gradient(
+        135deg,
+        var(--bmk-blue),
+        #2563eb
+    );
+    font-size: 0.88rem;
+    font-weight: 750;
+    box-shadow: 0 8px 22px rgba(29, 78, 216, 0.20);
+    overflow: hidden;
+}
+
+.navbar .nav-item > .btn-primary::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 80%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,0.22),
+        transparent
+    );
+    transform: skewX(-20deg);
+    transition: left 0.55s ease;
+}
+
+.navbar .nav-item > .btn-primary:hover::before {
+    left: 130%;
+}
+
+.navbar .nav-item > .btn-primary:hover {
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 13px 30px rgba(29, 78, 216, 0.27);
+}
+
+
+/* =========================================================
+   USER MENU
+========================================================= */
+
+.navbar .dropdown > .nav-link {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+}
+
+.navbar .dropdown > .nav-link::after {
+    position: static;
+    width: auto;
+    height: auto;
+    margin-left: 7px;
+    background: none;
+    opacity: 1;
+    transform: none;
+    border-top: 0.35em solid;
+    border-right: 0.35em solid transparent;
+    border-left: 0.35em solid transparent;
+}
+
+
+/* =========================================================
+   DROPDOWN
+========================================================= */
+
+.navbar .dropdown-menu {
+    min-width: 235px;
+    margin-top: 12px !important;
+    padding: 8px;
+    border: 1px solid rgba(15, 39, 71, 0.07) !important;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 20px 55px rgba(15, 35, 55, 0.15) !important;
+}
+
+.navbar .dropdown-item {
+    padding: 11px 13px;
+    border-radius: 10px;
+    color: #475569;
+    font-size: 0.88rem;
+    font-weight: 600;
+    transition:
+        color 0.2s ease,
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.navbar .dropdown-item:hover {
+    color: var(--bmk-blue);
+    background: #eef5ff;
+    transform: translateX(3px);
+}
+
+.navbar .dropdown-item i {
+    color: var(--bmk-blue);
+}
+
+.navbar .dropdown-divider {
+    margin: 7px 4px;
+    border-color: rgba(15, 39, 71, 0.08);
+}
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+.navbar .nav-item > .btn-primary i {
+    font-size: 0.9rem;
+}
+
+
+/* =========================================================
+   MOBILE TOGGLER
+========================================================= */
+
+.navbar-toggler {
+    width: 45px;
+    height: 45px;
+    padding: 0;
+    border: 1px solid rgba(15, 39, 71, 0.10);
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 0 6px 18px rgba(15, 35, 55, 0.07);
+}
+
+.navbar-toggler:focus {
+    border-color: rgba(29, 78, 216, 0.25);
+    box-shadow: 0 0 0 4px rgba(29, 78, 216, 0.10);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 991.98px) {
+
+    .navbar {
+        min-height: 70px;
+        padding: 7px 0;
+    }
+
+    .bmk-logo {
+        width: 47px;
+        height: 47px;
+    }
+
+    .bmk-brand span {
+        font-size: 1.08rem;
+    }
+
+    .navbar-collapse {
+        margin-top: 12px;
+        padding: 12px 0 8px;
+        border-top: 1px solid rgba(15, 39, 71, 0.07);
+    }
+
+    .navbar-nav {
+        gap: 3px;
+    }
+
+    .navbar .nav-link {
+        width: 100%;
+        min-height: 46px;
+        padding: 10px 14px !important;
+        border-radius: 10px;
+    }
+
+    .navbar .nav-item > .nav-link::after {
+        display: none;
+    }
+
+    .navbar .nav-link:hover {
+        background: #f1f6ff;
+    }
+
+    .navbar .nav-item > .btn-primary {
+        width: 100%;
+        margin-top: 7px;
+    }
+
+    .navbar .nav-item.ms-lg-3 {
+        margin-left: 0 !important;
+    }
+
+    .navbar .dropdown {
+        width: 100%;
+    }
+
+    .navbar .dropdown-menu {
+        position: static !important;
+        width: 100%;
+        margin-top: 4px !important;
+        border-radius: 12px;
+        background: #f8fafc;
+        box-shadow: none !important;
+    }
+
+    .navbar .dropdown-item {
+        padding: 11px 14px;
+    }
+}
+
+
+/* =========================================================
+   SMALL PHONES
+========================================================= */
+
+@media (max-width: 575.98px) {
+
+    .navbar .container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .bmk-logo {
+        width: 44px;
+        height: 44px;
+    }
+
+    .bmk-brand {
+        gap: 9px;
+    }
+
+    .bmk-brand span {
+        font-size: 1rem;
+    }
+
+    .navbar-toggler {
+        width: 42px;
+        height: 42px;
+    }
+}
+/* =========================================================
+   ACTIVE PAGE
+========================================================= */
+
+.navbar .nav-link.bmk-nav-active {
+    color: var(--bmk-blue);
+    background: #f1f6ff;
+}
+
+.navbar .nav-link.bmk-nav-active::after {
+    opacity: 1;
+    transform: scaleX(1);
+}
+
+
+/* =========================================================
+   SCROLLED NAVBAR
+========================================================= */
+
+.navbar.bmk-navbar-scrolled {
+    min-height: 72px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background: rgba(255, 255, 255, 0.94) !important;
+    border-bottom-color: rgba(15, 39, 71, 0.10);
+    box-shadow: 0 10px 30px rgba(15, 35, 55, 0.10) !important;
+}
+
+.navbar.bmk-navbar-scrolled .bmk-logo {
+    width: 49px;
+    height: 49px;
+}
+
+.navbar.bmk-navbar-scrolled .bmk-brand span {
+    font-size: 1.12rem;
+}
+
+@media (max-width: 991.98px) {
+
+    .navbar.bmk-navbar-scrolled {
+        min-height: 66px;
+    }
+
+    .navbar.bmk-navbar-scrolled .bmk-logo {
+        width: 44px;
+        height: 44px;
+    }
+
+    .navbar.bmk-navbar-scrolled .bmk-brand span {
+        font-size: 1.04rem;
+    }
+}
+/* =========================================================
+   ACTIVE NAVIGATION — FINAL
+========================================================= */
+
+.navbar .nav-link.bmk-nav-active {
+    color: var(--bmk-blue) !important;
+    background-color: #eef5ff !important;
+    border-radius: 10px;
+}
+
+.navbar .nav-link.bmk-nav-active::after {
+    opacity: 1 !important;
+    transform: scaleX(1) !important;
+}
+
+
+/* =========================================================
+   BMK PUBLIC NAVBAR
+   BRAND IDENTITY CLASS
+========================================================= */
+
+.bmk-public-navbar {
+    /* Keeps the existing public navbar appearance */
+    background: rgba(255, 255, 255, 0.97) !important;
+}

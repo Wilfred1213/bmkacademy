@@ -1,284 +1,385 @@
 {% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
 
+<link rel="stylesheet" href="{% static 'website/css/user_management.css' %}">
+{% endblock %}
 {% block title %}
     User Management - BMK Academy
 {% endblock %}
 
 {% block content %}
 
-<div class="container">
 
-    <!-- HEADER -->
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+<div class="container bmk-user-management">
 
-        <div>
+    <!-- PAGE HEADER -->
 
-            <h2 class="fw-bold mb-1">
-                User Management
-            </h2>
+    <div class="bmk-page-header">
 
-            <p class="text-muted mb-0">
-                Manage user accounts and account status.
-            </p>
+        <div class="bmk-page-header-content">
+
+            <div class="row align-items-center g-4">
+
+                <div class="col-lg">
+
+                    <div class="bmk-eyebrow">
+                        <i class="bi bi-people-fill"></i>
+                        Account Administration
+                    </div>
+
+                    <h1>
+                        User Management
+                    </h1>
+
+                    <p>
+                        Manage BMK Academy user accounts, roles, account status,
+                        and password requirements from one place.
+                    </p>
+
+                </div>
+
+                <div class="col-lg-auto">
+
+                    <a
+                        href="{% url 'accounts:account_dashboard' %}"
+                        class="bmk-back-btn"
+                    >
+                        <i class="bi bi-arrow-left"></i>
+                        Back to Accounts
+                    </a>
+
+                </div>
+
+            </div>
 
         </div>
-
-        <a
-            href="{% url 'accounts:account_dashboard' %}"
-            class="btn btn-outline-secondary"
-        >
-            ← Accounts
-        </a>
 
     </div>
 
 
-    <!-- USERS TABLE -->
+    <!-- USERS -->
 
-    <div class="card shadow-sm border-0">
+    <div class="bmk-users-card">
 
-        <div class="card-body p-4">
+        <div class="bmk-users-card-header">
 
-            <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="bmk-section-title">
+
+                <div class="bmk-section-icon">
+                    <i class="bi bi-person-lines-fill"></i>
+                </div>
 
                 <div>
 
-                    <h5 class="fw-bold mb-1">
+                    <h2>
                         System Users
-                    </h5>
+                    </h2>
 
-                    <p class="text-muted mb-0">
-                        {{ users|length }} registered user{{ users|length|pluralize }}
+                    <p>
+                        Review and manage registered accounts.
                     </p>
 
                 </div>
 
             </div>
 
+            <div class="bmk-user-count">
+                <i class="bi bi-people"></i>
+                {{ users|length }} user{{ users|length|pluralize }}
+            </div>
 
-            <div class="table-responsive">
+        </div>
 
-                <table class="table table-hover align-middle">
 
-                    <thead class="table-light">
+        <div class="bmk-table-wrapper">
+
+            <table class="table bmk-user-table align-middle">
+
+                <thead>
+
+                    <tr>
+
+                        <th>#</th>
+
+                        <th>User</th>
+
+                        <th>Username</th>
+
+                        <th>Role</th>
+
+                        <th>Account Status</th>
+
+                        <th>Password Status</th>
+
+                        <th>Date Joined</th>
+
+                        <th>Actions</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for user in users %}
 
                         <tr>
 
-                            <th>
-                                #
-                            </th>
+                            <!-- NUMBER -->
 
-                            <th>
-                                User
-                            </th>
+                            <td>
 
-                            <th>
-                                Username
-                            </th>
-
-                            <th>
-                                Role
-                            </th>
-
-                            <th>
-                                Account Status
-                            </th>
-
-                            <th>
-                                Password Status
-                            </th>
-
-                            <th>
-                                Date Joined
-                            </th>
-                            <th>
-                                Action
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody>
-
-                        {% for user in users %}
-
-                            <tr>
-
-                                <td>
+                                <span class="bmk-user-number">
                                     {{ forloop.counter }}
-                                </td>
+                                </span>
+
+                            </td>
 
 
-                                <td>
+                            <!-- USER -->
 
-                                    <div class="fw-semibold">
-                                        {{ user.get_full_name|default:user.username }}
+                            <td>
+
+                                <div class="bmk-user-identity">
+
+                                    <div class="bmk-user-avatar">
+
+                                        {% if user.first_name %}
+                                            {{ user.first_name|slice:":1"|upper }}
+                                        {% else %}
+                                            {{ user.username|slice:":1"|upper }}
+                                        {% endif %}
+
                                     </div>
 
-                                    {% if user.email %}
+                                    <div>
 
-                                        <small class="text-muted">
-                                            {{ user.email }}
-                                        </small>
+                                        <div class="bmk-user-name">
+                                            {{ user.get_full_name|default:user.username }}
+                                        </div>
 
-                                    {% endif %}
+                                        {% if user.email %}
 
-                                </td>
+                                            <div class="bmk-user-email">
+                                                {{ user.email }}
+                                            </div>
 
+                                        {% endif %}
 
-                                <td>
-                                    {{ user.username }}
-                                </td>
+                                    </div>
 
+                                </div>
 
-                                <td>
-
-                                    {% if user.role == "admin" %}
-
-                                        <span class="badge bg-dark">
-                                            {{ user.get_role_display }}
-                                        </span>
-
-                                    {% elif user.role == "teacher" %}
-
-                                        <span class="badge bg-primary">
-                                            {{ user.get_role_display }}
-                                        </span>
-
-                                    {% elif user.role == "parent" %}
-
-                                        <span class="badge bg-success">
-                                            {{ user.get_role_display }}
-                                        </span>
-
-                                    {% elif user.role == "student" %}
-
-                                        <span class="badge bg-info">
-                                            {{ user.get_role_display }}
-                                        </span>
-
-                                    {% endif %}
-
-                                </td>
+                            </td>
 
 
-                                <td>
+                            <!-- USERNAME -->
 
-                                    {% if user.is_active %}
+                            <td>
 
-                                        <span class="badge bg-success">
-                                            Active
-                                        </span>
+                                <span class="bmk-username">
+                                    @{{ user.username }}
+                                </span>
 
-                                    {% else %}
-
-                                        <span class="badge bg-secondary">
-                                            Inactive
-                                        </span>
-
-                                    {% endif %}
-
-                                </td>
+                            </td>
 
 
-                                <td>
+                            <!-- ROLE -->
 
-                                    {% if user.must_change_password %}
+                            <td>
 
-                                        <span class="badge bg-warning text-dark">
-                                            Password Change Required
-                                        </span>
+                                {% if user.role == "admin" %}
 
-                                    {% else %}
+                                    <span class="bmk-role-badge bmk-role-admin">
+                                        <i class="bi bi-shield-fill-check"></i>
+                                        {{ user.get_role_display }}
+                                    </span>
 
-                                        <span class="badge bg-success">
-                                            Password Set
-                                        </span>
+                                {% elif user.role == "teacher" %}
 
-                                    {% endif %}
+                                    <span class="bmk-role-badge bmk-role-teacher">
+                                        <i class="bi bi-person-workspace"></i>
+                                        {{ user.get_role_display }}
+                                    </span>
 
-                                </td>
+                                {% elif user.role == "parent" %}
+
+                                    <span class="bmk-role-badge bmk-role-parent">
+                                        <i class="bi bi-people-fill"></i>
+                                        {{ user.get_role_display }}
+                                    </span>
+
+                                {% elif user.role == "student" %}
+
+                                    <span class="bmk-role-badge bmk-role-student">
+                                        <i class="bi bi-mortarboard-fill"></i>
+                                        {{ user.get_role_display }}
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
 
 
-                                <td>
+                            <!-- ACCOUNT STATUS -->
+
+                            <td>
+
+                                {% if user.is_active %}
+
+                                    <span class="bmk-status-badge bmk-status-active">
+                                        <i class="bi bi-check-circle-fill"></i>
+                                        Active
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="bmk-status-badge bmk-status-inactive">
+                                        <i class="bi bi-pause-circle-fill"></i>
+                                        Inactive
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- PASSWORD STATUS -->
+
+                            <td>
+
+                                {% if user.must_change_password %}
+
+                                    <span class="bmk-password-badge bmk-password-required">
+                                        <i class="bi bi-key-fill"></i>
+                                        Change Required
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="bmk-password-badge bmk-password-set">
+                                        <i class="bi bi-shield-check"></i>
+                                        Password Set
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- DATE JOINED -->
+
+                            <td>
+
+                                <span class="bmk-date">
                                     {{ user.date_joined|date:"d M Y" }}
-                                </td>
-                                <td>
+                                </span>
+
+                            </td>
+
+
+                            <!-- ACTIONS -->
+
+                            <td>
+
+                                <div class="bmk-actions">
 
                                     <a
                                         href="{% url 'accounts:user_detail' user.id %}"
-                                        class="btn btn-sm btn-outline-primary"
+                                        class="btn btn-sm btn-outline-primary bmk-action-btn"
                                     >
+                                        <i class="bi bi-eye"></i>
                                         View
                                     </a>
-                                
+
+
                                     {% if user != request.user %}
-                                
+
                                         <form
                                             method="post"
                                             action="{% url 'accounts:toggle_user_status' user.id %}"
                                             class="d-inline"
                                         >
-                                
+
                                             {% csrf_token %}
-                                
+
                                             {% if user.is_active %}
-                                
+
                                                 <button
                                                     type="submit"
-                                                    class="btn btn-sm btn-outline-danger"
+                                                    class="btn btn-sm btn-outline-danger bmk-action-btn"
                                                 >
+                                                    <i class="bi bi-person-dash"></i>
                                                     Deactivate
                                                 </button>
-                                
+
                                             {% else %}
-                                
+
                                                 <button
                                                     type="submit"
-                                                    class="btn btn-sm btn-outline-success"
+                                                    class="btn btn-sm btn-outline-success bmk-action-btn"
                                                 >
+                                                    <i class="bi bi-person-check"></i>
                                                     Activate
                                                 </button>
-                                
+
                                             {% endif %}
-                                
+
                                         </form>
-                                
+
                                     {% else %}
-                                
-                                        <span class="text-muted small ms-1">
+
+                                        <span class="bmk-current-account">
+                                            <i class="bi bi-person-check me-1"></i>
                                             Current account
                                         </span>
-                                
+
                                     {% endif %}
-                                
-                                </td>
 
-                            </tr>
+                                </div>
 
-                        {% empty %}
+                            </td>
 
-                            <tr>
+                        </tr>
 
-                                <td
-                                    colspan="7"
-                                    class="text-center text-muted py-5"
-                                >
-                                    No user accounts found.
-                                </td>
 
-                            </tr>
+                    {% empty %}
 
-                        {% endfor %}
+                        <tr>
 
-                    </tbody>
+                            <td
+                                colspan="8"
+                                class="border-0"
+                            >
 
-                </table>
+                                <div class="bmk-empty-state">
 
-            </div>
+                                    <div class="bmk-empty-icon">
+                                        <i class="bi bi-people"></i>
+                                    </div>
+
+                                    <h3>
+                                        No user accounts found
+                                    </h3>
+
+                                    <p>
+                                        There are currently no registered user accounts to display.
+                                    </p>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
 
         </div>
 

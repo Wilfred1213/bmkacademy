@@ -1,151 +1,211 @@
 {% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
 
-
-{% block title %}
-    Payment Receipt | BMK Academy
+<link rel="stylesheet" href="{% static 'website/css/reports.css' %}">
 {% endblock %}
 
+{% block title %}
+Payment Receipt | BMK Academy
+{% endblock %}
 
 {% block content %}
 
-<div class="d-flex justify-content-between align-items-center mb-4 no-print">
+<div class="bmk-receipt-page">
+
+<!-- PAGE HEADER -->
+<div class="bmk-receipt-page-header no-print">
 
     <div>
-        <h2 class="fw-bold mb-1">
-            Payment Receipt
-        </h2>
+        <span class="bmk-eyebrow">
+            <i class="bi bi-receipt"></i>
+            Finance
+        </span>
 
-        <p class="text-muted mb-0">
+        <h1>
+            Payment Receipt
+        </h1>
+
+        <p>
             Official school fee payment receipt
         </p>
     </div>
 
-    <div class="d-flex gap-2">
+    <div class="bmk-receipt-actions">
 
         {% if from_parent %}
-    
+
             <a
                 href="{% url 'accounts:parent_invoice_payment_history' invoice.id %}"
-                class="btn btn-outline-secondary"
+                class="bmk-receipt-back"
             >
-                ← Payment History
+                <i class="bi bi-arrow-left"></i>
+                <span>Payment History</span>
             </a>
-    
+
         {% else %}
-    
+
             <a
                 href="{% url 'fees:payment_history' invoice.id %}"
-                class="btn btn-outline-secondary"
+                class="bmk-receipt-back"
             >
-                ← Payment History
+                <i class="bi bi-arrow-left"></i>
+                <span>Payment History</span>
             </a>
-    
+
         {% endif %}
-    
-    
+
         <button
             type="button"
             onclick="window.print()"
-            class="btn btn-primary"
+            class="bmk-print-btn"
         >
-            Print Receipt
+            <i class="bi bi-printer-fill"></i>
+            <span>Print Receipt</span>
         </button>
-    
+
     </div>
 
 </div>
 
 
-<div class="card shadow-sm">
+<!-- RECEIPT -->
+<div class="bmk-receipt-card">
 
-    <div class="card-body p-4">
+    <!-- SCHOOL HEADER -->
+    <div class="bmk-receipt-top">
 
+        <div class="bmk-school-brand">
 
-        <!-- School Header -->
-
-        <div class="text-center mb-4">
-
-            <h1 class="fw-bold mb-1">
-                BMK ACADEMY
-            </h1>
-
-            <p class="mb-1">
-                Nursery & Primary Education
-            </p>
-
-            <p class="text-muted mb-0">
-                Official Payment Receipt
-            </p>
-
-        </div>
-
-
-        <hr>
-
-
-        <!-- Receipt Information -->
-
-        <div class="row mb-4">
-
-            <div class="col-md-6">
-
-                <p class="mb-1 text-muted">
-                    Student
-                </p>
-
-                <h5 class="fw-bold">
-
-                    {{ student.first_name }}
-
-                    {% if student.middle_name %}
-                        {{ student.middle_name }}
-                    {% endif %}
-
-                    {{ student.last_name }}
-
-                </h5>
-
+            <!-- BMK LOGO -->
+            <div class="bmk-school-logo">
+                <img
+                    src="{% static 'website/images/bmk-logo.png' %}"
+                    alt="BMK Academy Logo"
+                >
             </div>
 
+            <div class="bmk-school-name">
 
-            <div class="col-md-6 text-md-end">
+                <h2>
+                    BMK ACADEMY
+                </h2>
 
-                <p class="mb-1 text-muted">
-                    Admission Number
+                <p>
+                    Baki and Mairam Kwasari Nursery & Primary School
                 </p>
 
-                <h5 class="fw-bold">
-                    {{ student.admission_number }}
-                </h5>
+                <span>
+                    Education for Service
+                </span>
 
             </div>
 
         </div>
 
 
-        <!-- Payment Details -->
+        <div class="bmk-receipt-label">
 
-        <div class="table-responsive">
+            <span>
+                OFFICIAL
+            </span>
 
-            <table class="table table-bordered align-middle">
+            <strong>
+                PAYMENT RECEIPT
+            </strong>
+
+            <small>
+                School Fee Payment
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <!-- DIVIDER -->
+    <div class="bmk-receipt-divider"></div>
+
+
+    <!-- STUDENT INFORMATION -->
+    <div class="bmk-student-section">
+
+        <div class="bmk-student-block">
+
+            <span class="bmk-detail-label">
+                Student
+            </span>
+
+            <h3>
+
+                {{ student.first_name }}
+
+                {% if student.middle_name %}
+                    {{ student.middle_name }}
+                {% endif %}
+
+                {{ student.last_name }}
+
+            </h3>
+
+        </div>
+
+
+        <div class="bmk-student-block bmk-student-admission">
+
+            <span class="bmk-detail-label">
+                Admission Number
+            </span>
+
+            <strong>
+                {{ student.admission_number }}
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- PAYMENT DETAILS -->
+    <div class="bmk-payment-details">
+
+        <div class="bmk-section-heading">
+
+            <div class="bmk-section-icon">
+                <i class="bi bi-credit-card-2-front"></i>
+            </div>
+
+            <div>
+                <h3>
+                    Payment Details
+                </h3>
+
+                <p>
+                    Details of this transaction
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="bmk-payment-table-wrapper">
+
+            <table class="bmk-payment-table">
 
                 <tbody>
 
                     <tr>
-
-                        <th style="width: 35%;">
+                        <th>
                             Receipt Number
                         </th>
 
-                        <td>
+                        <td class="bmk-receipt-number">
                             {{ payment.receipt_number }}
                         </td>
-
                     </tr>
 
 
                     <tr>
-
                         <th>
                             Payment Date
                         </th>
@@ -153,12 +213,10 @@
                         <td>
                             {{ payment.payment_date|date:"M. d, Y" }}
                         </td>
-
                     </tr>
 
 
                     <tr>
-
                         <th>
                             Academic Year
                         </th>
@@ -166,23 +224,21 @@
                         <td>
                             {{ invoice.enrollment.academic_year }}
                         </td>
-
                     </tr>
-                    <tr>
 
+
+                    <tr>
                         <th>
                             Term
                         </th>
-                    
+
                         <td>
                             {{ invoice.enrollment.term }}
                         </td>
-                    
                     </tr>
 
 
                     <tr>
-
                         <th>
                             Description
                         </th>
@@ -190,12 +246,10 @@
                         <td>
                             {{ invoice.description }}
                         </td>
-
                     </tr>
 
 
                     <tr>
-
                         <th>
                             Payment Method
                         </th>
@@ -203,12 +257,10 @@
                         <td>
                             {{ payment.get_payment_method_display }}
                         </td>
-
                     </tr>
 
 
                     <tr>
-
                         <th>
                             Reference
                         </th>
@@ -216,27 +268,23 @@
                         <td>
                             {{ payment.reference|default:"—" }}
                         </td>
-
                     </tr>
 
 
-                    <tr>
+                    <tr class="bmk-amount-row">
 
                         <th>
                             Amount Paid
                         </th>
 
-                        <td class="fw-bold text-success">
-
+                        <td class="bmk-amount-paid">
                             ₦{{ payment.amount|floatformat:2 }}
-
                         </td>
 
                     </tr>
 
 
                     <tr>
-
                         <th>
                             Previous Amount Paid
                         </th>
@@ -244,27 +292,27 @@
                         <td>
                             ₦{{ paid_before|floatformat:2 }}
                         </td>
-
                     </tr>
 
 
-                    <tr>
+                    <tr class="bmk-balance-row">
 
                         <th>
                             Balance After Payment
                         </th>
 
-                        <td class="fw-bold">
+                        <td>
 
                             {% if balance_after <= 0 %}
 
-                                <span class="text-success">
+                                <span class="bmk-balance-paid">
+                                    <i class="bi bi-check-circle-fill"></i>
                                     ₦0.00
                                 </span>
 
                             {% else %}
 
-                                <span class="text-danger">
+                                <span class="bmk-balance-due">
                                     ₦{{ balance_after|floatformat:2 }}
                                 </span>
 
@@ -280,103 +328,66 @@
 
         </div>
 
+    </div>
 
-        <!-- Remarks -->
 
-        {% if payment.remarks %}
+    <!-- REMARKS -->
+    {% if payment.remarks %}
 
-            <div class="mt-4">
+        <div class="bmk-receipt-remarks">
 
-                <h6 class="fw-bold">
+            <div class="bmk-remarks-icon">
+                <i class="bi bi-chat-left-text"></i>
+            </div>
+
+            <div>
+
+                <h4>
                     Remarks
-                </h6>
+                </h4>
 
-                <p class="mb-0">
+                <p>
                     {{ payment.remarks }}
                 </p>
 
             </div>
 
-        {% endif %}
+        </div>
+
+    {% endif %}
 
 
-        <!-- Footer -->
+    <!-- FOOTER -->
+    <div class="bmk-receipt-footer">
 
-        <div class="text-center mt-5">
+        <div class="bmk-thank-you">
 
-            <p class="mb-1">
-                Thank you for your payment.
-            </p>
+            <i class="bi bi-check-circle-fill"></i>
 
-            <small class="text-muted">
-                This receipt was generated by BMK Academy.
-            </small>
+            <div>
+
+                <strong>
+                    Thank you for your payment.
+                </strong>
+
+                <span>
+                    This receipt was generated by BMK Academy.
+                </span>
+
+            </div>
 
         </div>
 
+        <div class="bmk-footer-motto">
+            Education for Service
+        </div>
 
     </div>
 
 </div>
 
+</div>
 
-<style>
-
-    @media print {
-    
-        body {
-            background: white !important;
-        }
-    
-        nav,
-        footer,
-        .no-print,
-        .btn {
-            display: none !important;
-        }
-    
-        .container,
-        .container-fluid {
-            width: 100% !important;
-            max-width: 100% !important;
-            padding: 0 !important;
-            margin: 0 !important;
-        }
-    
-        .card {
-            border: none !important;
-            box-shadow: none !important;
-        }
-    
-        .card-body {
-            padding: 0 !important;
-        }
-    
-        .table {
-            border-color: #000 !important;
-        }
-    
-        .table th,
-        .table td {
-            border-color: #000 !important;
-        }
-    
-        .text-success,
-        .text-danger {
-            color: #000 !important;
-        }
-    
-        .text-muted {
-            color: #000 !important;
-        }
-    
-        @page {
-            margin: 15mm;
-        }
-    
-    }
-    
-    </style>
 
 
 {% endblock %}

@@ -4,275 +4,306 @@
     My Profile | BMK Academy
 {% endblock %}
 
+{% load static %}
+{% block extra_css %}
+
+<link rel="stylesheet" href="{% static 'website/css/password_profile.css' %}">
+{% endblock %}
 {% block content %}
 
-<div class="container py-4">
+<section class="bmk-profile-page">
 
-    <!-- HEADER -->
+    <div class="container">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+        <!-- HEADER -->
 
-        <div>
+        <div class="bmk-profile-header">
 
-            <h2 class="fw-bold mb-1">
-                My Profile
-            </h2>
+            <div>
 
-            <p class="text-muted mb-0">
-                Your administrator account information
-            </p>
-
-        </div>
-
-        <div class="d-flex gap-2">
-
-            <a
-                href="{% url 'accounts:change_password' %}"
-                class="btn btn-outline-primary"
-            >
-                <i class="bi bi-key"></i>
-                Change Password
-            </a>
-
-            <a
-                href="{% url 'accounts:admin_home' %}"
-                class="btn btn-outline-secondary"
-            >
-                <i class="bi bi-arrow-left"></i>
-                Back to Dashboard
-            </a>
-
-        </div>
-
-    </div>
-
-
-    <!-- PROFILE -->
-
-    <div class="row g-4">
-
-
-        <!-- PERSONAL INFORMATION -->
-
-        <div class="col-lg-8">
-
-            <div class="card border-0 shadow-sm h-100">
-
-                <div class="card-body p-4">
-
-                    <h5 class="fw-bold mb-4">
-                        Personal Information
-                    </h5>
-
-
-                    <form method="post">
-
-                        {% csrf_token %}
-
-
-                        <!-- FIRST NAME -->
-
-                        <div class="mb-3">
-
-                            <label
-                                for="{{ form.first_name.id_for_label }}"
-                                class="form-label fw-semibold"
-                            >
-                                First Name
-                            </label>
-
-                            {{ form.first_name }}
-
-                            {% if form.first_name.errors %}
-
-                                <div class="text-danger small mt-1">
-                                    {{ form.first_name.errors }}
-                                </div>
-
-                            {% endif %}
-
-                        </div>
-
-
-                        <!-- LAST NAME -->
-
-                        <div class="mb-3">
-
-                            <label
-                                for="{{ form.last_name.id_for_label }}"
-                                class="form-label fw-semibold"
-                            >
-                                Last Name
-                            </label>
-
-                            {{ form.last_name }}
-
-                            {% if form.last_name.errors %}
-
-                                <div class="text-danger small mt-1">
-                                    {{ form.last_name.errors }}
-                                </div>
-
-                            {% endif %}
-
-                        </div>
-
-
-                        <!-- EMAIL -->
-
-                        <div class="mb-3">
-
-                            <label
-                                for="{{ form.email.id_for_label }}"
-                                class="form-label fw-semibold"
-                            >
-                                Email
-                            </label>
-
-                            {{ form.email }}
-
-                            {% if form.email.errors %}
-
-                                <div class="text-danger small mt-1">
-                                    {{ form.email.errors }}
-                                </div>
-
-                            {% endif %}
-
-                        </div>
-
-
-                        <div class="d-flex justify-content-end">
-
-                            <button
-                                type="submit"
-                                class="btn btn-primary"
-                            >
-                                <i class="bi bi-check-circle"></i>
-                                Save Changes
-                            </button>
-
-                        </div>
-
-                    </form>
-
+                <div class="bmk-profile-eyebrow">
+                    <i class="bi bi-person-circle"></i>
+                    Administrator Account
                 </div>
+
+                <h2>
+                    My Profile
+                </h2>
+
+                <p>
+                    Manage your personal information and account details.
+                </p>
+
+            </div>
+
+
+            <div class="bmk-profile-actions">
+
+                <a
+                    href="{% url 'accounts:change_password' %}"
+                    class="btn btn-outline-primary"
+                >
+                    <i class="bi bi-key me-1"></i>
+                    Change Password
+                </a>
+
+                <a
+                    href="{% url 'accounts:admin_home' %}"
+                    class="btn btn-outline-secondary"
+                >
+                    <i class="bi bi-arrow-left me-1"></i>
+                    Back to Dashboard
+                </a>
 
             </div>
 
         </div>
 
 
-        <!-- ACCOUNT SUMMARY -->
+        <div class="row g-4">
 
-        <div class="col-lg-4">
 
-            <div class="card border-0 shadow-sm">
+            <!-- PERSONAL INFORMATION -->
 
-                <div class="card-body p-4">
+            <div class="col-lg-8">
 
-                    <div class="text-center mb-4">
+                <div class="bmk-profile-card">
 
-                        <div
-                            class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center"
-                            style="width: 80px; height: 80px;"
-                        >
+                    <div class="bmk-profile-card-header">
 
-                            <i class="bi bi-person fs-1"></i>
-
+                        <div class="bmk-profile-section-icon">
+                            <i class="bi bi-person-vcard"></i>
                         </div>
 
-                        <h5 class="fw-bold mt-3 mb-1">
-
-                            {{ user_account.get_full_name|default:user_account.username }}
-
-                        </h5>
-
-                        <small class="text-muted">
-                            Administrator
-                        </small>
+                        <div>
+                            <h5>
+                                Personal Information
+                            </h5>
+                        </div>
 
                     </div>
 
 
-                    <div class="mt-4">
+                    <div class="bmk-profile-card-body">
 
-                        <h6 class="fw-bold mb-3">
-                            Account Information
-                        </h6>
+                        <form method="post">
+
+                            {% csrf_token %}
 
 
-                        <!-- USERNAME -->
+                            <!-- FIRST NAME -->
 
-                        <div class="mb-3">
+                            <div class="mb-4">
 
-                            <small class="text-muted">
-                                Username
-                            </small>
+                                <label
+                                    for="{{ form.first_name.id_for_label }}"
+                                    class="form-label fw-semibold"
+                                >
+                                    First Name
+                                </label>
 
-                            <div class="fw-semibold">
-                                {{ user_account.username }}
+                                {{ form.first_name }}
+
+                                {% if form.first_name.errors %}
+
+                                    {% for error in form.first_name.errors %}
+
+                                        <div class="bmk-profile-error">
+                                            {{ error }}
+                                        </div>
+
+                                    {% endfor %}
+
+                                {% endif %}
+
                             </div>
 
-                        </div>
 
+                            <!-- LAST NAME -->
 
-                        <!-- EMAIL -->
+                            <div class="mb-4">
 
-                        <div class="mb-3">
+                                <label
+                                    for="{{ form.last_name.id_for_label }}"
+                                    class="form-label fw-semibold"
+                                >
+                                    Last Name
+                                </label>
 
-                            <small class="text-muted">
-                                Email
-                            </small>
+                                {{ form.last_name }}
 
-                            <div class="fw-semibold">
-                                {{ user_account.email|default:"-" }}
+                                {% if form.last_name.errors %}
+
+                                    {% for error in form.last_name.errors %}
+
+                                        <div class="bmk-profile-error">
+                                            {{ error }}
+                                        </div>
+
+                                    {% endfor %}
+
+                                {% endif %}
+
                             </div>
 
-                        </div>
+
+                            <!-- EMAIL -->
+
+                            <div class="mb-4">
+
+                                <label
+                                    for="{{ form.email.id_for_label }}"
+                                    class="form-label fw-semibold"
+                                >
+                                    Email
+                                </label>
+
+                                {{ form.email }}
+
+                                {% if form.email.errors %}
+
+                                    {% for error in form.email.errors %}
+
+                                        <div class="bmk-profile-error">
+                                            {{ error }}
+                                        </div>
+
+                                    {% endfor %}
+
+                                {% endif %}
+
+                            </div>
 
 
-                        <!-- ROLE -->
+                            <div class="d-flex justify-content-end">
 
-                        <div class="mb-3">
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary bmk-save-btn"
+                                >
+                                    <i class="bi bi-check-circle me-1"></i>
+                                    Save Changes
+                                </button>
 
-                            <small class="text-muted">
-                                Role
-                            </small>
+                            </div>
 
-                            <div class="fw-semibold">
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ACCOUNT SUMMARY -->
+
+            <div class="col-lg-4">
+
+                <div class="bmk-profile-card bmk-account-summary">
+
+                    <div class="bmk-profile-card-body">
+
+                        <div class="bmk-account-identity">
+
+                            <div class="bmk-profile-avatar">
+
+                                <i class="bi bi-person"></i>
+
+                            </div>
+
+
+                            <h5>
+                                {{ user_account.get_full_name|default:user_account.username }}
+                            </h5>
+
+                            <span class="bmk-admin-label">
+                                <i class="bi bi-shield-check"></i>
                                 Administrator
+                            </span>
+
+                        </div>
+
+
+                        <div>
+
+                            <h6 class="bmk-account-info-title">
+                                Account Information
+                            </h6>
+
+
+                            <!-- USERNAME -->
+
+                            <div class="bmk-account-info-item">
+
+                                <span class="bmk-account-info-label">
+                                    Username
+                                </span>
+
+                                <div class="bmk-account-info-value">
+                                    {{ user_account.username }}
+                                </div>
+
+                            </div>
+
+
+                            <!-- EMAIL -->
+
+                            <div class="bmk-account-info-item">
+
+                                <span class="bmk-account-info-label">
+                                    Email
+                                </span>
+
+                                <div class="bmk-account-info-value">
+                                    {{ user_account.email|default:"-" }}
+                                </div>
+
+                            </div>
+
+
+                            <!-- ROLE -->
+
+                            <div class="bmk-account-info-item">
+
+                                <span class="bmk-account-info-label">
+                                    Role
+                                </span>
+
+                                <div class="bmk-account-info-value">
+                                    Administrator
+                                </div>
+
                             </div>
 
                         </div>
 
-                    </div>
 
+                        <!-- STATUS -->
 
-                    <hr>
+                        <div class="bmk-account-status">
 
-
-                    <!-- ACCOUNT STATUS -->
-
-                    <div class="d-flex justify-content-between">
-
-                        <span class="text-muted">
-                            Account Status
-                        </span>
-
-                        {% if user_account.is_active %}
-
-                            <span class="badge bg-success">
-                                Active
+                            <span class="bmk-account-status-label">
+                                Account Status
                             </span>
 
-                        {% else %}
+                            {% if user_account.is_active %}
 
-                            <span class="badge bg-danger">
-                                Inactive
-                            </span>
+                                <span class="bmk-status-badge bmk-status-active">
+                                    <i class="bi bi-check-circle-fill"></i>
+                                    Active
+                                </span>
 
-                        {% endif %}
+                            {% else %}
+
+                                <span class="bmk-status-badge bmk-status-inactive">
+                                    <i class="bi bi-x-circle-fill"></i>
+                                    Inactive
+                                </span>
+
+                            {% endif %}
+
+                        </div>
 
                     </div>
 
@@ -280,11 +311,12 @@
 
             </div>
 
-        </div>
 
+        </div>
 
     </div>
 
-</div>
+</section>
 
 {% endblock %}
+

@@ -1,0 +1,2287 @@
+/* =========================================================
+   BMK NOTIFICATIONS LIST
+   ========================================================= */
+
+   .notification-page {
+    min-height: 100%;
+    background: #f7f9fc;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.notification-hero {
+    position: relative;
+    overflow: hidden;
+
+    padding: 42px 0;
+
+    background:
+        radial-gradient(
+            circle at 90% 20%,
+            rgba(37, 99, 235, 0.24),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 8% 90%,
+            rgba(224, 168, 62, 0.12),
+            transparent 28%
+        ),
+        linear-gradient(
+            135deg,
+            #081a2e 0%,
+            #0f2747 58%,
+            #173e6d 100%
+        );
+}
+
+.notification-hero::before {
+    content: "";
+
+    position: absolute;
+
+    width: 340px;
+    height: 340px;
+
+    top: -210px;
+    right: -100px;
+
+    border: 1px solid rgba(255, 255, 255, 0.07);
+
+    border-radius: 50%;
+}
+
+.notification-hero::after {
+    content: "";
+
+    position: absolute;
+
+    width: 260px;
+    height: 260px;
+
+    bottom: -180px;
+    left: -100px;
+
+    border: 1px solid rgba(224, 168, 62, 0.09);
+
+    border-radius: 50%;
+}
+
+.notification-hero .container {
+    position: relative;
+    z-index: 1;
+}
+
+.notification-hero-content {
+    display: flex;
+    align-items: center;
+
+    gap: 18px;
+}
+
+
+/* =========================================================
+   HERO ICON
+   ========================================================= */
+
+.notification-hero-icon {
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 58px;
+    height: 58px;
+
+    border: 1px solid rgba(224, 168, 62, 0.20);
+
+    border-radius: 16px;
+
+    background: rgba(224, 168, 62, 0.12);
+
+    color: #f3d58a;
+
+    font-size: 1.35rem;
+}
+
+
+/* =========================================================
+   HERO TEXT
+   ========================================================= */
+
+.notification-hero-text {
+    flex: 1;
+}
+
+.notification-eyebrow {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #f3d58a;
+
+    font-size: 0.65rem;
+
+    font-weight: 800;
+
+    letter-spacing: 0.14em;
+
+    text-transform: uppercase;
+}
+
+.notification-hero h1 {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 1.75rem;
+
+    font-weight: 800;
+
+    letter-spacing: -0.025em;
+}
+
+.notification-hero p {
+    margin: 5px 0 0;
+
+    color: rgba(255, 255, 255, 0.70);
+
+    font-size: 0.88rem;
+}
+
+
+/* =========================================================
+   UNREAD SUMMARY
+   ========================================================= */
+
+.notification-unread-summary {
+    flex-shrink: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 82px;
+    min-height: 70px;
+
+    padding: 10px 15px;
+
+    border: 1px solid rgba(255, 255, 255, 0.11);
+
+    border-radius: 14px;
+
+    background: rgba(255, 255, 255, 0.07);
+
+    color: #ffffff;
+
+    backdrop-filter: blur(8px);
+}
+
+.notification-unread-summary strong {
+    color: #f3d58a;
+
+    font-size: 1.35rem;
+
+    line-height: 1;
+
+    font-weight: 800;
+}
+
+.notification-unread-summary span {
+    margin-top: 5px;
+
+    color: rgba(255, 255, 255, 0.65);
+
+    font-size: 0.66rem;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.08em;
+}
+
+.notification-all-read {
+    flex-direction: row;
+
+    gap: 8px;
+
+    min-width: auto;
+}
+
+.notification-all-read i {
+    color: #8fd1a5;
+
+    font-size: 1rem;
+}
+
+.notification-all-read span {
+    margin: 0;
+
+    color: rgba(255, 255, 255, 0.78);
+
+    text-transform: none;
+
+    letter-spacing: 0;
+}
+
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.notification-content {
+    padding: 55px 0 90px;
+}
+
+
+/* =========================================================
+   TOOLBAR
+   ========================================================= */
+
+.notification-toolbar {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 30px;
+
+    margin-bottom: 28px;
+}
+
+.notification-section-label {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: var(--bmk-blue);
+
+    font-size: 0.65rem;
+
+    font-weight: 800;
+
+    letter-spacing: 0.13em;
+
+    text-transform: uppercase;
+}
+
+.notification-toolbar h2 {
+    margin: 0;
+
+    color: var(--bmk-navy);
+
+    font-size: 1.5rem;
+
+    font-weight: 800;
+
+    letter-spacing: -0.025em;
+}
+
+.notification-toolbar p {
+    margin: 6px 0 0;
+
+    color: var(--bmk-muted);
+
+    font-size: 0.84rem;
+}
+
+.notification-toolbar-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+}
+
+.notification-mark-all-form {
+    margin: 0;
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+   ========================================================= */
+
+.notification-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    min-height: 39px;
+
+    padding: 9px 14px;
+
+    border-radius: 9px;
+
+    font-size: 0.75rem;
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition:
+        transform 0.22s ease,
+        background-color 0.22s ease,
+        border-color 0.22s ease,
+        color 0.22s ease,
+        box-shadow 0.22s ease;
+}
+
+.notification-action:hover {
+    transform: translateY(-2px);
+}
+
+.notification-action-primary {
+    border: 1px solid var(--bmk-blue);
+
+    background: var(--bmk-blue);
+
+    color: #ffffff;
+
+    box-shadow:
+        0 7px 18px rgba(29, 78, 216, 0.14);
+}
+
+.notification-action-primary:hover {
+    background: #1740b5;
+
+    color: #ffffff;
+}
+
+.notification-action-secondary {
+    border: 1px solid #dce3eb;
+
+    background: #ffffff;
+
+    color: var(--bmk-navy);
+}
+
+.notification-action-secondary:hover {
+    border-color: var(--bmk-blue);
+
+    color: var(--bmk-blue);
+}
+
+.notification-action-light {
+    border: 1px solid #dce3eb;
+
+    background: #ffffff;
+
+    color: #475569;
+}
+
+.notification-action-light:hover {
+    border-color: var(--bmk-blue);
+
+    color: var(--bmk-blue);
+}
+
+
+/* =========================================================
+   NOTIFICATION LIST
+   ========================================================= */
+
+.notification-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+
+/* =========================================================
+   NOTIFICATION CARD
+   ========================================================= */
+
+.notification-card {
+    position: relative;
+
+    display: flex;
+
+    gap: 17px;
+
+    padding: 20px 22px;
+
+    border: 1px solid #e3e8ef;
+
+    border-radius: 16px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 8px 25px rgba(15, 35, 55, 0.045);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.notification-card:hover {
+    transform: translateY(-3px);
+
+    border-color: rgba(29, 78, 216, 0.14);
+
+    box-shadow:
+        0 16px 35px rgba(15, 35, 55, 0.085);
+}
+
+
+/* =========================================================
+   UNREAD CARD
+   ========================================================= */
+
+.notification-card.notification-unread {
+    border-color: rgba(29, 78, 216, 0.15);
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff 0%,
+            #f8fbff 100%
+        );
+}
+
+.notification-card.notification-unread::before {
+    content: "";
+
+    position: absolute;
+
+    top: 18px;
+    bottom: 18px;
+    left: 0;
+
+    width: 3px;
+
+    border-radius: 0 4px 4px 0;
+
+    background: var(--bmk-blue);
+}
+
+
+/* =========================================================
+   CARD ICON
+   ========================================================= */
+
+.notification-card-icon {
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 45px;
+    height: 45px;
+
+    border-radius: 13px;
+
+    font-size: 1rem;
+}
+
+.notification-icon-general {
+    background: #eef5ff;
+
+    color: var(--bmk-blue);
+}
+
+.notification-icon-announcement {
+    background: #fff6e4;
+
+    color: #b8790c;
+}
+
+
+/* =========================================================
+   CARD CONTENT
+   ========================================================= */
+
+.notification-card-content {
+    flex: 1;
+
+    min-width: 0;
+}
+
+.notification-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 8px;
+}
+
+.notification-card-heading {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 7px;
+}
+
+.notification-type-badge,
+.notification-new-badge {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 5px;
+
+    padding: 5px 8px;
+
+    border-radius: 999px;
+
+    font-size: 0.61rem;
+
+    font-weight: 800;
+
+    letter-spacing: 0.04em;
+
+    text-transform: uppercase;
+}
+
+.notification-type-badge {
+    background: #f1f5f9;
+
+    color: #64748b;
+}
+
+.notification-type-badge.announcement {
+    background: #fff4dc;
+
+    color: #a86f08;
+}
+
+.notification-new-badge {
+    background: #eaf1ff;
+
+    color: var(--bmk-blue);
+}
+
+.notification-date {
+    flex-shrink: 0;
+
+    display: inline-flex;
+    align-items: center;
+
+    gap: 5px;
+
+    color: #94a3b8;
+
+    font-size: 0.69rem;
+
+    white-space: nowrap;
+}
+
+.notification-card-icon i {
+    line-height: 1;
+}
+
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+.notification-title {
+    margin: 0 0 7px;
+
+    color: var(--bmk-navy);
+
+    font-size: 1rem;
+
+    font-weight: 800;
+
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   MESSAGE
+   ========================================================= */
+
+.notification-message {
+    max-width: 900px;
+
+    margin: 0;
+
+    color: #64748b;
+
+    font-size: 0.84rem;
+
+    line-height: 1.7;
+
+    white-space: pre-line;
+}
+
+
+/* =========================================================
+   CARD FOOTER
+   ========================================================= */
+
+.notification-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-top: 15px;
+    padding-top: 13px;
+
+    border-top: 1px solid #edf0f4;
+}
+
+
+/* =========================================================
+   READ STATUS
+   ========================================================= */
+
+.notification-read-status,
+.notification-unread-status {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 6px;
+
+    font-size: 0.69rem;
+
+    font-weight: 700;
+}
+
+.notification-read-status {
+    color: #7c8a99;
+}
+
+.notification-read-status i {
+    color: #6fa17d;
+}
+
+.notification-unread-status {
+    color: var(--bmk-blue);
+}
+
+.notification-unread-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: var(--bmk-blue);
+
+    box-shadow:
+        0 0 0 4px rgba(29, 78, 216, 0.08);
+}
+
+
+/* =========================================================
+   VIEW LINK
+   ========================================================= */
+
+.notification-view-link {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 6px;
+
+    color: var(--bmk-blue);
+
+    font-size: 0.75rem;
+
+    font-weight: 800;
+
+    text-decoration: none;
+
+    transition:
+        gap 0.22s ease,
+        color 0.22s ease;
+}
+
+.notification-view-link:hover {
+    gap: 9px;
+
+    color: var(--bmk-navy);
+}
+
+.notification-mark-read {
+    color: #64748b;
+}
+
+.notification-mark-read:hover {
+    color: var(--bmk-blue);
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.notification-empty {
+    max-width: 650px;
+
+    margin: 25px auto 0;
+
+    padding: 70px 30px;
+
+    text-align: center;
+
+    border: 1px solid #e2e8ef;
+
+    border-radius: 22px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 15px 40px rgba(15, 35, 55, 0.055);
+}
+
+.notification-empty-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 70px;
+    height: 70px;
+
+    margin: 0 auto 20px;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eef5ff,
+            #fff7e7
+        );
+
+    color: var(--bmk-blue);
+
+    font-size: 1.5rem;
+}
+
+.notification-empty h2 {
+    margin: 0 0 9px;
+
+    color: var(--bmk-navy);
+
+    font-size: 1.5rem;
+
+    font-weight: 800;
+}
+
+.notification-empty p {
+    max-width: 480px;
+
+    margin: 0 auto;
+
+    color: var(--bmk-muted);
+
+    font-size: 0.87rem;
+
+    line-height: 1.75;
+}
+
+.notification-empty-check {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 7px;
+
+    margin-top: 22px;
+
+    padding: 8px 12px;
+
+    border-radius: 999px;
+
+    background: #edf8f0;
+
+    color: #4e8861;
+
+    font-size: 0.69rem;
+
+    font-weight: 700;
+}
+
+.notification-empty-check i {
+    font-size: 0.76rem;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .notification-hero {
+        padding: 32px 0;
+    }
+
+    .notification-hero-content {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .notification-hero-icon {
+        width: 50px;
+        height: 50px;
+
+        border-radius: 14px;
+    }
+
+    .notification-hero-text {
+        min-width: 0;
+    }
+
+    .notification-hero h1 {
+        font-size: 1.45rem;
+    }
+
+    .notification-hero p {
+        font-size: 0.79rem;
+        line-height: 1.6;
+    }
+
+    .notification-unread-summary {
+        margin-left: 68px;
+
+        min-height: 55px;
+
+        flex-direction: row;
+
+        gap: 8px;
+    }
+
+    .notification-unread-summary strong {
+        font-size: 1.1rem;
+    }
+
+    .notification-unread-summary span {
+        margin-top: 0;
+    }
+
+    .notification-content {
+        padding: 40px 0 70px;
+    }
+
+    .notification-toolbar {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 18px;
+
+        margin-bottom: 22px;
+    }
+
+    .notification-toolbar-actions {
+        width: 100%;
+
+        justify-content: flex-start;
+    }
+
+    .notification-action {
+        flex: 1;
+
+        min-width: 0;
+
+        padding: 9px 11px;
+    }
+
+    .notification-action span {
+        white-space: nowrap;
+    }
+
+    .notification-card {
+        gap: 13px;
+
+        padding: 17px;
+    }
+
+    .notification-card-icon {
+        width: 40px;
+        height: 40px;
+
+        border-radius: 11px;
+
+        font-size: 0.9rem;
+    }
+
+    .notification-card-top {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 8px;
+    }
+
+    .notification-date {
+        font-size: 0.65rem;
+    }
+
+    .notification-title {
+        font-size: 0.94rem;
+    }
+
+    .notification-message {
+        font-size: 0.81rem;
+    }
+
+    .notification-card-footer {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 10px;
+    }
+
+    .notification-empty {
+        padding: 55px 22px;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 420px) {
+
+    .notification-hero-content {
+        display: grid;
+
+        grid-template-columns: auto 1fr;
+    }
+
+    .notification-unread-summary {
+        grid-column: 1 / -1;
+
+        margin-left: 0;
+
+        justify-self: start;
+    }
+
+    .notification-toolbar-actions {
+        display: grid;
+
+        grid-template-columns: 1fr;
+
+        width: 100%;
+    }
+
+    .notification-action {
+        width: 100%;
+    }
+
+    .notification-card {
+        padding: 15px;
+    }
+
+    .notification-card-heading {
+        gap: 5px;
+    }
+
+    .notification-type-badge,
+    .notification-new-badge {
+        font-size: 0.57rem;
+    }
+
+}
+
+/* =========================================================
+   BMK ACADEMY
+   NOTIFICATION / ANNOUNCEMENT STYLES
+   ========================================================= */
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+   .notification-page {
+    min-height: calc(100vh - 100px);
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(29, 78, 216, 0.06),
+            transparent 30%
+        ),
+        var(--bmk-soft);
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.notification-page-header {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.notification-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--bmk-blue);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+.notification-back-link:hover {
+    color: var(--bmk-navy);
+    transform: translateX(-3px);
+}
+
+.notification-heading {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.notification-heading-icon {
+    width: 62px;
+    height: 62px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 18px;
+    background: linear-gradient(
+        135deg,
+        var(--bmk-blue),
+        var(--bmk-navy)
+    );
+    color: var(--bmk-white);
+    font-size: 1.45rem;
+    box-shadow: 0 12px 28px rgba(29, 78, 216, 0.20);
+}
+
+.notification-eyebrow {
+    display: block;
+    margin-bottom: 3px;
+    color: var(--bmk-gold);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.notification-page-title {
+    margin: 0;
+    color: var(--bmk-navy);
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 800;
+    line-height: 1.15;
+}
+
+.notification-page-subtitle {
+    margin-top: 7px;
+    color: var(--bmk-muted);
+    font-size: 0.96rem;
+}
+
+
+/* =========================================================
+   ANNOUNCEMENT FORM CARD
+   ========================================================= */
+
+.announcement-form-card {
+    overflow: hidden;
+    background: var(--bmk-white);
+    border: 1px solid var(--bmk-border);
+    border-radius: 24px;
+    box-shadow: var(--bmk-shadow-lg);
+}
+
+
+/* =========================================================
+   FORM HEADER
+   ========================================================= */
+
+.announcement-form-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 25px 30px;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(15, 39, 71, 0.04),
+            rgba(29, 78, 216, 0.05)
+        );
+    border-bottom: 1px solid var(--bmk-border);
+}
+
+.announcement-form-header h2 {
+    margin: 0 0 5px;
+    color: var(--bmk-navy);
+    font-size: 1.15rem;
+    font-weight: 800;
+}
+
+.announcement-form-header p {
+    color: var(--bmk-muted);
+    font-size: 0.88rem;
+}
+
+.announcement-form-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 13px;
+    border-radius: 999px;
+    background: rgba(224, 168, 62, 0.14);
+    color: #946b12;
+    font-size: 0.78rem;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   FORM BODY
+   ========================================================= */
+
+.announcement-form-body {
+    padding: 32px;
+}
+
+
+/* =========================================================
+   FORM FIELDS
+   ========================================================= */
+
+.announcement-field {
+    margin-bottom: 26px;
+}
+
+.announcement-label {
+    display: block;
+    margin-bottom: 9px;
+    color: var(--bmk-navy);
+    font-size: 0.9rem;
+    font-weight: 750;
+}
+
+.announcement-label span {
+    color: #dc3545;
+    margin-left: 2px;
+}
+
+
+/* Django rendered inputs */
+
+.announcement-field input,
+.announcement-field textarea,
+.announcement-field select {
+    width: 100%;
+    padding: 12px 14px;
+    color: var(--bmk-text);
+    background: var(--bmk-white);
+    border: 1px solid #d9e1eb;
+    border-radius: 12px;
+    outline: none;
+    font-size: 0.94rem;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.announcement-field input {
+    min-height: 48px;
+}
+
+.announcement-field textarea {
+    min-height: 160px;
+    resize: vertical;
+    line-height: 1.65;
+}
+
+.announcement-field select {
+    min-height: 48px;
+    cursor: pointer;
+}
+
+.announcement-field input:hover,
+.announcement-field textarea:hover,
+.announcement-field select:hover {
+    border-color: #b8c7d9;
+}
+
+.announcement-field input:focus,
+.announcement-field textarea:focus,
+.announcement-field select:focus {
+    background: var(--bmk-white);
+    border-color: var(--bmk-blue);
+    box-shadow: 0 0 0 4px rgba(29, 78, 216, 0.09);
+}
+
+
+/* =========================================================
+   HELP TEXT
+   ========================================================= */
+
+.announcement-help {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    margin-top: 8px;
+    color: var(--bmk-muted);
+    font-size: 0.78rem;
+    line-height: 1.5;
+}
+
+.announcement-help i {
+    margin-top: 2px;
+    color: var(--bmk-blue);
+}
+
+
+/* =========================================================
+   ERRORS
+   ========================================================= */
+
+.notification-form-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 25px;
+    padding: 14px 16px;
+    border: 1px solid #f1b7bd;
+    border-radius: 12px;
+    background: #fff4f4;
+    color: #842029;
+    font-size: 0.88rem;
+}
+
+.notification-alert-icon {
+    flex-shrink: 0;
+    color: #dc3545;
+}
+
+.announcement-error {
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+    margin-top: 7px;
+    color: #dc3545;
+    font-size: 0.78rem;
+}
+
+.announcement-error i {
+    margin-top: 2px;
+}
+
+
+/* =========================================================
+   BEFORE-SENDING NOTICE
+   ========================================================= */
+
+.announcement-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+    margin: 5px 0 30px;
+    padding: 17px 18px;
+    border: 1px solid rgba(224, 168, 62, 0.30);
+    border-radius: 14px;
+    background: linear-gradient(
+        135deg,
+        rgba(224, 168, 62, 0.09),
+        rgba(243, 213, 138, 0.12)
+    );
+}
+
+.announcement-notice-icon {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: rgba(224, 168, 62, 0.18);
+    color: #9a7117;
+}
+
+.announcement-notice strong {
+    display: block;
+    margin-bottom: 3px;
+    color: var(--bmk-navy);
+    font-size: 0.85rem;
+}
+
+.announcement-notice p {
+    color: var(--bmk-muted);
+    font-size: 0.79rem;
+    line-height: 1.55;
+}
+
+
+/* =========================================================
+   FORM ACTIONS
+   ========================================================= */
+
+.announcement-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 5px;
+}
+
+.announcement-form-actions .btn {
+    min-height: 46px;
+    padding: 10px 19px;
+    border-radius: 11px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.announcement-cancel-btn {
+    color: var(--bmk-text);
+    background: var(--bmk-white);
+    border: 1px solid var(--bmk-border);
+}
+
+.announcement-cancel-btn:hover {
+    color: var(--bmk-navy);
+    background: #f8fafc;
+    border-color: #cbd5e1;
+    transform: translateY(-1px);
+}
+
+.announcement-send-btn {
+    color: var(--bmk-white);
+    background: linear-gradient(
+        135deg,
+        var(--bmk-blue),
+        var(--bmk-navy)
+    );
+    border: none;
+    box-shadow: 0 8px 20px rgba(29, 78, 216, 0.18);
+}
+
+.announcement-send-btn:hover {
+    color: var(--bmk-white);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(29, 78, 216, 0.25);
+}
+
+
+/* =========================================================
+   GUIDANCE
+   ========================================================= */
+
+.announcement-guidance {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 18px;
+    padding: 16px 18px;
+    color: var(--bmk-muted);
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid var(--bmk-border);
+    border-radius: 14px;
+}
+
+.announcement-guidance-icon {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: rgba(63, 125, 88, 0.10);
+    color: var(--bmk-green);
+}
+
+.announcement-guidance strong {
+    display: block;
+    margin-bottom: 2px;
+    color: var(--bmk-navy);
+    font-size: 0.82rem;
+}
+
+.announcement-guidance p {
+    font-size: 0.77rem;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .notification-page {
+        min-height: auto;
+    }
+
+    .notification-heading {
+        align-items: flex-start;
+        gap: 13px;
+    }
+
+    .notification-heading-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 14px;
+        font-size: 1.15rem;
+    }
+
+    .notification-page-title {
+        font-size: 1.65rem;
+    }
+
+    .notification-page-subtitle {
+        font-size: 0.87rem;
+    }
+
+    .announcement-form-header {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 21px;
+    }
+
+    .announcement-form-body {
+        padding: 22px;
+    }
+
+    .announcement-form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .announcement-form-actions .btn {
+        width: 100%;
+    }
+
+    .announcement-guidance {
+        margin-bottom: 10px;
+    }
+}
+
+
+@media (max-width: 420px) {
+
+    .notification-heading-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        font-size: 1rem;
+    }
+
+    .notification-page-title {
+        font-size: 1.45rem;
+    }
+
+    .notification-eyebrow {
+        font-size: 0.68rem;
+    }
+
+    .announcement-form-body {
+        padding: 18px;
+    }
+
+    .announcement-form-header {
+        padding: 18px;
+    }
+
+    .announcement-notice {
+        padding: 14px;
+    }
+
+}
+
+/* =========================================================
+   BMK NOTIFICATIONS
+   ========================================================= */
+
+   .bmk-notification-page {
+    min-height: 70vh;
+    background: var(--bmk-soft);
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.bmk-notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 30px;
+}
+
+.bmk-notification-header-content {
+    max-width: 720px;
+}
+
+.bmk-notification-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--bmk-blue);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.bmk-notification-title {
+    margin: 0;
+    color: var(--bmk-navy);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.bmk-notification-subtitle {
+    margin: 14px 0 0;
+    color: var(--bmk-muted);
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+.bmk-notification-header-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.bmk-notification-primary-btn,
+.bmk-notification-secondary-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 17px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.bmk-notification-primary-btn {
+    color: var(--bmk-white);
+    background: var(--bmk-blue);
+    box-shadow: 0 8px 20px rgba(29, 78, 216, 0.18);
+}
+
+.bmk-notification-primary-btn:hover {
+    color: var(--bmk-white);
+    background: var(--bmk-navy);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(15, 39, 71, 0.18);
+}
+
+.bmk-notification-secondary-btn {
+    color: var(--bmk-navy);
+    background: var(--bmk-white);
+    border: 1px solid var(--bmk-border);
+}
+
+.bmk-notification-secondary-btn:hover {
+    color: var(--bmk-blue);
+    border-color: var(--bmk-blue);
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   SUMMARY
+   ========================================================= */
+
+.bmk-announcement-summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    background: var(--bmk-white);
+    border: 1px solid var(--bmk-border);
+    border-radius: 16px;
+    box-shadow: var(--bmk-shadow);
+}
+
+.bmk-announcement-summary-icon {
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bmk-blue);
+    background: var(--bmk-light-blue);
+    border-radius: 13px;
+    font-size: 1.2rem;
+}
+
+.bmk-announcement-summary-label {
+    display: block;
+    color: var(--bmk-muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.bmk-announcement-summary-value {
+    display: block;
+    margin-top: 2px;
+    color: var(--bmk-navy);
+    font-size: 1.25rem;
+}
+
+
+/* =========================================================
+   TABLE CARD
+   ========================================================= */
+
+.bmk-announcement-table-card {
+    overflow: hidden;
+    background: var(--bmk-white);
+    border: 1px solid var(--bmk-border);
+    border-radius: var(--bmk-radius);
+    box-shadow: var(--bmk-shadow);
+}
+
+.bmk-announcement-table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 24px 26px;
+    border-bottom: 1px solid var(--bmk-border);
+}
+
+.bmk-announcement-table-header h2 {
+    margin: 0;
+    color: var(--bmk-navy);
+    font-size: 1.15rem;
+    font-weight: 800;
+}
+
+.bmk-announcement-table-header p {
+    margin: 5px 0 0;
+    color: var(--bmk-muted);
+    font-size: 0.88rem;
+}
+
+.bmk-announcement-table-icon {
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--bmk-gold);
+    background: rgba(224, 168, 62, 0.12);
+    border-radius: 13px;
+    font-size: 1.15rem;
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.bmk-announcement-table {
+    min-width: 950px;
+}
+
+.bmk-announcement-table thead th {
+    padding: 15px 18px;
+    color: var(--bmk-muted);
+    background: var(--bmk-soft);
+    border-bottom: 1px solid var(--bmk-border);
+    font-size: 0.73rem;
+    font-weight: 800;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.bmk-announcement-table tbody td {
+    padding: 18px;
+    border-bottom: 1px solid var(--bmk-border);
+    vertical-align: middle;
+}
+
+.bmk-announcement-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.bmk-announcement-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.bmk-announcement-table tbody tr:hover {
+    background: #fbfcfe;
+}
+
+
+/* =========================================================
+   ANNOUNCEMENT TITLE
+   ========================================================= */
+
+.bmk-announcement-title-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 210px;
+}
+
+.bmk-announcement-row-icon {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--bmk-blue);
+    background: var(--bmk-light-blue);
+    border-radius: 12px;
+}
+
+.bmk-announcement-title-cell strong {
+    display: block;
+    color: var(--bmk-navy);
+    font-size: 0.92rem;
+    line-height: 1.4;
+}
+
+.bmk-announcement-title-cell small {
+    display: block;
+    margin-top: 3px;
+    color: var(--bmk-muted);
+    font-size: 0.75rem;
+}
+
+
+/* =========================================================
+   AUDIENCE BADGES
+   ========================================================= */
+
+.bmk-audience-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 10px;
+    border-radius: 30px;
+    color: var(--bmk-muted);
+    background: var(--bmk-soft);
+    font-size: 0.74rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.bmk-audience-badge.parents {
+    color: #1d4ed8;
+    background: #eef5ff;
+}
+
+.bmk-audience-badge.teachers {
+    color: #28734a;
+    background: #edf8f1;
+}
+
+.bmk-audience-badge.students {
+    color: #8a6200;
+    background: #fff7df;
+}
+
+.bmk-audience-badge.everyone {
+    color: var(--bmk-navy);
+    background: #edf0f4;
+}
+
+
+/* =========================================================
+   RECIPIENT COUNT
+   ========================================================= */
+
+.bmk-recipient-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 38px;
+    height: 32px;
+    padding: 0 10px;
+    color: var(--bmk-navy);
+    background: var(--bmk-soft);
+    border: 1px solid var(--bmk-border);
+    border-radius: 9px;
+    font-size: 0.82rem;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   DATE
+   ========================================================= */
+
+.bmk-announcement-date strong {
+    display: block;
+    color: var(--bmk-navy);
+    font-size: 0.82rem;
+    white-space: nowrap;
+}
+
+.bmk-announcement-date span {
+    display: block;
+    margin-top: 3px;
+    color: var(--bmk-muted);
+    font-size: 0.75rem;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   MESSAGE
+   ========================================================= */
+
+.bmk-announcement-message {
+    max-width: 300px;
+    margin: 0;
+    color: var(--bmk-text);
+    font-size: 0.82rem;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   VIEW BUTTON
+   ========================================================= */
+
+.bmk-announcement-view-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    color: var(--bmk-blue);
+    background: var(--bmk-white);
+    border: 1px solid #cbd8f7;
+    border-radius: 9px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.bmk-announcement-view-btn:hover {
+    color: var(--bmk-white);
+    background: var(--bmk-blue);
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.bmk-notification-empty {
+    max-width: 650px;
+    margin: 40px auto;
+    padding: 60px 30px;
+    text-align: center;
+    background: var(--bmk-white);
+    border: 1px solid var(--bmk-border);
+    border-radius: var(--bmk-radius);
+    box-shadow: var(--bmk-shadow);
+}
+
+.bmk-notification-empty-icon {
+    width: 78px;
+    height: 78px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bmk-blue);
+    background: var(--bmk-light-blue);
+    border-radius: 22px;
+    font-size: 2rem;
+}
+
+.bmk-notification-empty h2 {
+    margin-bottom: 8px;
+    color: var(--bmk-navy);
+    font-size: 1.4rem;
+    font-weight: 800;
+}
+
+.bmk-notification-empty p {
+    max-width: 430px;
+    margin: 0 auto 25px;
+    color: var(--bmk-muted);
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 991.98px) {
+
+    .bmk-notification-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .bmk-notification-header-actions {
+        width: 100%;
+    }
+
+}
+
+
+@media (max-width: 575.98px) {
+
+    .bmk-notification-header-actions {
+        flex-direction: column;
+    }
+
+    .bmk-notification-primary-btn,
+    .bmk-notification-secondary-btn {
+        width: 100%;
+    }
+
+    .bmk-announcement-table-header {
+        padding: 20px;
+    }
+
+    .bmk-notification-empty {
+        padding: 45px 20px;
+    }
+
+}
+
+/* =========================================================
+   ANNOUNCEMENT DETAIL
+   ========================================================= */
+
+   .bmk-announcement-detail-card {
+    overflow: hidden;
+    background: var(--bmk-white);
+    border: 1px solid var(--bmk-border);
+    border-radius: var(--bmk-radius);
+    box-shadow: var(--bmk-shadow);
+}
+
+.bmk-announcement-detail-top {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 28px 30px;
+    border-bottom: 1px solid var(--bmk-border);
+}
+
+.bmk-announcement-detail-icon {
+    width: 58px;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--bmk-blue);
+    background: var(--bmk-light-blue);
+    border-radius: 16px;
+    font-size: 1.4rem;
+}
+
+.bmk-announcement-detail-heading span {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--bmk-muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.bmk-announcement-detail-heading h2 {
+    margin: 0;
+    color: var(--bmk-navy);
+    font-size: 1.55rem;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   DETAIL META
+   ========================================================= */
+
+.bmk-announcement-detail-meta {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-bottom: 1px solid var(--bmk-border);
+}
+
+.bmk-announcement-meta-item {
+    min-height: 105px;
+    padding: 22px 26px;
+    border-right: 1px solid var(--bmk-border);
+}
+
+.bmk-announcement-meta-item:last-child {
+    border-right: 0;
+}
+
+.bmk-announcement-meta-label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 9px;
+    color: var(--bmk-muted);
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.bmk-announcement-meta-value {
+    display: inline-block;
+    color: var(--bmk-navy);
+    font-size: 1.05rem;
+}
+
+.bmk-announcement-meta-item small {
+    display: inline-block;
+    margin-left: 5px;
+    color: var(--bmk-muted);
+    font-size: 0.78rem;
+}
+
+
+/* =========================================================
+   DETAIL MESSAGE
+   ========================================================= */
+
+.bmk-announcement-detail-message {
+    padding: 28px 30px 32px;
+}
+
+.bmk-announcement-message-heading {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 14px;
+}
+
+.bmk-announcement-message-heading i {
+    color: var(--bmk-blue);
+}
+
+.bmk-announcement-message-heading h3 {
+    margin: 0;
+    color: var(--bmk-navy);
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.bmk-announcement-message-body {
+    padding: 20px 22px;
+    color: var(--bmk-text);
+    background: var(--bmk-soft);
+    border: 1px solid var(--bmk-border);
+    border-radius: 14px;
+    line-height: 1.8;
+}
+
+.bmk-announcement-message-body p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* =========================================================
+   RECIPIENT CELL
+   ========================================================= */
+
+.bmk-recipient-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 210px;
+}
+
+.bmk-recipient-avatar {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--bmk-blue);
+    background: var(--bmk-light-blue);
+    border-radius: 11px;
+}
+
+.bmk-recipient-cell strong {
+    display: block;
+    color: var(--bmk-navy);
+    font-size: 0.86rem;
+}
+
+.bmk-recipient-cell small {
+    display: block;
+    margin-top: 3px;
+    color: var(--bmk-muted);
+    font-size: 0.72rem;
+}
+
+.bmk-username {
+    color: var(--bmk-text);
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.bmk-recipient-email {
+    color: var(--bmk-text);
+    font-size: 0.8rem;
+}
+
+.bmk-no-email {
+    color: var(--bmk-muted);
+    font-size: 0.78rem;
+    font-style: italic;
+}
+
+
+/* =========================================================
+   RECIPIENT STATUS
+   ========================================================= */
+
+.bmk-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 10px;
+    border-radius: 30px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.bmk-status-badge.read {
+    color: #28734a;
+    background: #edf8f1;
+}
+
+.bmk-status-badge.unread {
+    color: #64748b;
+    background: #f1f4f7;
+}
+
+
+/* =========================================================
+   RECIPIENT DATE
+   ========================================================= */
+
+.bmk-recipient-date strong {
+    display: block;
+    color: var(--bmk-navy);
+    font-size: 0.8rem;
+    white-space: nowrap;
+}
+
+.bmk-recipient-date span {
+    display: block;
+    margin-top: 3px;
+    color: var(--bmk-muted);
+    font-size: 0.73rem;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   EMPTY RECIPIENT STATE
+   ========================================================= */
+
+.bmk-recipient-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 45px 20px;
+    text-align: center;
+}
+
+.bmk-recipient-empty i {
+    margin-bottom: 8px;
+    color: var(--bmk-muted);
+    font-size: 2rem;
+}
+
+.bmk-recipient-empty strong {
+    color: var(--bmk-navy);
+}
+
+.bmk-recipient-empty span {
+    color: var(--bmk-muted);
+    font-size: 0.82rem;
+}
+
+
+/* =========================================================
+   DETAIL RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .bmk-announcement-detail-top {
+        padding: 22px 20px;
+    }
+
+    .bmk-announcement-detail-heading h2 {
+        font-size: 1.25rem;
+    }
+
+    .bmk-announcement-detail-meta {
+        grid-template-columns: 1fr;
+    }
+
+    .bmk-announcement-meta-item {
+        min-height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--bmk-border);
+    }
+
+    .bmk-announcement-meta-item:last-child {
+        border-bottom: 0;
+    }
+
+    .bmk-announcement-detail-message {
+        padding: 22px 20px 25px;
+    }
+
+}

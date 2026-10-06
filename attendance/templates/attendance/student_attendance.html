@@ -1,21 +1,35 @@
 {% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
 
-{% block title %}
-    {{ student.first_name }} {{ student.last_name }} | Attendance
+<link rel="stylesheet" href="{% static 'website/css/classroom.css' %}">
 {% endblock %}
-
+{% block title %}
+{{ student.first_name }} {{ student.last_name }} | Attendance | BMK Academy
+{% endblock %}
 
 {% block content %}
 
-<div class="row">
+<div class="bmk-student-attendance">
 
-    <div class="col-lg-11 mx-auto">
 
-        <!-- Student heading -->
+<div class="container-xl">
 
-        <div class="mb-4">
+    <!-- =====================================================
+         Student Header
+    ====================================================== -->
 
-            <h2 class="fw-bold">
+    <section class="bmk-student-attendance-header">
+
+        <div class="bmk-header-content">
+
+            <div class="bmk-eyebrow">
+                <i class="bi bi-person-check-fill"></i>
+                Student Attendance
+            </div>
+
+            <h1 class="bmk-student-name">
+
                 {{ student.first_name }}
 
                 {% if student.middle_name %}
@@ -23,296 +37,382 @@
                 {% endif %}
 
                 {{ student.last_name }}
-            </h2>
 
-            <p class="text-muted mb-1">
-                Admission Number:
-                <strong>
-                    {{ student.admission_number }}
-                </strong>
-            </p>
+            </h1>
+
+            <div class="bmk-admission-number">
+                <i class="bi bi-person-vcard"></i>
+
+                <span>
+                    Admission Number:
+                    <strong>{{ student.admission_number }}</strong>
+                </span>
+            </div>
 
         </div>
 
-
-        <!-- Date filter -->
-
-        <div class="card shadow-sm mb-4">
-
-            <div class="card-body">
-
-                <form method="get">
-
-                    <div class="row g-3">
-
-                        <div class="col-md-5">
-
-                            <label class="form-label">
-                                Start Date
-                            </label>
-
-                            <input
-                                type="date"
-                                name="start_date"
-                                class="form-control"
-                                value="{{ start_date|default:'' }}"
-                            >
-
-                        </div>
+    </section>
 
 
-                        <div class="col-md-5">
+    <!-- =====================================================
+         Date Filter
+    ====================================================== -->
 
-                            <label class="form-label">
-                                End Date
-                            </label>
+    <section class="bmk-attendance-filter">
 
-                            <input
-                                type="date"
-                                name="end_date"
-                                class="form-control"
-                                value="{{ end_date|default:'' }}"
-                            >
+        <div class="bmk-filter-header">
 
-                        </div>
+            <div class="bmk-filter-icon">
+                <i class="bi bi-calendar3"></i>
+            </div>
 
+            <div>
+                <h2 class="bmk-filter-title">
+                    Attendance Period
+                </h2>
 
-                        <div class="col-md-2 d-flex align-items-end">
-
-                            <button
-                                type="submit"
-                                class="btn btn-primary w-100"
-                            >
-                                Filter
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </form>
-
+                <p class="bmk-filter-subtitle">
+                    Select a date range to review this student's attendance.
+                </p>
             </div>
 
         </div>
 
 
-        <!-- Statistics -->
+        <div class="bmk-filter-body">
 
-        <div class="row g-3 mb-4">
+            <form method="get">
 
-            <div class="col-md-4 col-lg">
+                <div class="row g-3 align-items-end">
 
-                <div class="card shadow-sm h-100">
+                    <div class="col-md-5">
 
-                    <div class="card-body">
+                        <label
+                            for="startDate"
+                            class="bmk-filter-label"
+                        >
+                            Start Date
+                        </label>
 
-                        <small class="text-muted">
-                            Total Days
-                        </small>
+                        <input
+                            type="date"
+                            id="startDate"
+                            name="start_date"
+                            class="form-control bmk-filter-input"
+                            value="{{ start_date|default:'' }}"
+                        >
 
-                        <h3 class="fw-bold mb-0">
-                            {{ statistics.total }}
-                        </h3>
+                    </div>
+
+
+                    <div class="col-md-5">
+
+                        <label
+                            for="endDate"
+                            class="bmk-filter-label"
+                        >
+                            End Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="endDate"
+                            name="end_date"
+                            class="form-control bmk-filter-input"
+                            value="{{ end_date|default:'' }}"
+                        >
+
+                    </div>
+
+
+                    <div class="col-md-2">
+
+                        <button
+                            type="submit"
+                            class="btn bmk-filter-btn w-100"
+                        >
+                            <i class="bi bi-funnel-fill me-1"></i>
+                            Filter
+                        </button>
 
                     </div>
 
                 </div>
 
-            </div>
+            </form>
+
+        </div>
+
+    </section>
 
 
-            <div class="col-md-4 col-lg">
+    <!-- =====================================================
+         Statistics
+    ====================================================== -->
 
-                <div class="card shadow-sm h-100">
+    <div class="row g-3">
 
-                    <div class="card-body">
+        <div class="col-6 col-md-4 col-xl">
 
-                        <small class="text-muted">
-                            Present
-                        </small>
+            <div class="bmk-attendance-stat bmk-stat-total">
 
-                        <h3 class="fw-bold text-success mb-0">
-                            {{ statistics.present }}
-                        </h3>
+                <div class="bmk-stat-top">
 
-                    </div>
+                    <span class="bmk-stat-label">
+                        Total Days
+                    </span>
 
-                </div>
-
-            </div>
-
-
-            <div class="col-md-4 col-lg">
-
-                <div class="card shadow-sm h-100">
-
-                    <div class="card-body">
-
-                        <small class="text-muted">
-                            Absent
-                        </small>
-
-                        <h3 class="fw-bold text-danger mb-0">
-                            {{ statistics.absent }}
-                        </h3>
-
-                    </div>
+                    <span class="bmk-stat-icon">
+                        <i class="bi bi-calendar-check"></i>
+                    </span>
 
                 </div>
 
-            </div>
-
-
-            <div class="col-md-4 col-lg">
-
-                <div class="card shadow-sm h-100">
-
-                    <div class="card-body">
-
-                        <small class="text-muted">
-                            Late
-                        </small>
-
-                        <h3 class="fw-bold text-warning mb-0">
-                            {{ statistics.late }}
-                        </h3>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="col-md-4 col-lg">
-
-                <div class="card shadow-sm h-100">
-
-                    <div class="card-body">
-
-                        <small class="text-muted">
-                            Attendance Rate
-                        </small>
-
-                        <h3 class="fw-bold mb-0">
-                            {{ statistics.attendance_rate }}%
-                        </h3>
-
-                    </div>
-
-                </div>
+                <h3 class="bmk-stat-value">
+                    {{ statistics.total }}
+                </h3>
 
             </div>
 
         </div>
 
 
-        <!-- Attendance history -->
+        <div class="col-6 col-md-4 col-xl">
 
-        <div class="card shadow-sm">
+            <div class="bmk-attendance-stat bmk-stat-present">
 
-            <div class="card-header">
+                <div class="bmk-stat-top">
 
-                <strong>
-                    Attendance History
-                </strong>
+                    <span class="bmk-stat-label">
+                        Present
+                    </span>
+
+                    <span class="bmk-stat-icon">
+                        <i class="bi bi-check-circle-fill"></i>
+                    </span>
+
+                </div>
+
+                <h3 class="bmk-stat-value">
+                    {{ statistics.present }}
+                </h3>
 
             </div>
 
-
-            <div class="card-body">
-
-                <div class="table-responsive">
-
-                    <table class="table table-hover align-middle">
-
-                        <thead>
-
-                            <tr>
-
-                                <th>
-                                    Date
-                                </th>
-
-                                <th>
-                                    Status
-                                </th>
-
-                            </tr>
-
-                        </thead>
+        </div>
 
 
-                        <tbody>
+        <div class="col-6 col-md-4 col-xl">
 
-                            {% for record in records %}
+            <div class="bmk-attendance-stat bmk-stat-absent">
 
-                                <tr>
+                <div class="bmk-stat-top">
 
-                                    <td>
-                                        {{ record.attendance_date|date:"M d, Y" }}
-                                    </td>
+                    <span class="bmk-stat-label">
+                        Absent
+                    </span>
 
-
-                                    <td>
-
-                                        {% if record.status == "present" %}
-
-                                            <span class="badge bg-success">
-                                                Present
-                                            </span>
-
-                                        {% elif record.status == "absent" %}
-
-                                            <span class="badge bg-danger">
-                                                Absent
-                                            </span>
-
-                                        {% elif record.status == "late" %}
-
-                                            <span class="badge bg-warning text-dark">
-                                                Late
-                                            </span>
-
-                                        {% elif record.status == "excused" %}
-
-                                            <span class="badge bg-info text-dark">
-                                                Excused
-                                            </span>
-
-                                        {% endif %}
-
-                                    </td>
-
-                                </tr>
-
-                            {% empty %}
-
-                                <tr>
-
-                                    <td
-                                        colspan="2"
-                                        class="text-center text-muted py-4"
-                                    >
-                                        No attendance records found.
-                                    </td>
-
-                                </tr>
-
-                            {% endfor %}
-
-                        </tbody>
-
-                    </table>
+                    <span class="bmk-stat-icon">
+                        <i class="bi bi-x-circle-fill"></i>
+                    </span>
 
                 </div>
+
+                <h3 class="bmk-stat-value">
+                    {{ statistics.absent }}
+                </h3>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-6 col-md-4 col-xl">
+
+            <div class="bmk-attendance-stat bmk-stat-late">
+
+                <div class="bmk-stat-top">
+
+                    <span class="bmk-stat-label">
+                        Late
+                    </span>
+
+                    <span class="bmk-stat-icon">
+                        <i class="bi bi-clock-fill"></i>
+                    </span>
+
+                </div>
+
+                <h3 class="bmk-stat-value">
+                    {{ statistics.late }}
+                </h3>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-6 col-md-4 col-xl">
+
+            <div class="bmk-attendance-stat bmk-stat-rate">
+
+                <div class="bmk-stat-top">
+
+                    <span class="bmk-stat-label">
+                        Attendance Rate
+                    </span>
+
+                    <span class="bmk-stat-icon">
+                        <i class="bi bi-graph-up-arrow"></i>
+                    </span>
+
+                </div>
+
+                <h3 class="bmk-stat-value">
+                    {{ statistics.attendance_rate }}%
+                </h3>
 
             </div>
 
         </div>
 
     </div>
+
+
+    <!-- =====================================================
+         Attendance History
+    ====================================================== -->
+
+    <section class="bmk-history-card">
+
+        <div class="bmk-history-header">
+
+            <div class="bmk-history-icon">
+                <i class="bi bi-clock-history"></i>
+            </div>
+
+            <div>
+                <h2 class="bmk-history-title">
+                    Attendance History
+                </h2>
+
+                <p class="bmk-history-subtitle">
+                    Daily attendance records for this student.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="bmk-history-body">
+
+            <div class="table-responsive">
+
+                <table class="table bmk-history-table align-middle">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for record in records %}
+
+                            <tr>
+
+                                <td class="bmk-date">
+                                    {{ record.attendance_date|date:"M d, Y" }}
+                                </td>
+
+
+                                <td>
+
+                                    {% if record.status == "present" %}
+
+                                        <span class="bmk-status-badge bmk-status-present">
+                                            <i class="bi bi-check-circle-fill"></i>
+                                            Present
+                                        </span>
+
+                                    {% elif record.status == "absent" %}
+
+                                        <span class="bmk-status-badge bmk-status-absent">
+                                            <i class="bi bi-x-circle-fill"></i>
+                                            Absent
+                                        </span>
+
+                                    {% elif record.status == "late" %}
+
+                                        <span class="bmk-status-badge bmk-status-late">
+                                            <i class="bi bi-clock-fill"></i>
+                                            Late
+                                        </span>
+
+                                    {% elif record.status == "excused" %}
+
+                                        <span class="bmk-status-badge bmk-status-excused">
+                                            <i class="bi bi-info-circle-fill"></i>
+                                            Excused
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+                            </tr>
+
+                        {% empty %}
+
+                            <tr>
+
+                                <td colspan="2">
+
+                                    <div class="bmk-empty-state">
+
+                                        <div class="bmk-empty-icon">
+                                            <i class="bi bi-calendar-x"></i>
+                                        </div>
+
+                                        <h4>
+                                            No Attendance Records
+                                        </h4>
+
+                                        <p>
+                                            No attendance records were found for the selected period.
+                                        </p>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
 
 </div>
 

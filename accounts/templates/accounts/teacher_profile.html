@@ -1,82 +1,108 @@
 {% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
 
+<link rel="stylesheet" href="{% static 'website/css/password_profile.css' %}">
+{% endblock %}
 {% block title %}
-    My Profile | BMK Academy
+My Profile | BMK Academy
 {% endblock %}
 
 {% block content %}
 
-<div class="container py-4">
+<div class="bmk-teacher-profile">
+
+<div class="container">
 
     <!-- HEADER -->
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="bmk-profile-header">
 
-        <div>
+        <div class="row align-items-center">
 
-            <h2 class="fw-bold mb-1">
-                My Profile
-            </h2>
+            <div class="col-md-7">
 
-            <p class="text-muted mb-0">
-                Your teacher account information
-            </p>
+                <div class="bmk-profile-header-content">
 
-        </div>
+                    <div class="bmk-profile-eyebrow">
+                        <i class="bi bi-person-badge"></i>
+                        Teacher Account
+                    </div>
 
-        <div class="d-flex gap-2">
+                    <h2>
+                        My Profile
+                    </h2>
 
-            <a
-                href="{% url 'accounts:change_password' %}"
-                class="btn btn-outline-primary"
-            >
-                <i class="bi bi-key"></i>
-                Change Password
-            </a>
+                    <p>
+                        Manage your personal and professional information.
+                    </p>
 
-            <a
-                href="{% url 'accounts:teacher_home' %}"
-                class="btn btn-outline-secondary"
-            >
-                <i class="bi bi-arrow-left"></i>
-                Back to Dashboard
-            </a>
+                </div>
+
+            </div>
+
+            <div class="col-md-5">
+
+                <div class="bmk-profile-actions d-flex justify-content-md-end gap-2 flex-wrap">
+
+                    <a
+                        href="{% url 'accounts:change_password' %}"
+                        class="btn btn-light"
+                    >
+                        <i class="bi bi-key me-1"></i>
+                        Change Password
+                    </a>
+
+                    <a
+                        href="{% url 'accounts:teacher_home' %}"
+                        class="btn btn-outline-light"
+                    >
+                        <i class="bi bi-arrow-left me-1"></i>
+                        Dashboard
+                    </a>
+
+                </div>
+
+            </div>
 
         </div>
 
     </div>
 
 
-    <!-- PROFILE -->
+    <!-- CONTENT -->
 
     <div class="row g-4">
-
 
         <!-- PERSONAL INFORMATION -->
 
         <div class="col-lg-8">
 
-            <div class="card border-0 shadow-sm h-100">
+            <div class="bmk-profile-card">
 
-                <div class="card-body p-4">
+                <div class="bmk-profile-card-header">
 
-                    <h5 class="fw-bold mb-4">
+                    <h5>
+                        <i class="bi bi-person-lines-fill text-primary me-2"></i>
                         Personal Information
                     </h5>
 
+                </div>
 
-                    <form method="post">
+                <div class="bmk-profile-card-body">
+
+                    <form method="post" class="bmk-profile-form">
 
                         {% csrf_token %}
 
 
                         <!-- FIRST NAME -->
 
-                        <div class="mb-3">
+                        <div class="mb-4">
 
                             <label
                                 for="{{ user_form.first_name.id_for_label }}"
-                                class="form-label fw-semibold"
+                                class="form-label"
                             >
                                 First Name
                             </label>
@@ -85,7 +111,7 @@
 
                             {% if user_form.first_name.errors %}
 
-                                <div class="text-danger small mt-1">
+                                <div class="bmk-field-error">
                                     {{ user_form.first_name.errors }}
                                 </div>
 
@@ -96,11 +122,11 @@
 
                         <!-- LAST NAME -->
 
-                        <div class="mb-3">
+                        <div class="mb-4">
 
                             <label
                                 for="{{ user_form.last_name.id_for_label }}"
-                                class="form-label fw-semibold"
+                                class="form-label"
                             >
                                 Last Name
                             </label>
@@ -109,7 +135,7 @@
 
                             {% if user_form.last_name.errors %}
 
-                                <div class="text-danger small mt-1">
+                                <div class="bmk-field-error">
                                     {{ user_form.last_name.errors }}
                                 </div>
 
@@ -120,11 +146,11 @@
 
                         <!-- EMAIL -->
 
-                        <div class="mb-3">
+                        <div class="mb-4">
 
                             <label
                                 for="{{ user_form.email.id_for_label }}"
-                                class="form-label fw-semibold"
+                                class="form-label"
                             >
                                 Email
                             </label>
@@ -133,7 +159,7 @@
 
                             {% if user_form.email.errors %}
 
-                                <div class="text-danger small mt-1">
+                                <div class="bmk-field-error">
                                     {{ user_form.email.errors }}
                                 </div>
 
@@ -144,11 +170,11 @@
 
                         <!-- PHONE -->
 
-                        <div class="mb-3">
+                        <div class="mb-4">
 
                             <label
                                 for="{{ teacher_form.phone.id_for_label }}"
-                                class="form-label fw-semibold"
+                                class="form-label"
                             >
                                 Phone
                             </label>
@@ -157,7 +183,7 @@
 
                             {% if teacher_form.phone.errors %}
 
-                                <div class="text-danger small mt-1">
+                                <div class="bmk-field-error">
                                     {{ teacher_form.phone.errors }}
                                 </div>
 
@@ -168,11 +194,11 @@
 
                         <!-- QUALIFICATION -->
 
-                        <div class="mb-3">
+                        <div class="mb-4">
 
                             <label
                                 for="{{ teacher_form.qualification.id_for_label }}"
-                                class="form-label fw-semibold"
+                                class="form-label"
                             >
                                 Qualification
                             </label>
@@ -181,7 +207,7 @@
 
                             {% if teacher_form.qualification.errors %}
 
-                                <div class="text-danger small mt-1">
+                                <div class="bmk-field-error">
                                     {{ teacher_form.qualification.errors }}
                                 </div>
 
@@ -194,7 +220,7 @@
 
                             <button
                                 type="submit"
-                                class="btn btn-primary"
+                                class="bmk-profile-save"
                             >
                                 <i class="bi bi-check-circle"></i>
                                 Save Changes
@@ -211,131 +237,119 @@
         </div>
 
 
-        <!-- PROFESSIONAL / ACCOUNT SUMMARY -->
+        <!-- ACCOUNT SUMMARY -->
 
         <div class="col-lg-4">
 
-            <div class="card border-0 shadow-sm">
+            <div class="bmk-profile-card">
 
-                <div class="card-body p-4">
+                <div class="bmk-profile-card-body">
 
-                    <!-- PROFILE ICON -->
+                    <div class="bmk-profile-summary">
 
-                    <div class="text-center mb-4">
-
-                        <div
-                            class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center"
-                            style="width: 80px; height: 80px;"
-                        >
-
-                            <i class="bi bi-person fs-1"></i>
-
+                        <div class="bmk-profile-avatar">
+                            <i class="bi bi-person"></i>
                         </div>
 
-                        <h5 class="fw-bold mt-3 mb-1">
-
+                        <h5>
                             {{ teacher.user.get_full_name|default:teacher.user.username }}
-
                         </h5>
 
-                        <small class="text-muted">
+                        <span class="bmk-teacher-badge">
+                            <i class="bi bi-person-badge"></i>
                             Teacher
-                        </small>
+                        </span>
 
                     </div>
 
 
-                    <!-- ACCOUNT INFORMATION -->
-
-                    <div class="mt-4">
-
-                        <h6 class="fw-bold mb-3">
-                            Account Information
-                        </h6>
+                    <hr class="my-4">
 
 
-                        <!-- USERNAME -->
-
-                        <div class="mb-3">
-
-                            <small class="text-muted">
-                                Username
-                            </small>
-
-                            <div class="fw-semibold">
-                                {{ teacher.user.username }}
-                            </div>
-
-                        </div>
+                    <div class="bmk-account-heading">
+                        Account Information
+                    </div>
 
 
-                        <!-- EMAIL -->
+                    <!-- USERNAME -->
 
-                        <div class="mb-3">
+                    <div class="bmk-account-item">
 
-                            <small class="text-muted">
-                                Email
-                            </small>
+                        <span class="bmk-account-label">
+                            Username
+                        </span>
 
-                            <div class="fw-semibold">
-                                {{ teacher.user.email|default:"-" }}
-                            </div>
-
-                        </div>
-
-
-                        <!-- EMPLOYEE ID -->
-
-                        <div class="mb-3">
-
-                            <small class="text-muted">
-                                Employee ID
-                            </small>
-
-                            <div class="fw-semibold">
-                                {{ teacher.employee_id }}
-                            </div>
-
-                        </div>
-
-
-                        <!-- DATE JOINED -->
-
-                        <div class="mb-3">
-
-                            <small class="text-muted">
-                                Date Joined
-                            </small>
-
-                            <div class="fw-semibold">
-                                {{ teacher.date_joined|date:"d M Y" }}
-                            </div>
-
+                        <div class="bmk-account-value">
+                            {{ teacher.user.username }}
                         </div>
 
                     </div>
 
 
-                    <hr>
+                    <!-- EMAIL -->
+
+                    <div class="bmk-account-item">
+
+                        <span class="bmk-account-label">
+                            Email
+                        </span>
+
+                        <div class="bmk-account-value">
+                            {{ teacher.user.email|default:"-" }}
+                        </div>
+
+                    </div>
 
 
-                    <!-- ACCOUNT STATUS -->
+                    <!-- EMPLOYEE ID -->
 
-                    <div class="d-flex justify-content-between">
+                    <div class="bmk-account-item">
 
-                        <span class="text-muted">
+                        <span class="bmk-account-label">
+                            Employee ID
+                        </span>
+
+                        <div class="bmk-account-value">
+                            {{ teacher.employee_id }}
+                        </div>
+
+                    </div>
+
+
+                    <!-- DATE JOINED -->
+
+                    <div class="bmk-account-item">
+
+                        <span class="bmk-account-label">
+                            Date Joined
+                        </span>
+
+                        <div class="bmk-account-value">
+                            {{ teacher.date_joined|date:"d M Y" }}
+                        </div>
+
+                    </div>
+
+
+                    <!-- STATUS -->
+
+                    <div class="bmk-account-status">
+
+                        <span class="text-muted small fw-semibold">
                             Account Status
                         </span>
 
                         {% if teacher.is_active %}
 
-                            <span class="badge bg-success">
+                            <span class="bmk-status-active">
+                                <i class="bi bi-check-circle-fill"></i>
                                 Active
                             </span>
 
                         {% else %}
 
-                            <span class="badge bg-danger">
+                            <span class="bmk-status-inactive">
+                                <i class="bi bi-x-circle-fill"></i>
                                 Inactive
                             </span>
 
@@ -349,8 +363,10 @@
 
         </div>
 
-
     </div>
+
+</div>
+
 
 </div>
 

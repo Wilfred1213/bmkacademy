@@ -1,5 +1,8 @@
 {% extends "website/base.html" %}
 {% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'website/css/academics.css' %}">
+{% endblock %}
 {% block title %}
 Academics | BMK Academy
 {% endblock %}
@@ -416,8 +419,7 @@ Academics | BMK Academy
 
 
 <!-- OUR CLASSES -->
-<section class="py-5 bg-light">
-
+<section class="bmk-academic-programme">
     <div class="container">
 
         <div class="text-center mb-5">
@@ -564,4 +566,64 @@ Academics | BMK Academy
     </div>
 
 </section>
+
+{% block extra_js %}
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const revealElements = document.querySelectorAll(
+        ".bmk-academic-approach .bmk-section-label, " +
+        ".bmk-academic-approach .bmk-section-title, " +
+        ".bmk-academic-approach .bmk-academic-page-text, " +
+        ".bmk-academic-page-card, " +
+        ".bmk-learning-journey .bmk-section-label, " +
+        ".bmk-learning-journey .bmk-section-title, " +
+        ".bmk-learning-intro, " +
+        ".bmk-learning-stage, " +
+        ".bmk-whole-child .bmk-section-label, " +
+        ".bmk-whole-child .bmk-section-title, " +
+        ".bmk-whole-child .bmk-academic-page-text, " +
+        ".bmk-whole-child-box, " +
+        ".bmk-academic-service-box, " +
+        ".bmk-academic-programme .text-center.mb-5, " +
+        ".bmk-academic-programme h3, " +
+        ".bmk-academic-programme .card"
+    );
+
+    if (!revealElements.length) {
+        return;
+    }
+
+    const academicsObserver = new IntersectionObserver(
+        function (entries, observer) {
+
+            entries.forEach(function (entry) {
+
+                if (entry.isIntersecting) {
+
+                    entry.target.classList.add(
+                        "bmk-academics-reveal-visible"
+                    );
+
+                    observer.unobserve(entry.target);
+                }
+
+            });
+
+        },
+        {
+            threshold: 0.12
+        }
+    );
+
+
+    revealElements.forEach(function (element) {
+        academicsObserver.observe(element);
+    });
+
+});
+</script>
+
+{% endblock %}
 {% endblock %}

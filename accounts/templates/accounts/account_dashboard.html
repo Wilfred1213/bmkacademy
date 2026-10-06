@@ -1,110 +1,142 @@
 {% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
 
+<link rel="stylesheet" href="{% static 'website/css/dashboard.css' %}">
+{% endblock %}
 {% block title %}
-    Accounts - BMK Academy
+Accounts | BMK Academy
 {% endblock %}
 
 {% block content %}
 
-<div class="container">
+
+<div class="bmk-accounts-page">
+
+<div class="container-xl">
 
     <!-- HEADER -->
 
-    <div class="mb-4">
+    <section class="bmk-accounts-header">
 
-        <h2 class="fw-bold mb-1">
-            Accounts
-        </h2>
+        <div class="bmk-header-content">
 
-        <p class="text-muted mb-0">
-            Manage BMK Academy user accounts.
-        </p>
+            <div class="bmk-accounts-eyebrow">
+                <i class="bi bi-shield-lock-fill"></i>
+                Account Administration
+            </div>
 
-    </div>
+            <h1 class="bmk-accounts-title">
+                Accounts
+            </h1>
+
+            <p class="bmk-accounts-subtitle">
+                Manage and monitor user accounts across BMK Academy.
+            </p>
+
+        </div>
+
+    </section>
 
 
     <!-- SUMMARY CARDS -->
 
     <div class="row g-3 mb-4">
 
-        <div class="col-md-3">
+        <div class="col-6 col-md-3">
 
-            <div class="card shadow-sm border-0 h-100">
+            <div class="bmk-account-stat bmk-stat-users">
 
-                <div class="card-body">
+                <div class="bmk-account-stat-top">
 
-                    <small class="text-muted">
+                    <span class="bmk-account-stat-label">
                         Total Users
-                    </small>
+                    </span>
 
-                    <h3 class="fw-bold mb-0">
-                        {{ total_users }}
-                    </h3>
+                    <span class="bmk-account-stat-icon">
+                        <i class="bi bi-people-fill"></i>
+                    </span>
 
                 </div>
+
+                <h3 class="bmk-account-stat-value">
+                    {{ total_users }}
+                </h3>
 
             </div>
 
         </div>
 
 
-        <div class="col-md-3">
+        <div class="col-6 col-md-3">
 
-            <div class="card shadow-sm border-0 h-100">
+            <div class="bmk-account-stat bmk-stat-admins">
 
-                <div class="card-body">
+                <div class="bmk-account-stat-top">
 
-                    <small class="text-muted">
+                    <span class="bmk-account-stat-label">
                         Administrators
-                    </small>
+                    </span>
 
-                    <h3 class="fw-bold mb-0">
-                        {{ total_admins }}
-                    </h3>
+                    <span class="bmk-account-stat-icon">
+                        <i class="bi bi-shield-check"></i>
+                    </span>
 
                 </div>
+
+                <h3 class="bmk-account-stat-value">
+                    {{ total_admins }}
+                </h3>
 
             </div>
 
         </div>
 
 
-        <div class="col-md-3">
+        <div class="col-6 col-md-3">
 
-            <div class="card shadow-sm border-0 h-100">
+            <div class="bmk-account-stat bmk-stat-teachers">
 
-                <div class="card-body">
+                <div class="bmk-account-stat-top">
 
-                    <small class="text-muted">
+                    <span class="bmk-account-stat-label">
                         Teachers
-                    </small>
+                    </span>
 
-                    <h3 class="fw-bold mb-0">
-                        {{ total_teachers }}
-                    </h3>
+                    <span class="bmk-account-stat-icon">
+                        <i class="bi bi-person-workspace"></i>
+                    </span>
 
                 </div>
+
+                <h3 class="bmk-account-stat-value">
+                    {{ total_teachers }}
+                </h3>
 
             </div>
 
         </div>
 
 
-        <div class="col-md-3">
+        <div class="col-6 col-md-3">
 
-            <div class="card shadow-sm border-0 h-100">
+            <div class="bmk-account-stat bmk-stat-parents">
 
-                <div class="card-body">
+                <div class="bmk-account-stat-top">
 
-                    <small class="text-muted">
+                    <span class="bmk-account-stat-label">
                         Parents
-                    </small>
+                    </span>
 
-                    <h3 class="fw-bold mb-0">
-                        {{ total_parents }}
-                    </h3>
+                    <span class="bmk-account-stat-icon">
+                        <i class="bi bi-people"></i>
+                    </span>
 
                 </div>
+
+                <h3 class="bmk-account-stat-value">
+                    {{ total_parents }}
+                </h3>
 
             </div>
 
@@ -115,59 +147,61 @@
 
     <!-- USERS -->
 
-    <div class="card shadow-sm border-0">
+    <section class="bmk-users-card">
 
-        <div class="card-body p-4">
+        <div class="bmk-users-header">
 
-            <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="bmk-users-heading">
+
+                <div class="bmk-users-icon">
+                    <i class="bi bi-person-lines-fill"></i>
+                </div>
 
                 <div>
-            
-                    <h5 class="fw-bold mb-1">
+
+                    <h2 class="bmk-users-title">
                         System Users
-                    </h5>
-            
-                    <p class="text-muted mb-0">
-                        Accounts registered in BMK Academy.
+                    </h2>
+
+                    <p class="bmk-users-description">
+                        Accounts currently registered in BMK Academy.
                     </p>
-            
+
                 </div>
-            
-                <a
-                    href="{% url 'accounts:user_list' %}"
-                    class="btn btn-primary"
-                >
-                    Manage Users
-                </a>
-            
+
             </div>
 
 
+            <a
+                href="{% url 'accounts:user_list' %}"
+                class="bmk-manage-users-btn"
+            >
+                <i class="bi bi-people-fill"></i>
+                Manage Users
+            </a>
+
+        </div>
+
+
+        <div class="bmk-users-body">
+
             <div class="table-responsive">
 
-                <table class="table table-hover align-middle">
+                <table class="table bmk-users-table align-middle">
 
-                    <thead class="table-light">
+                    <thead>
 
                         <tr>
 
                             <th>#</th>
 
-                            <th>
-                                Name
-                            </th>
+                            <th>Name</th>
 
-                            <th>
-                                Username
-                            </th>
+                            <th>Username</th>
 
-                            <th>
-                                Role
-                            </th>
+                            <th>Role</th>
 
-                            <th>
-                                Status
-                            </th>
+                            <th>Status</th>
 
                         </tr>
 
@@ -180,35 +214,40 @@
 
                             <tr>
 
-                                <td>
+                                <td class="bmk-user-number">
                                     {{ forloop.counter }}
                                 </td>
 
-                                <td class="fw-semibold">
-
+                                <td class="bmk-user-name">
                                     {{ user.get_full_name|default:user.username }}
-
                                 </td>
 
-                                <td>
+                                <td class="bmk-username">
                                     {{ user.username }}
                                 </td>
 
                                 <td>
-                                    {{ user.get_role_display }}
+
+                                    <span class="bmk-role-badge">
+                                        <i class="bi bi-person-badge"></i>
+                                        {{ user.get_role_display }}
+                                    </span>
+
                                 </td>
 
                                 <td>
 
                                     {% if user.is_active %}
 
-                                        <span class="badge bg-success">
+                                        <span class="bmk-status-badge bmk-status-active">
+                                            <i class="bi bi-check-circle-fill"></i>
                                             Active
                                         </span>
 
                                     {% else %}
 
-                                        <span class="badge bg-secondary">
+                                        <span class="bmk-status-badge bmk-status-inactive">
+                                            <i class="bi bi-dash-circle"></i>
                                             Inactive
                                         </span>
 
@@ -222,11 +261,24 @@
 
                             <tr>
 
-                                <td
-                                    colspan="5"
-                                    class="text-center text-muted py-4"
-                                >
-                                    No user accounts found.
+                                <td colspan="5">
+
+                                    <div class="bmk-users-empty">
+
+                                        <div class="bmk-empty-icon">
+                                            <i class="bi bi-people"></i>
+                                        </div>
+
+                                        <h4>
+                                            No User Accounts
+                                        </h4>
+
+                                        <p>
+                                            No user accounts are currently registered in BMK Academy.
+                                        </p>
+
+                                    </div>
+
                                 </td>
 
                             </tr>
@@ -241,7 +293,10 @@
 
         </div>
 
-    </div>
+    </section>
+
+</div>
+
 
 </div>
 

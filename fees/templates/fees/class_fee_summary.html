@@ -1,1018 +1,979 @@
 {% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
 
-
-{% block title %}
-    Class Fee Summary | BMK Academy
+<link rel="stylesheet" href="{% static 'website/css/fees.css' %}">
 {% endblock %}
 
+{% block title %}
+Class Fee Summary | BMK Academy
+{% endblock %}
 
 {% block content %}
 
-<div class="d-flex justify-content-between align-items-center mb-4">
 
-    <div>
-
-        <h2 class="fw-bold mb-1">
-            Class Fee Summary
-        </h2>
-
-        <p class="text-muted mb-0">
-            Analyze fee collection by class and academic year.
-        </p>
-
-    </div>
-
-</div>
+<div class="bmk-class-fee-page">
 
 
-<div class="card shadow-sm mb-4">
+<div class="container">
 
-    <div class="card-body">
+    <!-- Page Header -->
 
-        <form
-            method="get"
-            class="row g-3 align-items-end"
-        >
+    <div class="bmk-fee-page-header">
 
-            <!-- Class -->
+        <div>
 
-            <div class="col-md-4">
-
-                <label
-                    for="class_id"
-                    class="form-label"
-                >
-                    Class
-                </label>
-
-                <select
-                    name="class_id"
-                    id="class_id"
-                    class="form-select"
-                >
-
-                    <option value="">
-                        Select Class
-                    </option>
-
-                    {% for school_class in school_classes %}
-
-                        <option
-                            value="{{ school_class.id }}"
-                            {% if selected_class == school_class.id|stringformat:"s" %}
-                                selected
-                            {% endif %}
-                        >
-                            {{ school_class.name }}
-                        </option>
-
-                    {% endfor %}
-
-                </select>
-
+            <div class="bmk-fee-eyebrow">
+                Fee Management
             </div>
 
-
-            <!-- Academic Year -->
-
-            <div class="col-md-4">
-
-                <label
-                    for="academic_year"
-                    class="form-label"
-                >
-                    Academic Year
-                </label>
-
-                <select
-                    name="academic_year"
-                    id="academic_year"
-                    class="form-select"
-                >
-
-                    <option value="">
-                        Select Academic Year
-                    </option>
-
-                    {% for year in academic_years %}
-
-                        <option
-                            value="{{ year }}"
-                            {% if selected_academic_year == year %}
-                                selected
-                            {% endif %}
-                        >
-                            {{ year }}
-                        </option>
-
-                    {% endfor %}
-
-                </select>
-
-            </div>
-
-
-            <div class="col-md-auto">
-
-                <button
-                    type="submit"
-                    class="btn btn-primary"
-                >
-                    View Summary
-                </button>
-
-            </div>
-
-        </form>
-
-    </div>
-
-</div>
-
-
-{% if summary %}
-
-    <div class="mb-4">
-
-        <h4 class="fw-bold">
-
-            {{ summary.school_class.name }}
-
-            <span class="text-muted">
-                — {{ summary.academic_year }}
-            </span>
-
-        </h4>
-
-    </div>
-
-
-    <div class="row g-3">
-
-
-        <div class="col-md-3">
-
-            <div class="card shadow-sm h-100">
-
-                <div class="card-body">
-
-                    <small class="text-muted">
-                        Students
-                    </small>
-
-                    <h3 class="fw-bold mb-0">
-                        {{ summary.student_count }}
-                    </h3>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="col-md-3">
-
-            <div class="card shadow-sm h-100">
-
-                <div class="card-body">
-
-                    <small class="text-muted">
-                        Total Invoiced
-                    </small>
-
-                    <h4 class="fw-bold mb-0">
-
-                        ₦{{ summary.total_invoiced|floatformat:2 }}
-
-                    </h4>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="col-md-3">
-
-            <div class="card shadow-sm h-100">
-
-                <div class="card-body">
-
-                    <small class="text-muted">
-                        Total Paid
-                    </small>
-
-                    <h4 class="fw-bold text-success mb-0">
-
-                        ₦{{ summary.total_paid|floatformat:2 }}
-
-                    </h4>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="col-md-3">
-
-            <div class="card shadow-sm h-100">
-
-                <div class="card-body">
-
-                    <small class="text-muted">
-                        Outstanding
-                    </small>
-
-                    <h4 class="fw-bold text-danger mb-0">
-
-                        ₦{{ summary.outstanding|floatformat:2 }}
-
-                    </h4>
-
-                </div>
-
-            </div>
-
-        </div>
-        
-
-    </div>
-
-
-    <div class="row mt-3">
-
-        <div class="col-md-3">
-
-            <div class="card shadow-sm">
-
-                <div class="card-body">
-
-                    <small class="text-muted">
-                        Collection Rate
-                    </small>
-
-                    <h3 class="fw-bold text-primary mb-0">
-
-                        {{ summary.collection_rate|floatformat:2 }}%
-
-                    </h3>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-    
-    <div class="row g-3 mt-2 mb-4">
-
-        <div class="col-md-3">
-
-            <a
-                href="?class_id={{ selected_class }}&academic_year={{ selected_academic_year }}&risk=high"
-                class="text-decoration-none"
-            >
-        
-                <div
-                    class="card h-100 {% if risk_filter == 'high' %}border-danger shadow{% else %}border-danger{% endif %}"
-                >
-        
-                    <div class="card-body">
-        
-                        <small class="text-muted">
-                            High Risk Students
-                        </small>
-        
-                        <h3 class="fw-bold text-danger mb-0">
-                            {{ risk_summary.high }}
-                        </h3>
-        
-                    </div>
-        
-                </div>
-        
-            </a>
-        
-        </div>
-    
-    
-        <div class="col-md-3">
-
-            <a
-                href="?class_id={{ selected_class }}&academic_year={{ selected_academic_year }}&risk=medium"
-                class="text-decoration-none"
-            >
-        
-                <div
-                    class="card h-100 {% if risk_filter == 'medium' %}border-warning shadow{% else %}border-warning{% endif %}"
-                >
-        
-                    <div class="card-body">
-        
-                        <small class="text-muted">
-                            Medium Risk Students
-                        </small>
-        
-                        <h3 class="fw-bold text-warning mb-0">
-                            {{ risk_summary.medium }}
-                        </h3>
-        
-                    </div>
-        
-                </div>
-        
-            </a>
-        
-        </div>
-    
-    
-        <div class="col-md-3">
-
-            <a
-                href="?class_id={{ selected_class }}&academic_year={{ selected_academic_year }}&risk=low"
-                class="text-decoration-none"
-            >
-        
-                <div
-                    class="card h-100 {% if risk_filter == 'low' %}border-info shadow{% else %}border-info{% endif %}"
-                >
-        
-                    <div class="card-body">
-        
-                        <small class="text-muted">
-                            Low Risk Students
-                        </small>
-        
-                        <h3 class="fw-bold text-info mb-0">
-                            {{ risk_summary.low }}
-                        </h3>
-        
-                    </div>
-        
-                </div>
-        
-            </a>
-        
-        </div>
-    
-    
-        <div class="col-md-3">
-
-            <a
-                href="?class_id={{ selected_class }}&academic_year={{ selected_academic_year }}&risk=paid"
-                class="text-decoration-none"
-            >
-        
-                <div
-                    class="card h-100 {% if risk_filter == 'paid' %}border-success shadow{% else %}border-success{% endif %}"
-                >
-        
-                    <div class="card-body">
-        
-                        <small class="text-muted">
-                            Fully Paid Students
-                        </small>
-        
-                        <h3 class="fw-bold text-success mb-0">
-                            {{ risk_summary.paid }}
-                        </h3>
-        
-                    </div>
-        
-                </div>
-        
-            </a>
-        
-        </div>
-    
-    </div>
-    <!--CHART-->
-    <div class="card shadow-sm mt-4 mb-4">
-
-        <div class="card-header">
-    
-            <strong>
-                Fee Collection Overview
-            </strong>
-    
-        </div>
-    
-    
-        <div class="card-body">
-    
-            <div style="height: 350px;">
-    
-                <canvas id="classFeeChart"></canvas>
-    
-            </div>
-    
-        </div>
-    
-    </div>
-
-    {% if risk_filter %}
-
-        <div class="d-flex justify-content-between align-items-center mt-4">
-
-            <p class="mb-0">
-
-                Showing:
-
-                <strong>
-                    {{ risk_filter|title }}
-                </strong>
-
-                students
-
+            <h1 class="bmk-fee-page-title">
+                Class Fee Summary
+            </h1>
+
+            <p class="bmk-fee-page-subtitle">
+                Analyze fee collection by class and academic year.
             </p>
 
+        </div>
 
-            <a
-                href="?class_id={{ selected_class }}&academic_year={{ selected_academic_year }}"
-                class="btn btn-sm btn-outline-secondary"
-            >
-                Show All Students
-            </a>
+    </div>
 
-            
+
+    <!-- Class / Academic Year Filter -->
+
+    <div class="bmk-filter-card">
+
+        <div class="bmk-card-header">
+
+            <div class="bmk-card-icon">
+                <i class="bi bi-funnel-fill"></i>
+            </div>
+
+            <div>
+                <h2 class="bmk-card-heading">
+                    Select Class Summary
+                </h2>
+
+                <p class="bmk-card-description">
+                    Choose a class and academic year to view collection performance.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="bmk-filter-body">
+
+            <form method="get" class="row g-3 align-items-end">
+
+                <div class="col-lg-4 col-md-6">
+
+                    <label
+                        for="class_id"
+                        class="bmk-field-label"
+                    >
+                        Class
+                    </label>
+
+                    <select
+                        name="class_id"
+                        id="class_id"
+                        class="bmk-filter-select"
+                    >
+
+                        <option value="">
+                            Select Class
+                        </option>
+
+                        {% for school_class in school_classes %}
+
+                            <option
+                                value="{{ school_class.id }}"
+                                {% if selected_class == school_class.id|stringformat:"s" %}
+                                    selected
+                                {% endif %}
+                            >
+                                {{ school_class.name }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <div class="col-lg-4 col-md-6">
+
+                    <label
+                        for="academic_year"
+                        class="bmk-field-label"
+                    >
+                        Academic Year
+                    </label>
+
+                    <select
+                        name="academic_year"
+                        id="academic_year"
+                        class="bmk-filter-select"
+                    >
+
+                        <option value="">
+                            Select Academic Year
+                        </option>
+
+                        {% for year in academic_years %}
+
+                            <option
+                                value="{{ year }}"
+                                {% if selected_academic_year == year %}
+                                    selected
+                                {% endif %}
+                            >
+                                {{ year }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <div class="col-lg-4 col-md-6">
+
+                    <button
+                        type="submit"
+                        class="bmk-primary-btn w-100"
+                    >
+                        <i class="bi bi-bar-chart-fill"></i>
+                        View Summary
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    {% if summary %}
+
+        <!-- Selected Class -->
+
+        <h2 class="bmk-summary-heading">
+            {{ summary.school_class.name }}
+            <span>— {{ summary.academic_year }}</span>
+        </h2>
+
+
+        <!-- Main Summary Cards -->
+
+        <div class="row g-3">
+
+            <div class="col-xl-3 col-md-6">
+
+                <div class="bmk-stat-card bmk-stat-students">
+
+                    <div class="bmk-stat-top">
+
+                        <span class="bmk-stat-label">
+                            Students
+                        </span>
+
+                        <div class="bmk-stat-icon">
+                            <i class="bi bi-people-fill"></i>
+                        </div>
+
+                    </div>
+
+                    <div class="bmk-stat-value">
+                        {{ summary.student_count }}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-xl-3 col-md-6">
+
+                <div class="bmk-stat-card">
+
+                    <div class="bmk-stat-top">
+
+                        <span class="bmk-stat-label">
+                            Total Invoiced
+                        </span>
+
+                        <div class="bmk-stat-icon">
+                            <i class="bi bi-receipt"></i>
+                        </div>
+
+                    </div>
+
+                    <div class="bmk-stat-value">
+                        ₦{{ summary.total_invoiced|floatformat:2 }}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-xl-3 col-md-6">
+
+                <div class="bmk-stat-card bmk-stat-paid">
+
+                    <div class="bmk-stat-top">
+
+                        <span class="bmk-stat-label">
+                            Total Paid
+                        </span>
+
+                        <div class="bmk-stat-icon">
+                            <i class="bi bi-check-circle-fill"></i>
+                        </div>
+
+                    </div>
+
+                    <div class="bmk-stat-value">
+                        ₦{{ summary.total_paid|floatformat:2 }}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-xl-3 col-md-6">
+
+                <div class="bmk-stat-card bmk-stat-outstanding">
+
+                    <div class="bmk-stat-top">
+
+                        <span class="bmk-stat-label">
+                            Outstanding
+                        </span>
+
+                        <div class="bmk-stat-icon">
+                            <i class="bi bi-exclamation-circle-fill"></i>
+                        </div>
+
+                    </div>
+
+                    <div class="bmk-stat-value">
+                        ₦{{ summary.outstanding|floatformat:2 }}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Collection Rate -->
+
+        <div class="row g-3 mt-1">
+
+            <div class="col-xl-3 col-md-6">
+
+                <div class="bmk-stat-card bmk-stat-rate">
+
+                    <div class="bmk-stat-top">
+
+                        <span class="bmk-stat-label">
+                            Collection Rate
+                        </span>
+
+                        <div class="bmk-stat-icon">
+                            <i class="bi bi-graph-up-arrow"></i>
+                        </div>
+
+                    </div>
+
+                    <div class="bmk-stat-value">
+                        {{ summary.collection_rate|floatformat:2 }}%
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Risk Summary -->
+
+        <div class="bmk-risk-section">
+
+            <div class="bmk-card-header mb-3 px-0 border-0">
+
+                <div class="bmk-card-icon">
+                    <i class="bi bi-shield-exclamation"></i>
+                </div>
+
+                <div>
+                    <h2 class="bmk-card-heading">
+                        Fee Risk Overview
+                    </h2>
+
+                    <p class="bmk-card-description">
+                        Click a category to filter the student breakdown.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="row g-3">
+
+                <div class="col-xl-3 col-md-6">
+
+                    <a
+                        href="?class_id={{ selected_class }}&academic_year={{ selected_academic_year }}&risk=high"
+                        class="bmk-risk-card bmk-risk-high {% if risk_filter == 'high' %}active{% endif %}"
+                    >
+
+                        <span class="bmk-risk-label">
+                            High Risk Students
+                        </span>
+
+                        <span class="bmk-risk-value">
+                            {{ risk_summary.high }}
+                        </span>
+
+                    </a>
+
+                </div>
+
+
+                <div class="col-xl-3 col-md-6">
+
+                    <a
+                        href="?class_id={{ selected_class }}&academic_year={{ selected_academic_year }}&risk=medium"
+                        class="bmk-risk-card bmk-risk-medium {% if risk_filter == 'medium' %}active{% endif %}"
+                    >
+
+                        <span class="bmk-risk-label">
+                            Medium Risk Students
+                        </span>
+
+                        <span class="bmk-risk-value">
+                            {{ risk_summary.medium }}
+                        </span>
+
+                    </a>
+
+                </div>
+
+
+                <div class="col-xl-3 col-md-6">
+
+                    <a
+                        href="?class_id={{ selected_class }}&academic_year={{ selected_academic_year }}&risk=low"
+                        class="bmk-risk-card bmk-risk-low {% if risk_filter == 'low' %}active{% endif %}"
+                    >
+
+                        <span class="bmk-risk-label">
+                            Low Risk Students
+                        </span>
+
+                        <span class="bmk-risk-value">
+                            {{ risk_summary.low }}
+                        </span>
+
+                    </a>
+
+                </div>
+
+
+                <div class="col-xl-3 col-md-6">
+
+                    <a
+                        href="?class_id={{ selected_class }}&academic_year={{ selected_academic_year }}&risk=paid"
+                        class="bmk-risk-card bmk-risk-paid {% if risk_filter == 'paid' %}active{% endif %}"
+                    >
+
+                        <span class="bmk-risk-label">
+                            Fully Paid Students
+                        </span>
+
+                        <span class="bmk-risk-value">
+                            {{ risk_summary.paid }}
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Chart -->
+
+        <div class="bmk-chart-card">
+
+            <div class="bmk-card-header">
+
+                <div class="bmk-card-icon">
+                    <i class="bi bi-bar-chart-fill"></i>
+                </div>
+
+                <div>
+                    <h2 class="bmk-card-heading">
+                        Fee Collection Overview
+                    </h2>
+
+                    <p class="bmk-card-description">
+                        Comparison of invoiced, paid, and outstanding amounts.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="bmk-chart-body">
+
+                <div class="bmk-chart-wrapper">
+
+                    <canvas id="classFeeChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Active Risk Filter -->
+
+        {% if risk_filter %}
+
+            <div class="bmk-filter-state">
+
+                <p>
+                    Showing:
+                    <strong>{{ risk_filter|title }}</strong>
+                    students
+                </p>
+
+                <a
+                    href="?class_id={{ selected_class }}&academic_year={{ selected_academic_year }}"
+                    class="bmk-outline-btn"
+                >
+                    <i class="bi bi-x-circle"></i>
+                    Show All Students
+                </a>
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- Student Search -->
+
+        <div class="bmk-search-card">
+
+            <div class="bmk-search-body">
+
+                <form
+                    method="get"
+                    class="row g-3 align-items-end"
+                >
+
+                    <input
+                        type="hidden"
+                        name="class_id"
+                        value="{{ selected_class }}"
+                    >
+
+                    <input
+                        type="hidden"
+                        name="academic_year"
+                        value="{{ selected_academic_year }}"
+                    >
+
+                    {% if risk_filter %}
+
+                        <input
+                            type="hidden"
+                            name="risk"
+                            value="{{ risk_filter }}"
+                        >
+
+                    {% endif %}
+
+
+                    <div class="col-lg-8">
+
+                        <label
+                            for="search"
+                            class="bmk-field-label"
+                        >
+                            Search Student
+                        </label>
+
+                        <input
+                            type="text"
+                            name="search"
+                            id="search"
+                            class="bmk-search-input"
+                            value="{{ search }}"
+                            placeholder="Search by student name or admission number"
+                        >
+
+                    </div>
+
+
+                    <div class="col-lg-2 col-md-6">
+
+                        <button
+                            type="submit"
+                            class="bmk-primary-btn w-100"
+                        >
+                            <i class="bi bi-search"></i>
+                            Search
+                        </button>
+
+                    </div>
+
+
+                    <div class="col-lg-2 col-md-6">
+
+                        <a
+                            href="?class_id={{ selected_class }}&academic_year={{ selected_academic_year }}{% if risk_filter %}&risk={{ risk_filter }}{% endif %}"
+                            class="bmk-outline-btn w-100"
+                        >
+                            Clear
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+        <!-- Student Fee Breakdown -->
+
+        <div class="bmk-students-card">
+
+            <div class="bmk-students-header">
+
+                <div class="bmk-students-heading">
+
+                    <div class="bmk-card-icon">
+                        <i class="bi bi-people-fill"></i>
+                    </div>
+
+                    <div>
+
+                        <h2 class="bmk-card-heading">
+                            Student Fee Breakdown
+                        </h2>
+
+                        {% if student_page %}
+
+                            <span class="bmk-students-count">
+                                {{ student_page.paginator.count }}
+                                student{{ student_page.paginator.count|pluralize }}
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <div class="d-flex align-items-center gap-3 flex-wrap">
+
+                    {% if student_page and student_page.paginator.count > 0 %}
+
+                        <span class="bmk-students-range">
+                            Showing
+                            {{ student_page.start_index }}
+                            to
+                            {{ student_page.end_index }}
+                        </span>
+
+                    {% endif %}
+
+
+                    <a
+                        href="{% url 'fees:export_class_fee_summary' %}?class_id={{ selected_class }}&academic_year={{ selected_academic_year }}{% if risk_filter %}&risk={{ risk_filter }}{% endif %}{% if search %}&search={{ search }}{% endif %}"
+                        class="bmk-export-btn"
+                    >
+                        <i class="bi bi-file-earmark-excel-fill"></i>
+                        Export to Excel
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            {% if student_summaries %}
+
+                <div class="bmk-table-wrapper">
+
+                    <table class="bmk-students-table">
+
+                        <thead>
+
+                            <tr>
+                                <th>#</th>
+                                <th>Student</th>
+                                <th>Admission Number</th>
+                                <th>Total Invoiced</th>
+                                <th>Total Paid</th>
+                                <th>Outstanding</th>
+                                <th>Status</th>
+                                <th>Risk</th>
+                                <th>Action</th>
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for item in student_page %}
+
+                                <tr>
+
+                                    <td>
+                                        <span class="bmk-number">
+                                            {{ student_page.start_index|add:forloop.counter0 }}
+                                        </span>
+                                    </td>
+
+
+                                    <td>
+
+                                        <span class="bmk-student-name">
+
+                                            {{ item.student.first_name }}
+
+                                            {% if item.student.middle_name %}
+                                                {{ item.student.middle_name }}
+                                            {% endif %}
+
+                                            {{ item.student.last_name }}
+
+                                        </span>
+
+                                    </td>
+
+
+                                    <td>
+                                        {{ item.student.admission_number }}
+                                    </td>
+
+
+                                    <td class="bmk-money">
+                                        ₦{{ item.total_invoiced|floatformat:2 }}
+                                    </td>
+
+
+                                    <td class="bmk-money bmk-money-paid">
+                                        ₦{{ item.total_paid|floatformat:2 }}
+                                    </td>
+
+
+                                    <td class="bmk-money bmk-money-outstanding">
+                                        ₦{{ item.outstanding|floatformat:2 }}
+                                    </td>
+
+
+                                    <td>
+
+                                        {% if item.status == "paid" %}
+
+                                            <span class="bmk-status bmk-status-paid">
+                                                Paid
+                                            </span>
+
+                                        {% elif item.status == "partial" %}
+
+                                            <span class="bmk-status bmk-status-partial">
+                                                Partial
+                                            </span>
+
+                                        {% else %}
+
+                                            <span class="bmk-status bmk-status-unpaid">
+                                                Unpaid
+                                            </span>
+
+                                        {% endif %}
+
+                                    </td>
+
+
+                                    <td>
+
+                                        {% if item.risk_level == "paid" %}
+
+                                            <span class="bmk-risk bmk-risk-paid-badge">
+                                                Paid
+                                            </span>
+
+                                        {% elif item.risk_level == "high" %}
+
+                                            <span class="bmk-risk bmk-risk-high-badge">
+                                                High Risk
+                                            </span>
+
+                                        {% elif item.risk_level == "medium" %}
+
+                                            <span class="bmk-risk bmk-risk-medium-badge">
+                                                Medium Risk
+                                            </span>
+
+                                        {% else %}
+
+                                            <span class="bmk-risk bmk-risk-low-badge">
+                                                Low Risk
+                                            </span>
+
+                                        {% endif %}
+
+                                    </td>
+
+
+                                    <td>
+
+                                        <div class="bmk-action-group">
+
+                                            <a
+                                                href="{% url 'fees:student_fees' item.student.id %}"
+                                                class="bmk-action-btn bmk-view-fees"
+                                            >
+                                                <i class="bi bi-eye"></i>
+                                                View Fees
+                                            </a>
+
+
+                                            {% if item.outstanding > 0 %}
+
+                                                <a
+                                                    href="{% url 'fees:student_fees' item.student.id %}"
+                                                    class="bmk-action-btn bmk-collect-fees"
+                                                >
+                                                    <i class="bi bi-cash-coin"></i>
+                                                    Collect Payment
+                                                </a>
+
+                                            {% endif %}
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            {% else %}
+
+                <div class="bmk-no-data">
+                    No fee invoices found for this class.
+                </div>
+
+            {% endif %}
+
+
+            {% if student_page and student_page.has_other_pages %}
+
+                <div class="bmk-pagination">
+
+                    <nav>
+
+                        <ul class="pagination justify-content-center mb-0">
+
+                            {% if student_page.has_previous %}
+
+                                <li class="page-item">
+
+                                    <a
+                                        class="page-link"
+                                        href="?class_id={{ selected_class }}&academic_year={{ selected_academic_year }}{% if risk_filter %}&risk={{ risk_filter }}{% endif %}{% if search %}&search={{ search }}{% endif %}&page={{ student_page.previous_page_number }}"
+                                    >
+                                        Previous
+                                    </a>
+
+                                </li>
+
+                            {% else %}
+
+                                <li class="page-item disabled">
+
+                                    <span class="page-link">
+                                        Previous
+                                    </span>
+
+                                </li>
+
+                            {% endif %}
+
+
+                            {% for page_num in student_page.paginator.page_range %}
+
+                                {% if page_num == student_page.number %}
+
+                                    <li class="page-item active">
+
+                                        <span class="page-link">
+                                            {{ page_num }}
+                                        </span>
+
+                                    </li>
+
+                                {% else %}
+
+                                    <li class="page-item">
+
+                                        <a
+                                            class="page-link"
+                                            href="?class_id={{ selected_class }}&academic_year={{ selected_academic_year }}{% if risk_filter %}&risk={{ risk_filter }}{% endif %}{% if search %}&search={{ search }}{% endif %}&page={{ page_num }}"
+                                        >
+                                            {{ page_num }}
+                                        </a>
+
+                                    </li>
+
+                                {% endif %}
+
+                            {% endfor %}
+
+
+                            {% if student_page.has_next %}
+
+                                <li class="page-item">
+
+                                    <a
+                                        class="page-link"
+                                        href="?class_id={{ selected_class }}&academic_year={{ selected_academic_year }}{% if risk_filter %}&risk={{ risk_filter }}{% endif %}{% if search %}&search={{ search }}{% endif %}&page={{ student_page.next_page_number }}"
+                                    >
+                                        Next
+                                    </a>
+
+                                </li>
+
+                            {% else %}
+
+                                <li class="page-item disabled">
+
+                                    <span class="page-link">
+                                        Next
+                                    </span>
+
+                                </li>
+
+                            {% endif %}
+
+                        </ul>
+
+                    </nav>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    {% else %}
+
+        <div class="bmk-no-data">
+
+            <h3 class="mb-2" style="color:#0f2747; font-weight:800;">
+                Select a class and academic year
+            </h3>
+
+            <p class="mb-0">
+                Choose the filters above to view the fee collection summary.
+            </p>
 
         </div>
 
     {% endif %}
-    
-    <div class="card shadow-sm mt-4 mb-3">
 
-        <div class="card-body">
-    
-            <form
-                method="get"
-                class="row g-3 align-items-end"
-            >
-    
-                <!-- Preserve selected class -->
-    
-                <input
-                    type="hidden"
-                    name="class_id"
-                    value="{{ selected_class }}"
-                >
-    
-    
-                <!-- Preserve academic year -->
-    
-                <input
-                    type="hidden"
-                    name="academic_year"
-                    value="{{ selected_academic_year }}"
-                >
-    
-    
-                <!-- Preserve risk filter -->
-    
-                {% if risk_filter %}
-    
-                    <input
-                        type="hidden"
-                        name="risk"
-                        value="{{ risk_filter }}"
-                    >
-    
-                {% endif %}
-    
-    
-                <div class="col-md-8">
-    
-                    <label
-                        for="search"
-                        class="form-label"
-                    >
-                        Search Student
-                    </label>
-    
-                    <input
-                        type="text"
-                        name="search"
-                        id="search"
-                        class="form-control"
-                        value="{{ search }}"
-                        placeholder="Search by student name or admission number"
-                    >
-    
-                </div>
-    
-    
-                <div class="col-md-2 d-grid">
-    
-                    <button
-                        type="submit"
-                        class="btn btn-primary"
-                    >
-                        Search
-                    </button>
-    
-                </div>
-    
-    
-                <div class="col-md-2 d-grid">
-    
-                    <a
-                        href="?class_id={{ selected_class }}&academic_year={{ selected_academic_year }}{% if risk_filter %}&risk={{ risk_filter }}{% endif %}"
-                        class="btn btn-outline-secondary"
-                    >
-                        Clear
-                    </a>
-    
-                </div>
-    
-            </form>
-    
-        </div>
-    
-    </div>
-    <div class="card shadow-sm mt-4">
-        {% if summary %}
-
-            <a
-                href="{% url 'fees:export_class_fee_summary' %}?class_id={{ selected_class }}&academic_year={{ selected_academic_year }}{% if risk_filter %}&risk={{ risk_filter }}{% endif %}{% if search %}&search={{ search }}{% endif %}"
-                class="btn btn-success"
-            >
-                Export to Excel
-            </a>
-
-        {% endif %}
-
-        <div class="card-header">
-    
-            <strong>
-                Student Fee Breakdown
-            </strong>
-    
-        </div>
-    
-        <div class="d-flex justify-content-between align-items-center mb-3">
-
-            <div>
-        
-                <strong>
-                    Student Fee Breakdown
-                </strong>
-        
-                <span class="text-muted">
-        
-                    — {{ student_page.paginator.count }} student{{ student_page.paginator.count|pluralize }}
-        
-                </span>
-        
-            </div>
-        
-        
-            {% if student_page.paginator.count > 0 %}
-        
-                <small class="text-muted">
-        
-                    Showing
-                    {{ student_page.start_index }}
-                    to
-                    {{ student_page.end_index }}
-        
-                </small>
-        
-            {% endif %}
-        
-        </div>
-        <div class="card-body">
-    
-            {% if student_summaries %}
-    
-                <div class="table-responsive">
-    
-                    <table class="table table-hover align-middle">
-    
-                        <thead>
-
-                            <tr>
-                                <th>
-                                    #
-                                </th>
-                        
-                                <th>
-                                    Student
-                                </th>
-                        
-                                <th>
-                                    Admission Number
-                                </th>
-                        
-                                <th>
-                                    Total Invoiced
-                                </th>
-                        
-                                <th>
-                                    Total Paid
-                                </th>
-                        
-                                <th>
-                                    Outstanding
-                                </th>
-                        
-                                <th>
-                                    Status
-                                </th>
-                                <th>
-                                    Risk
-                                </th>
-                        
-                                <th>
-                                    Action
-                                </th>
-                                
-                        
-                            </tr>
-                        
-                        </thead>
-    
-    
-                        <tbody>
-
-                            {% for item in student_page %}
-                        
-                                <tr>
-                        
-                                    <!-- Student -->
-                                    <td>
-                                        {{ student_page.start_index|add:forloop.counter0 }}
-                                    </td>
-                        
-                                    <td class="fw-semibold">
-                        
-                                        {{ item.student.first_name }}
-                        
-                                        {% if item.student.middle_name %}
-                                            {{ item.student.middle_name }}
-                                        {% endif %}
-                        
-                                        {{ item.student.last_name }}
-                        
-                                    </td>
-                        
-                        
-                                    <!-- Admission Number -->
-                        
-                                    <td>
-                        
-                                        {{ item.student.admission_number }}
-                        
-                                    </td>
-                        
-                        
-                                    <!-- Total Invoiced -->
-                        
-                                    <td>
-                        
-                                        ₦{{ item.total_invoiced|floatformat:2 }}
-                        
-                                    </td>
-                        
-                        
-                                    <!-- Total Paid -->
-                        
-                                    <td class="text-success">
-                        
-                                        ₦{{ item.total_paid|floatformat:2 }}
-                        
-                                    </td>
-                        
-                        
-                                    <!-- Outstanding -->
-                        
-                                    <td class="text-danger fw-semibold">
-                        
-                                        ₦{{ item.outstanding|floatformat:2 }}
-                        
-                                    </td>
-                        
-                        
-                                    <!-- Status -->
-                        
-                                    <td>
-                        
-                                        {% if item.status == "paid" %}
-                        
-                                            <span class="badge bg-success">
-                                                Paid
-                                            </span>
-                        
-                                        {% elif item.status == "partial" %}
-                        
-                                            <span class="badge bg-warning text-dark">
-                                                Partial
-                                            </span>
-                        
-                                        {% else %}
-                        
-                                            <span class="badge bg-danger">
-                                                Unpaid
-                                            </span>
-                        
-                                        {% endif %}
-                        
-                                    </td>
-                                    <!--Risk-->
-                                    <td>
-
-                                        {% if item.risk_level == "paid" %}
-                                    
-                                            <span class="badge bg-success">
-                                                Paid
-                                            </span>
-                                    
-                                        {% elif item.risk_level == "high" %}
-                                    
-                                            <span class="badge bg-danger">
-                                                High Risk
-                                            </span>
-                                    
-                                        {% elif item.risk_level == "medium" %}
-                                    
-                                            <span class="badge bg-warning text-dark">
-                                                Medium Risk
-                                            </span>
-                                    
-                                        {% else %}
-                                    
-                                            <span class="badge bg-info text-dark">
-                                                Low Risk
-                                            </span>
-                                    
-                                        {% endif %}
-                                    
-                                    </td>
-                        
-                                    <!-- Action -->
-                        
-                                    <td>
-                        
-                                        <div class="d-flex gap-2">
-
-                                            <a
-                                                href="{% url 'fees:student_fees' item.student.id %}"
-                                                class="btn btn-sm btn-outline-secondary"
-                                            >
-                                                View Fees
-                                            </a>
-                                        
-                                            {% if item.outstanding > 0 %}
-                                        
-                                                <a
-                                                    href="{% url 'fees:student_fees' item.student.id %}"
-                                                    class="btn btn-sm btn-outline-primary"
-                                                >
-                                                    Collect Payment
-                                                </a>
-                                        
-                                            {% endif %}
-                                        
-                                        </div>
-                        
-                                    </td>
-                        
-                                </tr>
-                        
-                            {% endfor %}
-                        
-                        </tbody>
-    
-                    </table>
-    
-                </div>
-    
-            {% else %}
-    
-                <div class="text-center text-muted py-4">
-    
-                    No fee invoices found for this class.
-    
-                </div>
-    
-            {% endif %}
-    
-        </div>
-
-        {% if student_page.has_other_pages %}
-
-    <nav class="mt-4">
-
-        <ul class="pagination justify-content-center">
+</div>
 
 
-            <!-- Previous -->
-
-            {% if student_page.has_previous %}
-
-                <li class="page-item">
-
-                    <a
-                        class="page-link"
-                        href="?class_id={{ selected_class }}&academic_year={{ selected_academic_year }}{% if risk_filter %}&risk={{ risk_filter }}{% endif %}{% if search %}&search={{ search }}{% endif %}&page={{ student_page.previous_page_number }}"
-                    >
-                        Previous
-                    </a>
-
-                </li>
-
-            {% else %}
-
-                <li class="page-item disabled">
-
-                    <span class="page-link">
-                        Previous
-                    </span>
-
-                </li>
-
-            {% endif %}
-
-
-            <!-- Page numbers -->
-
-            {% for page_num in student_page.paginator.page_range %}
-
-                {% if page_num == student_page.number %}
-
-                    <li class="page-item active">
-
-                        <span class="page-link">
-                            {{ page_num }}
-                        </span>
-
-                    </li>
-
-                {% else %}
-
-                    <li class="page-item">
-
-                        <a
-                            class="page-link"
-                            href="?class_id={{ selected_class }}&academic_year={{ selected_academic_year }}{% if risk_filter %}&risk={{ risk_filter }}{% endif %}{% if search %}&search={{ search }}{% endif %}&page={{ page_num }}"
-                        >
-                            {{ page_num }}
-                        </a>
-
-                    </li>
-
-                {% endif %}
-
-            {% endfor %}
-
-
-            <!-- Next -->
-
-            {% if student_page.has_next %}
-
-                <li class="page-item">
-
-                    <a
-                        class="page-link"
-                        href="?class_id={{ selected_class }}&academic_year={{ selected_academic_year }}{% if risk_filter %}&risk={{ risk_filter }}{% endif %}{% if search %}&search={{ search }}{% endif %}&page={{ student_page.next_page_number }}"
-                    >
-                        Next
-                    </a>
-
-                </li>
-
-            {% else %}
-
-                <li class="page-item disabled">
-
-                    <span class="page-link">
-                        Next
-                    </span>
-
-                </li>
-
-            {% endif %}
-
-
-        </ul>
-
-    </nav>
-
-{% endif %}
-    
-    </div>
-
-
-{% else %}
-
-    <div class="text-center text-muted py-5">
-
-        <h5>
-            Select a class and academic year
-        </h5>
-
-        <p>
-            Choose the filters above to view the fee collection summary.
-        </p>
-
-    </div>
-
-{% endif %}
-
+</div>
 
 {% if summary %}
 
 <script>
-
     const classFeeLabels = {{ chart_labels|safe }};
-
     const classFeeValues = {{ chart_values|safe }};
 
+    const classFeeCtx = document.getElementById("classFeeChart");
 
-    const classFeeCtx = document.getElementById(
-        "classFeeChart"
-    );
-
-
-    new Chart(
-        classFeeCtx,
-        {
+    if (classFeeCtx) {
+        new Chart(classFeeCtx, {
             type: "bar",
 
             data: {
-
                 labels: classFeeLabels,
 
                 datasets: [
                     {
                         label: "Amount",
-
                         data: classFeeValues,
-
                         borderWidth: 1,
                     }
                 ]
-
             },
 
             options: {
-
                 responsive: true,
-
                 maintainAspectRatio: false,
 
                 scales: {
-
                     y: {
-
                         beginAtZero: true,
 
                         ticks: {
-
                             callback: function(value) {
-
-                                return "₦" +
-                                    value.toLocaleString();
-
+                                return "₦" + value.toLocaleString();
                             }
-
                         }
-
                     }
-
                 },
 
                 plugins: {
-
                     tooltip: {
-
                         callbacks: {
-
                             label: function(context) {
-
                                 return (
                                     "₦" +
-                                    context.parsed.y
-                                    .toLocaleString()
+                                    context.parsed.y.toLocaleString()
                                 );
-
                             }
-
                         }
-
                     }
-
                 }
-
             }
-
-        }
-    );
-
+        });
+    }
 </script>
 
 {% endif %}

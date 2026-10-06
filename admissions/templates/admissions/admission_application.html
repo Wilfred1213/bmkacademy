@@ -1,43 +1,166 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}
-    Online Admission Application
+Online Admission Application | BMK Academy
+{% endblock %}
+
+{% block extra_css %}
+
+<link
+    rel="stylesheet"
+    href="{% static 'website/css/admissions.css' %}"
+>
 {% endblock %}
 
 {% block content %}
 
-<div class="container py-4">
+<div class="bmk-admission-page">
 
-    <div class="text-center mb-4">
+<!-- ========================================= -->
+<!-- HERO -->
+<!-- ========================================= -->
 
-        <h1 class="fw-bold">
-            BMK ACADEMY
-        </h1>
+<section class="bmk-admission-hero">
 
-        <p class="text-muted mb-1">
-            Baki and Mairam Kwasari
-        </p>
+    <div class="container">
 
-        <p class="text-muted">
-            Nursery & Primary Education
-        </p>
+        <div class="bmk-admission-hero-content">
 
-        <h3 class="mt-4">
-            Online Admission Application
-        </h3>
+            <span class="bmk-admission-label">
+                <i class="bi bi-mortarboard-fill"></i>
+                Admissions
+            </span>
 
-        <p class="text-muted">
-            Complete the form below to apply for admission.
-        </p>
+            <h1>
+                Begin Your Child's Journey With
+                <span>BMK Academy</span>
+            </h1>
+
+            <p class="bmk-admission-school-name">
+                Baki and Mairam Kwasari Nursery &amp; Primary School
+            </p>
+
+            <p class="bmk-admission-hero-text">
+                Complete the online application below to begin
+                your child's admission journey with us.
+            </p>
+
+            <div class="bmk-admission-hero-badges">
+
+                <div class="bmk-admission-hero-badge">
+                    <i class="bi bi-check-circle-fill"></i>
+                    Simple online application
+                </div>
+
+                <div class="bmk-admission-hero-badge">
+                    <i class="bi bi-shield-check"></i>
+                    Secure information
+                </div>
+
+                <div class="bmk-admission-hero-badge">
+                    <i class="bi bi-heart-fill"></i>
+                    Education for Service
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 
+</section>
 
-    <div id="admission-form-container">
 
-        {% include "admissions/partials/admission_form.html" %}
+<!-- ========================================= -->
+<!-- APPLICATION AREA -->
+<!-- ========================================= -->
+
+<section class="bmk-admission-form-section">
+
+    <div class="container">
+
+        <div class="bmk-admission-layout">
+
+            <!-- SIDE INFORMATION -->
+
+            <aside class="bmk-admission-sidebar">
+
+                <div class="bmk-admission-sidebar-card">
+
+                    <div class="bmk-admission-sidebar-icon">
+                        <i class="bi bi-info-circle-fill"></i>
+                    </div>
+
+                    <h2>
+                        Before You Apply
+                    </h2>
+
+                    <p>
+                        Please have the student's personal and
+                        parent or guardian information available
+                        before completing the application.
+                    </p>
+
+                    <div class="bmk-admission-check-list">
+
+                        <div>
+                            <i class="bi bi-check-circle-fill"></i>
+                            Student information
+                        </div>
+
+                        <div>
+                            <i class="bi bi-check-circle-fill"></i>
+                            Academic preferences
+                        </div>
+
+                        <div>
+                            <i class="bi bi-check-circle-fill"></i>
+                            Parent or guardian details
+                        </div>
+
+                        <div>
+                            <i class="bi bi-check-circle-fill"></i>
+                            Accurate contact information
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="bmk-admission-sidebar-card bmk-admission-motto-card">
+
+                    <i class="bi bi-stars"></i>
+
+                    <span>
+                        Our Motto
+                    </span>
+
+                    <strong>
+                        Education for Service
+                    </strong>
+
+                </div>
+
+            </aside>
+
+
+            <!-- FORM -->
+
+            <div
+                id="admission-form-container"
+                class="bmk-admission-form-container"
+            >
+                {% include "admissions/partials/admission_form.html" %}
+            </div>
+
+        </div>
 
     </div>
+
+</section>
+
 
 </div>
 

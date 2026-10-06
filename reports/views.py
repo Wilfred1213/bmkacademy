@@ -11,6 +11,9 @@ from accounts.decorators import role_required
 
 from teachers.models import Teacher, ClassTeacherAssignment
 
+from django.contrib import messages
+from django.urls import reverse
+
 @login_required
 @role_required("admin", "teacher")
 def report_dashboard(request):
@@ -96,26 +99,62 @@ def student_report(request, enrollment_id):
 @login_required
 @role_required("admin", "teacher")
 def class_performance_report(
-request,
-academic_year_id,
-term_id,
-school_class_id,
+    request,
+    academic_year_id,
+    term_id,
+    school_class_id,
 ):
-    academic_year = get_object_or_404(
-    AcademicYear,
-    id=academic_year_id,
-    )
+    # -----------------------------------------
+    # VALIDATE ACADEMIC YEAR
+    # -----------------------------------------
+    academic_year = AcademicYear.objects.filter(
+        id=academic_year_id
+    ).first()
 
-    term = get_object_or_404(
-        Term,
+    if not academic_year:
+        messages.error(
+            request,
+            "Please select a valid academic year before viewing class performance."
+        )
+        return redirect("reports:report_dashboard")
+
+    # -----------------------------------------
+    # VALIDATE TERM
+    # -----------------------------------------
+    term = Term.objects.filter(
         id=term_id,
         academic_year=academic_year,
-    )
+    ).first()
 
-    school_class = get_object_or_404(
-        SchoolClass,
+    if not term:
+        messages.error(
+            request,
+            "The selected term does not belong to the selected academic year."
+        )
+        return redirect(
+            f"{reverse('reports:report_dashboard')}?"
+            f"academic_year={academic_year.id}"
+        )
+
+    # -----------------------------------------
+    # VALIDATE CLASS
+    # -----------------------------------------
+    school_class = SchoolClass.objects.filter(
         id=school_class_id,
-    )
+        enrollments__academic_year=academic_year,
+        enrollments__term=term,
+    ).distinct().first()
+
+    if not school_class:
+        messages.error(
+            request,
+            "The selected class is not available for this academic period."
+        )
+        return redirect(
+            f"{reverse('reports:report_dashboard')}?"
+            f"academic_year={academic_year.id}"
+            f"&term={term.id}"
+        )
 
     # -----------------------------------------
     # TEACHER PERMISSION CHECK
@@ -200,4 +239,3 @@ school_class_id,
         "reports/class_performance_report.html",
         context,
     )
-

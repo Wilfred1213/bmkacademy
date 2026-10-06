@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 
 {% block title %}
@@ -14,67 +15,111 @@
 {% endblock %}
 
 
-{% block content %}
+{% block extra_css %}
 
-
-<!-- ========================= -->
-<!-- Page Header -->
-<!-- ========================= -->
-
-<div
-    class="d-flex justify-content-between align-items-center mb-4"
+<link
+    rel="stylesheet"
+    href="{% static 'website/css/teacher.css' %}"
 >
 
-    <div>
-
-        <h2 class="mb-1">
-
-            {% if teacher %}
-                Edit Teacher
-            {% else %}
-                Add Teacher
-            {% endif %}
-
-        </h2>
+{% endblock %}
 
 
-        <p class="text-muted mb-0">
+{% block content %}
 
-            {% if teacher %}
-
-                Update teacher information.
-
-            {% else %}
-
-                Create a new teacher account.
-
-            {% endif %}
-
-        </p>
-
-    </div>
+<div class="teacher-page">
 
 
-    <a
-        href="{% url 'teachers:teacher_list' %}"
-        class="btn btn-outline-secondary"
-    >
+    <!-- =================================================
+         PAGE HERO
+    ================================================== -->
 
-        Back to Teachers
+    <section class="teacher-hero">
 
-    </a>
+        <div class="teacher-hero-content">
 
-</div>
+            <div class="teacher-hero-icon">
+
+                {% if teacher %}
+
+                    <i class="bi bi-person-gear"></i>
+
+                {% else %}
+
+                    <i class="bi bi-person-plus"></i>
+
+                {% endif %}
+
+            </div>
+
+
+            <div>
+
+                <span class="teacher-hero-eyebrow">
+
+                    {% if teacher %}
+                        TEACHER MANAGEMENT
+                    {% else %}
+                        STAFF MANAGEMENT
+                    {% endif %}
+
+                </span>
+
+
+                <h2>
+
+                    {% if teacher %}
+                        Edit Teacher
+                    {% else %}
+                        Add Teacher
+                    {% endif %}
+
+                </h2>
+
+
+                <p>
+
+                    {% if teacher %}
+
+                        Update the teacher's account,
+                        personal, and employment information.
+
+                    {% else %}
+
+                        Create a new teacher account
+                        for BMK Academy.
+
+                    {% endif %}
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <a
+            href="{% url 'teachers:teacher_list' %}"
+            class="teacher-add-btn teacher-back-btn"
+        >
+
+            <i class="bi bi-arrow-left"></i>
+
+            <span>
+                Back to Teachers
+            </span>
+
+        </a>
+
+    </section>
 
 
 
-<!-- ========================= -->
-<!-- Teacher Form -->
-<!-- ========================= -->
+    <!-- =================================================
+         FORM CARD
+    ================================================== -->
 
-<div class="card shadow-sm">
-
-    <div class="card-body">
+    <section class="teacher-form-card">
 
 
         <form method="post">
@@ -82,359 +127,541 @@
             {% csrf_token %}
 
 
-            <!-- ========================= -->
-            <!-- ACCOUNT INFORMATION -->
-            <!-- ========================= -->
 
-            <h5 class="mb-3">
+            <!-- =================================================
+                 ACCOUNT INFORMATION
+            ================================================== -->
 
-                Account Information
-
-            </h5>
+            <div class="teacher-form-section">
 
 
-            <div class="row g-3">
+                <div class="teacher-form-section-heading">
+
+                    <div class="teacher-form-section-icon">
+
+                        <i class="bi bi-person-lock"></i>
+
+                    </div>
 
 
-                <!-- Username -->
+                    <div>
 
-                <div class="col-md-6">
+                        <h5>
+                            Account Information
+                        </h5>
 
-                    <label
-                        class="form-label"
-                    >
+                        <p>
+                            Login details used to access the teacher account.
+                        </p>
 
-                        Username
+                    </div>
 
-                    </label>
+                </div>
 
 
-                    <input
-                        type="text"
-                        name="username"
-                        class="form-control"
-                        value="{% if teacher %}{{ teacher.user.username }}{% endif %}"
-                        {% if not teacher %}required{% endif %}
-                        {% if teacher %}readonly{% endif %}
-                    >
+
+                <div class="row g-4">
+
+
+                    <!-- Username -->
+
+                    <div class="col-md-6">
+
+                        <label class="teacher-form-label">
+
+                            Username
+
+                            <span class="teacher-required">
+                                *
+                            </span>
+
+                        </label>
+
+
+                        <div class="teacher-input-wrapper">
+
+                            <i class="bi bi-at"></i>
+
+
+                            <input
+                                type="text"
+                                name="username"
+                                class="teacher-form-input"
+                                value="{% if teacher %}{{ teacher.user.username }}{% endif %}"
+                                {% if not teacher %}required{% endif %}
+                                {% if teacher %}readonly{% endif %}
+                            >
+
+                        </div>
+
+
+                        {% if teacher %}
+
+                            <div class="teacher-form-help">
+
+                                <i class="bi bi-lock"></i>
+
+                                Username cannot be changed here.
+
+                            </div>
+
+                        {% else %}
+
+                            <div class="teacher-form-help">
+
+                                <i class="bi bi-info-circle"></i>
+
+                                This will be used when the teacher signs in.
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+
+                    <!-- Email -->
+
+                    <div class="col-md-6">
+
+                        <label class="teacher-form-label">
+
+                            Email
+
+                            <span class="teacher-required">
+                                *
+                            </span>
+
+                        </label>
+
+
+                        <div class="teacher-input-wrapper">
+
+                            <i class="bi bi-envelope"></i>
+
+
+                            <input
+                                type="email"
+                                name="email"
+                                class="teacher-form-input"
+                                value="{% if teacher %}{{ teacher.user.email }}{% endif %}"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="teacher-form-help">
+
+                            <i class="bi bi-info-circle"></i>
+
+                            Use an active email address where applicable.
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 SECTION DIVIDER
+            ================================================== -->
+
+            <div class="teacher-form-divider"></div>
+
+
+
+            <!-- =================================================
+                 PERSONAL INFORMATION
+            ================================================== -->
+
+            <div class="teacher-form-section">
+
+
+                <div class="teacher-form-section-heading">
+
+                    <div class="teacher-form-section-icon">
+
+                        <i class="bi bi-person-vcard"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h5>
+                            Personal Information
+                        </h5>
+
+                        <p>
+                            Basic information about the teacher.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="row g-4">
+
+
+                    <!-- First Name -->
+
+                    <div class="col-md-6">
+
+                        <label class="teacher-form-label">
+
+                            First Name
+
+                            <span class="teacher-required">
+                                *
+                            </span>
+
+                        </label>
+
+
+                        <div class="teacher-input-wrapper">
+
+                            <i class="bi bi-person"></i>
+
+
+                            <input
+                                type="text"
+                                name="first_name"
+                                class="teacher-form-input"
+                                value="{% if teacher %}{{ teacher.user.first_name }}{% endif %}"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Last Name -->
+
+                    <div class="col-md-6">
+
+                        <label class="teacher-form-label">
+
+                            Last Name
+
+                            <span class="teacher-required">
+                                *
+                            </span>
+
+                        </label>
+
+
+                        <div class="teacher-input-wrapper">
+
+                            <i class="bi bi-person"></i>
+
+
+                            <input
+                                type="text"
+                                name="last_name"
+                                class="teacher-form-input"
+                                value="{% if teacher %}{{ teacher.user.last_name }}{% endif %}"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 SECTION DIVIDER
+            ================================================== -->
+
+            <div class="teacher-form-divider"></div>
+
+
+
+            <!-- =================================================
+                 EMPLOYMENT INFORMATION
+            ================================================== -->
+
+            <div class="teacher-form-section">
+
+
+                <div class="teacher-form-section-heading">
+
+                    <div class="teacher-form-section-icon">
+
+                        <i class="bi bi-briefcase"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h5>
+                            Employment Information
+                        </h5>
+
+                        <p>
+                            Professional and employment details.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="row g-4">
+
+
+                    <!-- Qualification -->
+
+                    <div class="col-md-6">
+
+                        <label class="teacher-form-label">
+
+                            Qualification
+
+                        </label>
+
+
+                        <div class="teacher-input-wrapper">
+
+                            <i class="bi bi-mortarboard"></i>
+
+
+                            <input
+                                type="text"
+                                name="qualification"
+                                class="teacher-form-input"
+                                value="{% if teacher %}{{ teacher.qualification }}{% endif %}"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Phone -->
+
+                    <div class="col-md-6">
+
+                        <label class="teacher-form-label">
+
+                            Phone
+
+                        </label>
+
+
+                        <div class="teacher-input-wrapper">
+
+                            <i class="bi bi-telephone"></i>
+
+
+                            <input
+                                type="text"
+                                name="phone"
+                                class="teacher-form-input"
+                                value="{% if teacher %}{{ teacher.phone }}{% endif %}"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Date Joined -->
+
+                    <div class="col-md-6">
+
+                        <label class="teacher-form-label">
+
+                            Date Joined
+
+                            <span class="teacher-required">
+                                *
+                            </span>
+
+                        </label>
+
+
+                        <div class="teacher-input-wrapper">
+
+                            <i class="bi bi-calendar3"></i>
+
+
+                            <input
+                                type="date"
+                                name="date_joined"
+                                class="teacher-form-input"
+                                value="{% if teacher %}{{ teacher.date_joined|date:'Y-m-d' }}{% endif %}"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Employee ID -->
 
                     {% if teacher %}
 
-                        <div class="form-text">
+                        <div class="col-md-6">
 
-                            Username cannot be changed here.
+                            <label class="teacher-form-label">
+
+                                Employee ID
+
+                            </label>
+
+
+                            <div class="teacher-employee-field">
+
+                                <div class="teacher-employee-display">
+
+                                    <span class="teacher-employee-display-icon">
+
+                                        <i class="bi bi-person-badge"></i>
+
+                                    </span>
+
+
+                                    <div>
+
+                                        <strong>
+                                            {{ teacher.employee_id }}
+                                        </strong>
+
+                                        <span>
+                                            Automatically generated
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="teacher-form-help">
+
+                                <i class="bi bi-lock"></i>
+
+                                Employee ID cannot be changed manually.
+
+                            </div>
 
                         </div>
 
                     {% endif %}
 
-                </div>
-
-
-                <!-- Email -->
-
-                <div class="col-md-6">
-
-                    <label
-                        class="form-label"
-                    >
-
-                        Email
-
-                    </label>
-
-
-                    <input
-                        type="email"
-                        name="email"
-                        class="form-control"
-                        value="{% if teacher %}{{ teacher.user.email }}{% endif %}"
-                        required
-                    >
 
                 </div>
-
-
-                <!-- Password -->
-
-                {% comment %} {% if not teacher %}
-
-                    <div class="col-md-6">
-
-                        <label
-                            class="form-label"
-                        >
-
-                            Password
-
-                        </label>
-
-
-                        <input
-                            type="password"
-                            name="password"
-                            class="form-control"
-                            required
-                        >
-
-                    </div>
-
-                {% endif %} {% endcomment %}
-
 
             </div>
 
 
 
-            <hr class="my-4">
+            <!-- =================================================
+                 FORM ACTIONS
+            ================================================== -->
+
+            <div class="teacher-form-actions">
 
 
+                <div class="teacher-form-actions-note">
 
-            <!-- ========================= -->
-            <!-- PERSONAL INFORMATION -->
-            <!-- ========================= -->
+                    <i class="bi bi-shield-check"></i>
 
-            <h5 class="mb-3">
+                    <span>
 
-                Personal Information
+                        {% if teacher %}
 
-            </h5>
+                            Review the information before updating this teacher.
 
+                        {% else %}
 
-            <div class="row g-3">
+                            Review the information before creating the teacher account.
 
+                        {% endif %}
 
-                <!-- First Name -->
-
-                <div class="col-md-6">
-
-                    <label
-                        class="form-label"
-                    >
-
-                        First Name
-
-                    </label>
-
-
-                    <input
-                        type="text"
-                        name="first_name"
-                        class="form-control"
-                        value="{% if teacher %}{{ teacher.user.first_name }}{% endif %}"
-                        required
-                    >
+                    </span>
 
                 </div>
 
 
-                <!-- Last Name -->
-
-                <div class="col-md-6">
-
-                    <label
-                        class="form-label"
-                    >
-
-                        Last Name
-
-                    </label>
+                <div class="teacher-form-buttons">
 
 
-                    <input
-                        type="text"
-                        name="last_name"
-                        class="form-control"
-                        value="{% if teacher %}{{ teacher.user.last_name }}{% endif %}"
-                        required
-                    >
+                    {% if teacher %}
 
-                </div>
-
-
-            </div>
-
-
-
-            <hr class="my-4">
-
-
-
-            <!-- ========================= -->
-            <!-- EMPLOYMENT INFORMATION -->
-            <!-- ========================= -->
-
-            <h5 class="mb-3">
-
-                Employment Information
-
-            </h5>
-
-
-            <div class="row g-3">
-
-
-                <!-- Qualification -->
-
-                <div class="col-md-6">
-
-                    <label
-                        class="form-label"
-                    >
-
-                        Qualification
-
-                    </label>
-
-
-                    <input
-                        type="text"
-                        name="qualification"
-                        class="form-control"
-                        value="{% if teacher %}{{ teacher.qualification }}{% endif %}"
-                    >
-
-                </div>
-
-
-                <!-- Phone -->
-
-                <div class="col-md-6">
-
-                    <label
-                        class="form-label"
-                    >
-
-                        Phone
-
-                    </label>
-
-
-                    <input
-                        type="text"
-                        name="phone"
-                        class="form-control"
-                        value="{% if teacher %}{{ teacher.phone }}{% endif %}"
-                    >
-
-                </div>
-
-
-                <!-- Date Joined -->
-
-                <div class="col-md-6">
-
-                    <label
-                        class="form-label"
-                    >
-
-                        Date Joined
-
-                    </label>
-
-
-                    <input
-                        type="date"
-                        name="date_joined"
-                        class="form-control"
-                        value="{% if teacher %}{{ teacher.date_joined|date:'Y-m-d' }}{% endif %}"
-                        required
-                    >
-
-                </div>
-
-
-                <!-- Employee ID -->
-
-                {% if teacher %}
-
-                    <div class="col-md-6">
-
-                        <label
-                            class="form-label"
+                        <button
+                            type="submit"
+                            class="teacher-submit-btn"
                         >
 
-                            Employee ID
+                            <i class="bi bi-check2-circle"></i>
 
-                        </label>
+                            Update Teacher
+
+                        </button>
 
 
-                        <input
-                            type="text"
-                            class="form-control"
-                            value="{{ teacher.employee_id }}"
-                            readonly
+                        <a
+                            href="{% url 'teachers:teacher_detail' teacher.id %}"
+                            class="teacher-cancel-btn"
                         >
 
-                        <div class="form-text">
+                            Cancel
 
-                            Employee ID is generated automatically.
-
-                        </div>
-
-                    </div>
-
-                {% endif %}
+                        </a>
 
 
-            </div>
+                    {% else %}
+
+                        <button
+                            type="submit"
+                            class="teacher-submit-btn"
+                        >
+
+                            <i class="bi bi-person-plus"></i>
+
+                            Create Teacher
+
+                        </button>
 
 
+                        <a
+                            href="{% url 'teachers:teacher_list' %}"
+                            class="teacher-cancel-btn"
+                        >
 
-            <!-- ========================= -->
-            <!-- BUTTONS -->
-            <!-- ========================= -->
+                            Cancel
 
-            <div class="mt-4">
+                        </a>
 
-
-                {% if teacher %}
-
-                    <button
-                        type="submit"
-                        class="btn btn-primary"
-                    >
-
-                        Update Teacher
-
-                    </button>
+                    {% endif %}
 
 
-                    <a
-                        href="{% url 'teachers:teacher_detail' teacher.id %}"
-                        class="btn btn-outline-secondary"
-                    >
-
-                        Cancel
-
-                    </a>
-
-
-                {% else %}
-
-
-                    <button
-                        type="submit"
-                        class="btn btn-primary"
-                    >
-
-                        Create Teacher
-
-                    </button>
-
-
-                    <a
-                        href="{% url 'teachers:teacher_list' %}"
-                        class="btn btn-outline-secondary"
-                    >
-
-                        Cancel
-
-                    </a>
-
-
-                {% endif %}
-
+                </div>
 
             </div>
 
@@ -442,7 +669,8 @@
         </form>
 
 
-    </div>
+    </section>
+
 
 </div>
 

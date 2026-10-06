@@ -1,33 +1,45 @@
-{% extends "base.html" %}
-
+{% extends "website/base.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'website/css/blog.css' %}">
+{% endblock %}
 {% block title %}
-    Edit Blog Post | BMK Academy
+Edit Blog Post | BMK Academy
 {% endblock %}
 
 {% block content %}
 
-<div class="container py-5">
+
+<section class="bmk-blog-form-page">
+
+<div class="container">
 
     <div class="row justify-content-center">
 
-        <div class="col-lg-8">
+        <div class="col-xl-8 col-lg-9">
 
-            <div class="card border-0 shadow-sm">
+            <div class="bmk-form-card">
 
-                <div class="card-body p-4">
+                <div class="bmk-form-header">
 
-                    <div class="mb-4">
-
-                        <h2 class="fw-bold mb-1">
-                            Edit Blog Post
-                        </h2>
-
-                        <p class="text-muted mb-0">
-                            Update "{{ post.title }}".
-                        </p>
-
+                    <div class="bmk-form-eyebrow">
+                        <i class="bi bi-pencil-square me-1"></i>
+                        Blog Management
                     </div>
 
+                    <h1>
+                        Edit Blog Post
+                    </h1>
+
+                    <p>
+                        Update "{{ post.title }}" and keep your
+                        BMK Academy story current.
+                    </p>
+
+                </div>
+
+
+                <div class="bmk-form-body">
 
                     <form
                         method="post"
@@ -39,7 +51,7 @@
                         {{ form.as_p }}
 
 
-                        <div class="d-flex gap-2 mt-4">
+                        <div class="bmk-form-actions">
 
                             <button
                                 type="submit"
@@ -48,7 +60,6 @@
                                 <i class="bi bi-save me-1"></i>
                                 Save Changes
                             </button>
-
 
                             <a
                                 href="{% url 'blog:manage_posts' %}"
@@ -70,5 +81,8 @@
     </div>
 
 </div>
+
+
+</section>
 
 {% endblock %}

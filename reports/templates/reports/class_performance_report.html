@@ -1,810 +1,624 @@
 {% extends "base.html" %}
+{% load static %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'website/css/reports.css' %}">
+{% endblock %}
 {% block title %}
-Class Performance Report - {{ school_class }}
+    Class Performance Report - {{ school_class }}
 {% endblock %}
 
 {% block content %}
 
-<div class="container py-4">
-
-<!-- =====================================================
-    ACTIONS
-===================================================== -->
-
-<div class="d-flex justify-content-between align-items-center mb-4 no-print">
-
-
-    <a
-        href="{% url 'reports:report_dashboard' %}"
-        class="btn btn-outline-secondary"
-    >
-        ← Reports
-    </a>
-
-    <button
-        type="button"
-        onclick="window.print()"
-        class="btn btn-primary"
-    >
-        <i class="bi bi-printer"></i>
-        Print Report
-    </button>
-
-
-    </div>
+<div class="class-report-page">
 
     <!-- =====================================================
-        REPORT CARD
-    ===================================================== -->
+         SCREEN ACTIONS
+    ====================================================== -->
 
-    <div class="report-card">
+    <div class="class-report-actions no-print">
 
-    
-    <!-- =================================================
-        SCHOOL HEADER
-    ================================================== -->
+        <a
+            href="{% url 'reports:report_dashboard' %}"
+            class="class-report-back-btn"
+        >
+            <i class="bi bi-arrow-left"></i>
+            <span>Reports</span>
+        </a>
 
-    <div class="school-header text-center">
-
-        <h1 class="school-name">
-            BMK ACADEMY
-        </h1>
-
-        <div class="school-motto">
-            Baki and Mairam Kwasari
-        </div>
-
-        <div class="school-title">
-            NURSERY & PRIMARY EDUCATION
-        </div>
-
-        <div class="school-contact">
-            CLASS PERFORMANCE REPORT
-        </div>
+        <button
+            type="button"
+            onclick="window.print()"
+            class="class-report-print-btn"
+        >
+            <i class="bi bi-printer-fill"></i>
+            <span>Print Report</span>
+        </button>
 
     </div>
 
 
-    <!-- =================================================
-        CLASS INFORMATION
-    ================================================== -->
+    <!-- =====================================================
+         REPORT DOCUMENT
+    ====================================================== -->
 
-    <div class="student-info mt-4">
-
-        <div class="student-info-title">
-            CLASS INFORMATION
-        </div>
-
-        <table>
-
-            <tr>
-
-                <td>
-
-                    <span class="label">
-                        Academic Year:
-                    </span>
-
-                    {{ academic_year }}
-
-                </td>
+    <div class="class-report-document">
 
 
-                <td>
+        <!-- =================================================
+             SCHOOL HEADER
+        ================================================== -->
 
-                    <span class="label">
-                        Term:
-                    </span>
+        <header class="class-report-header">
 
-                    {{ term }}
+            <div class="class-report-brand">
 
-                </td>
+                <div class="class-report-logo-wrap">
 
-            </tr>
+                    <img
+                        src="{% static 'website/images/bmk-logo.png' %}"
+                        alt="BMK Academy Logo"
+                        class="class-report-logo"
+                    >
 
+                </div>
 
-            <tr>
+                <div class="class-report-school-details">
 
-                <td>
+                    <h1>
+                        BAKI &amp; MAIRAM KWASARI ACADEMY
+                    </h1>
 
-                    <span class="label">
-                        Class:
-                    </span>
-
-                    {{ school_class }}
-
-                </td>
-
-
-                <td>
-
-                    <span class="label">
-                        Students:
-                    </span>
-
-                    {{ student_count }}
-
-                </td>
-
-            </tr>
-
-        </table>
-
-    </div>
-
-
-    <!-- =================================================
-        PERFORMANCE
-    ================================================== -->
-
-    <div class="section-title mt-4">
-
-        CLASS PERFORMANCE
-
-    </div>
-
-
-    <!-- =================================================
-        SUMMARY CARDS
-    ================================================== -->
-
-    <div class="row g-3 mb-4 class-performance-summary">
-
-
-        <!-- STUDENTS -->
-
-        <div class="col-md-3">
-
-            <div class="card border-0 shadow-sm text-center h-100">
-
-                <div class="card-body">
-
-                    <div class="text-muted small">
-                        STUDENTS
+                    <div class="class-report-school-subtitle">
+                        Nursery &amp; Primary Education
                     </div>
 
-                    <div class="fs-3 fw-bold">
+                    <div class="class-report-school-motto">
+                        Education for Service
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="class-report-title">
+
+                <span>
+                    ACADEMIC PERFORMANCE DOCUMENT
+                </span>
+
+                <strong>
+                    CLASS PERFORMANCE REPORT
+                </strong>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             CLASS INFORMATION
+        ================================================== -->
+
+        <section class="class-report-info">
+
+            <div class="class-report-section-heading">
+
+                <div class="class-report-section-icon">
+                    <i class="bi bi-mortarboard-fill"></i>
+                </div>
+
+                <div>
+
+                    <span>
+                        Class Information
+                    </span>
+
+                    <h2>
+                        Academic Period
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="class-report-info-grid">
+
+                <div class="class-report-info-item">
+
+                    <span>
+                        Academic Year
+                    </span>
+
+                    <strong>
+                        {{ academic_year }}
+                    </strong>
+
+                </div>
+
+
+                <div class="class-report-info-item">
+
+                    <span>
+                        Term
+                    </span>
+
+                    <strong>
+                        {{ term }}
+                    </strong>
+
+                </div>
+
+
+                <div class="class-report-info-item">
+
+                    <span>
+                        Class
+                    </span>
+
+                    <strong>
+                        {{ school_class }}
+                    </strong>
+
+                </div>
+
+
+                <div class="class-report-info-item">
+
+                    <span>
+                        Students
+                    </span>
+
+                    <strong>
                         {{ student_count }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             PERFORMANCE SUMMARY
+        ================================================== -->
+
+        <section class="class-report-performance">
+
+            <div class="class-report-section-heading">
+
+                <div class="class-report-section-icon performance-icon">
+                    <i class="bi bi-bar-chart-fill"></i>
+                </div>
+
+                <div>
+
+                    <span>
+                        Performance Overview
+                    </span>
+
+                    <h2>
+                        Class Performance
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="class-report-summary-grid">
+
+
+                <!-- STUDENTS -->
+
+                <div class="class-report-summary-card">
+
+                    <div class="class-report-summary-icon students">
+                        <i class="bi bi-people-fill"></i>
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Students
+                        </span>
+
+                        <strong>
+                            {{ student_count }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CLASS AVERAGE -->
+
+                <div class="class-report-summary-card">
+
+                    <div class="class-report-summary-icon average">
+                        <i class="bi bi-graph-up-arrow"></i>
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Class Average
+                        </span>
+
+                        <strong>
+                            {{ class_average|floatformat:2 }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- HIGHEST -->
+
+                <div class="class-report-summary-card">
+
+                    <div class="class-report-summary-icon highest">
+                        <i class="bi bi-trophy-fill"></i>
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Highest Average
+                        </span>
+
+                        <strong>
+                            {{ highest_average|floatformat:2 }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- LOWEST -->
+
+                <div class="class-report-summary-card">
+
+                    <div class="class-report-summary-icon lowest">
+                        <i class="bi bi-arrow-down-circle-fill"></i>
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Lowest Average
+                        </span>
+
+                        <strong>
+                            {{ lowest_average|floatformat:2 }}
+                        </strong>
+
                     </div>
 
                 </div>
 
             </div>
 
-        </div>
+        </section>
 
 
-        <!-- CLASS AVERAGE -->
+        <!-- =================================================
+             STUDENT PERFORMANCE
+        ================================================== -->
 
-        <div class="col-md-3">
+        <section class="class-report-results">
 
-            <div class="card border-0 shadow-sm text-center h-100">
+            <div class="class-report-results-heading">
 
-                <div class="card-body">
+                <div>
 
-                    <div class="text-muted small">
-                        CLASS AVERAGE
-                    </div>
+                    <span>
+                        Student Performance
+                    </span>
 
-                    <div class="fs-3 fw-bold">
-                        {{ class_average|floatformat:2 }}
-                    </div>
+                    <h2>
+                        Results by Student
+                    </h2>
 
+                </div>
+
+                <div class="class-report-result-count">
+                    {{ student_count }}
+                    Student{{ student_count|pluralize }}
                 </div>
 
             </div>
 
-        </div>
 
+            <div class="class-report-table-wrapper">
 
-        <!-- HIGHEST AVERAGE -->
+                <table class="class-report-table">
 
-        <div class="col-md-3">
+                    <thead>
 
-            <div class="card border-0 shadow-sm text-center h-100">
+                        <tr>
 
-                <div class="card-body">
+                            <th class="position-column">
+                                Pos.
+                            </th>
 
-                    <div class="text-muted small">
-                        HIGHEST AVERAGE
-                    </div>
+                            <th class="student-column">
+                                Student
+                            </th>
 
-                    <div class="fs-3 fw-bold">
-                        {{ highest_average|floatformat:2 }}
-                    </div>
 
-                </div>
+                            {% for class_subject in subjects %}
 
-            </div>
+                                <th>
+                                    {{ class_subject.subject.name }}
+                                </th>
 
-        </div>
+                            {% endfor %}
 
 
-        <!-- LOWEST AVERAGE -->
+                            <th>
+                                Total
+                            </th>
 
-        <div class="col-md-3">
+                            <th>
+                                Average
+                            </th>
 
-            <div class="card border-0 shadow-sm text-center h-100">
+                        </tr>
 
-                <div class="card-body">
+                    </thead>
 
-                    <div class="text-muted small">
-                        LOWEST AVERAGE
-                    </div>
 
-                    <div class="fs-3 fw-bold">
-                        {{ lowest_average|floatformat:2 }}
-                    </div>
+                    <tbody>
 
-                </div>
+                        {% for item in class_results %}
 
-            </div>
+                            <tr>
 
-        </div>
 
-    </div>
+                                <!-- POSITION -->
 
+                                <td class="position-cell">
 
-    <!-- =================================================
-        RESULTS TABLE
-    ================================================== -->
+                                    {% if item.position %}
 
-    <div class="table-responsive">
+                                        {% if item.position == 1 %}
 
-        <table class="results-table">
+                                            <span class="position-badge first">
+                                                <i class="bi bi-trophy-fill"></i>
+                                                1
+                                            </span>
 
-            <thead>
+                                        {% elif item.position == 2 %}
 
-                <tr>
+                                            <span class="position-badge second">
+                                                2
+                                            </span>
 
-                    <!-- POSITION -->
+                                        {% elif item.position == 3 %}
 
-                    <th style="width: 6%;">
-                        POS.
-                    </th>
+                                            <span class="position-badge third">
+                                                3
+                                            </span>
 
+                                        {% else %}
 
-                    <!-- STUDENT -->
+                                            <span class="position-number">
+                                                {{ item.position }}
+                                            </span>
 
-                    <th style="text-align: left;">
-                        STUDENT
-                    </th>
+                                        {% endif %}
 
+                                    {% else %}
 
-                    <!-- SUBJECT HEADINGS -->
+                                        <span class="position-number">
+                                            —
+                                        </span>
 
-                    {% for class_subject in subjects %}
+                                    {% endif %}
 
-                        <th>
+                                </td>
 
-                            {{ class_subject.subject.name }}
 
-                        </th>
+                                <!-- STUDENT -->
 
-                    {% endfor %}
+                                <td class="student-cell">
 
+                                    <div class="class-report-student">
 
-                    <!-- TOTAL -->
+                                        <div class="class-report-student-avatar">
+                                            <i class="bi bi-person-fill"></i>
+                                        </div>
 
-                    <th>
-                        TOTAL
-                    </th>
+                                        <div>
 
+                                            <strong>
 
-                    <!-- AVERAGE -->
+                                                {{ item.student.first_name }}
 
-                    <th>
-                        AVERAGE
-                    </th>
+                                                {% if item.student.middle_name %}
+                                                    {{ item.student.middle_name }}
+                                                {% endif %}
 
-                </tr>
+                                                {{ item.student.last_name }}
 
-            </thead>
+                                            </strong>
 
+                                            <span>
+                                                {{ item.student.admission_number }}
+                                            </span>
 
-            <tbody>
+                                        </div>
 
-                {% for item in class_results %}
+                                    </div>
 
-                    <tr>
+                                </td>
 
 
-                        <!-- POSITION -->
+                                <!-- SUBJECT SCORES -->
 
-                        <td class="center">
+                                {% for subject_item in item.subject_scores %}
 
-                            {% if item.position %}
+                                    <td class="score-cell">
 
-                                {{ item.position }}
+                                        {% if subject_item.score is not None %}
 
-                            {% else %}
+                                            {{ subject_item.score }}
 
-                                —
+                                        {% else %}
 
-                            {% endif %}
+                                            <span class="missing-score">
+                                                —
+                                            </span>
 
-                        </td>
+                                        {% endif %}
 
+                                    </td>
 
-                        <!-- STUDENT -->
+                                {% endfor %}
 
-                        <td class="subject-name">
 
-                            {{ item.student.first_name }}
+                                <!-- TOTAL -->
 
-                            {% if item.student.middle_name %}
+                                <td class="total-cell">
 
-                                {{ item.student.middle_name }}
+                                    {% if item.total_score is not None %}
 
-                            {% endif %}
+                                        <strong>
+                                            {{ item.total_score }}
+                                        </strong>
 
-                            {{ item.student.last_name }}
+                                    {% else %}
 
-                        </td>
+                                        —
+                                        
+                                    {% endif %}
 
+                                </td>
 
-                        <!-- SUBJECT SCORES -->
 
-                        {% for subject_item in item.subject_scores %}
+                                <!-- AVERAGE -->
 
-                            <td class="center">
+                                <td class="average-cell">
 
-                                {% if subject_item.score is not None %}
+                                    {% if item.average is not None %}
 
-                                    {{ subject_item.score }}
+                                        <strong>
+                                            {{ item.average|floatformat:2 }}
+                                        </strong>
 
-                                {% else %}
+                                    {% else %}
 
-                                    —
+                                        —
+                                        
+                                    {% endif %}
 
-                                {% endif %}
+                                </td>
 
-                            </td>
+                            </tr>
+
+
+                        {% empty %}
+
+                            <tr>
+
+                                <td
+                                    colspan="{{ subjects|length|add:'4' }}"
+                                    class="class-report-empty-row"
+                                >
+
+                                    <div class="class-report-empty">
+
+                                        <i class="bi bi-file-earmark-x"></i>
+
+                                        <span>
+                                            No students found for this class and term.
+                                        </span>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
 
                         {% endfor %}
 
+                    </tbody>
 
-                        <!-- TOTAL -->
+                </table>
 
-                        <td class="center">
+            </div>
 
-                            {% if item.total_score is not None %}
-
-                                {{ item.total_score }}
-
-                            {% else %}
-
-                                —
-
-                            {% endif %}
-
-                        </td>
+        </section>
 
 
-                        <!-- AVERAGE -->
+        <!-- =================================================
+             SIGNATURES
+        ================================================== -->
 
-                        <td class="center">
+        <section class="class-report-signatures">
 
-                            {% if item.average is not None %}
+            <div class="class-report-signature">
 
-                                {{ item.average|floatformat:2 }}
+                <div class="signature-line"></div>
 
-                            {% else %}
-
-                                —
-
-                            {% endif %}
-
-                        </td>
-
-                    </tr>
-
-
-                {% empty %}
-
-                    <tr>
-
-                        <td
-                            colspan="{{ subjects|length|add:'4' }}"
-                            class="text-center"
-                        >
-
-                            No students found for this class and term.
-
-                        </td>
-
-                    </tr>
-
-                {% endfor %}
-
-            </tbody>
-
-        </table>
-
-    </div>
-
-
-    <!-- =================================================
-        SIGNATURES
-    ================================================== -->
-
-    <div class="mt-5">
-
-        <div class="row text-center">
-
-
-            <div class="col-md-6">
-
-                <div class="signature-line">
-
+                <strong>
                     Class Teacher
+                </strong>
 
-                </div>
+                <span>
+                    Signature
+                </span>
 
             </div>
 
 
-            <div class="col-md-6">
+            <div class="class-report-signature">
 
-                <div class="signature-line">
+                <div class="signature-line"></div>
 
+                <strong>
                     Head Teacher
+                </strong>
 
-                </div>
+                <span>
+                    Signature
+                </span>
 
             </div>
 
+        </section>
 
-        </div>
 
-    </div>
+        <!-- =================================================
+             FOOTER
+        ================================================== -->
+
+        <footer class="class-report-footer">
+
+            <span>
+                BMK Academy
+            </span>
+
+            <span>
+                Education for Service
+            </span>
+
+            <span>
+                Class Performance Report
+            </span>
+
+        </footer>
 
 
     </div>
 
 </div>
-
-<!-- =====================================================
-     PRINT CSS
-===================================================== -->
-
-<style>
-
-@media print {
-
-
-    /* =================================================
-       A4 LANDSCAPE
-    ================================================== */
-
-    @page {
-
-        size: A4 landscape;
-
-        margin: 8mm;
-
-    }
-
-
-    /* =================================================
-       HIDE SCREEN-ONLY ELEMENTS
-    ================================================== */
-
-    .no-print {
-
-        display: none !important;
-
-    }
-
-
-    /* =================================================
-       REMOVE BOOTSTRAP CONTAINER RESTRICTIONS
-    ================================================== */
-
-    .container {
-
-        width: 100% !important;
-
-        max-width: none !important;
-
-        margin: 0 !important;
-
-        padding: 0 !important;
-
-    }
-
-
-    /* =================================================
-       REPORT CARD
-    ================================================== */
-
-    .report-card {
-
-        width: 100% !important;
-
-        margin: 0 !important;
-
-        padding: 0 !important;
-
-        border: none !important;
-
-        box-shadow: none !important;
-
-    }
-
-
-    /* =================================================
-       TABLE RESPONSIVE WRAPPER
-    ================================================== */
-
-    .table-responsive {
-
-        overflow: visible !important;
-
-    }
-
-
-    /* =================================================
-       RESULTS TABLE
-    ================================================== */
-
-    .results-table {
-
-        width: 100% !important;
-
-        border-collapse: collapse;
-
-        table-layout: fixed;
-
-        font-size: 8px;
-
-    }
-
-
-    /* =================================================
-       TABLE CELLS
-    ================================================== */
-
-    .results-table th,
-    .results-table td {
-
-        padding: 3px 4px;
-
-        font-size: 8px;
-
-        line-height: 1.2;
-
-        vertical-align: middle;
-
-        word-wrap: break-word;
-
-        overflow-wrap: break-word;
-
-    }
-
-
-    /* =================================================
-       TABLE HEADERS
-    ================================================== */
-
-    .results-table th {
-
-        white-space: normal;
-
-        text-align: center;
-
-        font-weight: 700;
-
-    }
-
-
-    /* =================================================
-       STUDENT COLUMN
-    ================================================== */
-
-    .results-table th:nth-child(2),
-    .results-table td:nth-child(2) {
-
-        text-align: left;
-
-        width: 22%;
-
-        word-wrap: break-word;
-
-        overflow-wrap: break-word;
-
-    }
-
-
-    /* =================================================
-       POSITION COLUMN
-    ================================================== */
-
-    .results-table th:first-child,
-    .results-table td:first-child {
-
-        width: 5%;
-
-        text-align: center;
-
-    }
-
-
-    /* =================================================
-       REPEAT TABLE HEADER ON NEW PAGES
-    ================================================== */
-
-    .results-table thead {
-
-        display: table-header-group;
-
-    }
-
-
-    /* =================================================
-       KEEP STUDENT ROWS TOGETHER
-    ================================================== */
-
-    .results-table tr {
-
-        page-break-inside: avoid;
-
-        break-inside: avoid;
-
-    }
-
-
-    /* =================================================
-       DON'T BREAK IMPORTANT SECTIONS
-    ================================================== */
-
-    .school-header,
-    .student-info,
-    .section-title {
-
-        page-break-inside: avoid;
-
-        break-inside: avoid;
-
-    }
-
-
-    /* =================================================
-       CLASS PERFORMANCE SUMMARY
-       PRINT ONLY
-    ================================================== */
-
-    .class-performance-summary {
-
-        display: flex !important;
-
-        flex-wrap: nowrap !important;
-
-        width: 100% !important;
-
-        margin-left: 0 !important;
-
-        margin-right: 0 !important;
-
-        gap: 0 !important;
-
-    }
-
-
-    /* =================================================
-       FORCE FOUR SUMMARY ITEMS INTO ONE ROW
-    ================================================== */
-
-    .class-performance-summary > div {
-
-        flex: 0 0 25% !important;
-
-        width: 25% !important;
-
-        max-width: 25% !important;
-
-        padding-left: 2px !important;
-
-        padding-right: 2px !important;
-
-    }
-
-
-    /* =================================================
-       SUMMARY CARDS
-    ================================================== */
-
-    .class-performance-summary .card {
-
-        width: 100% !important;
-
-        height: 100% !important;
-
-        margin: 0 !important;
-
-        border-radius: 0 !important;
-
-        box-shadow: none !important;
-
-    }
-
-
-    /* =================================================
-       SUMMARY CARD BODY
-    ================================================== */
-
-    .class-performance-summary .card-body {
-
-        padding: 5px 3px !important;
-
-    }
-
-
-    /* =================================================
-       SUMMARY LABELS
-    ================================================== */
-
-    .class-performance-summary .text-muted {
-
-        font-size: 8px !important;
-
-        white-space: nowrap !important;
-
-    }
-
-
-    /* =================================================
-       SUMMARY NUMBERS
-    ================================================== */
-
-    .class-performance-summary .fs-3 {
-
-        font-size: 14px !important;
-
-        line-height: 1.2 !important;
-
-    }
-
-
-    /* =================================================
-       SIGNATURES
-    ================================================== */
-
-    .signature-line {
-
-        page-break-inside: avoid;
-
-    }
-
-
-    /* =================================================
-       REMOVE CARD SHADOWS
-    ================================================== */
-
-    .card {
-
-        box-shadow: none !important;
-
-    }
-
-
-    /* =================================================
-       PRINT BODY
-    ================================================== */
-
-    body {
-
-        margin: 0 !important;
-
-        padding: 0 !important;
-
-        font-size: 9px;
-
-    }
-
-}
-
-</style>
 
 {% endblock %}
