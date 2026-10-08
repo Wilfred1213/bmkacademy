@@ -14,25 +14,23 @@
 {% block content %}
 
 <div class="bmk-home">
-    <!-- =========================
-        HERO CAROUSEL
-    ========================= -->
-
-
+    <!--===========================
+    BMK HERO Section
+    ==============================-->
     <section class="bmk-hero">
 
         {% if hero_slides %}
-
+    
         <div id="bmkHeroCarousel"
             class="carousel slide carousel-fade"
             data-bs-ride="carousel"
             data-bs-interval="6000">
-
+    
                 <!-- Carousel Indicators -->
                 <div class="carousel-indicators">
-
+    
                     {% for slide in hero_slides %}
-
+    
                         <button
                             type="button"
                             data-bs-target="#bmkHeroCarousel"
@@ -43,101 +41,101 @@
                             {% endif %}
                             aria-label="Slide {{ forloop.counter }}"
                         ></button>
-
+    
                     {% endfor %}
-
+    
                 </div>
-
-
+    
+    
                 <!-- Carousel Slides -->
                 <div class="carousel-inner">
-
+    
                     {% for slide in hero_slides %}
-
+    
                         <div class="carousel-item {% if forloop.first %}active{% endif %}">
-
+    
                             <!-- Slide Image -->
                             <img
                                 src="{{ slide.image.url }}"
                                 class="bmk-hero-image"
                                 alt="{{ slide.title }}"
                             >
-
-
+    
+    
                             <!-- Dark Gradient Overlay -->
                             <div class="bmk-hero-overlay"></div>
-
-
+    
+    
                             <!-- Slide Content -->
                             <div class="carousel-caption bmk-hero-content">
-
+    
                                 <div class="container">
-
+    
                                     <div class="row">
-
+    
                                         <div class="col-lg-8 col-xl-7 text-start">
-
+    
                                             <!-- BMK Badge -->
                                             <span class="bmk-hero-badge">
-
+    
                                                 <i class="bi bi-mortarboard-fill me-2"></i>
-
+    
                                                 BMK Academy
-
+    
                                             </span>
-
-
+    
+    
                                             <!-- Slide Title -->
                                             <h1 class="bmk-hero-title">
-
+    
                                                 {{ slide.title }}
-
+    
                                             </h1>
-
-
+    
+    
                                             <!-- Slide Subtitle -->
                                             {% if slide.subtitle %}
-
+    
                                                 <p class="bmk-hero-subtitle">
-
+    
                                                     {{ slide.subtitle }}
-
+    
                                                 </p>
-
+    
                                             {% endif %}
-
-
+    
+    
                                             <!-- Slide Button -->
                                             {% if slide.button_text and slide.button_url %}
-
+    
                                                 <a
                                                     href="{{ slide.button_url }}"
                                                     class="btn bmk-hero-button"
                                                 >
-
+    
                                                     {{ slide.button_text }}
-
+    
                                                     <i class="bi bi-arrow-right ms-2"></i>
-
+    
                                                 </a>
-
+    
                                             {% endif %}
-
+    
                                         </div>
-
+    
                                     </div>
-
+    
                                 </div>
-
+    
                             </div>
-
+    
                         </div>
-
+    
                     {% endfor %}
-
+    
                 </div>
-
-
+    
+    
                 <!-- Previous Button -->
                 <button
                     class="carousel-control-prev bmk-carousel-control"
@@ -145,20 +143,20 @@
                     data-bs-target="#bmkHeroCarousel"
                     data-bs-slide="prev"
                 >
-
+    
                     <span class="bmk-carousel-arrow">
-
+    
                         <i class="bi bi-chevron-left"></i>
-
+    
                     </span>
-
+    
                     <span class="visually-hidden">
                         Previous
                     </span>
-
+    
                 </button>
-
-
+    
+    
                 <!-- Next Button -->
                 <button
                     class="carousel-control-next bmk-carousel-control"
@@ -166,59 +164,61 @@
                     data-bs-target="#bmkHeroCarousel"
                     data-bs-slide="next"
                 >
-
+    
                     <span class="bmk-carousel-arrow">
-
+    
                         <i class="bi bi-chevron-right"></i>
-
+    
                     </span>
-
+    
                     <span class="visually-hidden">
                         Next
                     </span>
-
+    
                 </button>
-
+    
             </div>
-
-
+    
+    
         {% else %}
-
+    
             <!-- Fallback when there are no carousel slides -->
-
+    
             <div class="bmk-hero-empty">
-
+    
                 <div class="container text-center">
-
+    
                     <span class="bmk-hero-badge">
-
+    
                         <i class="bi bi-mortarboard-fill me-2"></i>
-
+    
                         Welcome to BMK Academy
-
+    
                     </span>
-
-
+    
+    
                     <h1 class="display-4 fw-bold mt-3">
-
+    
                         Building Bright Futures
-
+    
                     </h1>
-
-
+    
+    
                     <p class="lead">
-
+    
                         Baki and Mairam Kwasari Nursery and Primary School
-
+    
                     </p>
-
+    
                 </div>
-
+    
             </div>
-
+    
         {% endif %}
-
+    
     </section> 
+
+    
 
     {% if popup_event %}
 
@@ -1166,148 +1166,171 @@
     LATEST NEWS & STORIES
     ========================================= -->
 
-    <section class="bmk-events py-5 py-lg-6">
+    <section class="bmk-blog-section py-5 py-lg-6">
 
         <div class="container py-lg-4">
-    
+
             <div class="row justify-content-center text-center mb-5">
-    
+
                 <div class="col-lg-8">
-    
+
                     <span class="bmk-section-label">
-                        SCHOOL EVENTS
+                        NEWS & STORIES
                     </span>
-    
+
                     <h2 class="bmk-section-title">
-                        What's Happening at BMK
+                        Latest From BMK Academy
                     </h2>
-    
-                    <p class="bmk-events-intro">
-                        Stay informed about upcoming activities,
-                        celebrations and important events at BMK Academy.
+
+                    <p class="bmk-blog-intro">
+                        Stay informed about the latest news, activities,
+                        achievements and stories from our school community.
                     </p>
-    
+
                 </div>
-    
+
             </div>
-    
-    
-            {% if upcoming_events %}
-    
+
+
+            {% if latest_posts %}
+
                 <div class="row g-4">
-    
-                    {% for event in upcoming_events %}
-    
+
+                    {% for post in latest_posts %}
+
                         <div class="col-md-6 col-lg-4">
-    
-                            <article class="bmk-event-card">
-    
-                                {% if event.image %}
-    
-                                    <div class="bmk-event-image">
-    
+
+                            <article class="bmk-blog-card h-100">
+
+                                <div class="bmk-blog-image">
+
+                                    {% if post.featured_image %}
+
                                         <img
-                                            src="{{ event.image.url }}"
-                                            alt="{{ event.title }}"
+                                            src="{{ post.featured_image.url }}"
+                                            alt="{{ post.title }}"
                                         >
-    
-                                        <div class="bmk-event-date">
-    
-                                            <strong>
-                                                {{ event.event_date|date:"j" }}
-                                            </strong>
-    
-                                            <span>
-                                                {{ event.event_date|date:"M" }}
-                                            </span>
-    
+
+                                    {% else %}
+
+                                        <div class="bmk-blog-placeholder">
+
+                                            <i class="bi bi-newspaper"></i>
+
                                         </div>
-    
-                                    </div>
-    
-                                {% endif %}
-    
-    
-                                <div class="p-4">
-    
-                                    <h4 class="fw-bold mb-3">
-                                        {{ event.title }}
-                                    </h4>
-    
-    
-                                    <div class="text-muted small mb-3">
-    
-                                        {% if event.event_time %}
-                                            <div class="mb-2">
-                                                <i class="bi bi-clock me-2"></i>
-                                                {{ event.event_time|time:"g:i A" }}
-                                            </div>
-                                        {% endif %}
-    
-                                        {% if event.venue %}
-                                            <div>
-                                                <i class="bi bi-geo-alt me-2"></i>
-                                                {{ event.venue }}
-                                            </div>
-                                        {% endif %}
-    
-                                    </div>
-    
-    
-                                    {% if event.description %}
-    
-                                        <p class="text-muted">
-                                            {{ event.description|truncatewords:20 }}
-                                        </p>
-    
+
                                     {% endif %}
-    
-    
-                                    <a
-                                        href="{% url 'website:event_detail' event.slug %}"
-                                        class="btn btn-outline-primary"
-                                    >
-                                        View Event
-                                        <i class="bi bi-arrow-right ms-1"></i>
-                                    </a>
-    
+
                                 </div>
-    
+
+
+                                <div class="bmk-blog-content">
+
+                                    {% if post.category %}
+
+                                        <span class="bmk-blog-category">
+                                            {{ post.category.name }}
+                                        </span>
+
+                                    {% endif %}
+
+
+                                    <h3 class="bmk-blog-title">
+                                        {{ post.title }}
+                                    </h3>
+
+
+                                    {% if post.excerpt %}
+
+                                        <p class="bmk-blog-excerpt">
+                                            {{ post.excerpt|truncatewords:24 }}
+                                        </p>
+
+                                    {% else %}
+
+                                        <p class="bmk-blog-excerpt">
+                                            {{ post.content|striptags|truncatewords:24 }}
+                                        </p>
+
+                                    {% endif %}
+
+
+                                    {% if post.published_at %}
+
+                                        <div class="bmk-blog-meta">
+
+                                            <i class="bi bi-calendar3 me-1"></i>
+
+                                            {{ post.published_at|date:"M d, Y" }}
+
+                                        </div>
+
+                                    {% endif %}
+
+
+                                    <a
+                                        href="{% url 'blog:post_list' %}"
+                                        class="bmk-blog-link"
+                                    >
+
+                                        Read More
+
+                                        <i class="bi bi-arrow-right ms-2"></i>
+
+                                    </a>
+
+                                </div>
+
                             </article>
-    
+
                         </div>
-    
+
                     {% endfor %}
-    
+
                 </div>
-    
-    
+
+
                 <div class="text-center mt-5">
-    
+
                     <a
-                        href="{% url 'website:events' %}"
-                        class="btn btn-primary px-4 py-3"
+                        href="{% url 'blog:post_list' %}"
+                        class="btn bmk-blog-button px-4 py-3"
                     >
-                        View All Events
+
+                        View All News
+
                         <i class="bi bi-arrow-right ms-2"></i>
+
                     </a>
-    
+
                 </div>
-    
+
+
             {% else %}
-    
-                <div class="text-center py-5">
-    
-                    <p class="text-muted">
-                        There are currently no upcoming school events.
+
+                <div class="bmk-blog-empty text-center">
+
+                    <div class="bmk-blog-empty-icon">
+
+                        <i class="bi bi-newspaper"></i>
+
+                    </div>
+
+                    <h3>
+                        No News Available Yet
+                    </h3>
+
+                    <p>
+                        Check back soon for the latest news and updates
+                        from BMK Academy.
                     </p>
-    
+
                 </div>
-    
+
             {% endif %}
-    
+
         </div>
-    
+
     </section>
     <!-- =========================================
     ADMISSIONS CTA
@@ -1630,6 +1653,7 @@
 
     {% block extra_js %}
     <script src="{% static 'website/js/home.js' %}"></script>
+    {% comment %} <script src="{% static 'website/js/carousel.js' %}"></script> {% endcomment %}
 
     {% endblock %}
 

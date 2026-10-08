@@ -8099,3 +8099,339 @@
     }
 
 }
+/* =========================================================
+   BMK BLOG / NEWS SECTION
+========================================================= */
+
+.bmk-blog-section {
+    padding: 90px 0;
+    background: #f8fafc;
+}
+
+.bmk-blog-intro {
+    max-width: 700px;
+    margin: 0 auto;
+    color: #64748b;
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   BLOG CARD
+========================================================= */
+
+.bmk-blog-card {
+    height: 100%;
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid #e5eaf0;
+    border-radius: 22px;
+    box-shadow: 0 12px 35px rgba(15, 23, 42, 0.06);
+
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+.bmk-blog-card:hover {
+    transform: translateY(-8px);
+
+    box-shadow:
+        0 20px 45px rgba(15, 23, 42, 0.11);
+}
+
+
+/* =========================================================
+   BLOG IMAGE
+========================================================= */
+
+.bmk-blog-image {
+    position: relative;
+
+    height: 230px;
+
+    overflow: hidden;
+
+    background: #eaf2ff;
+}
+
+.bmk-blog-image img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    transition:
+        transform 0.6s ease;
+}
+
+.bmk-blog-card:hover .bmk-blog-image img {
+    transform: scale(1.06);
+}
+
+
+/* =========================================================
+   BLOG IMAGE PLACEHOLDER
+========================================================= */
+
+.bmk-blog-placeholder {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0f2747,
+            #1d4ed8
+        );
+
+    color: rgba(255,255,255,0.9);
+
+    font-size: 3rem;
+}
+
+
+/* =========================================================
+   BLOG CONTENT
+========================================================= */
+
+.bmk-blog-content {
+    padding: 28px;
+}
+
+
+/* =========================================================
+   CATEGORY
+========================================================= */
+
+.bmk-blog-category {
+    display: inline-flex;
+
+    align-items: center;
+
+    margin-bottom: 13px;
+
+    padding: 6px 12px;
+
+    border-radius: 50px;
+
+    background:
+        rgba(224, 168, 62, 0.12);
+
+    color: #a87516;
+
+    font-size: 0.72rem;
+
+    font-weight: 800;
+
+    letter-spacing: 0.07em;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.bmk-blog-title {
+    margin-bottom: 13px;
+
+    color: #0f2747;
+
+    font-size: 1.25rem;
+
+    font-weight: 800;
+
+    line-height: 1.35;
+}
+
+
+/* =========================================================
+   EXCERPT
+========================================================= */
+
+.bmk-blog-excerpt {
+    margin-bottom: 18px;
+
+    color: #64748b;
+
+    font-size: 0.92rem;
+
+    line-height: 1.75;
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+.bmk-blog-meta {
+    margin-bottom: 18px;
+
+    color: #94a3b8;
+
+    font-size: 0.78rem;
+}
+
+
+/* =========================================================
+   READ MORE
+========================================================= */
+
+.bmk-blog-link {
+    display: inline-flex;
+
+    align-items: center;
+
+    color: #1d4ed8;
+
+    font-size: 0.9rem;
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition:
+        color 0.3s ease,
+        transform 0.3s ease;
+}
+
+.bmk-blog-link:hover {
+    color: #0f2747;
+
+    transform: translateX(3px);
+}
+
+
+/* =========================================================
+   VIEW ALL NEWS BUTTON
+========================================================= */
+
+.bmk-blog-button {
+    padding: 12px 25px;
+
+    border: 2px solid #1d4ed8;
+
+    border-radius: 8px;
+
+    background: #1d4ed8;
+
+    color: #ffffff;
+
+    font-weight: 700;
+
+    transition:
+        background-color 0.3s ease,
+        border-color 0.3s ease,
+        transform 0.3s ease;
+}
+
+.bmk-blog-button:hover {
+    border-color: #0f2747;
+
+    background: #0f2747;
+
+    color: #ffffff;
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   EMPTY BLOG STATE
+========================================================= */
+
+.bmk-blog-empty {
+    max-width: 600px;
+
+    margin: 0 auto;
+
+    padding: 50px 30px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5eaf0;
+
+    border-radius: 20px;
+}
+
+.bmk-blog-empty-icon {
+    width: 65px;
+    height: 65px;
+
+    margin: 0 auto 20px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #eaf2ff;
+
+    color: #1d4ed8;
+
+    font-size: 1.5rem;
+}
+
+.bmk-blog-empty h3 {
+    margin-bottom: 10px;
+
+    color: #0f2747;
+
+    font-weight: 800;
+}
+
+.bmk-blog-empty p {
+    margin-bottom: 0;
+
+    color: #64748b;
+}
+
+
+/* =========================================================
+   MOBILE BLOG
+========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .bmk-blog-section {
+        padding: 65px 0;
+    }
+
+    .bmk-blog-intro {
+        padding: 0 12px;
+    }
+
+    .bmk-blog-image {
+        height: 220px;
+    }
+
+    .bmk-blog-content {
+        padding: 24px 22px;
+
+        text-align: center;
+    }
+
+    .bmk-blog-category {
+        justify-content: center;
+    }
+
+    .bmk-blog-title {
+        font-size: 1.15rem;
+    }
+
+    .bmk-blog-link {
+        justify-content: center;
+    }
+
+}
