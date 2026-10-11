@@ -1,204 +1,83 @@
 {% extends "base.html" %}
 {% load static %}
 {% block extra_css %}
-
-<link rel="stylesheet" href="{% static 'website/css/students.css' %}">
+<link rel="stylesheet" href="{% static 'website/css/students.css' %}?v=6">
+<style>
+.bmk-search-wrap{display:flex; gap:10px; align-items:center; background:#f8fafc; border:1px solid #edf0f4; border-radius:12px; padding:6px 12px; min-width:320px;}
+.bmk-search-wrap input{border:0; background:transparent; flex:1; font-size:.86rem; outline:none; color:#0f172a;}
+.bmk-search-wrap button{border:0; background:#1d4ed8; color:#fff; width:32px; height:32px; border-radius:9px; display:flex; align-items:center; justify-content:center;}
+.bmk-student-identity{display:flex; align-items:center; gap:12px;}
+.bmk-student-avatar{width:36px; height:36px; background:#eef5ff; color:#1d4ed8; border-radius:10px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:.85rem; flex-shrink:0;}
+.bmk-student-name{color:#0f172a !important; font-size:.88rem !important; font-weight:600 !important; margin:0; line-height:1.2;}
+.bmk-admission-sub{color:#64748b !important; font-size:.75rem !important;}
+</style>
 {% endblock %}
-
-{% block title %}
-Students | BMK Academy
-{% endblock %}
-
+{% block title %}Students | BMK Academy{% endblock %}
 {% block content %}
-
-
 <div class="container bmk-students-page">
 
-
 <div class="bmk-page-header">
-    <div class="bmk-page-header-content">
-
-        <div class="bmk-eyebrow">
-            <i class="bi bi-mortarboard-fill"></i>
-            Student Management
-        </div>
-
+  <div class="bmk-page-header-content">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+      <div>
+        <div class="bmk-eyebrow"><i class="bi bi-mortarboard-fill"></i> Student Management</div>
         <h1 class="bmk-page-title">
-            Students
-        </h1>
-
-        <p class="bmk-page-subtitle">
-            Manage and view students enrolled at BMK Academy.
-        </p>
-
-        <a href="#" class="bmk-add-student-btn">
-            <i class="bi bi-person-plus-fill"></i>
-            Add Student
-        </a>
-
+            {% if request.user.role == 'teacher' %}My Students{% else %}Students{% endif %}
+          </h1>
+          <p class="bmk-page-subtitle">
+            {% if request.user.role == 'teacher' %}Students in your assigned classes{% else %}Manage and view students enrolled at BMK Academy.{% endif %}
+          </p>
+      </div>
+      {% if request.user.role == 'admin' or request.user.is_superuser or request.user.role == 'admissions' %}
+      <a href="#" class="bmk-add-student-btn">
+        <i class="bi bi-person-plus-fill"></i> Add Student
+      </a>
+      {% endif %}
     </div>
+  </div>
 </div>
 
-<div class="bmk-students-card">
+<div class="bmk-students-card" style="background:#fff; border:1px solid #edf0f4; border-radius:18px; overflow:hidden;">
+  <div class="bmk-students-card-header" style="padding:18px 20px; border-bottom:1px solid #edf0f4; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+    <h2 class="bmk-section-heading" style="margin:0; font-size:1rem; font-weight:800;"><span class="bmk-section-icon"><i class="bi bi-people-fill"></i></span> Student Directory <span class="bmk-student-count" style="margin-left:8px; background:#f1f5f9; padding:4px 10px; border-radius:999px; font-size:.78rem;">{{ students|length }}</span></h2>
+    
+    <!-- SEARCH -->
+    <form method="get" class="bmk-search-wrap">
+      <i class="bi bi-search text-muted"></i>
+      <input type="text" name="q" value="{{ q }}" placeholder="Search name or admission no...">
+      {% if q %}<a href="{% url 'students:student_list' %}" style="color:#64748b; text-decoration:none;"><i class="bi bi-x-circle"></i></a>{% endif %}
+      <button type="submit"><i class="bi bi-arrow-right"></i></button>
+    </form>
+  </div>
 
-    <div class="bmk-students-card-header">
-
-        <h2 class="bmk-section-heading">
-            <span class="bmk-section-icon">
-                <i class="bi bi-people-fill"></i>
-            </span>
-            Student Directory
-        </h2>
-
-        <span class="bmk-student-count">
-            {{ students|length }} student{{ students|length|pluralize }}
-        </span>
-
+  <div class="bmk-students-card-body">
+    <div class="table-responsive">
+      <table class="table align-middle bmk-students-table mb-0">
+        <thead style="background:#f8fafc;"><tr><th class="ps-4" style="font-size:.72rem; text-transform:uppercase; color:#64748b;">Student</th><th style="font-size:.72rem; text-transform:uppercase; color:#64748b;">Admission No</th><th style="font-size:.72rem; text-transform:uppercase; color:#64748b;">Gender</th><th style="font-size:.72rem; text-transform:uppercase; color:#64748b;">Status</th><th style="font-size:.72rem; text-transform:uppercase; color:#64748b;">Action</th></tr></thead>
+        <tbody>
+          {% for student in students %}
+          <tr>
+            <td class="ps-4">
+              <div class="bmk-student-identity">
+                <div class="bmk-student-avatar">{{ student.first_name|first|upper }}</div>
+                <div>
+                  <p class="bmk-student-name">{{ student.get_full_name }}</p>
+                  <div class="bmk-admission-sub">Enrolled: {{ student.date_admitted|date:"d M Y" }}</div>
+                </div>
+              </div>
+            </td>
+            <td><span style="font-size:.84rem; font-weight:600; color:#334155;">{{ student.admission_number }}</span></td>
+            <td style="font-size:.84rem;">{{ student.get_gender_display }}</td>
+            <td>{% if student.status == "active" %}<span class="badge bg-success-subtle text-success" style="border-radius:999px; padding:5px 10px;"><i class="bi bi-check-circle-fill"></i> Active</span>{% else %}<span class="badge bg-secondary-subtle text-secondary" style="border-radius:999px; padding:5px 10px;">{{ student.status|title }}</span>{% endif %}</td>
+            <td><a href="{% url 'students:student_detail' student.id %}" class="btn btn-sm btn-outline-primary" style="border-radius:9px; font-size:.8rem;"><i class="bi bi-eye"></i> View</a></td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="5"><div class="text-center py-5"><div style="width:56px; height:56px; background:#f1f5f9; border-radius:14px; display:inline-flex; align-items:center; justify-content:center; margin-bottom:12px;"><i class="bi bi-search"></i></div><h6>No students found</h6><p class="small text-muted">{% if q %}No results for "{{ q }}"{% else %}No students in system{% endif %}</p>{% if q %}<a href="{% url 'students:student_list' %}" class="btn btn-sm btn-outline-secondary">Clear search</a>{% endif %}</div></td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
-
-    <div class="bmk-students-card-body">
-
-        <div class="bmk-students-table-wrapper">
-
-            <table class="table align-middle bmk-students-table">
-
-                <thead>
-                    <tr>
-                        <th>Student</th>
-                        <th>Admission Number</th>
-                        <th>Gender</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-
-                    {% for student in students %}
-
-                        <tr>
-
-                            <td>
-                                <div class="bmk-student-identity">
-
-                                    <div class="bmk-student-avatar">
-                                        {{ student.first_name|first|upper }}
-                                    </div>
-
-                                    <div>
-                                        <p class="bmk-student-name">
-                                            {{ student.first_name }}
-
-                                            {% if student.middle_name %}
-                                                {{ student.middle_name }}
-                                            {% endif %}
-
-                                            {{ student.last_name }}
-                                        </p>
-
-                                        <div class="bmk-admission-number">
-                                            BMK Student
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </td>
-
-                            <td>
-                                <span class="bmk-admission-value">
-                                    {{ student.admission_number }}
-                                </span>
-                            </td>
-
-                            <td>
-                                {{ student.get_gender_display }}
-                            </td>
-
-                            <td>
-
-                                {% if student.status == "active" %}
-
-                                    <span class="bmk-status-badge bmk-status-active">
-                                        <i class="bi bi-check-circle-fill"></i>
-                                        Active
-                                    </span>
-
-                                {% elif student.status == "withdrawn" %}
-
-                                    <span class="bmk-status-badge bmk-status-withdrawn">
-                                        <i class="bi bi-x-circle-fill"></i>
-                                        Withdrawn
-                                    </span>
-
-                                {% elif student.status == "graduated" %}
-
-                                    <span class="bmk-status-badge bmk-status-graduated">
-                                        <i class="bi bi-mortarboard-fill"></i>
-                                        Graduated
-                                    </span>
-
-                                {% elif student.status == "transferred" %}
-
-                                    <span class="bmk-status-badge bmk-status-transferred">
-                                        <i class="bi bi-arrow-left-right"></i>
-                                        Transferred
-                                    </span>
-
-                                {% endif %}
-
-                            </td>
-
-                            <td>
-
-                                <a
-                                    href="{% url 'students:student_detail' student.id %}"
-                                    class="bmk-view-btn"
-                                >
-                                    <i class="bi bi-eye-fill"></i>
-                                    View
-                                </a>
-
-                            </td>
-
-                        </tr>
-
-                    {% empty %}
-
-                        <tr>
-                            <td colspan="5">
-
-                                <div class="bmk-empty-state">
-
-                                    <div class="bmk-empty-icon">
-                                        <i class="bi bi-people"></i>
-                                    </div>
-
-                                    <h4>
-                                        No students found
-                                    </h4>
-
-                                    <p>
-                                        There are currently no students available in the system.
-                                    </p>
-
-                                </div>
-
-                            </td>
-                        </tr>
-
-                    {% endfor %}
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-    </div>
-
+  </div>
 </div>
-
-
 </div>
-
 {% endblock %}

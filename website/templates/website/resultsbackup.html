@@ -1,0 +1,186 @@
+<!-- =========================================================
+     FEES: ADMIN ONLY
+========================================================= -->
+
+{% if request.user.is_authenticated and request.user.role == "admin" %}
+
+<li class="nav-item dropdown">
+
+    <a class="nav-link dropdown-toggle"
+       href="#"
+       role="button"
+       data-bs-toggle="dropdown"
+       aria-expanded="false">
+
+        <i class="bi bi-cash-stack me-1"></i>
+        Fees
+
+    </a>
+
+    <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+
+        <li>
+            <a class="dropdown-item"
+               href="{% url 'fees:invoice_list' %}">
+                <i class="bi bi-receipt me-2"></i>
+                Invoices
+            </a>
+        </li>
+
+        <li>
+            <a class="dropdown-item"
+               href="{% url 'fees:fee_report' %}">
+                <i class="bi bi-graph-up me-2"></i>
+                Collection Report
+            </a>
+        </li>
+
+        <li>
+            <a class="dropdown-item"
+               href="{% url 'fees:monthly_payment_report' %}">
+                <i class="bi bi-calendar3 me-2"></i>
+                Monthly Collections
+            </a>
+        </li>
+
+        <li>
+            <a class="dropdown-item"
+               href="{% url 'fees:outstanding_fees' %}">
+                <i class="bi bi-exclamation-circle me-2"></i>
+                Outstanding Fees
+            </a>
+        </li>
+
+        <li>
+            <a class="dropdown-item"
+               href="{% url 'fees:class_fee_summary' %}">
+                <i class="bi bi-bar-chart-line me-2"></i>
+                Class Fee Summary
+            </a>
+        </li>
+
+    </ul>
+
+</li>
+
+{% endif %}
+```
+
+
+```django
+<!-- =========================================================
+     ADMISSIONS
+========================================================= -->
+
+<li class="nav-item dropdown">
+
+    <a class="nav-link dropdown-toggle"
+       href="#"
+       role="button"
+       data-bs-toggle="dropdown"
+       aria-expanded="false">
+
+        <i class="bi bi-person-plus me-1"></i>
+        Admissions
+
+    </a>
+
+    <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+
+        {% if request.user.is_authenticated and request.user.role == "admin" %}
+
+            <li>
+                <a class="dropdown-item"
+                   href="{% url 'admissions:admission_list' %}">
+                    <i class="bi bi-file-earmark-text me-2"></i>
+                    Admission Applications
+                </a>
+            </li>
+
+            <li><hr class="dropdown-divider"></li>
+
+        {% endif %}
+
+        <li>
+            <a class="dropdown-item"
+               href="{% url 'admissions:admission_application' %}">
+                <i class="bi bi-file-earmark-plus me-2"></i>
+                Apply for Admission
+            </a>
+        </li>
+
+    </ul>
+
+</li>
+```
+
+
+
+```django
+<!-- =========================================================
+     FEES: ADMIN ONLY
+========================================================= -->
+
+{% if request.user.is_authenticated and request.user.role == "admin" %}
+
+<li class="nav-item dropdown">
+
+    <a class="nav-link dropdown-toggle"
+       href="#"
+       role="button"
+       data-bs-toggle="dropdown"
+       aria-expanded="false">
+
+        <i class="bi bi-cash-stack me-1"></i>
+        Fees
+
+    </a>
+
+    <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+
+        <li>
+            <a class="dropdown-item"
+               href="{% url 'fees:invoice_list' %}">
+                <i class="bi bi-receipt me-2"></i>
+                Invoices
+            </a>
+        </li>
+
+        <li>
+            <a class="dropdown-item"
+               href="{% url 'fees:fee_report' %}">
+                <i class="bi bi-graph-up me-2"></i>
+                Collection Report
+            </a>
+        </li>
+
+        <li>
+            <a class="dropdown-item"
+               href="{% url 'fees:monthly_payment_report' %}">
+                <i class="bi bi-calendar3 me-2"></i>
+                Monthly Collections
+            </a>
+        </li>
+
+        <li>
+            <a class="dropdown-item"
+               href="{% url 'fees:outstanding_fees' %}">
+                <i class="bi bi-exclamation-circle me-2"></i>
+                Outstanding Fees
+            </a>
+        </li>
+
+        <li>
+            <a class="dropdown-item"
+               href="{% url 'fees:class_fee_summary' %}">
+                <i class="bi bi-bar-chart-line me-2"></i>
+                Class Fee Summary
+            </a>
+        </li>
+
+    </ul>
+
+</li>
+
+{% endif %}
+```

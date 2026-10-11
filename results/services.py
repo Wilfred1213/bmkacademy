@@ -547,73 +547,7 @@ class ResultService:
             "position": position,
             "out_of": len(student_totals),
         }
-    # @staticmethod
-    # def get_student_position(enrollment):
-
-    #     class_enrollments = (
-    #         Enrollment.objects
-    #         .filter(
-    #             academic_year=enrollment.academic_year,
-    #             term=enrollment.term,
-    #             school_class=enrollment.school_class,
-    #             is_current=True,
-    #             student__status="active",
-    #         )
-    #         .select_related(
-    #             "student"
-    #         )
-    #     )
-
-    #     student_totals = []
-
-    #     for class_enrollment in class_enrollments:
-
-    #         total_score = (
-    #             StudentSubjectResult.objects
-    #             .filter(
-    #                 enrollment=class_enrollment,
-    #                 total_score__isnull=False,
-    #             )
-    #             .aggregate(
-    #                 total=Sum("total_score")
-    #             )["total"]
-    #             or Decimal("0")
-    #         )
-
-    #         student_totals.append(
-    #             {
-    #                 "enrollment_id": (
-    #                     class_enrollment.id
-    #                 ),
-    #                 "total_score": total_score,
-    #             }
-    #         )
-
-    #     student_totals = sorted(
-    #         student_totals,
-    #         key=lambda item: item["total_score"],
-    #         reverse=True,
-    #     )
-
-    #     position = None
-
-    #     for index, item in enumerate(
-    #         student_totals,
-    #         start=1,
-    #     ):
-
-    #         if (
-    #             item["enrollment_id"]
-    #             == enrollment.id
-    #         ):
-
-    #             position = index
-    #             break
-
-    #     return {
-    #         "position": position,
-    #         "out_of": len(student_totals),
-    #     }
+    
     # --------------------------------
     # SAVE BEHAVIOUR RATINGS
     # --------------------------------

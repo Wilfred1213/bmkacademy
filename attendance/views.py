@@ -236,15 +236,19 @@ def mark_attendance(request):
     # Attach status to each student
     # ==================================================
 
+    # for student in students:
+
+    #     student.attendance_status = (
+    #         existing_attendance.get(
+    #             student.id
+    #         )
+    #     )
+
+    # Convert to list so the attribute sticks
+    students = list(students)
     for student in students:
-
-        student.attendance_status = (
-            existing_attendance.get(
-                student.id
-            )
-        )
-
-
+        student.attendance_status = existing_attendance.get(student.id)
+        print(f"Class: {selected_class}, Students found: {len(students)}")
     # ==================================================
     # Response
     # ==================================================

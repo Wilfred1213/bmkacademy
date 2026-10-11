@@ -21,6 +21,7 @@ from django.db.models import Sum, Q
 from .forms import FeeInvoiceForm
 from .models import FeeInvoice, Payment
 
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -217,7 +218,25 @@ def payment_history(request, invoice_id):
     )
 
 
+
+# from decimal import Decimal
+
+# from django.contrib import messages
+# from django.contrib.auth.decorators import login_required
+# from django.db.models import Sum
+# from django.shortcuts import get_object_or_404, redirect, render
+
+
+@login_required
 def payment_receipt(request, payment_id):
+
+    # Only administrators can access the general receipt view.
+    if request.user.role != "admin":
+        messages.error(
+            request,
+            "You do not have permission to access this payment receipt."
+        )
+        return redirect("accounts:login")
 
     payment = get_object_or_404(
         Payment.objects.select_related(
@@ -229,16 +248,15 @@ def payment_receipt(request, payment_id):
     invoice = payment.invoice
     student = invoice.enrollment.student
 
-    # Calculate total paid including this payment
+    # Calculate payments recorded before this payment.
     paid_before = (
         invoice.payments
         .filter(id__lt=payment.id)
-        .aggregate(
-            total=Sum("amount")
-        )["total"]
+        .aggregate(total=Sum("amount"))["total"]
         or Decimal("0.00")
     )
 
+    # Calculate the remaining balance after this payment.
     balance_after = invoice.amount - (
         paid_before + payment.amount
     )

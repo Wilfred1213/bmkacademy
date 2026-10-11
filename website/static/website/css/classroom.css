@@ -1930,3 +1930,25 @@
             padding-right: 18px;
         }
     }
+    /* Fix stubborn name + inline admission */
+.bmk-student-inline{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+    line-height:1.2;
+  }
+  .bmk-student-name{
+    color:#0f172a !important;
+    font-size:0.88rem !important;
+    font-weight:600 !important;
+    letter-spacing:-0.01em;
+  }
+  .bmk-admission-number{
+    color:#64748b !important;
+    font-size:0.75rem !important;
+    font-weight:500 !important;
+  }
+  .bmk-attendance-table tbody td{
+    padding:12px 17px !important;
+    vertical-align:middle;
+  }

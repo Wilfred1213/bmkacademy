@@ -552,21 +552,33 @@ Mark Attendance | BMK Academy
                                         </td>
 
 
-                                        <td>
+                                        {% comment %} <td>
 
                                             <div class="bmk-student-name">
-
-                                                {{ student.first_name }}
-
-                                                {% if student.middle_name %}
-                                                    {{ student.middle_name }}
+                                                {{ student.get_full_name }}
+                                                {% if not student.get_full_name %}
+                                                  <small class="text-danger">[No name - {{ student.admission_number }}]</small>
                                                 {% endif %}
-
-                                                {{ student.last_name }}
-
                                             </div>
+                                            
 
-                                        </td>
+                                        </td> {% endcomment %}
+                                        {% comment %} <td class="ps-4">
+                                            <div class="bmk-student-inline">
+                                              <span class="bmk-student-name">{{ student.get_full_name }}</span>
+                                              <span class="bmk-admission-number">{{ student.admission_number }}</span>
+                                            </div>
+                                        </td> {% endcomment %}
+                                        <td class="ps-4">
+                                            <div style="display:flex; flex-direction:column; gap:2px; line-height:1.2;">
+                                              <span style="color:#0f172a !important; font-size:14px !important; font-weight:600 !important; display:block;">
+                                                {{ student.get_full_name }}
+                                              </span>
+                                              <span style="color:#64748b !important; font-size:12px !important; font-weight:500 !important; display:block;">
+                                                <i class="bi bi-calendar2 me-1"></i>Enrolled: {{ student.date_admitted|date:"d M, Y" }}
+                                              </span>
+                                            </div>
+                                          </td>
 
 
                                         <td>

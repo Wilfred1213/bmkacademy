@@ -1,462 +1,435 @@
+
 /* =========================================================
-       BMK RESULTS — ENTER RESULTS
-       Frontend only — no backend logic changed
-    ========================================================= */
+   BMK RESULTS — ENTER RESULTS
+   Frontend styling only; no backend logic
+   ========================================================= */
 
-    .results-page {
-        padding-bottom: 40px;
-    }
+   .results-page {
+    padding-bottom: 40px;
+}
 
-    /* ---------------------------------------------------------
-       Page Header
-    --------------------------------------------------------- */
+/* Page header */
+.results-hero {
+    background: linear-gradient(135deg, #0f2747 0%, #173d68 65%, #1d4ed8 100%);
+    border-radius: 18px;
+    padding: 28px 30px;
+    color: #fff;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+}
 
+.results-hero::after {
+    content: "";
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: rgba(224, 168, 62, 0.12);
+    right: -70px;
+    top: -100px;
+    pointer-events: none;
+}
+
+.results-hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.results-hero-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: rgba(224, 168, 62, 0.18);
+    color: #f3d58a;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    margin-bottom: 12px;
+}
+
+.results-hero h2 {
+    margin: 0 0 6px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+}
+
+.results-hero p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.78);
+}
+
+/* Selection card */
+.results-card {
+    background: #fff;
+    border: 1px solid #e7ebf0;
+    border-radius: 18px;
+    box-shadow: 0 12px 35px rgba(15, 39, 71, 0.07);
+    overflow: hidden;
+}
+
+.results-card-header {
+    padding: 18px 22px;
+    border-bottom: 1px solid #edf0f4;
+    background: #fbfcfe;
+}
+
+.results-card-header h5 {
+    margin: 0;
+    color: #0f2747;
+    font-weight: 700;
+}
+
+.results-card-header p {
+    margin: 4px 0 0;
+    color: #64748b;
+    font-size: 0.88rem;
+}
+
+.results-card-body {
+    padding: 22px;
+}
+
+.results-label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #334155;
+    margin-bottom: 7px;
+}
+
+.results-select {
+    border: 1px solid #dce2e9;
+    border-radius: 10px;
+    min-height: 45px;
+    font-size: 0.92rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.results-select:focus {
+    border-color: #1d4ed8;
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.10);
+}
+
+.results-select:disabled {
+    background: #f3f5f8;
+    cursor: not-allowed;
+}
+
+/* Selection progress */
+.selection-step {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 8px;
+}
+
+.selection-number {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #eef3fa;
+    color: #64748b;
+    font-size: 0.75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.selection-number.active {
+    background: #0f2747;
+    color: #fff;
+}
+
+/* Selected context */
+.selected-context {
+    margin-top: 20px;
+    background: linear-gradient(135deg, #f8fbff, #f4f8fc);
+    border: 1px solid #e0e8f1;
+    border-radius: 16px;
+    padding: 18px;
+}
+
+.context-item {
+    padding: 4px 14px;
+    border-right: 1px solid #dce4ed;
+}
+
+.context-item:last-child {
+    border-right: none;
+}
+
+.context-label {
+    display: block;
+    color: #64748b;
+    font-size: 0.73rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+    margin-bottom: 3px;
+}
+
+.context-value {
+    color: #0f2747;
+    font-weight: 700;
+    font-size: 0.94rem;
+    overflow-wrap: anywhere;
+}
+
+/* Results entry card */
+.results-entry-card {
+    margin-top: 24px;
+    background: #fff;
+    border: 1px solid #e5eaf0;
+    border-radius: 18px;
+    box-shadow: 0 15px 40px rgba(15, 39, 71, 0.08);
+    overflow: hidden;
+}
+
+.entry-header {
+    padding: 18px 22px;
+    background: #0f2747;
+    color: #fff;
+}
+
+.entry-header h5 {
+    margin: 0;
+    font-weight: 700;
+}
+
+.entry-header small {
+    color: rgba(255, 255, 255, 0.68);
+}
+
+.student-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    padding: 7px 12px;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+/* Save button */
+.save-results-btn {
+    background: #e0a83e;
+    border: none;
+    color: #0f2747;
+    font-weight: 700;
+    border-radius: 9px;
+    padding: 9px 17px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.save-results-btn:hover {
+    background: #f0bd58;
+    color: #0f2747;
+    transform: translateY(-1px);
+    box-shadow: 0 7px 18px rgba(224, 168, 62, 0.25);
+}
+
+.save-results-btn:focus-visible {
+    outline: 3px solid rgba(29, 78, 216, 0.35);
+    outline-offset: 2px;
+}
+
+/* Results table */
+.results-table-wrapper {
+    max-height: 620px;
+    overflow: auto;
+}
+
+.results-table {
+    margin: 0;
+    min-width: 850px;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.results-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: #f7f9fc;
+    color: #334155;
+    border-bottom: 2px solid #dce3eb;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.35px;
+    padding: 13px 12px;
+    white-space: nowrap;
+}
+
+.results-table thead th:first-child {
+    left: 0;
+    z-index: 7;
+}
+
+.results-table tbody td {
+    padding: 11px 12px;
+    border-color: #edf0f3;
+    vertical-align: middle;
+}
+
+.results-table tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.results-table tbody tr:hover {
+    background: #f8fbff;
+}
+
+.student-cell {
+    min-width: 260px;
+    position: sticky;
+    left: 0;
+    z-index: 3;
+    background: #fff;
+    border-right: 1px solid #edf0f3;
+}
+
+.results-table tbody tr:hover .student-cell {
+    background: #f8fbff;
+}
+
+.student-name {
+    color: #0f2747;
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 2px;
+}
+
+.student-admission {
+    color: #64748b;
+    font-size: 0.75rem;
+}
+
+.score-cell {
+    min-width: 105px;
+}
+
+.score-input {
+    width: 82px;
+    margin: 0 auto;
+    border: 1px solid #d9e0e8;
+    border-radius: 8px;
+    min-height: 39px;
+    font-weight: 600;
+    color: #0f2747;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.score-input:focus {
+    border-color: #1d4ed8;
+    background: #f8fbff;
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.10);
+}
+
+.score-input:invalid {
+    border-color: #dc3545;
+}
+
+.maximum-score {
+    display: block;
+    margin-top: 3px;
+    color: #94a3b8;
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+/* Footer */
+.entry-footer {
+    padding: 15px 22px;
+    background: #fbfcfe;
+    border-top: 1px solid #edf0f3;
+}
+
+.entry-footer-note {
+    color: #64748b;
+    font-size: 0.78rem;
+}
+
+/* Empty state */
+.results-empty {
+    margin-top: 24px;
+    padding: 45px 25px;
+    text-align: center;
+    background: #fff;
+    border: 1px dashed #d9e0e8;
+    border-radius: 18px;
+    color: #64748b;
+}
+
+.results-empty-icon {
+    width: 55px;
+    height: 55px;
+    margin: 0 auto 15px;
+    border-radius: 50%;
+    background: #fff5df;
+    color: #b8790c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+}
+
+.results-empty h5 {
+    color: #0f2747;
+    font-weight: 700;
+}
+
+/* Mobile */
+@media (max-width: 767.98px) {
     .results-hero {
-        background:
-            linear-gradient(135deg, #0f2747 0%, #173d68 65%, #1d4ed8 100%);
-        border-radius: 18px;
-        padding: 28px 30px;
-        color: #fff;
-        margin-bottom: 24px;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .results-hero::after {
-        content: "";
-        position: absolute;
-        width: 220px;
-        height: 220px;
-        border-radius: 50%;
-        background: rgba(224, 168, 62, 0.12);
-        right: -70px;
-        top: -100px;
-    }
-
-    .results-hero-content {
-        position: relative;
-        z-index: 1;
-    }
-
-    .results-hero-icon {
-        width: 48px;
-        height: 48px;
-        border-radius: 14px;
-        background: rgba(224, 168, 62, 0.18);
-        color: #f3d58a;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.35rem;
-        margin-bottom: 12px;
+        padding: 22px;
+        border-radius: 15px;
     }
 
     .results-hero h2 {
-        margin: 0 0 6px;
-        font-weight: 700;
-        letter-spacing: -0.3px;
-    }
-
-    .results-hero p {
-        margin: 0;
-        color: rgba(255, 255, 255, 0.78);
-    }
-
-    /* ---------------------------------------------------------
-       Selection Card
-    --------------------------------------------------------- */
-
-    .results-card {
-        background: #fff;
-        border: 1px solid #e7ebf0;
-        border-radius: 18px;
-        box-shadow: 0 12px 35px rgba(15, 39, 71, 0.07);
-        overflow: hidden;
-    }
-
-    .results-card-header {
-        padding: 18px 22px;
-        border-bottom: 1px solid #edf0f4;
-        background: #fbfcfe;
-    }
-
-    .results-card-header h5 {
-        margin: 0;
-        color: #0f2747;
-        font-weight: 700;
-    }
-
-    .results-card-header p {
-        margin: 4px 0 0;
-        color: #64748b;
-        font-size: 0.88rem;
+        font-size: 1.35rem;
     }
 
     .results-card-body {
-        padding: 22px;
-    }
-
-    .results-label {
-        font-size: 0.82rem;
-        font-weight: 700;
-        color: #334155;
-        margin-bottom: 7px;
-    }
-
-    .results-select {
-        border: 1px solid #dce2e9;
-        border-radius: 10px;
-        min-height: 45px;
-        font-size: 0.92rem;
-        transition:
-            border-color 0.2s ease,
-            box-shadow 0.2s ease,
-            transform 0.2s ease;
-    }
-
-    .results-select:focus {
-        border-color: #1d4ed8;
-        box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.10);
-    }
-
-    .results-select:disabled {
-        background: #f3f5f8;
-        cursor: not-allowed;
-    }
-
-    /* ---------------------------------------------------------
-       Selection Progress
-    --------------------------------------------------------- */
-
-    .selection-step {
-        display: flex;
-        align-items: center;
-        gap: 9px;
-        margin-bottom: 8px;
-    }
-
-    .selection-number {
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        background: #eef3fa;
-        color: #64748b;
-        font-size: 0.75rem;
-        font-weight: 700;
-        flex-shrink: 0;
-    }
-
-    .selection-number.active {
-        background: #0f2747;
-        color: #fff;
-    }
-
-    /* ---------------------------------------------------------
-       Selected Context
-    --------------------------------------------------------- */
-
-    .selected-context {
-        margin-top: 20px;
-        background: linear-gradient(135deg, #f8fbff, #f4f8fc);
-        border: 1px solid #e0e8f1;
-        border-radius: 16px;
-        padding: 18px;
+        padding: 17px;
     }
 
     .context-item {
-        padding: 4px 14px;
-        border-right: 1px solid #dce4ed;
+        border-right: none;
+        border-bottom: 1px solid #dce4ed;
+        padding: 10px 0;
     }
 
     .context-item:last-child {
-        border-right: none;
-    }
-
-    .context-label {
-        display: block;
-        color: #64748b;
-        font-size: 0.73rem;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        font-weight: 700;
-        margin-bottom: 3px;
-    }
-
-    .context-value {
-        color: #0f2747;
-        font-weight: 700;
-        font-size: 0.94rem;
-    }
-
-    /* ---------------------------------------------------------
-       Results Entry Card
-    --------------------------------------------------------- */
-
-    .results-entry-card {
-        margin-top: 24px;
-        background: #fff;
-        border: 1px solid #e5eaf0;
-        border-radius: 18px;
-        box-shadow: 0 15px 40px rgba(15, 39, 71, 0.08);
-        overflow: hidden;
+        border-bottom: none;
     }
 
     .entry-header {
-        padding: 18px 22px;
-        background: #0f2747;
-        color: #fff;
+        padding: 16px;
     }
 
-    .entry-header h5 {
-        margin: 0;
-        font-weight: 700;
+    .entry-header .d-flex {
+        align-items: flex-start !important;
+        gap: 12px;
     }
-
-    .entry-header small {
-        color: rgba(255, 255, 255, 0.68);
-    }
-
-    .student-count {
-        display: inline-flex;
-        align-items: center;
-        gap: 7px;
-        background: rgba(255, 255, 255, 0.10);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 999px;
-        padding: 7px 12px;
-        font-size: 0.8rem;
-        color: rgba(255, 255, 255, 0.85);
-    }
-
-    /* ---------------------------------------------------------
-       Save Buttons
-    --------------------------------------------------------- */
 
     .save-results-btn {
-        background: #e0a83e;
-        border: none;
-        color: #0f2747;
-        font-weight: 700;
-        border-radius: 9px;
-        padding: 9px 17px;
-        transition:
-            transform 0.2s ease,
-            box-shadow 0.2s ease,
-            background 0.2s ease;
+        white-space: nowrap;
+        padding: 8px 12px;
     }
-
-    .save-results-btn:hover {
-        background: #f0bd58;
-        color: #0f2747;
-        transform: translateY(-1px);
-        box-shadow: 0 7px 18px rgba(224, 168, 62, 0.25);
-    }
-
-    /* ---------------------------------------------------------
-       Results Table
-    --------------------------------------------------------- */
 
     .results-table-wrapper {
-        max-height: 620px;
-        overflow: auto;
+        max-height: 520px;
     }
-
-    .results-table {
-        margin: 0;
-        min-width: 850px;
-    }
-
-    .results-table thead th {
-        position: sticky;
-        top: 0;
-        z-index: 5;
-        background: #f7f9fc;
-        color: #334155;
-        border-bottom: 2px solid #dce3eb;
-        font-size: 0.78rem;
-        text-transform: uppercase;
-        letter-spacing: 0.35px;
-        padding: 13px 12px;
-        white-space: nowrap;
-    }
-
-    .results-table thead th:first-child {
-        left: 0;
-        z-index: 7;
-    }
-
-    .results-table tbody td {
-        padding: 11px 12px;
-        border-color: #edf0f3;
-        vertical-align: middle;
-    }
-
-    .results-table tbody tr {
-        transition: background-color 0.15s ease;
-    }
-
-    .results-table tbody tr:hover {
-        background: #f8fbff;
-    }
-
-    .student-cell {
-        min-width: 260px;
-        position: sticky;
-        left: 0;
-        z-index: 3;
-        background: #fff;
-        border-right: 1px solid #edf0f3;
-    }
-
-    .results-table tbody tr:hover .student-cell {
-        background: #f8fbff;
-    }
-
-    .student-name {
-        color: #0f2747;
-        font-weight: 700;
-        font-size: 0.9rem;
-        margin-bottom: 2px;
-    }
-
-    .student-admission {
-        color: #64748b;
-        font-size: 0.75rem;
-    }
-
-    .score-cell {
-        min-width: 105px;
-    }
-
-    .score-input {
-        width: 82px;
-        margin: 0 auto;
-        border: 1px solid #d9e0e8;
-        border-radius: 8px;
-        min-height: 39px;
-        font-weight: 600;
-        color: #0f2747;
-        transition:
-            border-color 0.2s ease,
-            box-shadow 0.2s ease,
-            background-color 0.2s ease;
-    }
-
-    .score-input:focus {
-        border-color: #1d4ed8;
-        background: #f8fbff;
-        box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.10);
-    }
-
-    .score-input:invalid {
-        border-color: #dc3545;
-    }
-
-    .maximum-score {
-        display: block;
-        margin-top: 3px;
-        color: #94a3b8;
-        font-size: 0.7rem;
-        font-weight: 500;
-    }
-
-    /* ---------------------------------------------------------
-       Footer
-    --------------------------------------------------------- */
 
     .entry-footer {
-        padding: 15px 22px;
-        background: #fbfcfe;
-        border-top: 1px solid #edf0f3;
+        padding: 15px 16px;
     }
-
-    .entry-footer-note {
-        color: #64748b;
-        font-size: 0.78rem;
-    }
-
-    /* ---------------------------------------------------------
-       Empty State
-    --------------------------------------------------------- */
-
-    .results-empty {
-        margin-top: 24px;
-        padding: 45px 25px;
-        text-align: center;
-        background: #fff;
-        border: 1px dashed #d9e0e8;
-        border-radius: 18px;
-        color: #64748b;
-    }
-
-    .results-empty-icon {
-        width: 55px;
-        height: 55px;
-        margin: 0 auto 15px;
-        border-radius: 50%;
-        background: #fff5df;
-        color: #b8790c;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.3rem;
-    }
-
-    .results-empty h5 {
-        color: #0f2747;
-        font-weight: 700;
-    }
-
-    /* ---------------------------------------------------------
-       Mobile
-    --------------------------------------------------------- */
-
-    @media (max-width: 767.98px) {
-
-        .results-hero {
-            padding: 22px;
-            border-radius: 15px;
-        }
-
-        .results-hero h2 {
-            font-size: 1.35rem;
-        }
-
-        .results-card-body {
-            padding: 17px;
-        }
-
-        .context-item {
-            border-right: none;
-            border-bottom: 1px solid #dce4ed;
-            padding: 10px 0;
-        }
-
-        .context-item:last-child {
-            border-bottom: none;
-        }
-
-        .entry-header {
-            padding: 16px;
-        }
-
-        .entry-header .d-flex {
-            align-items: flex-start !important;
-            gap: 12px;
-        }
-
-        .save-results-btn {
-            white-space: nowrap;
-            padding: 8px 12px;
-        }
-
-        .results-table-wrapper {
-            max-height: 520px;
-        }
-    }
+}
 
 /* =========================================================
 BMK ACADEMY — STUDENT RESULT
