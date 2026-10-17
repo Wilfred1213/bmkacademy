@@ -5,6 +5,32 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'website/css/results.css' %}">
+<style>
+    /* MOBILE FIX FOR RESULT ENTRY */
+.mobile-student-card{
+    border:1px solid #edf0f4;
+    border-radius:14px;
+    padding:12px;
+    margin:10px 12px;
+    background:#fff;
+  }
+  .mobile-student-head{display:flex; gap:10px; align-items:center; margin-bottom:10px; border-bottom:1px dashed #e2e8f0; padding-bottom:8px;}
+  .mobile-avatar{width:36px; height:36px; background:#eef5ff; color:#1d4ed8; border-radius:10px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:.8rem;}
+  .mobile-name{font-size:.9rem; font-weight:700; color:#0f172a; line-height:1.1;}
+  .mobile-adm{font-size:.72rem; color:#64748b;}
+  .mobile-scores-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  .mobile-score-item label{font-size:.7rem; text-transform:uppercase; font-weight:700; color:#475569; display:block; margin-bottom:4px;}
+  .mobile-score-item small{color:#94a3b8;}
+  .score-input-mobile{height:42px; font-size:1rem; font-weight:600; text-align:center; border-radius:10px; border:1.5px solid #e2e8f0;}
+  .score-input-mobile:focus{border-color:#1d4ed8; box-shadow:0 0 0 3px #dbeafe;}
+  .score-input{height:38px; text-align:center; font-weight:600;}
+  
+  @media(max-width:768px){
+    .results-table-wrapper{overflow-x:auto; -webkit-overflow-scrolling:touch;}
+  }
+</style>
+
+
 {% endblock %}
 
 {% block content %}
@@ -233,88 +259,72 @@
                 <input type="hidden" name="term" value="{{ selected_term.id }}">
                 <input type="hidden" name="school_class" value="{{ selected_class.id }}">
                 <input type="hidden" name="class_subject" value="{{ selected_class_subject.id }}">
-
                 <section class="results-entry-card">
                     <div class="entry-header">
-                        <div class="d-flex justify-content-between align-items-center flex-wrap">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
                             <div>
-                                <h5><i class="bi bi-pencil-square me-2" aria-hidden="true"></i>Assessment Scores</h5>
-                                <small>Enter each student's score for the assessment components shown below.</small>
+                                <h5><i class="bi bi-pencil-square me-2"></i>Assessment Scores</h5>
+                                <small>Enter scores for {{ selected_class_subject.subject.name }} - {{ selected_class.name }}</small>
                             </div>
-                            <span class="student-count">
-                                <i class="bi bi-people-fill" aria-hidden="true"></i>
-                                {{ students|length }} student{{ students|length|pluralize }}
-                            </span>
+                            <span class="student-count"><i class="bi bi-people-fill"></i> {{ students|length }} students</span>
                         </div>
                     </div>
-
-                    <div class="results-table-wrapper">
-                        <table class="table results-table align-middle">
+                
+                    <!-- DESKTOP TABLE -->
+                    <div class="results-table-wrapper d-none d-md-block">
+                        <table class="table results-table align-middle mb-0">
                             <thead>
                                 <tr>
-                                    <th scope="col">Student</th>
+                                    <th style="min-width:160px;">Student</th>
                                     {% for component in assessment_components %}
-                                        <th scope="col" class="text-center">
-                                            {{ component.name }}
-                                            <span class="maximum-score">Max: {{ component.max_score }}</span>
-                                        </th>
+                                    <th class="text-center" style="min-width:90px;">{{ component.name }}<br><span class="maximum-score">Max: {{ component.max_score }}</span></th>
                                     {% endfor %}
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for enrollment in students %}
-                                    <tr>
-                                        <td class="student-cell">
-                                            <div class="student-name">
-                                                {{ enrollment.student.first_name }} {{ enrollment.student.last_name }}
-                                            </div>
-                                            {% if enrollment.student.admission_number %}
-                                                <div class="student-admission">
-                                                    {{ enrollment.student.admission_number }}
-                                                </div>
-                                            {% endif %}
-                                        </td>
-
-                                        {% for result_score in enrollment.result_scores %}
-                                            <td class="score-cell text-center">
-                                                <label class="visually-hidden"
-                                                       for="score-{{ enrollment.id }}-{{ result_score.component.id }}">
-                                                    {{ enrollment.student.first_name }} {{ enrollment.student.last_name }} —
-                                                    {{ result_score.component.name }}
-                                                </label>
-                                                <input
-                                                    type="number"
-                                                    class="form-control score-input"
-                                                    id="score-{{ enrollment.id }}-{{ result_score.component.id }}"
-                                                    name="score_{{ enrollment.id }}_{{ result_score.component.id }}"
-                                                    value="{% if result_score.score != None %}{{ result_score.score }}{% endif %}"
-                                                    min="0"
-                                                    max="{{ result_score.component.max_score }}"
-                                                    step="0.01"
-                                                    inputmode="decimal"
-                                                    aria-describedby="max-{{ enrollment.id }}-{{ result_score.component.id }}"
-                                                >
-                                                <span class="maximum-score" id="max-{{ enrollment.id }}-{{ result_score.component.id }}">
-                                                    / {{ result_score.component.max_score }}
-                                                </span>
-                                            </td>
-                                        {% endfor %}
-                                    </tr>
+                                <tr>
+                                    <td class="student-cell">
+                                        <div class="student-name">{{ enrollment.student.first_name }} {{ enrollment.student.last_name }}</div>
+                                        <div class="student-admission">{{ enrollment.student.admission_number }}</div>
+                                    </td>
+                                    {% for result_score in enrollment.result_scores %}
+                                    <td class="text-center"><input type="number" class="form-control score-input" name="score_{{ enrollment.id }}_{{ result_score.component.id }}" value="{% if result_score.score != None %}{{ result_score.score }}{% endif %}" min="0" max="{{ result_score.component.max_score }}" step="0.01"></td>
+                                    {% endfor %}
+                                </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
                     </div>
-
-                    <div class="entry-footer d-flex justify-content-between align-items-center flex-wrap gap-3">
-                        <span class="entry-footer-note">
-                            <i class="bi bi-info-circle me-1" aria-hidden="true"></i>
-                            Leave a score blank if it has not been entered yet. Scores are validated by the server.
-                        </span>
-                        <button type="submit" class="btn save-results-btn">
-                            <i class="bi bi-save me-2" aria-hidden="true"></i>Save Results
-                        </button>
+                
+                    <!-- MOBILE CARDS - This fixes your issue -->
+                    <div class="d-block d-md-none">
+                        {% for enrollment in students %}
+                        <div class="mobile-student-card">
+                            <div class="mobile-student-head">
+                                <div class="mobile-avatar">{{ enrollment.student.first_name|first|upper }}{{ enrollment.student.last_name|first|upper }}</div>
+                                <div>
+                                    <div class="mobile-name">{{ enrollment.student.first_name }} {{ enrollment.student.last_name }}</div>
+                                    <div class="mobile-adm">{{ enrollment.student.admission_number }}</div>
+                                </div>
+                            </div>
+                            <div class="mobile-scores-grid">
+                                {% for result_score in enrollment.result_scores %}
+                                <div class="mobile-score-item">
+                                    <label>{{ result_score.component.name }} <small>/{{ result_score.component.max_score }}</small></label>
+                                    <input type="number" class="form-control score-input-mobile" name="score_{{ enrollment.id }}_{{ result_score.component.id }}" value="{% if result_score.score != None %}{{ result_score.score }}{% endif %}" min="0" max="{{ result_score.component.max_score }}" step="0.01" inputmode="decimal" placeholder="0">
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                
+                    <div class="entry-footer">
+                        <button type="submit" class="btn save-results-btn w-100 w-md-auto"><i class="bi bi-save me-2"></i>Save Results</button>
                     </div>
                 </section>
+                
             </form>
         {% elif not students %}
             <div class="results-empty">

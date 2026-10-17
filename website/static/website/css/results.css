@@ -383,7 +383,7 @@
     font-weight: 700;
 }
 
-/* Mobile */
+Mobile
 @media (max-width: 767.98px) {
     .results-hero {
         padding: 22px;
@@ -4701,3 +4701,6 @@ Frontend only — no backend logic changed
 
     letter-spacing: 0.8px;
 }
+
+
+

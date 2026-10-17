@@ -59,14 +59,24 @@ INSTALLED_APPS = [
     "gallery",
     "notifications",
     "reports",
-    "fees"
+    "fees",
+    "rest_framework", 
+    "corsheaders"
 ]
 
 AUTH_USER_MODEL = "accounts.User"
 LOGIN_URL = "accounts:login"
 # LOGIN_REDIRECT_URL = "dashboard"
+CORS_ALLOWED_ORIGINS = ["http://localhost:5173"] # Vite port
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['rest_framework.filters.SearchFilter'],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 20
+}
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

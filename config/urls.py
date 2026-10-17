@@ -68,6 +68,7 @@ urlpatterns = [
     ),
     path("blog/", include("blog.urls")),
     path("gallery/", include("gallery.urls")),
+    path('api/students/', include('students.api_urls')),
 ]
 urlpatterns += static(
     settings.MEDIA_URL,
