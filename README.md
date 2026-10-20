@@ -1,4 +1,6 @@
 # BMK Academy Management System
+**Live Demo:** https://devwil.pythonanywhere.com/
+**Tech:** Django, MySQL, Service-layer architecture, Bootstrap 5
 
 A Django-based school management system for managing students, attendance, school fees, payments, and related academic records.
 
